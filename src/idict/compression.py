@@ -58,18 +58,25 @@ def pack(obj):
             GLOBAL["compression_cachesize"] -= memo[memid]["packed"]
             del memo[memid]
 
-    blob = lz4.compress(pickle.dumps(obj, protocol=5))
-    GLOBAL["compression_cachesize"] += len(blob)
-    memo[memid] = {"unpacked": obj, "packed": blob}
+    try:
+        dump = pickle.dumps(obj, protocol=5)
+        blob = lz4.compress(dump)
+        GLOBAL["compression_cachesize"] += len(blob)
+        memo[memid] = {"unpacked": obj, "packed": blob}
 
-    # LRU
-    keys = iter(list(memo.keys()))
-    while len(memo) > 0 and GLOBAL["compression_cachesize"] > GLOBAL["compression_cachelimit"]:
-        k = next(keys)
-        v = memo.pop(k)["packed"]
-        GLOBAL["compression_cachesize"] -= len(v)
+        # LRU
+        keys = iter(list(memo.keys()))
+        while len(memo) > 0 and GLOBAL["compression_cachesize"] > GLOBAL["compression_cachelimit"]:
+            k = next(keys)
+            v = memo.pop(k)["packed"]
+            GLOBAL["compression_cachesize"] -= len(v)
 
-    return blob
+        return blob
+    except KeyError as e:
+        if str(e) == "'__getstate__'":
+            raise Exception("Unpickable value:", type(obj))
+        else:
+            raise e
 
 
 def unpack(blob):

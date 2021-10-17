@@ -1,10 +1,10 @@
 # Laziness example
-from ldict import ldict
+from idict import idict
 
 # We disable 'ids' here just for the sake of clarity.
 # setup(ids=False)
 
-a = ldict(x=3)
+a = idict(x=3)
 print(a)
 # ...
 

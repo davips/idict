@@ -22,12 +22,16 @@
 
 import operator
 from functools import reduce
+from typing import Dict
 
-from identification import fhosh, removal_id, blobs_hashes_hoshes
+from garoupa import Hosh
 from ldict.parameter.let import Let
 
+from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
+from idict.frozenidentifieddict import FrozenIdentifiedDict
 
-def application(self, other, f, f_hosh, output=None):
+
+def application(self: FrozenIdentifiedDict, other, f, f_hosh, output=None):
     f_hosh *= fhosh(f, self.identity.version)  # d' = d * ħ(config) * f
     if output:
         frozen = self.frozen >> {output: other}
@@ -102,7 +106,8 @@ def ihandle_dict(self, dictlike):
             "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde"
         }
     }
-    >>> print(ihandle_dict(di, {"w":lambda x,z: x**z}))
+    >>> di2 = ihandle_dict(di, {"w":lambda x,z: x**z})
+    >>> print(di2)
     {
         "w": "→(x z)",
         "x": 5,
@@ -114,6 +119,28 @@ def ihandle_dict(self, dictlike):
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
             "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde"
+        }
+    }
+    >>> print(ihandle_dict(di2, {"x": 55555}))
+    {
+        "w": "→(x z)",
+        "x": 55555,
+        "y": null,
+        "z": 8,
+        "id": "4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE",
+        "ids": {
+            "w": "APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5",
+            "x": "T7_37f7565449f62df2f074952f6484ea6581b77",
+            "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
+            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde"
+        }
+    }
+    >>> print(ihandle_dict(idict(), {"x": 1555}))
+    {
+        "x": 1555,
+        "id": "wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30",
+        "ids": {
+            "x": "wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30"
         }
     }
     """
@@ -130,16 +157,24 @@ def ihandle_dict(self, dictlike):
                 clone = application(clone, v, v, self.identity, k)
             else:
                 internals = blobs_hashes_hoshes({k: v}, self.identity)
-                internals["hosh"] = reduce(operator.mul, [self.identity] + list(self.hoshes.values()))
+                clone.blobs[k] = internals["blobs"][k]
+                clone.hashes[k] = internals["hashes"][k]
+                clone.hoshes[k] = internals["hoshes"][k]
+                internals["blobs"], internals["hashes"], internals["hoshes"] = clone.blobs, clone.hashes, clone.hoshes
+                hosh = reduce(operator.mul, [self.identity] + list(self.hoshes.values()))
+                internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
+                del clone.data["id"]
+                del clone.data["ids"]
                 clone = FrozenIdentifiedDict(clone.data, rnd=clone.rnd, _cloned=internals, **{k: v})
     return clone
 
 
-def placeholder(key, f_hosh, identity, hoshes):
+def placeholder(key, f_hosh, identity, hoshes: Dict[str, Hosh]):
     it = iter(hoshes.items())
     while (pair := next(it))[0] != key:
         pass
-    oldfield_hosh = pair[1]
+    # noinspection PyTypeChecker
+    oldfield_hosh: Hosh = pair[1]
     right = identity
     for k, v in it:
         right *= v
@@ -147,7 +182,7 @@ def placeholder(key, f_hosh, identity, hoshes):
     return field_hosh
 
 
-def solve(hoshes, output, uf):
+def solve(hoshes, output, uf: Hosh):
     """
     >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> a = idict(x=3)

@@ -25,75 +25,8 @@ import dis
 from inspect import signature
 
 from garoupa import Hosh, UT40_4
-from orjson import dumps
-
-# def process(field, value, version):
-#     """
-#     Create hosh with etype=
-#         "hybrid" if 'value' is not callable
-#         "ordered" if 'value' is a callable without an attribute 'hosh'
-#
-#     Usage:
-#
-#     >>> hosh, blob = process("X", 123, "UT64.4")
-#     >>> hosh.id
-#     '000000000000000000000dHdUWpyde2pYKmMPrlf3jsgYRCHG5r0pjr5.ppXaVVi'
-#     >>> blob
-#     b'{"X":123}'
-#     >>> f = lambda X: 123
-#     >>> hasattr(f, "hosh")
-#     False
-#     >>> hosh, blob = process("X", f, "UT64.4")
-#     >>> hosh.id
-#     'fCnqZp8kieVFrP4uCsQPLmcflhA5ENCk2oRbzdjBxUxr.2mWiVrBjut5cJmaR3m2'
-#     >>> blob is None
-#     True
-#     >>> f.hosh = hosh
-#     >>> hasattr(f, "hosh")
-#     True
-#     >>> hosh2, blob = process("X", f, "UT64.4")
-#     >>> hosh is hosh2
-#     True
-#
-#     Parameters
-#     ----------
-#     field
-#     value
-#     version
-#
-#     Returns
-#     -------
-#
-#     """
-#     if callable(value):
-#         h = value.hosh if hasattr(value, "hosh") else fhosh(value, version)
-#         return h, None
-#     obj = {field: value}
-#     # TODO: separar key do hosh pra ser usada como no artigo, para localizar o blob no db. ver abaixo """
-#     """
-#     tabelas do BD:
-#         alias(id    -> [id])        # id original (ou nested) antes de mesclar com key   ->  [hash] ou [id1, id2, ...]
-#         value(id    -> blob)        # hash  ->  valor
-#
-#     estrutura de dados
-#         {
-#             id  ->  7427923r798g423t9
-#             ids ->  {
-#                 x   ->  798g234gf42338h32t
-#                 y   ->  987hg23r86g87g32rf
-#             }
-#             hashes* ->  {
-#                 x   ->  078g23f809h432g0h2
-#                 y   ->  fdhfd49g8h34g0h923
-#             }
-#             x   ->  v1
-#             y   ->  v2
-#     }
-#     *: talvez seja melhor apenas sob demanda e ficar como atributo, não field.
-#     """
-#     bytes = dumps(obj, option=OPT_SORT_KEYS)
-#     return Hosh(bytes, "hybrid", version=version), bytes
 from ldict.exception import NoInputException
+from orjson import dumps
 
 from idict.compression import pack
 
@@ -166,16 +99,15 @@ def removal_id(template, field):
 
 def blobs_hashes_hoshes(data, identity):
     from idict.frozenidentifieddict import FrozenIdentifiedDict
+    from idict.core.idict_ import Idict
     blobs = {}
     hashes = {}
     hoshes = {}
     for k, v in data.items():
-        # TODO checar se é um ?dict mutável e congelar ele
-        if isinstance(v, FrozenIdentifiedDict):
+        if isinstance(v, (Idict, FrozenIdentifiedDict)):
             hashes[k] = v.hosh
-            hoshes[k] = hashes[k] ** key2id(k, identity.digits)
         else:
             blobs[k] = pack(v)
             hashes[k] = identity.h * blobs[k]
-            hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+        hoshes[k] = hashes[k] ** key2id(k, identity.digits)
     return dict(blobs=blobs, hashes=hashes, hoshes=hoshes)

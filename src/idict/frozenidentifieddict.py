@@ -25,15 +25,14 @@ from functools import reduce
 from random import Random
 from typing import Dict, TypeVar, Union, Callable
 
-from garoupa import ø40
-
-from idict.appearance import decolorize, ldict2txt
-from idict.core.identification import key2id, blobs_hashes_hoshes
-from idict.core.rshift import application, ihandle_dict
-from ldict.core.base import AbstractLazyDict
+from garoupa import ø40, Hosh
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.frozenlazydict import FrozenLazyDict
 from ldict.parameter.functionspace import FunctionSpace
 from ldict.parameter.let import Let
+
+from idict.appearance import decolorize, ldict2txt
+from idict.core.identification import key2id, blobs_hashes_hoshes
 
 VT = TypeVar("VT")
 
@@ -123,13 +122,14 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> d = idict() >> {"x": "more content"}
     >>> print(d)
     {
-        "id": "0000000000000000000000000000000000000000",
+        "x": "more content",
+        "id": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff",
         "ids": {
             "x": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff"
-        },
-        "x": "more content"
+        }
     }
     """
+    hosh: Hosh
 
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
@@ -137,6 +137,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         self.identity = identity
         data = _dictionary or {}
         data.update(kwargs)
+
+        # Freeze mutable *dicts.
+        for k, v in data.items():
+            if isinstance(v, AbstractMutableLazyDict):
+                data[k] = v.frozen
 
         if _cloned:
             self.blobs = _cloned["blobs"]
@@ -165,9 +170,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
         if id is None:
             id = self.hosh.id
-            ids = {k: v.id for k, v in self.hoshes.items()}
+            try:
+                ids = {k: v.id for k, v in self.hoshes.items()}
+            except:
+                print(self.hoshes)
+                raise Exception()
 
-        # Store as immutable lazy dict.
+        # Store as an immutable lazy dict.
         self.frozen = FrozenLazyDict(data, id=id, ids=ids, rnd=rnd)
         self.data = self.frozen.data
         self.id = self.hosh.id
@@ -242,6 +251,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, Let, FunctionSpace, Random]):
+        from idict import Empty
+        from idict.core.rshift import application, ihandle_dict
+        if isinstance(other, Empty):
+            return self
         if isinstance(other, Random):
             return self.clone(rnd=other)
         if isinstance(other, FunctionSpace):
@@ -302,7 +315,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         if isinstance(other, Dict):
             if "id" in other:
                 return self.id == other["id"]
-            if self.keys() != other.keys():
+            if list(self.keys())[:-2] != list(other.keys()):
                 return False
         from idict.core.idict_ import Idict
         if isinstance(other, (FrozenIdentifiedDict, Idict)):
@@ -313,5 +326,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             other.evaluate()
             return self.data == other.data
         if isinstance(other, Dict):
-            return self.data == other
+            data = self.data.copy()
+            del data["id"]
+            del data["ids"]
+            return data == other
         raise TypeError(f"Cannot compare {type(self)} and {type(other)}")  # pragma: no cover

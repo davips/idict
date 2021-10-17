@@ -1,11 +1,11 @@
 # Identity example
-from ldict import ldict
+from idict import idict
 
-a = ldict(x=3)
+a = idict(x=3)
 print(a)
 # ...
 
-b = ldict(y=5)
+b = idict(y=5)
 print(b)
 # ...
 

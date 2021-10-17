@@ -22,7 +22,6 @@
 from typing import Callable, Dict, Union
 
 from idict.frozenidentifieddict import FrozenIdentifiedDict
-# from idict.core.idict_ import Idict
 from ldict.parameter.functionspace import FunctionSpace
 
 
@@ -36,6 +35,6 @@ class Empty(FrozenIdentifiedDict):
         # if isinstance(other, (Let, Idict)):
         #     return other
         if isinstance(other, dict):
-            from idict.frozenidentifieddict import Idict
+            from idict.core.idict_ import Idict
             return Idict(other)
         return NotImplemented

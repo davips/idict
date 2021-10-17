@@ -1,11 +1,11 @@
-# Lazily applying functions to ldict
-from ldict import ldict
+# Lazily applying functions to idict
+from idict import idict
 
-a = ldict(x=3)
+a = idict(x=3)
 print(a)
 # ...
 
-a = a >> ldict(y=5) >> {"z": 7} >> (lambda x, y, z: {"r": x ** y // z})
+a = a >> idict(y=5) >> {"z": 7} >> (lambda x, y, z: {"r": x ** y // z})
 print(a)
 # ...
 

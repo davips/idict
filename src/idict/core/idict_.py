@@ -26,10 +26,7 @@ from random import Random
 from typing import Dict, TypeVar, Union, Callable
 
 from garoupa import ø40
-
-from idict.frozenidentifieddict import FrozenIdentifiedDict
 from ldict.core.base import AbstractMutableLazyDict
-from ldict.core.rshift import handle_dict, lazify
 from ldict.exception import WrongKeyType
 from ldict.parameter.functionspace import FunctionSpace
 from ldict.parameter.let import Let
@@ -83,6 +80,8 @@ class Idict(AbstractMutableLazyDict):
     }
     >>> d = idict(x=123123, y=88)
     >>> d2 = d >> (lambda x: {"z": x**2})
+    >>> d2.ids
+    {'z': '.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8', 'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}
     >>> d2.hosh == d2.identity * d2.ids["z"] * d2.ids["x"] * d2.ids["y"]
     True
     >>> e = d2 >> (lambda x,y: {"w": x/y})
@@ -119,28 +118,61 @@ class Idict(AbstractMutableLazyDict):
     >>> d == d2
     True
     >>> from idict import Ø
+    >>> d = Ø >> {"x": "more content"}
+    >>> print(d)
+    {
+        "x": "more content",
+        "id": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff",
+        "ids": {
+            "x": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff"
+        }
+    }
     >>> d = idict() >> {"x": "more content"}
     >>> print(d)
     {
-        "id": "0000000000000000000000000000000000000000",
+        "x": "more content",
+        "id": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff",
         "ids": {
             "x": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff"
-        },
-        "x": "more content"
+        }
     }
+    >>> e.ids.keys()
+    dict_keys(['w', 'z', 'x', 'y'])
     >>> del e["z"]
-    >>> e
+    >>> print(e)
+    {
+        "w": "→(x y)",
+        "x": 123123,
+        "y": 88,
+        "id": "GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5",
+        "ids": {
+            "w": "1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5",
+            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e",
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
+        }
+    }
+    >>> e.hosh == e.identity * e.ids["w"] * e.ids["x"] * e.ids["y"]
+    True
     >>> e["x"] = 77
+    >>> print(e)
+    {
+        "w": "→(x y)",
+        "x": 77,
+        "y": 88,
+        "id": "aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5",
+        "ids": {
+            "w": "1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5",
+            "x": "JF_093a985add7d5e2d319c2662db9ae954648b4",
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
+        }
+    }
     """
 
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.identity = identity
+        from idict.frozenidentifieddict import FrozenIdentifiedDict
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(_dictionary, id, ids, rnd, identity, _cloned, **kwargs)
-
-    @property
-    def id(self):
-        return self.frozen.id
 
     @property
     def hosh(self):
@@ -161,10 +193,11 @@ class Idict(AbstractMutableLazyDict):
     def __delitem__(self, key):
         if not isinstance(key, str):
             raise WrongKeyType(f"Key must be string, not {type(key)}.", key)
-        data, blobs, hashes, hoshes = self.data.copy(), self.blobs.copy(), self.blobs.copy(), self.blobs.copy()
+        data, blobs, hashes, hoshes = self.data.copy(), self.blobs.copy(), self.hashes.copy(), self.hoshes.copy()
         for coll in [data, blobs, hashes, hoshes]:
-            del coll[key]
-        hosh = reduce(operator.mul, [self.identity] + list(self.hoshes.values()))
+            if key in coll:
+                del coll[key]
+        hosh = reduce(operator.mul, [self.identity] + list(hoshes.values()))
         self.frozen = self.frozen.clone(data, _cloned=dict(blobs=blobs, hashes=hashes, hoshes=hoshes, hosh=hosh))
 
     def __getattr__(self, item):
@@ -184,14 +217,24 @@ class Idict(AbstractMutableLazyDict):
         >>> a = d >> f
         >>> print(a)
         {
+            "y": "→(x)",
             "x": 3,
-            "y": "→(x)"
+            "id": "tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe",
+            "ids": {
+                "y": "BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe",
+                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+            }
         }
         >>> a.evaluate()
         >>> print(a)
         {
+            "y": 5,
             "x": 3,
-            "y": 5
+            "id": "tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe",
+            "ids": {
+                "y": "BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe",
+                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+            }
         }
         """
         self.frozen.evaluate()
@@ -200,9 +243,15 @@ class Idict(AbstractMutableLazyDict):
     def asdict(self):
         """
         >>> from idict import idict
-        >>> d = idict(x=3, y=5)
-        >>> idict(x=7, y=8, d=d).asdict
-        {'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5}}
+        >>> d = idict(x=7, y=8)
+        >>> e = idict(x=7, y=8, d=d)
+        >>> e.asdict
+        {'x': 7, 'y': 8, 'd': {'x': 7, 'y': 8, 'id': 'sl_e71f88df59515edb262b26ea29b4c6470e3a7', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde'}}, 'id': '5F_a0d66f8882d3b43a5c4676da42798d242c74f', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': 'Fj_7dc836b829c2eb5e262b00ef19b4c6fc1e3a7'}}
+        >>> from idict.core.identification import key2id
+        >>> d.hosh == e.hoshes["d"]
+        False
+        >>> d.hosh == e.hoshes["d"] // key2id("d", e.hosh.digits)
+        True
         """
         return self.frozen.asdict
 
@@ -218,26 +267,29 @@ class Idict(AbstractMutableLazyDict):
         return NotImplemented
 
     def __rshift__(self, other: Union[Dict, 'Idict', Callable, Let, FunctionSpace, Random]):
+        """
+        >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
+        >>> d.ids
+        {'y': 'zJmLy1B8VQU8.Kji0iqU0zIrDWpWqcXxhrGWdepm', 'x': 'og_0f0d4c16437fb2a4c1bff594d68a486791c45'}
+        """
         from idict import Empty
-        if isinstance(other, Random):
-            return self.clone(rnd=other)
         if isinstance(other, Empty):
             return self
-        if isinstance(other, Idict):
-            return self.clone(handle_dict(self.frozen.data, other, other.rnd), other.rnd)
-        if isinstance(other, Dict):
-            return self.clone(handle_dict(self.frozen.data, other, self.rnd))
-        if isinstance(other, FunctionSpace):
-            return reduce(operator.rshift, (self,) + other.functions)
-        if callable(other) or isinstance(other, Let):
-            lazies = lazify(self.frozen.data, output_field="extract", f=other, rnd=self.rnd, multi_output=True)
-            data = self.frozen.data.copy()
-            data.update(lazies)
-            return self.clone(data)
-        return NotImplemented
+        clone = Idict(identity=self.identity)
+        clone.frozen = self.frozen >> other
+        return clone
+        # if isinstance(other, AbstractLazyDict):
+        #     return self.clone(handle_dict(self.frozen.data, other, other.rnd), rnd=other.rnd)
+        # if isinstance(other, Dict):
+        #     return self.clone(handle_dict(self.frozen.data, other, self.rnd))
+        # if isinstance(other, FunctionSpace):
+        #     return reduce(operator.rshift, (self,) + other.functions)
+        # if callable(other) or isinstance(other, Let):
+        #     return NotImplemented
 
     def __ne__(self, other):
         """
+        >>> from idict.frozenidentifieddict import FrozenIdentifiedDict
         >>> {"x": 5} == Idict({"x": 5})
         True
         >>> {"w": 5} == Idict({"x": 5})
@@ -255,3 +307,6 @@ class Idict(AbstractMutableLazyDict):
 
     def __eq__(self, other):
         return self.frozen == other
+
+    def show(self, colored=True):
+        self.frozen.show(colored)
