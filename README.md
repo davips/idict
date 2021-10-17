@@ -20,7 +20,7 @@ A lazy `dict` with universally unique deterministic identifiers.
 
 ## Overview
 
-A `idict` is a `dict` with `str` keys.
+An `idict` is a `dict` with `str` keys.
 
 ## See also
 
@@ -95,7 +95,7 @@ Each function, `idict`, and any value have a deterministic UUID
 magic available [here](https://pypi.org/project/garoupa). An `idict` is completely defined by its key-value pairs so that
 it can be converted from/to a built-in `dict`.
 
-Creating a `idict` is not different from creating an ordinary `dict`. Optionally it can be created through the `>>` operator
+Creating an `idict` is not different from creating an ordinary `dict`. Optionally it can be created through the `>>` operator
 used after `empty` or `Ø`
 (uppercase, usually AltGr+Shift+o in most keyboards):
 ![img.png](https://raw.githubusercontent.com/davips/idict/main/examples/img.png)
@@ -469,7 +469,7 @@ def h(z, c=[1, 2, 3]):
 fun = Ø >> g >> h  # 'empty' or 'Ø' enable the cartesian product of the subsequent sets of functions within the expression.
 print(fun)
 """
-«<function g at 0x7f1d5355b280> × <function h at 0x7f1d53ab9b80>»
+«<function g at 0x7fa86c26d280> × <function h at 0x7fa86c7ceb80>»
 """
 ```
 
@@ -559,7 +559,7 @@ Extra dependencies can be installed to support saving data to disk or to a serve
 
 ## Concept
 
-A `idict` is like a common Python `dict`, with extra functionality and lazy. It is a mapping between string keys, called
+An `idict` is like a common Python `dict`, with extra functionality and lazy. It is a mapping between string keys, called
 fields, and any serializable (pickable) object. The `idict` `id` (identifier) and the field `ids` are also part of the
 mapping.
 
