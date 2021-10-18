@@ -101,14 +101,14 @@ used after `empty` or `Ø`
 ![img.png](https://raw.githubusercontent.com/davips/idict/main/examples/img.png)
 
 Function application is done in the same way. The parameter names define the input fields, while the keys in the
-returned dict define the output fields:
+returned `dict` define the output fields:
 ![img_1.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_1.png)
 
 Similarly, for anonymous functions:
-![img_5.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_2.png)
+![img_2.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_2.png)
 
 Finally, the result is only evaluated at request:
-![img_6.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_3.png)
+![img_3.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_3.png)
 
 
 ## Installation
@@ -469,7 +469,7 @@ def h(z, c=[1, 2, 3]):
 fun = Ø >> g >> h  # 'empty' or 'Ø' enable the cartesian product of the subsequent sets of functions within the expression.
 print(fun)
 """
-«<function g at 0x7fa86c26d280> × <function h at 0x7fa86c7ceb80>»
+«<function g at 0x7f161ed09550> × <function h at 0x7f161f266dc0>»
 """
 ```
 

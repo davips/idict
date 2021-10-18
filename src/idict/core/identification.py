@@ -97,17 +97,35 @@ def removal_id(template, field):
     return template[:-len(field)] + field
 
 
-def blobs_hashes_hoshes(data, identity):
+def blobs_hashes_hoshes(data, identity, ids):
+    """
+    >>> from idict import idict
+    >>> idict(x=1, y=2, z=3, ids={"y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"}).show(colored=False)
+    {
+        "x": 1,
+        "y": 2,
+        "z": 3,
+        "id": "Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy",
+        "ids": {
+            "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",
+            "y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "z": "YB_957059a720926191bcc15ebde8f1b960282cd"
+        }
+    }
+    """
     from idict.frozenidentifieddict import FrozenIdentifiedDict
     from idict.core.idict_ import Idict
     blobs = {}
     hashes = {}
     hoshes = {}
     for k, v in data.items():
-        if isinstance(v, (Idict, FrozenIdentifiedDict)):
-            hashes[k] = v.hosh
+        if k in ids:
+            hoshes[k] = identity * ids[k]
         else:
-            blobs[k] = pack(v)
-            hashes[k] = identity.h * blobs[k]
-        hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+            if isinstance(v, (Idict, FrozenIdentifiedDict)):
+                hashes[k] = v.hosh
+            else:
+                blobs[k] = pack(v)
+                hashes[k] = identity.h * blobs[k]
+            hoshes[k] = hashes[k] ** key2id(k, identity.digits)
     return dict(blobs=blobs, hashes=hashes, hoshes=hoshes)

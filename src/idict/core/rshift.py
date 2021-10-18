@@ -148,6 +148,8 @@ def ihandle_dict(self, dictlike):
     from ldict.core.base import AbstractLazyDict
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
     for k, v in dictlike.items():
+        if k in ["id", "ids"]:  # pragma: no cover
+            raise Exception(f"{k} is a reserved key and cannot be used to name a field.")
         if v is None:
             clone = delete(clone, k)
         else:
@@ -156,7 +158,7 @@ def ihandle_dict(self, dictlike):
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)
             else:
-                internals = blobs_hashes_hoshes({k: v}, self.identity)
+                internals = blobs_hashes_hoshes({k: v}, self.identity, {})
                 clone.blobs[k] = internals["blobs"][k]
                 clone.hashes[k] = internals["hashes"][k]
                 clone.hoshes[k] = internals["hoshes"][k]
