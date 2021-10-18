@@ -20,7 +20,7 @@ A lazy `dict` with universally unique deterministic identifiers.
 
 ### See also
 
-* laziness+identity ([ldict](https://pypi.org/project/ldict))
+* laziness ([ldict](https://pypi.org/project/ldict))
 * laziness+identity+persistence ([cdict](https://pypi.org/project/cdict))
 
 ## Overview
