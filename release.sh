@@ -16,9 +16,9 @@ echo
 echo "----------------- docs... -----------------------"
 read -p "press enter"
 rm docs -rf
-poetry run pdoc --html --force ldict -o docs
-mv docs/ldict/* docs/
-rm docs/ldict -rf
+poetry run pdoc --html --force idict -o docs
+mv docs/idict/* docs/
+rm docs/idict -rf
 git add docs
 echo "----------------- docs done -----------------------"
 echo; echo

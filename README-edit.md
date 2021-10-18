@@ -80,7 +80,8 @@ poetry install
 ```
 
 ## Examples
-<<overview>>
+
+<<screenshot>>
 
 <<levelid>>
 
