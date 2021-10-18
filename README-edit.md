@@ -1,3 +1,9 @@
+![img.png](examples/img.png)
+![img_1.png](examples/img_1.png)
+![img_2.png](examples/img_2.png)
+![img_3.png](examples/img_3.png)
+
+
 ![test](https://github.com/davips/idict/workflows/test/badge.svg)
 [![codecov](https://codecov.io/gh/davips/idict/branch/main/graph/badge.svg)](https://codecov.io/gh/davips/idict)
 <a href="https://pypi.org/project/idict">
@@ -46,14 +52,14 @@ used after `empty` or `Ø`
 ![img.png](https://raw.githubusercontent.com/davips/idict/main/examples/img.png)
 
 Function application is done in the same way. The parameter names define the input fields, while the keys in the
-returned dict define the output fields:
+returned `dict` define the output fields:
 ![img_1.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_1.png)
 
 Similarly, for anonymous functions:
-![img_5.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_2.png)
+![img_2.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_2.png)
 
 Finally, the result is only evaluated at request:
-![img_6.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_3.png)
+![img_3.png](https://raw.githubusercontent.com/davips/idict/main/examples/img_3.png)
 
 
 ## Installation
