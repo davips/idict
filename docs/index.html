@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>ldict API documentation</title>
+<title>idict API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,46 +19,77 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>ldict</code></h1>
+<h1 class="title">Package <code>idict</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .core.ldict_ import Ldict as ldict
-from .empty import Empty
-from .parameter.functionspace import FunctionSpace
-from .parameter.let import Let as let
+<pre><code class="python">#  Copyright (c) 2021. Davi Pereira dos Santos
+#  This file is part of the idict project.
+#  Please respect the license - more about this in the section (*) below.
+#
+#  idict is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  idict is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with idict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+#
+#  (*) Removing authorship by any means, e.g. by distribution of derived
+#  works or verbatim, obfuscated, compiled or rewritten versions of any
+#  part of this work is illegal and unethical regarding the effort and
+#  time spent here.
+from .parameter.ilet import iLet
 
-empty = Empty()
-&#34;&#34;&#34;The empty object is used to induce a ldict from a dict&#34;&#34;&#34;</code></pre>
+from .config import setup
+from .core.idict_ import Idict as idict
+from .iempty import iEmpty
+
+empty = iEmpty()
+&#34;&#34;&#34;The empty object is used to induce a ldict from a dict&#34;&#34;&#34;
+
+Ø = empty
+&#34;&#34;&#34;UTF-8 alias for the empty object, it is used to induce a ldict from a dict. AltGr+Shift+o in most keyboards.&#34;&#34;&#34;
+
+let = iLet</code></pre>
 </details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
-<dt><code class="name"><a title="ldict.core" href="core/index.html">ldict.core</a></code></dt>
+<dt><code class="name"><a title="idict.appearance" href="appearance.html">idict.appearance</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="ldict.customjson" href="customjson.html">ldict.customjson</a></code></dt>
+<dt><code class="name"><a title="idict.compression" href="compression.html">idict.compression</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="ldict.exception" href="exception.html">ldict.exception</a></code></dt>
+<dt><code class="name"><a title="idict.config" href="config.html">idict.config</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="ldict.frozenlazydict" href="frozenlazydict.html">ldict.frozenlazydict</a></code></dt>
+<dt><code class="name"><a title="idict.core" href="core/index.html">idict.core</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="ldict.lazyval" href="lazyval.html">ldict.lazyval</a></code></dt>
+<dt><code class="name"><a title="idict.frozenidentifieddict" href="frozenidentifieddict.html">idict.frozenidentifieddict</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="ldict.parameter" href="parameter/index.html">ldict.parameter</a></code></dt>
+<dt><code class="name"><a title="idict.iempty" href="iempty.html">idict.iempty</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="idict.parameter" href="parameter/index.html">idict.parameter</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -67,9 +98,13 @@ empty = Empty()
 <section>
 <h2 class="section-title" id="header-variables">Global variables</h2>
 <dl>
-<dt id="ldict.empty"><code class="name">var <span class="ident">empty</span></code></dt>
+<dt id="idict.empty"><code class="name">var <span class="ident">empty</span></code></dt>
 <dd>
 <div class="desc"><p>The empty object is used to induce a ldict from a dict</p></div>
+</dd>
+<dt id="idict.Ø"><code class="name">var <span class="ident">Ø</span></code></dt>
+<dd>
+<div class="desc"><p>UTF-8 alias for the empty object, it is used to induce a ldict from a dict. AltGr+Shift+o in most keyboards.</p></div>
 </dd>
 </dl>
 </section>
@@ -86,17 +121,19 @@ empty = Empty()
 <ul id="index">
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="ldict.core" href="core/index.html">ldict.core</a></code></li>
-<li><code><a title="ldict.customjson" href="customjson.html">ldict.customjson</a></code></li>
-<li><code><a title="ldict.exception" href="exception.html">ldict.exception</a></code></li>
-<li><code><a title="ldict.frozenlazydict" href="frozenlazydict.html">ldict.frozenlazydict</a></code></li>
-<li><code><a title="ldict.lazyval" href="lazyval.html">ldict.lazyval</a></code></li>
-<li><code><a title="ldict.parameter" href="parameter/index.html">ldict.parameter</a></code></li>
+<li><code><a title="idict.appearance" href="appearance.html">idict.appearance</a></code></li>
+<li><code><a title="idict.compression" href="compression.html">idict.compression</a></code></li>
+<li><code><a title="idict.config" href="config.html">idict.config</a></code></li>
+<li><code><a title="idict.core" href="core/index.html">idict.core</a></code></li>
+<li><code><a title="idict.frozenidentifieddict" href="frozenidentifieddict.html">idict.frozenidentifieddict</a></code></li>
+<li><code><a title="idict.iempty" href="iempty.html">idict.iempty</a></code></li>
+<li><code><a title="idict.parameter" href="parameter/index.html">idict.parameter</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-variables">Global variables</a></h3>
 <ul class="">
-<li><code><a title="ldict.empty" href="#ldict.empty">empty</a></code></li>
+<li><code><a title="idict.empty" href="#idict.empty">empty</a></code></li>
+<li><code><a title="idict.Ø" href="#idict.Ø">Ø</a></code></li>
 </ul>
 </li>
 </ul>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>ldict.core.base API documentation</title>
+<title>idict.iempty API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>ldict.core.base</code></h1>
+<h1 class="title">Module <code>idict.iempty</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -27,68 +27,45 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">#  Copyright (c) 2021. Davi Pereira dos Santos
-#  This file is part of the ldict project.
+#  This file is part of the idict project.
 #  Please respect the license - more about this in the section (*) below.
 #
-#  ldict is free software: you can redistribute it and/or modify
+#  idict is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
-#  ldict is distributed in the hope that it will be useful,
+#  idict is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with ldict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+#  along with idict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 #
 #  (*) Removing authorship by any means, e.g. by distribution of derived
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from abc import abstractmethod, ABC
-from collections import UserDict
-from random import Random
-from typing import Dict, TypeVar
+from typing import Callable, Dict, Union
 
-from ldict.exception import WrongKeyType
-
-VT = TypeVar(&#34;VT&#34;)
+from idict.frozenidentifieddict import FrozenIdentifiedDict
+from idict.parameter.ifunctionspace import iFunctionSpace
 
 
-class AbstractLazyDict(UserDict, Dict[str, VT]):
-    rnd: Random
+class iEmpty(FrozenIdentifiedDict):
+    def __init__(self):
+        super().__init__()
 
-    @property
-    @abstractmethod
-    def asdict(self):  # pragma: no cover
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def evaluate(self):  # pragma: no cover
-        raise NotImplementedError
-
-
-class AbstractMutableLazyDict(AbstractLazyDict, ABC):
-    frozen: AbstractLazyDict
-
-    @property
-    def rnd(self):
-        return self.frozen.rnd
-
-    @property
-    def data(self):
-        return self.frozen.data
-
-    def __getitem__(self, item):
-        return self.frozen[item]
-
-    def __setitem__(self, key: str, value):
-        if not isinstance(key, str):  # pragma: no cover
-            raise WrongKeyType(f&#34;Key must be string, not {type(key)}.&#34;, key)
-        self.frozen &gt;&gt;= {key: value}</code></pre>
+    def __rshift__(self, other: Union[Dict, Callable, iFunctionSpace], config={}):
+        if callable(other):
+            return iFunctionSpace(other)
+        # if isinstance(other, (iLet, Idict)):
+        #     return other
+        if isinstance(other, dict):
+            from idict.core.idict_ import Idict
+            return Idict(other)
+        return NotImplemented</code></pre>
 </details>
 </section>
 <section>
@@ -100,41 +77,121 @@ class AbstractMutableLazyDict(AbstractLazyDict, ABC):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="ldict.core.base.AbstractLazyDict"><code class="flex name class">
-<span>class <span class="ident">AbstractLazyDict</span></span>
-<span>(</span><span>dict=None, /, **kwargs)</span>
+<dt id="idict.iempty.iEmpty"><code class="flex name class">
+<span>class <span class="ident">iEmpty</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>dict() -&gt; new empty dictionary
-dict(mapping) -&gt; new dictionary initialized from a mapping object's
-(key, value) pairs
-dict(iterable) -&gt; new dictionary initialized as if via:
-d = {}
-for k, v in iterable:
-d[k] = v
-dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
-in the keyword argument list.
-For example:
-dict(one=1, two=2)</p></div>
+<div class="desc"><p>Immutable lazy universally identified dict for serializable (picklable) pairs str-&gt;value</p>
+<p>Usage:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; print(idict())
+{
+    &quot;id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
+    &quot;ids&quot;: {}
+}
+&gt;&gt;&gt; d = idict(x=5, y=3)
+&gt;&gt;&gt; print(d)
+{
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 3,
+    &quot;id&quot;: &quot;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;XB_1cba4912b6826191bcc15ebde8f1b960282cd&quot;
+    }
+}
+&gt;&gt;&gt; d[&quot;y&quot;]
+3
+&gt;&gt;&gt; print(idict(x=123123, y=88))
+{
+    &quot;x&quot;: 123123,
+    &quot;y&quot;: 88,
+    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
+    }
+}
+&gt;&gt;&gt; print(idict(y=88, x=123123))
+{
+    &quot;y&quot;: 88,
+    &quot;x&quot;: 123123,
+    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;ids&quot;: {
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;,
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;
+    }
+}
+&gt;&gt;&gt; d = idict(x=123123, y=88)
+&gt;&gt;&gt; d2 = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
+&gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&quot;z&quot;] * d2.ids[&quot;x&quot;] * d2.ids[&quot;y&quot;]
+True
+&gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&quot;w&quot;: x/y})
+&gt;&gt;&gt; print(e)
+{
+    &quot;w&quot;: &quot;→(x y)&quot;,
+    &quot;z&quot;: &quot;→(x)&quot;,
+    &quot;x&quot;: 123123,
+    &quot;y&quot;: 88,
+    &quot;id&quot;: &quot;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&quot;,
+    &quot;ids&quot;: {
+        &quot;w&quot;: &quot;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&quot;,
+        &quot;z&quot;: &quot;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&quot;,
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
+    }
+}
+&gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2}) &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y})
+&gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y}) &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
+&gt;&gt;&gt; dic = d.asdict  # Converting to dict
+&gt;&gt;&gt; dic
+{'x': 123123, 'y': 88, 'id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', 'ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
+&gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
+&gt;&gt;&gt; print(d2)
+{
+    &quot;x&quot;: 123123,
+    &quot;y&quot;: 88,
+    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
+    }
+}
+&gt;&gt;&gt; d == d2
+True
+&gt;&gt;&gt; from idict import Ø
+&gt;&gt;&gt; d = idict() &gt;&gt; {&quot;x&quot;: &quot;more content&quot;}
+&gt;&gt;&gt; print(d)
+{
+    &quot;x&quot;: &quot;more content&quot;,
+    &quot;id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;
+    }
+}
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class AbstractLazyDict(UserDict, Dict[str, VT]):
-    rnd: Random
+<pre><code class="python">class iEmpty(FrozenIdentifiedDict):
+    def __init__(self):
+        super().__init__()
 
-    @property
-    @abstractmethod
-    def asdict(self):  # pragma: no cover
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def evaluate(self):  # pragma: no cover
-        raise NotImplementedError</code></pre>
+    def __rshift__(self, other: Union[Dict, Callable, iFunctionSpace], config={}):
+        if callable(other):
+            return iFunctionSpace(other)
+        # if isinstance(other, (iLet, Idict)):
+        #     return other
+        if isinstance(other, dict):
+            from idict.core.idict_ import Idict
+            return Idict(other)
+        return NotImplemented</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
+<li><a title="idict.frozenidentifieddict.FrozenIdentifiedDict" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a></li>
+<li>ldict.core.base.AbstractLazyDict</li>
 <li>collections.UserDict</li>
 <li>collections.abc.MutableMapping</li>
 <li>collections.abc.Mapping</li>
@@ -145,139 +202,24 @@ dict(one=1, two=2)</p></div>
 <li>builtins.dict</li>
 <li>typing.Generic</li>
 </ul>
-<h3>Subclasses</h3>
-<ul class="hlist">
-<li><a title="ldict.core.base.AbstractMutableLazyDict" href="#ldict.core.base.AbstractMutableLazyDict">AbstractMutableLazyDict</a></li>
-<li><a title="ldict.frozenlazydict.FrozenLazyDict" href="../frozenlazydict.html#ldict.frozenlazydict.FrozenLazyDict">FrozenLazyDict</a></li>
-</ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="ldict.core.base.AbstractLazyDict.rnd"><code class="name">var <span class="ident">rnd</span> : random.Random</code></dt>
+<dt id="idict.iempty.iEmpty.hosh"><code class="name">var <span class="ident">hosh</span> : garoupa.hosh.Hosh</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 </dl>
-<h3>Instance variables</h3>
-<dl>
-<dt id="ldict.core.base.AbstractLazyDict.asdict"><code class="name">var <span class="ident">asdict</span></code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-@abstractmethod
-def asdict(self):  # pragma: no cover
-    raise NotImplementedError</code></pre>
-</details>
-</dd>
-<dt id="ldict.core.base.AbstractLazyDict.evaluate"><code class="name">var <span class="ident">evaluate</span></code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-@abstractmethod
-def evaluate(self):  # pragma: no cover
-    raise NotImplementedError</code></pre>
-</details>
-</dd>
-</dl>
-</dd>
-<dt id="ldict.core.base.AbstractMutableLazyDict"><code class="flex name class">
-<span>class <span class="ident">AbstractMutableLazyDict</span></span>
-<span>(</span><span>dict=None, /, **kwargs)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>dict() -&gt; new empty dictionary
-dict(mapping) -&gt; new dictionary initialized from a mapping object's
-(key, value) pairs
-dict(iterable) -&gt; new dictionary initialized as if via:
-d = {}
-for k, v in iterable:
-d[k] = v
-dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
-in the keyword argument list.
-For example:
-dict(one=1, two=2)</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class AbstractMutableLazyDict(AbstractLazyDict, ABC):
-    frozen: AbstractLazyDict
-
-    @property
-    def rnd(self):
-        return self.frozen.rnd
-
-    @property
-    def data(self):
-        return self.frozen.data
-
-    def __getitem__(self, item):
-        return self.frozen[item]
-
-    def __setitem__(self, key: str, value):
-        if not isinstance(key, str):  # pragma: no cover
-            raise WrongKeyType(f&#34;Key must be string, not {type(key)}.&#34;, key)
-        self.frozen &gt;&gt;= {key: value}</code></pre>
-</details>
-<h3>Ancestors</h3>
+<h3>Inherited members</h3>
 <ul class="hlist">
-<li><a title="ldict.core.base.AbstractLazyDict" href="#ldict.core.base.AbstractLazyDict">AbstractLazyDict</a></li>
-<li>collections.UserDict</li>
-<li>collections.abc.MutableMapping</li>
-<li>collections.abc.Mapping</li>
-<li>collections.abc.Collection</li>
-<li>collections.abc.Sized</li>
-<li>collections.abc.Iterable</li>
-<li>collections.abc.Container</li>
-<li>builtins.dict</li>
-<li>typing.Generic</li>
-<li>abc.ABC</li>
-</ul>
-<h3>Subclasses</h3>
+<li><code><b><a title="idict.frozenidentifieddict.FrozenIdentifiedDict" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a></b></code>:
 <ul class="hlist">
-<li><a title="ldict.core.ldict_.Ldict" href="ldict_.html#ldict.core.ldict_.Ldict">Ldict</a></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.all" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.all">all</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.asdict" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.asdict">asdict</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.evaluate" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.evaluate">evaluate</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.show" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.show">show</a></code></li>
 </ul>
-<h3>Class variables</h3>
-<dl>
-<dt id="ldict.core.base.AbstractMutableLazyDict.frozen"><code class="name">var <span class="ident">frozen</span> : <a title="ldict.core.base.AbstractLazyDict" href="#ldict.core.base.AbstractLazyDict">AbstractLazyDict</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
-<h3>Instance variables</h3>
-<dl>
-<dt id="ldict.core.base.AbstractMutableLazyDict.data"><code class="name">var <span class="ident">data</span></code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def data(self):
-    return self.frozen.data</code></pre>
-</details>
-</dd>
-<dt id="ldict.core.base.AbstractMutableLazyDict.rnd"><code class="name">var <span class="ident">rnd</span> : random.Random</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def rnd(self):
-    return self.frozen.rnd</code></pre>
-</details>
-</dd>
-</dl>
+</li>
+</ul>
 </dd>
 </dl>
 </section>
@@ -290,25 +232,15 @@ def rnd(self):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="ldict.core" href="index.html">ldict.core</a></code></li>
+<li><code><a title="idict" href="index.html">idict</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="ldict.core.base.AbstractLazyDict" href="#ldict.core.base.AbstractLazyDict">AbstractLazyDict</a></code></h4>
+<h4><code><a title="idict.iempty.iEmpty" href="#idict.iempty.iEmpty">iEmpty</a></code></h4>
 <ul class="">
-<li><code><a title="ldict.core.base.AbstractLazyDict.asdict" href="#ldict.core.base.AbstractLazyDict.asdict">asdict</a></code></li>
-<li><code><a title="ldict.core.base.AbstractLazyDict.evaluate" href="#ldict.core.base.AbstractLazyDict.evaluate">evaluate</a></code></li>
-<li><code><a title="ldict.core.base.AbstractLazyDict.rnd" href="#ldict.core.base.AbstractLazyDict.rnd">rnd</a></code></li>
-</ul>
-</li>
-<li>
-<h4><code><a title="ldict.core.base.AbstractMutableLazyDict" href="#ldict.core.base.AbstractMutableLazyDict">AbstractMutableLazyDict</a></code></h4>
-<ul class="">
-<li><code><a title="ldict.core.base.AbstractMutableLazyDict.data" href="#ldict.core.base.AbstractMutableLazyDict.data">data</a></code></li>
-<li><code><a title="ldict.core.base.AbstractMutableLazyDict.frozen" href="#ldict.core.base.AbstractMutableLazyDict.frozen">frozen</a></code></li>
-<li><code><a title="ldict.core.base.AbstractMutableLazyDict.rnd" href="#ldict.core.base.AbstractMutableLazyDict.rnd">rnd</a></code></li>
+<li><code><a title="idict.iempty.iEmpty.hosh" href="#idict.iempty.iEmpty.hosh">hosh</a></code></li>
 </ul>
 </li>
 </ul>

@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>idict.frozenidentifieddict API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>idict.frozenidentifieddict</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#  Copyright (c) 2021. Davi Pereira dos Santos
+#  This file is part of the idict project.
+#  Please respect the license - more about this in the section (*) below.
+#
+#  idict is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  idict is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with idict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+#
+#  (*) Removing authorship by any means, e.g. by distribution of derived
+#  works or verbatim, obfuscated, compiled or rewritten versions of any
+#  part of this work is illegal and unethical regarding the effort and
+#  time spent here.
+#
+import operator
+from functools import reduce
+from random import Random
+from typing import Dict, TypeVar, Union, Callable
+
+from garoupa import ø40, Hosh
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.frozenlazydict import FrozenLazyDict
+from ldict.parameter.base.abslet import AbstractLet
+
+from idict.appearance import decolorize, ldict2txt
+from idict.core.identification import key2id, blobs_hashes_hoshes
+from idict.parameter.ifunctionspace import iFunctionSpace
+
+VT = TypeVar(&#34;VT&#34;)
+
+
+class FrozenIdentifiedDict(AbstractLazyDict):
+    &#34;&#34;&#34;Immutable lazy universally identified dict for serializable (picklable) pairs str-&gt;value
+
+    Usage:
+
+    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; print(idict())
+    {
+        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;ids&#34;: {}
+    }
+    &gt;&gt;&gt; d = idict(x=5, y=3)
+    &gt;&gt;&gt; print(d)
+    {
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 3,
+        &#34;id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; d[&#34;y&#34;]
+    3
+    &gt;&gt;&gt; print(idict(x=123123, y=88))
+    {
+        &#34;x&#34;: 123123,
+        &#34;y&#34;: 88,
+        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+        }
+    }
+    &gt;&gt;&gt; print(idict(y=88, x=123123))
+    {
+        &#34;y&#34;: 88,
+        &#34;x&#34;: 123123,
+        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;,
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;
+        }
+    }
+    &gt;&gt;&gt; d = idict(x=123123, y=88)
+    &gt;&gt;&gt; d2 = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
+    &gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&#34;z&#34;] * d2.ids[&#34;x&#34;] * d2.ids[&#34;y&#34;]
+    True
+    &gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&#34;w&#34;: x/y})
+    &gt;&gt;&gt; print(e)
+    {
+        &#34;w&#34;: &#34;→(x y)&#34;,
+        &#34;z&#34;: &#34;→(x)&#34;,
+        &#34;x&#34;: 123123,
+        &#34;y&#34;: 88,
+        &#34;id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;ids&#34;: {
+            &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
+            &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+        }
+    }
+    &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2}) &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y})
+    &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
+    &gt;&gt;&gt; dic = d.asdict  # Converting to dict
+    &gt;&gt;&gt; dic
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
+    &gt;&gt;&gt; print(d2)
+    {
+        &#34;x&#34;: 123123,
+        &#34;y&#34;: 88,
+        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+        }
+    }
+    &gt;&gt;&gt; d == d2
+    True
+    &gt;&gt;&gt; from idict import Ø
+    &gt;&gt;&gt; d = idict() &gt;&gt; {&#34;x&#34;: &#34;more content&#34;}
+    &gt;&gt;&gt; print(d)
+    {
+        &#34;x&#34;: &#34;more content&#34;,
+        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
+        }
+    }
+    &#34;&#34;&#34;
+    hosh: Hosh
+
+    # noinspection PyMissingConstructor
+    def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
+        self.rnd = rnd
+        self.identity = identity
+        data = _dictionary or {}
+        data.update(kwargs)
+
+        # Freeze mutable *dicts.
+        for k, v in data.items():
+            if isinstance(v, AbstractMutableLazyDict):
+                data[k] = v.frozen
+
+        if _cloned:
+            self.blobs = _cloned[&#34;blobs&#34;]
+            self.hashes = _cloned[&#34;hashes&#34;]
+            self.hoshes = _cloned[&#34;hoshes&#34;]
+            self.hosh = _cloned[&#34;hosh&#34;]
+        else:
+            if &#34;id&#34; in data:
+                if id:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;id&#39; values: {id} and {data[&#39;id&#39;]}&#34;)
+                id = data.pop(&#34;id&#34;)
+            if &#34;ids&#34; in data:
+                if ids:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;ids&#39; values: {ids} and {data[&#39;ids&#39;]}&#34;)
+                ids = data.pop(&#34;ids&#34;)
+
+            if id:
+                if ids is None:  # pragma: no cover
+                    raise Exception(f&#34;&#39;id&#39; {id} given, but &#39;ids&#39; is missing.&#34;)
+                self.blobs = {}
+                self.hashes = {}
+                self.hoshes = {k: identity * v for k, v in ids.items()}
+            else:
+                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(data, identity, ids or {}).values()
+            self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
+
+        if id is None:
+            id = self.hosh.id
+            try:
+                ids = {k: v.id for k, v in self.hoshes.items()}
+            except:
+                print(self.hoshes)
+                raise Exception()
+
+        # Store as an immutable lazy dict.
+        self.frozen = FrozenLazyDict(data, id=id, ids=ids, rnd=rnd)
+        self.data = self.frozen.data
+        self.id = self.hosh.id
+
+    def __getitem__(self, item):
+        return self.frozen[item]
+
+    def __setitem__(self, key: str, value):
+        self.frozen[key] = value
+
+    def __delitem__(self, key):
+        del self.frozen[key]
+
+    def __getattr__(self, item):
+        return getattr(self.frozen, item)
+
+    def __repr__(self):
+        return repr(self.frozen)
+
+    __str__ = __repr__
+
+    def evaluate(self):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x+2}
+        &gt;&gt;&gt; d = idict(x=3)
+        &gt;&gt;&gt; a = d &gt;&gt; f
+        &gt;&gt;&gt; print(a)
+        {
+            &#34;y&#34;: &#34;→(x)&#34;,
+            &#34;x&#34;: 3,
+            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;ids&#34;: {
+                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            }
+        }
+        &gt;&gt;&gt; a.evaluate()
+        &gt;&gt;&gt; print(a)
+        {
+            &#34;y&#34;: 5,
+            &#34;x&#34;: 3,
+            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;ids&#34;: {
+                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            }
+        }
+        &#34;&#34;&#34;
+        self.frozen.evaluate()
+
+    @property
+    def asdict(self):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; d = idict(x=3, y=5)
+        &gt;&gt;&gt; d.id
+        &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
+        &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
+        &gt;&gt;&gt; e.asdict
+        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+        &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
+        True
+        &#34;&#34;&#34;
+        return self.frozen.asdic
+
+    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
+        if isinstance(other, Dict):
+            return FrozenIdentifiedDict(other) &gt;&gt; self
+        if callable(other):
+            return iFunctionSpace(other, self)
+        return NotImplemented
+
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+        from idict import iEmpty
+        from idict.core.rshift import application, ihandle_dict
+        if isinstance(other, iEmpty):
+            return self
+        if isinstance(other, Random):
+            return self.clone(rnd=other)
+        if isinstance(other, iFunctionSpace):
+            return reduce(operator.rshift, (self,) + other.functions)
+        if isinstance(other, AbstractLet):
+            return application(self, other, other.f, other.asdict.encode())
+        if callable(other):
+            return application(self, other, other, self.identity)
+        if isinstance(other, Dict):
+            return ihandle_dict(self, other)
+        return NotImplemented
+
+    def clone(self, data=None, rnd=None, _cloned=None):
+        cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
+        return FrozenIdentifiedDict(
+            data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals
+        )
+
+    def __hash__(self):
+        return hash(self.hosh)
+
+    def show(self, colored=True):
+        r&#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
+        {
+            &#34;x&#34;: 134124,
+            &#34;y&#34;: 56,
+            &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+            &#34;ids&#34;: {
+                &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,
+                &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;
+            }
+        }
+        &#34;&#34;&#34;
+        return print(self.all if colored else decolorize(self.all))
+
+    def __repr__(self, all=False):
+        return ldict2txt(self, all)
+
+    @property
+    def all(self):
+        r&#34;&#34;&#34;
+        Usage:
+
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; from idict.appearance import decolorize
+        &gt;&gt;&gt; out = idict(x=134124, y= 56).all
+        &gt;&gt;&gt; decolorize(out)
+        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
+        &#34;&#34;&#34;
+        return self.__repr__(all=True)
+
+    def __ne__(self, other):
+        return not (self == other)
+
+    def __eq__(self, other):
+        if isinstance(other, Dict):
+            if &#34;id&#34; in other:
+                return self.id == other[&#34;id&#34;]
+            if list(self.keys())[:-2] != list(other.keys()):
+                return False
+        from idict.core.idict_ import Idict
+        if isinstance(other, (FrozenIdentifiedDict, Idict)):
+            return self.hosh == other.hosh
+        if isinstance(other, AbstractLazyDict):
+            if self.keys() != other.keys():
+                return False
+            other.evaluate()
+            return self.data == other.data
+        if isinstance(other, Dict):
+            data = self.data.copy()
+            del data[&#34;id&#34;]
+            del data[&#34;ids&#34;]
+            return data == other
+        raise TypeError(f&#34;Cannot compare {type(self)} and {type(other)}&#34;)  # pragma: no cover</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="idict.frozenidentifieddict.FrozenIdentifiedDict"><code class="flex name class">
+<span>class <span class="ident">FrozenIdentifiedDict</span></span>
+<span>(</span><span>id=None, ids=None, rnd=None, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Immutable lazy universally identified dict for serializable (picklable) pairs str-&gt;value</p>
+<p>Usage:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; print(idict())
+{
+    &quot;id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
+    &quot;ids&quot;: {}
+}
+&gt;&gt;&gt; d = idict(x=5, y=3)
+&gt;&gt;&gt; print(d)
+{
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 3,
+    &quot;id&quot;: &quot;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;XB_1cba4912b6826191bcc15ebde8f1b960282cd&quot;
+    }
+}
+&gt;&gt;&gt; d[&quot;y&quot;]
+3
+&gt;&gt;&gt; print(idict(x=123123, y=88))
+{
+    &quot;x&quot;: 123123,
+    &quot;y&quot;: 88,
+    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
+    }
+}
+&gt;&gt;&gt; print(idict(y=88, x=123123))
+{
+    &quot;y&quot;: 88,
+    &quot;x&quot;: 123123,
+    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;ids&quot;: {
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;,
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;
+    }
+}
+&gt;&gt;&gt; d = idict(x=123123, y=88)
+&gt;&gt;&gt; d2 = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
+&gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&quot;z&quot;] * d2.ids[&quot;x&quot;] * d2.ids[&quot;y&quot;]
+True
+&gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&quot;w&quot;: x/y})
+&gt;&gt;&gt; print(e)
+{
+    &quot;w&quot;: &quot;→(x y)&quot;,
+    &quot;z&quot;: &quot;→(x)&quot;,
+    &quot;x&quot;: 123123,
+    &quot;y&quot;: 88,
+    &quot;id&quot;: &quot;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&quot;,
+    &quot;ids&quot;: {
+        &quot;w&quot;: &quot;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&quot;,
+        &quot;z&quot;: &quot;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&quot;,
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
+    }
+}
+&gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2}) &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y})
+&gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y}) &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
+&gt;&gt;&gt; dic = d.asdict  # Converting to dict
+&gt;&gt;&gt; dic
+{'x': 123123, 'y': 88, 'id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', 'ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
+&gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
+&gt;&gt;&gt; print(d2)
+{
+    &quot;x&quot;: 123123,
+    &quot;y&quot;: 88,
+    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
+        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
+    }
+}
+&gt;&gt;&gt; d == d2
+True
+&gt;&gt;&gt; from idict import Ø
+&gt;&gt;&gt; d = idict() &gt;&gt; {&quot;x&quot;: &quot;more content&quot;}
+&gt;&gt;&gt; print(d)
+{
+    &quot;x&quot;: &quot;more content&quot;,
+    &quot;id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;
+    }
+}
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FrozenIdentifiedDict(AbstractLazyDict):
+    &#34;&#34;&#34;Immutable lazy universally identified dict for serializable (picklable) pairs str-&gt;value
+
+    Usage:
+
+    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; print(idict())
+    {
+        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;ids&#34;: {}
+    }
+    &gt;&gt;&gt; d = idict(x=5, y=3)
+    &gt;&gt;&gt; print(d)
+    {
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 3,
+        &#34;id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; d[&#34;y&#34;]
+    3
+    &gt;&gt;&gt; print(idict(x=123123, y=88))
+    {
+        &#34;x&#34;: 123123,
+        &#34;y&#34;: 88,
+        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+        }
+    }
+    &gt;&gt;&gt; print(idict(y=88, x=123123))
+    {
+        &#34;y&#34;: 88,
+        &#34;x&#34;: 123123,
+        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;,
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;
+        }
+    }
+    &gt;&gt;&gt; d = idict(x=123123, y=88)
+    &gt;&gt;&gt; d2 = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
+    &gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&#34;z&#34;] * d2.ids[&#34;x&#34;] * d2.ids[&#34;y&#34;]
+    True
+    &gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&#34;w&#34;: x/y})
+    &gt;&gt;&gt; print(e)
+    {
+        &#34;w&#34;: &#34;→(x y)&#34;,
+        &#34;z&#34;: &#34;→(x)&#34;,
+        &#34;x&#34;: 123123,
+        &#34;y&#34;: 88,
+        &#34;id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;ids&#34;: {
+            &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
+            &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+        }
+    }
+    &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2}) &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y})
+    &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
+    &gt;&gt;&gt; dic = d.asdict  # Converting to dict
+    &gt;&gt;&gt; dic
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
+    &gt;&gt;&gt; print(d2)
+    {
+        &#34;x&#34;: 123123,
+        &#34;y&#34;: 88,
+        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
+            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+        }
+    }
+    &gt;&gt;&gt; d == d2
+    True
+    &gt;&gt;&gt; from idict import Ø
+    &gt;&gt;&gt; d = idict() &gt;&gt; {&#34;x&#34;: &#34;more content&#34;}
+    &gt;&gt;&gt; print(d)
+    {
+        &#34;x&#34;: &#34;more content&#34;,
+        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
+        }
+    }
+    &#34;&#34;&#34;
+    hosh: Hosh
+
+    # noinspection PyMissingConstructor
+    def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
+        self.rnd = rnd
+        self.identity = identity
+        data = _dictionary or {}
+        data.update(kwargs)
+
+        # Freeze mutable *dicts.
+        for k, v in data.items():
+            if isinstance(v, AbstractMutableLazyDict):
+                data[k] = v.frozen
+
+        if _cloned:
+            self.blobs = _cloned[&#34;blobs&#34;]
+            self.hashes = _cloned[&#34;hashes&#34;]
+            self.hoshes = _cloned[&#34;hoshes&#34;]
+            self.hosh = _cloned[&#34;hosh&#34;]
+        else:
+            if &#34;id&#34; in data:
+                if id:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;id&#39; values: {id} and {data[&#39;id&#39;]}&#34;)
+                id = data.pop(&#34;id&#34;)
+            if &#34;ids&#34; in data:
+                if ids:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;ids&#39; values: {ids} and {data[&#39;ids&#39;]}&#34;)
+                ids = data.pop(&#34;ids&#34;)
+
+            if id:
+                if ids is None:  # pragma: no cover
+                    raise Exception(f&#34;&#39;id&#39; {id} given, but &#39;ids&#39; is missing.&#34;)
+                self.blobs = {}
+                self.hashes = {}
+                self.hoshes = {k: identity * v for k, v in ids.items()}
+            else:
+                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(data, identity, ids or {}).values()
+            self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
+
+        if id is None:
+            id = self.hosh.id
+            try:
+                ids = {k: v.id for k, v in self.hoshes.items()}
+            except:
+                print(self.hoshes)
+                raise Exception()
+
+        # Store as an immutable lazy dict.
+        self.frozen = FrozenLazyDict(data, id=id, ids=ids, rnd=rnd)
+        self.data = self.frozen.data
+        self.id = self.hosh.id
+
+    def __getitem__(self, item):
+        return self.frozen[item]
+
+    def __setitem__(self, key: str, value):
+        self.frozen[key] = value
+
+    def __delitem__(self, key):
+        del self.frozen[key]
+
+    def __getattr__(self, item):
+        return getattr(self.frozen, item)
+
+    def __repr__(self):
+        return repr(self.frozen)
+
+    __str__ = __repr__
+
+    def evaluate(self):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x+2}
+        &gt;&gt;&gt; d = idict(x=3)
+        &gt;&gt;&gt; a = d &gt;&gt; f
+        &gt;&gt;&gt; print(a)
+        {
+            &#34;y&#34;: &#34;→(x)&#34;,
+            &#34;x&#34;: 3,
+            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;ids&#34;: {
+                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            }
+        }
+        &gt;&gt;&gt; a.evaluate()
+        &gt;&gt;&gt; print(a)
+        {
+            &#34;y&#34;: 5,
+            &#34;x&#34;: 3,
+            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;ids&#34;: {
+                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            }
+        }
+        &#34;&#34;&#34;
+        self.frozen.evaluate()
+
+    @property
+    def asdict(self):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; d = idict(x=3, y=5)
+        &gt;&gt;&gt; d.id
+        &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
+        &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
+        &gt;&gt;&gt; e.asdict
+        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+        &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
+        True
+        &#34;&#34;&#34;
+        return self.frozen.asdic
+
+    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
+        if isinstance(other, Dict):
+            return FrozenIdentifiedDict(other) &gt;&gt; self
+        if callable(other):
+            return iFunctionSpace(other, self)
+        return NotImplemented
+
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+        from idict import iEmpty
+        from idict.core.rshift import application, ihandle_dict
+        if isinstance(other, iEmpty):
+            return self
+        if isinstance(other, Random):
+            return self.clone(rnd=other)
+        if isinstance(other, iFunctionSpace):
+            return reduce(operator.rshift, (self,) + other.functions)
+        if isinstance(other, AbstractLet):
+            return application(self, other, other.f, other.asdict.encode())
+        if callable(other):
+            return application(self, other, other, self.identity)
+        if isinstance(other, Dict):
+            return ihandle_dict(self, other)
+        return NotImplemented
+
+    def clone(self, data=None, rnd=None, _cloned=None):
+        cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
+        return FrozenIdentifiedDict(
+            data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals
+        )
+
+    def __hash__(self):
+        return hash(self.hosh)
+
+    def show(self, colored=True):
+        r&#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
+        {
+            &#34;x&#34;: 134124,
+            &#34;y&#34;: 56,
+            &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+            &#34;ids&#34;: {
+                &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,
+                &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;
+            }
+        }
+        &#34;&#34;&#34;
+        return print(self.all if colored else decolorize(self.all))
+
+    def __repr__(self, all=False):
+        return ldict2txt(self, all)
+
+    @property
+    def all(self):
+        r&#34;&#34;&#34;
+        Usage:
+
+        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        &gt;&gt;&gt; from idict.appearance import decolorize
+        &gt;&gt;&gt; out = idict(x=134124, y= 56).all
+        &gt;&gt;&gt; decolorize(out)
+        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
+        &#34;&#34;&#34;
+        return self.__repr__(all=True)
+
+    def __ne__(self, other):
+        return not (self == other)
+
+    def __eq__(self, other):
+        if isinstance(other, Dict):
+            if &#34;id&#34; in other:
+                return self.id == other[&#34;id&#34;]
+            if list(self.keys())[:-2] != list(other.keys()):
+                return False
+        from idict.core.idict_ import Idict
+        if isinstance(other, (FrozenIdentifiedDict, Idict)):
+            return self.hosh == other.hosh
+        if isinstance(other, AbstractLazyDict):
+            if self.keys() != other.keys():
+                return False
+            other.evaluate()
+            return self.data == other.data
+        if isinstance(other, Dict):
+            data = self.data.copy()
+            del data[&#34;id&#34;]
+            del data[&#34;ids&#34;]
+            return data == other
+        raise TypeError(f&#34;Cannot compare {type(self)} and {type(other)}&#34;)  # pragma: no cover</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ldict.core.base.AbstractLazyDict</li>
+<li>collections.UserDict</li>
+<li>collections.abc.MutableMapping</li>
+<li>collections.abc.Mapping</li>
+<li>collections.abc.Collection</li>
+<li>collections.abc.Sized</li>
+<li>collections.abc.Iterable</li>
+<li>collections.abc.Container</li>
+<li>builtins.dict</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="idict.iempty.iEmpty" href="iempty.html#idict.iempty.iEmpty">iEmpty</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="idict.frozenidentifieddict.FrozenIdentifiedDict.hosh"><code class="name">var <span class="ident">hosh</span> : garoupa.hosh.Hosh</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="idict.frozenidentifieddict.FrozenIdentifiedDict.all"><code class="name">var <span class="ident">all</span></code></dt>
+<dd>
+<div class="desc"><p>Usage:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; from idict.appearance import decolorize
+&gt;&gt;&gt; out = idict(x=134124, y= 56).all
+&gt;&gt;&gt; decolorize(out)
+'{\n    &quot;x&quot;: 134124,\n    &quot;y&quot;: 56,\n    &quot;id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,\n    &quot;ids&quot;: {\n        &quot;x&quot;: &quot;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&quot;,\n        &quot;y&quot;: &quot;Zs_c473399e77e6c2d2f69914891a488a3732bb0&quot;\n    }\n}'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def all(self):
+    r&#34;&#34;&#34;
+    Usage:
+
+    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from idict.appearance import decolorize
+    &gt;&gt;&gt; out = idict(x=134124, y= 56).all
+    &gt;&gt;&gt; decolorize(out)
+    &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
+    &#34;&#34;&#34;
+    return self.__repr__(all=True)</code></pre>
+</details>
+</dd>
+<dt id="idict.frozenidentifieddict.FrozenIdentifiedDict.asdict"><code class="name">var <span class="ident">asdict</span></code></dt>
+<dd>
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; d = idict(x=3, y=5)
+&gt;&gt;&gt; d.id
+'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35'
+&gt;&gt;&gt; e = idict(x=7, y=8, d=d)
+&gt;&gt;&gt; e.asdict
+{'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5, 'id': 'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35', 'ids': {'x': 'WB_e55a47230d67db81bcc1aecde8f1b950282cd', 'y': '0U_e2a86ff72e226d5365aea336044f7b4270977'}}, 'id': 'AN_650bae25143e28c5489bfbc806f5fb55c6fdc', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': '8s_1ccd1655bae1d9e91270e5eddc31351eb8b35'}}
+&gt;&gt;&gt; d.hosh ** key2id(&quot;d&quot;, d.identity.digits) == e.hoshes[&quot;d&quot;]
+True
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def asdict(self):
+    &#34;&#34;&#34;
+    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; d = idict(x=3, y=5)
+    &gt;&gt;&gt; d.id
+    &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
+    &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
+    &gt;&gt;&gt; e.asdict
+    {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+    &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
+    True
+    &#34;&#34;&#34;
+    return self.frozen.asdic</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="idict.frozenidentifieddict.FrozenIdentifiedDict.clone"><code class="name flex">
+<span>def <span class="ident">clone</span></span>(<span>self, data=None, rnd=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clone(self, data=None, rnd=None, _cloned=None):
+    cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
+    return FrozenIdentifiedDict(
+        data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals
+    )</code></pre>
+</details>
+</dd>
+<dt id="idict.frozenidentifieddict.FrozenIdentifiedDict.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; f = lambda x: {&quot;y&quot;: x+2}
+&gt;&gt;&gt; d = idict(x=3)
+&gt;&gt;&gt; a = d &gt;&gt; f
+&gt;&gt;&gt; print(a)
+{
+    &quot;y&quot;: &quot;→(x)&quot;,
+    &quot;x&quot;: 3,
+    &quot;id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
+    &quot;ids&quot;: {
+        &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
+        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+    }
+}
+&gt;&gt;&gt; a.evaluate()
+&gt;&gt;&gt; print(a)
+{
+    &quot;y&quot;: 5,
+    &quot;x&quot;: 3,
+    &quot;id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
+    &quot;ids&quot;: {
+        &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
+        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+    }
+}
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self):
+    &#34;&#34;&#34;
+    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x+2}
+    &gt;&gt;&gt; d = idict(x=3)
+    &gt;&gt;&gt; a = d &gt;&gt; f
+    &gt;&gt;&gt; print(a)
+    {
+        &#34;y&#34;: &#34;→(x)&#34;,
+        &#34;x&#34;: 3,
+        &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; a.evaluate()
+    &gt;&gt;&gt; print(a)
+    {
+        &#34;y&#34;: 5,
+        &#34;x&#34;: 3,
+        &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &#34;&#34;&#34;
+    self.frozen.evaluate()</code></pre>
+</details>
+</dd>
+<dt id="idict.frozenidentifieddict.FrozenIdentifiedDict.show"><code class="name flex">
+<span>def <span class="ident">show</span></span>(<span>self, colored=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
+{
+    &quot;x&quot;: 134124,
+    &quot;y&quot;: 56,
+    &quot;id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&quot;,
+        &quot;y&quot;: &quot;Zs_c473399e77e6c2d2f69914891a488a3732bb0&quot;
+    }
+}
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def show(self, colored=True):
+    r&#34;&#34;&#34;
+    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
+    {
+        &#34;x&#34;: 134124,
+        &#34;y&#34;: 56,
+        &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,
+            &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;
+        }
+    }
+    &#34;&#34;&#34;
+    return print(self.all if colored else decolorize(self.all))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="idict" href="index.html">idict</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict" href="#idict.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a></code></h4>
+<ul class="two-column">
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.all" href="#idict.frozenidentifieddict.FrozenIdentifiedDict.all">all</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.asdict" href="#idict.frozenidentifieddict.FrozenIdentifiedDict.asdict">asdict</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.clone" href="#idict.frozenidentifieddict.FrozenIdentifiedDict.clone">clone</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.evaluate" href="#idict.frozenidentifieddict.FrozenIdentifiedDict.evaluate">evaluate</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.hosh" href="#idict.frozenidentifieddict.FrozenIdentifiedDict.hosh">hosh</a></code></li>
+<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.show" href="#idict.frozenidentifieddict.FrozenIdentifiedDict.show">show</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

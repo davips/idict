@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>ldict.parameter.functionspace API documentation</title>
+<title>idict.parameter.ifunctionspace API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>ldict.parameter.functionspace</code></h1>
+<h1 class="title">Module <code>idict.parameter.ifunctionspace</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -27,67 +27,94 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">#  Copyright (c) 2021. Davi Pereira dos Santos
-#  This file is part of the ldict project.
+#  This file is part of the idict project.
 #  Please respect the license - more about this in the section (*) below.
 #
-#  ldict is free software: you can redistribute it and/or modify
+#  idict is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
-#  ldict is distributed in the hope that it will be useful,
+#  idict is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with ldict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+#  along with idict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 #
 #  (*) Removing authorship by any means, e.g. by distribution of derived
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-
 from ldict.parameter.base.absfunctionspace import AbstractFunctionSpace
 
 
-class FunctionSpace(AbstractFunctionSpace):
-    &#34;&#34;&#34;Aglutination for future application
+class iFunctionSpace(AbstractFunctionSpace):
+    &#34;&#34;&#34;Aglutination of steps for future application
 
-    &gt;&gt;&gt; from ldict import ldict, empty
-    &gt;&gt;&gt; empty &gt;&gt; FunctionSpace()
-    {}
-    &gt;&gt;&gt; fs = FunctionSpace() &gt;&gt; empty
+    &gt;&gt;&gt; from idict import idict, empty
+    &gt;&gt;&gt; print(empty &gt;&gt; iFunctionSpace())
+    {
+        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;ids&#34;: {}
+    }
+    &gt;&gt;&gt; fs = iFunctionSpace() &gt;&gt; empty
     &gt;&gt;&gt; fs &gt;&gt;= {&#34;x&#34;: 5}
     &gt;&gt;&gt; fs
     «{
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     }»
-    &gt;&gt;&gt; ldict(y=7) &gt;&gt; fs
+    &gt;&gt;&gt; print(idict(y=7) &gt;&gt; fs)
     {
         &#34;y&#34;: 7,
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     }
-    &gt;&gt;&gt; fs &gt;&gt;= ldict(y=7)
+    &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
     &gt;&gt;&gt; fs
     «{
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     } × {
-        &#34;y&#34;: 7
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
     }»
     &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&#34;z&#34;: x*y}
     &gt;&gt;&gt; fs
     «{
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     } × {
-        &#34;y&#34;: 7
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
     } × λ»
     &#34;&#34;&#34;
 
     def __init__(self, *args):
-        from ldict.empty import Empty
-        from ldict.core.ldict_ import Ldict
-        super().__init__(args, dict_type=Ldict, empty_type=Empty)</code></pre>
+        from idict.iempty import iEmpty
+        from idict.core.idict_ import Idict
+        super().__init__(args, dict_type=Idict, empty_type=iEmpty)</code></pre>
 </details>
 </section>
 <section>
@@ -99,86 +126,142 @@ class FunctionSpace(AbstractFunctionSpace):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="ldict.parameter.functionspace.FunctionSpace"><code class="flex name class">
-<span>class <span class="ident">FunctionSpace</span></span>
+<dt id="idict.parameter.ifunctionspace.iFunctionSpace"><code class="flex name class">
+<span>class <span class="ident">iFunctionSpace</span></span>
 <span>(</span><span>*args)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Aglutination for future application</p>
-<pre><code class="language-python-repl">&gt;&gt;&gt; from ldict import ldict, empty
-&gt;&gt;&gt; empty &gt;&gt; FunctionSpace()
-{}
-&gt;&gt;&gt; fs = FunctionSpace() &gt;&gt; empty
+<div class="desc"><p>Aglutination of steps for future application</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, empty
+&gt;&gt;&gt; print(empty &gt;&gt; iFunctionSpace())
+{
+    &quot;id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
+    &quot;ids&quot;: {}
+}
+&gt;&gt;&gt; fs = iFunctionSpace() &gt;&gt; empty
 &gt;&gt;&gt; fs &gt;&gt;= {&quot;x&quot;: 5}
 &gt;&gt;&gt; fs
 «{
-    &quot;x&quot;: 5
+    &quot;x&quot;: 5,
+    &quot;id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
 }»
-&gt;&gt;&gt; ldict(y=7) &gt;&gt; fs
+&gt;&gt;&gt; print(idict(y=7) &gt;&gt; fs)
 {
     &quot;y&quot;: 7,
-    &quot;x&quot;: 5
+    &quot;x&quot;: 5,
+    &quot;id&quot;: &quot;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&quot;,
+    &quot;ids&quot;: {
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
 }
-&gt;&gt;&gt; fs &gt;&gt;= ldict(y=7)
+&gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
 &gt;&gt;&gt; fs
 «{
-    &quot;x&quot;: 5
+    &quot;x&quot;: 5,
+    &quot;id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
 } × {
-    &quot;y&quot;: 7
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
+    &quot;ids&quot;: {
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
 }»
 &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&quot;z&quot;: x*y}
 &gt;&gt;&gt; fs
 «{
-    &quot;x&quot;: 5
+    &quot;x&quot;: 5,
+    &quot;id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+    &quot;ids&quot;: {
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
 } × {
-    &quot;y&quot;: 7
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
+    &quot;ids&quot;: {
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
 } × λ»
 </code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class FunctionSpace(AbstractFunctionSpace):
-    &#34;&#34;&#34;Aglutination for future application
+<pre><code class="python">class iFunctionSpace(AbstractFunctionSpace):
+    &#34;&#34;&#34;Aglutination of steps for future application
 
-    &gt;&gt;&gt; from ldict import ldict, empty
-    &gt;&gt;&gt; empty &gt;&gt; FunctionSpace()
-    {}
-    &gt;&gt;&gt; fs = FunctionSpace() &gt;&gt; empty
+    &gt;&gt;&gt; from idict import idict, empty
+    &gt;&gt;&gt; print(empty &gt;&gt; iFunctionSpace())
+    {
+        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;ids&#34;: {}
+    }
+    &gt;&gt;&gt; fs = iFunctionSpace() &gt;&gt; empty
     &gt;&gt;&gt; fs &gt;&gt;= {&#34;x&#34;: 5}
     &gt;&gt;&gt; fs
     «{
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     }»
-    &gt;&gt;&gt; ldict(y=7) &gt;&gt; fs
+    &gt;&gt;&gt; print(idict(y=7) &gt;&gt; fs)
     {
         &#34;y&#34;: 7,
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     }
-    &gt;&gt;&gt; fs &gt;&gt;= ldict(y=7)
+    &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
     &gt;&gt;&gt; fs
     «{
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     } × {
-        &#34;y&#34;: 7
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
     }»
     &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&#34;z&#34;: x*y}
     &gt;&gt;&gt; fs
     «{
-        &#34;x&#34;: 5
+        &#34;x&#34;: 5,
+        &#34;id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;ids&#34;: {
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
     } × {
-        &#34;y&#34;: 7
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+        &#34;ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
     } × λ»
     &#34;&#34;&#34;
 
     def __init__(self, *args):
-        from ldict.empty import Empty
-        from ldict.core.ldict_ import Ldict
-        super().__init__(args, dict_type=Ldict, empty_type=Empty)</code></pre>
+        from idict.iempty import iEmpty
+        from idict.core.idict_ import Idict
+        super().__init__(args, dict_type=Idict, empty_type=iEmpty)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="ldict.parameter.base.absfunctionspace.AbstractFunctionSpace" href="base/absfunctionspace.html#ldict.parameter.base.absfunctionspace.AbstractFunctionSpace">AbstractFunctionSpace</a></li>
+<li>ldict.parameter.base.absfunctionspace.AbstractFunctionSpace</li>
 </ul>
 </dd>
 </dl>
@@ -192,13 +275,13 @@ class FunctionSpace(AbstractFunctionSpace):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="ldict.parameter" href="index.html">ldict.parameter</a></code></li>
+<li><code><a title="idict.parameter" href="index.html">idict.parameter</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="ldict.parameter.functionspace.FunctionSpace" href="#ldict.parameter.functionspace.FunctionSpace">FunctionSpace</a></code></h4>
+<h4><code><a title="idict.parameter.ifunctionspace.iFunctionSpace" href="#idict.parameter.ifunctionspace.iFunctionSpace">iFunctionSpace</a></code></h4>
 </li>
 </ul>
 </li>
