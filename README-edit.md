@@ -107,15 +107,19 @@ It is a mapping between string keys, called
 fields, and any serializable (pickable) object.
 Each `idict` has two extra entries: `id` (identifier) and `ids` (value identifiers).
 
-The user can provide a 40-digit unique identifier (see [GaROUPa](https://pypi.org/project/garoupa))
-for each function or value object. 
-Otherwise, they will be calculated through blake3 hashing of the content of data or
-bytecode of function. 
-For this reason, such functions should be simple, i.e., with minimal external dependencies, to
-avoid the unfortunate situation where two functions with identical local code actually perform different calculations
-through calls to external code that implement different algorithms with the same name.
+A custom 40-digit unique identifier (see [GaROUPa](https://pypi.org/project/garoupa))
+can be provided as an attribute for each function.
+Value objects can have custom identifiers as well, if provided whithin the entry `ids`. 
+
+Otherwise, identifiers for functions and values will be calculated through blake3 hashing of their content.
+For functions, the bytecode is used as content. 
+For this reason, such functions should be simple, with minimal external dependencies or
+with their import statements inside the function body.
+This decreases the odds of using two functions with identical local code (and, therefore, identical identifiers) 
+performing different calculations.
 
 ## Grants
+
 This work was supported by Fapesp under supervision of
 Prof. André C. P. L. F. de Carvalho at CEPID-CeMEAI (Grants 2013/07375-0 – 2019/01735-0)
 until 2021-03-31.

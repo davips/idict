@@ -28,8 +28,9 @@ from typing import Dict, TypeVar, Union, Callable
 from garoupa import ø40
 from ldict.core.base import AbstractMutableLazyDict
 from ldict.exception import WrongKeyType
-from ldict.parameter.functionspace import FunctionSpace
-from ldict.parameter.let import Let
+from ldict.parameter.base.abslet import AbstractLet
+
+from idict.parameter.ifunctionspace import iFunctionSpace
 
 VT = TypeVar("VT")
 
@@ -194,7 +195,8 @@ class Idict(AbstractMutableLazyDict):
         if not isinstance(key, str):
             raise WrongKeyType(f"Key must be string, not {type(key)}.", key)
         data, blobs, hashes, hoshes = self.data.copy(), self.blobs.copy(), self.hashes.copy(), self.hoshes.copy()
-        for coll in [data, blobs, hashes, hoshes]:
+        del data[key]
+        for coll in [blobs, hashes, hoshes]:
             if key in coll:
                 del coll[key]
         hosh = reduce(operator.mul, [self.identity] + list(hoshes.values()))
@@ -259,21 +261,41 @@ class Idict(AbstractMutableLazyDict):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return Idict(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def __rrshift__(self, other: Union[Dict, Callable, FunctionSpace]):
+    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
+        """
+        >>> print({"x": 5} >> Idict(y=2))
+        {
+            "x": 5,
+            "y": 2,
+            "id": "o8_4c07d34b8963338a275e43bfcac9c37f125cc",
+            "ids": {
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+                "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"
+            }
+        }
+        >>> print((lambda x: {"y": 5*x}) >> Idict(y=2))
+        «λ × {
+            "y": 2,
+            "id": "pg_7d1eecc7838558a4c1bf9584d68a487791c45",
+            "ids": {
+                "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"
+            }
+        }»
+        """
         if isinstance(other, Dict):
             return Idict(other) >> self
         if callable(other):
-            return FunctionSpace(other, self)
-        return NotImplemented
+            return iFunctionSpace(other, self)
+        return NotImplemented  # pragma: no cover
 
-    def __rshift__(self, other: Union[Dict, 'Idict', Callable, Let, FunctionSpace, Random]):
+    def __rshift__(self, other: Union[Dict, 'Idict', Callable, AbstractLet, iFunctionSpace, Random]):
         """
         >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
         >>> d.ids
         {'y': 'zJmLy1B8VQU8.Kji0iqU0zIrDWpWqcXxhrGWdepm', 'x': 'og_0f0d4c16437fb2a4c1bff594d68a486791c45'}
         """
-        from idict import Empty
-        if isinstance(other, Empty):
+        from idict import iEmpty
+        if isinstance(other, iEmpty):
             return self
         clone = Idict(identity=self.identity)
         clone.frozen = self.frozen >> other
@@ -282,7 +304,7 @@ class Idict(AbstractMutableLazyDict):
         #     return self.clone(handle_dict(self.frozen.data, other, other.rnd), rnd=other.rnd)
         # if isinstance(other, Dict):
         #     return self.clone(handle_dict(self.frozen.data, other, self.rnd))
-        # if isinstance(other, FunctionSpace):
+        # if isinstance(other, iFunctionSpace):
         #     return reduce(operator.rshift, (self,) + other.functions)
         # if callable(other) or isinstance(other, Let):
         #     return NotImplemented

@@ -22,17 +22,17 @@
 from typing import Callable, Dict, Union
 
 from idict.frozenidentifieddict import FrozenIdentifiedDict
-from ldict.parameter.functionspace import FunctionSpace
+from idict.parameter.ifunctionspace import iFunctionSpace
 
 
-class Empty(FrozenIdentifiedDict):
+class iEmpty(FrozenIdentifiedDict):
     def __init__(self):
         super().__init__()
 
-    def __rshift__(self, other: Union[Dict, Callable, FunctionSpace], config={}):
+    def __rshift__(self, other: Union[Dict, Callable, iFunctionSpace], config={}):
         if callable(other):
-            return FunctionSpace(other)
-        # if isinstance(other, (Let, Idict)):
+            return iFunctionSpace(other)
+        # if isinstance(other, (iLet, Idict)):
         #     return other
         if isinstance(other, dict):
             from idict.core.idict_ import Idict

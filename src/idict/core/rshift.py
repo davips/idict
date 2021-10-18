@@ -31,15 +31,36 @@ from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
 from idict.frozenidentifieddict import FrozenIdentifiedDict
 
 
-def application(self: FrozenIdentifiedDict, other, f, f_hosh, output=None):
-    f_hosh *= fhosh(f, self.identity.version)  # d' = d * ħ(config) * f
+def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
+    """
+    >>> from idict import let
+    >>> from garoupa import ø
+    >>> d = FrozenIdentifiedDict(x=3)
+    >>> f = lambda x: {"y": x**2}
+    >>> f.id = "ffffffffffffffffffffffffffffffffffffffff"
+    >>> d2 = application(d, f, f, ø)
+    >>> d2.show(colored=False)
+    {
+        "y": "→(x)",
+        "x": 3,
+        "id": "hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff",
+        "ids": {
+            "y": "WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff",
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+        }
+    }
+    >>> d2.hosh / f.id == d.id
+    True
+    """
+    f_hosh = f.id if hasattr(f,"id") else fhosh(f, self.identity.version)
+    f_hosh_full = config_hosh * f_hosh  # d' = d * ħ(config) * f
     if output:
         frozen = self.frozen >> {output: other}
         outputs = [output]
     else:
         frozen = self.frozen >> other
         outputs = frozen.returned
-    uf = self.hosh * f_hosh
+    uf = self.hosh * f_hosh_full
     ufu_1 = lambda: solve(self.hoshes, outputs, uf)
 
     # Reorder items.
@@ -148,19 +169,19 @@ def ihandle_dict(self, dictlike):
     from ldict.core.base import AbstractLazyDict
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
     for k, v in dictlike.items():
-        if k in ["id", "ids"]:  # pragma: no cover
-            raise Exception(f"{k} is a reserved key and cannot be used to name a field.")
         if v is None:
             clone = delete(clone, k)
-        else:
+        elif k not in ["id", "ids"]:
             if isinstance(v, Let):
                 clone = application(clone, v, v.f, v.asdict.encode(), k)
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)
             else:
                 internals = blobs_hashes_hoshes({k: v}, self.identity, {})
-                clone.blobs[k] = internals["blobs"][k]
-                clone.hashes[k] = internals["hashes"][k]
+                if k in internals["blobs"]:
+                    clone.blobs[k] = internals["blobs"][k]
+                if k in internals["hashes"]:
+                    clone.hashes[k] = internals["hashes"][k]
                 clone.hoshes[k] = internals["hoshes"][k]
                 internals["blobs"], internals["hashes"], internals["hoshes"] = clone.blobs, clone.hashes, clone.hoshes
                 hosh = reduce(operator.mul, [self.identity] + list(self.hoshes.values()))

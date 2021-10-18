@@ -22,9 +22,9 @@
 from unittest import TestCase
 
 import pytest
-
-from ldict import ldict, empty
 from ldict.exception import DependenceException, NoInputException, WrongKeyType, ReadOnlyLdict
+
+from idict import empty, idict
 
 
 class TestLdict(TestCase):
@@ -34,7 +34,9 @@ class TestLdict(TestCase):
         self.assertEqual(a, b)
         self.assertFalse(a == {"a": 3})
         self.assertNotEqual(a, {"a": 3})
-        d = {'x': 1, 'y': 2}
+        d = {'id': 'Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4',
+             'ids': {'x': 'tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f',
+                     'y': 'pg_7d1eecc7838558a4c1bf9584d68a487791c45'}, 'x': 1, 'y': 2}
         self.assertEqual(a.asdict, d)
 
     def test_illdefined_function(self):
@@ -44,7 +46,7 @@ class TestLdict(TestCase):
             empty >> {"x": 5} >> (lambda: {"x": 5})
 
     def test_setitem_value(self):
-        d = ldict()
+        d = idict()
         d["x"] = 3
         d["y"] = 4
         d["z"] = 5
@@ -52,57 +54,82 @@ class TestLdict(TestCase):
             """{
     "x": 3,
     "y": 4,
-    "z": 5
+    "z": 5,
+    "id": "Pd_7f559308b2f3bf28c9dfd54cf6ba43b636504",
+    "ids": {
+        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+        "y": "SL_6e8b071c1bc6504ea76f407e1a791e887d9ce",
+        "z": "1U_fdd682399a475d5365aeb336044f7b4270977"
+    }
 }""",
             str(d),
         )
 
     def test_setitem_function(self):
-        d = ldict()
+        d = idict()
         d["x"] = 3
         d["y"] = 5
         d >>= lambda x, y: {"z": x * y}
 
         self.assertEqual(
             """{
+    "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "z": "→(x y)"
+    "id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
+    "ids": {
+        "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
+        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
+    }
 }""",
             str(d),
         )
         self.assertEqual(d.z, 15)
 
     def test_setitem_overwrite_value(self):
-        d = ldict()
+        d = idict()
         d["x"] = 3
         d["y"] = 5
         d >>= lambda x, y: {"z": x * y}
         d.evaluate()
-        self.assertEqual(d, {"x": 3, "y": 5, "z": 15})
+        de = {'id': 'dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg',
+              'ids': {'x': 'WB_e55a47230d67db81bcc1aecde8f1b950282cd',
+                      'y': '0U_e2a86ff72e226d5365aea336044f7b4270977',
+                      'z': 'm3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg'},
+              'x': 3,
+              'y': 5,
+              'z': 15}
+        self.assertEqual(d, de)
 
         # Overwrite same value.
         d["y"] = 5
-        self.assertEqual(d, {"x": 3, "y": 5, "z": 15})
+        self.assertEqual(d, de)
 
         # Repeate same overwrite.
         d["y"] = 5
-        self.assertEqual(d, {"x": 3, "y": 5, "z": 15})
+        self.assertEqual(d, de)
 
         # Overwrite other value.
         d["y"] = 6
-        self.assertNotEqual(d, {"x": 3, "y": 5, "z": 15})
+        self.assertNotEqual(d, de)
 
     def test_rshift(self):
-        d = ldict()
+        d = idict()
         d["x"] = 3
         d["y"] = 5
         d >>= lambda x, y: {"z": x * y}
         self.assertEqual(
             """{
+    "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "z": "→(x y)"
+    "id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
+    "ids": {
+        "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
+        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
+    }
 }""",
             str(d),
         )
@@ -111,16 +138,16 @@ class TestLdict(TestCase):
         #     d >>= {"z": 5}
 
     def test_overwrite(self):
-        a = ldict(x=3)
+        a = idict(x=3)
         self.assertEqual(a, a >> {"x": 3})  # overwrite
         a >>= {"y": 4}
-        b = ldict(y=4, x=3)
+        b = idict(y=4, x=3)
         self.assertEqual(a, b)  # new value
         self.assertEqual(a, a >> {"x": 3})  # should differ for idict/cdict
         # with pytest.raises(OverwriteException):
 
     def test_setitem_overwrite_function(self):
-        d = ldict()
+        d = idict()
         d["x"] = 1
         d["y"] = 2
         d["z"] = 3
@@ -129,7 +156,13 @@ class TestLdict(TestCase):
         old = d
         d >>= lambda x, y, z: {"z": x + y * z}  # 7
         self.assertNotEqual(old, d)
-        self.assertEqual(d, {"x": 1, "y": 2, "z": 7})
+        self.assertEqual(d, {'id': 'NU4YLiIschNCZX9.tuBycZ6n4BOCresH0ccu3pl7',
+                             'ids': {'x': 'tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f',
+                                     'y': 'pg_7d1eecc7838558a4c1bf9584d68a487791c45',
+                                     'z': '2CwHWARvJhPEk2cDYuPicC7tfnLCresH0ccu3pl7'},
+                             'x': 1,
+                             'y': 2,
+                             'z': 7})
 
         # Reapply same function.
         old = d
@@ -140,7 +173,13 @@ class TestLdict(TestCase):
         old = d
         d >>= lambda x, y, z: {"z": x + y * z}  # 31
         self.assertNotEqual(old, d)
-        self.assertEqual(d, {"x": 1, "y": 2, "z": 31})
+        self.assertEqual(d, {'id': 'q-F.7ZpdwiDTmX16eHsfJRN7DIJdmHk22sAqab0m',
+                             'ids': {'x': 'tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f',
+                                     'y': 'pg_7d1eecc7838558a4c1bf9584d68a487791c45',
+                                     'z': 'SwpdBZEt4A2Po04KIHG.IuOdOuGdmHk22sAqab0m'},
+                             'x': 1,
+                             'y': 2,
+                             'z': 31})
 
         def f(x):
             return {"z": x + 2}

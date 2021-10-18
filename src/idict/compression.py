@@ -72,7 +72,7 @@ def pack(obj):
             GLOBAL["compression_cachesize"] -= len(v)
 
         return blob
-    except KeyError as e:
+    except KeyError as e:  # pragma: no cover
         if str(e) == "'__getstate__'":
             raise Exception("Unpickable value:", type(obj))
         else:

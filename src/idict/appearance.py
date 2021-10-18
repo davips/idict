@@ -76,12 +76,12 @@ def ldict2txt(d, all):
 
 
 def ldict2dict(d, all):
-    from ldict.core.ldict_ import Ldict
+    from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
     for k, v in d.data.items():
         if isinstance(v, LazyVal):
             dic[k] = str(v)
-        elif isinstance(v, Ldict):
+        elif isinstance(v, AbstractLazyDict):
             dic[k] = ldict2dict(v, all)
         if not all:
             if len(d.ids) < 3:

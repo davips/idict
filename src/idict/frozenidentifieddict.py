@@ -28,11 +28,11 @@ from typing import Dict, TypeVar, Union, Callable
 from garoupa import ø40, Hosh
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.frozenlazydict import FrozenLazyDict
-from ldict.parameter.functionspace import FunctionSpace
-from ldict.parameter.let import Let
+from ldict.parameter.base.abslet import AbstractLet
 
 from idict.appearance import decolorize, ldict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
+from idict.parameter.ifunctionspace import iFunctionSpace
 
 VT = TypeVar("VT")
 
@@ -243,23 +243,23 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         return self.frozen.asdic
 
-    def __rrshift__(self, other: Union[Dict, Callable, FunctionSpace]):
+    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
         if isinstance(other, Dict):
             return FrozenIdentifiedDict(other) >> self
         if callable(other):
-            return FunctionSpace(other, self)
+            return iFunctionSpace(other, self)
         return NotImplemented
 
-    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, Let, FunctionSpace, Random]):
-        from idict import Empty
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+        from idict import iEmpty
         from idict.core.rshift import application, ihandle_dict
-        if isinstance(other, Empty):
+        if isinstance(other, iEmpty):
             return self
         if isinstance(other, Random):
             return self.clone(rnd=other)
-        if isinstance(other, FunctionSpace):
+        if isinstance(other, iFunctionSpace):
             return reduce(operator.rshift, (self,) + other.functions)
-        if isinstance(other, Let):
+        if isinstance(other, AbstractLet):
             return application(self, other, other.f, other.asdict.encode())
         if callable(other):
             return application(self, other, other, self.identity)

@@ -19,16 +19,16 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from ldict.parameter.let import Let
+from .parameter.ilet import iLet
 
 from .config import setup
 from .core.idict_ import Idict as idict
-from .empty import Empty
+from .iempty import iEmpty
 
-empty = Empty()
+empty = iEmpty()
 """The empty object is used to induce a ldict from a dict"""
 
 Ø = empty
 """UTF-8 alias for the empty object, it is used to induce a ldict from a dict. AltGr+Shift+o in most keyboards."""
 
-let = Let
+let = iLet
