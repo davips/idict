@@ -65,5 +65,4 @@ echo "------------------- pushed ----------------------"
 echo; echo
 
 echo "------------------- publish ----------------------"
-read -p "press enter"
 poetry publish --build
