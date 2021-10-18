@@ -47,8 +47,7 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-
-from ldict.parameter.base import AbstractLet
+from ldict.parameter.base.abslet import AbstractLet
 from ldict.parameter.functionspace import FunctionSpace
 
 
@@ -126,11 +125,20 @@ class Let(AbstractLet):
     }
     &gt;&gt;&gt; d.z
     23
+    &gt;&gt;&gt; d &gt;&gt;= Random(0) &gt;&gt; let(f, a=[1,2,3]) &gt;&gt; let(f, a=[9,8,7])
+    &gt;&gt;&gt; d
+    {
+        &#34;x&#34;: 3,
+        &#34;y&#34;: 8,
+        &#34;z&#34;: &#34;→(a x y)&#34;
+    }
+    &gt;&gt;&gt; d.z
+    32
     &#34;&#34;&#34;
 
     def __init__(self, f, **kwargs):
         from ldict.core.ldict_ import Ldict
-        super().__init__(f, dict_type=Ldict, **kwargs)</code></pre>
+        super().__init__(f, kwargs, dict_type=Ldict, fs_type=FunctionSpace)</code></pre>
 </details>
 </section>
 <section>
@@ -218,6 +226,15 @@ class Let(AbstractLet):
 }
 &gt;&gt;&gt; d.z
 23
+&gt;&gt;&gt; d &gt;&gt;= Random(0) &gt;&gt; let(f, a=[1,2,3]) &gt;&gt; let(f, a=[9,8,7])
+&gt;&gt;&gt; d
+{
+    &quot;x&quot;: 3,
+    &quot;y&quot;: 8,
+    &quot;z&quot;: &quot;→(a x y)&quot;
+}
+&gt;&gt;&gt; d.z
+32
 </code></pre></div>
 <details class="source">
 <summary>
@@ -297,15 +314,24 @@ class Let(AbstractLet):
     }
     &gt;&gt;&gt; d.z
     23
+    &gt;&gt;&gt; d &gt;&gt;= Random(0) &gt;&gt; let(f, a=[1,2,3]) &gt;&gt; let(f, a=[9,8,7])
+    &gt;&gt;&gt; d
+    {
+        &#34;x&#34;: 3,
+        &#34;y&#34;: 8,
+        &#34;z&#34;: &#34;→(a x y)&#34;
+    }
+    &gt;&gt;&gt; d.z
+    32
     &#34;&#34;&#34;
 
     def __init__(self, f, **kwargs):
         from ldict.core.ldict_ import Ldict
-        super().__init__(f, dict_type=Ldict, **kwargs)</code></pre>
+        super().__init__(f, kwargs, dict_type=Ldict, fs_type=FunctionSpace)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="ldict.parameter.base.AbstractLet" href="base.html#ldict.parameter.base.AbstractLet">AbstractLet</a></li>
+<li><a title="ldict.parameter.base.abslet.AbstractLet" href="base/abslet.html#ldict.parameter.base.abslet.AbstractLet">AbstractLet</a></li>
 </ul>
 </dd>
 </dl>
