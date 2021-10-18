@@ -302,7 +302,7 @@ print(d2)
 """
 {
     "z": 175,
-    "w": "→(a b ap gp x y)",
+    "w": "10.541350399999995",
     "y": 1.4,
     "x": 5,
     "id": "sKzmHJm6wbwwLKYCewWyeMBQ8dAItpDRQXLcK1wt",
@@ -704,7 +704,7 @@ def h(z, c=[1, 2, 3]):
 fun = Ø >> g >> h  # 'empty' or 'Ø' enable the cartesian product of the subsequent sets of functions within the expression.
 print(fun)
 """
-«<function g at 0x7fd7852bad30> × <function h at 0x7fd78527a5e0>»
+«<function g at 0x7f193a229dc0> × <function h at 0x7f193a237af0>»
 """
 ```
 
