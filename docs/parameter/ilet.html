@@ -27,29 +27,32 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">#  Copyright (c) 2021. Davi Pereira dos Santos
-#  This file is part of the ldict project.
+#  This file is part of the idict project.
 #  Please respect the license - more about this in the section (*) below.
 #
-#  ldict is free software: you can redistribute it and/or modify
+#  idict is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
-#  ldict is distributed in the hope that it will be useful,
+#  idict is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with ldict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+#  along with idict.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 #
 #  (*) Removing authorship by any means, e.g. by distribution of derived
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from ldict.parameter.base.abslet import AbstractLet
+from random import Random
 
-from idict.parameter.ifunctionspace import iFunctionSpace
+from ldict.parameter.abslet import AbstractLet
+from ldict.parameter.functionspace import FunctionSpace
+
+from idict.core.idict_ import Idict
 
 
 class iLet(AbstractLet):
@@ -62,7 +65,7 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; f_a
     λ{&#39;a&#39;: 0}
     &gt;&gt;&gt; d = idict(x=5,y=7)
-    &gt;&gt;&gt; d2 = d &gt;&gt; f_a
+     &gt;&gt;&gt; d2 = d &gt;&gt; f_a
     &gt;&gt;&gt; print(d2)
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
@@ -116,15 +119,7 @@ class iLet(AbstractLet):
         }
     }
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; {&#34;x&#34;: 5, &#34;y&#34;: 7}
-    «λ{&#39;a&#39;: 5} × {
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&#34;,
-        &#34;ids&#34;: {
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }»
+    «λ{&#39;a&#39;: 5} × {&#39;x&#39;: 5, &#39;y&#39;: 7}»
     &gt;&gt;&gt; print(idict({&#34;x&#34;: 5, &#34;y&#34;: 7}) &gt;&gt; let(f, a=5))
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
@@ -150,13 +145,13 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; from random import Random
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; [&#34;mycache&#34;]
     «λ{&#39;a&#39;: 5} × ^»
-    &gt;&gt;&gt; from idict.parameter.ifunctionspace import iFunctionSpace
-    &gt;&gt;&gt; let(f, a=5) &gt;&gt; iFunctionSpace()
-    «λ{&#39;a&#39;: 5}»
-    &gt;&gt;&gt; iFunctionSpace() &gt;&gt; let(f, a=5)
+    &gt;&gt;&gt; from ldict.parameter.functionspace import FunctionSpace
+    &gt;&gt;&gt; let(f, a=5) &gt;&gt; FunctionSpace()
+    λ{&#39;a&#39;: 5}
+    &gt;&gt;&gt; FunctionSpace() &gt;&gt; let(f, a=5)
     «λ{&#39;a&#39;: 5}»
     &gt;&gt;&gt; (lambda x: {&#34;z&#34;: x*8}) &gt;&gt; let(f, a=5)
-    «λ × λ{&#39;a&#39;: 5}»
+    «λ{} × λ{&#39;a&#39;: 5}»
     &gt;&gt;&gt; d = {&#34;x&#34;:3, &#34;y&#34;: 8} &gt;&gt; let(f, a=5)
     &gt;&gt;&gt; print(d)
     {
@@ -189,9 +184,9 @@ class iLet(AbstractLet):
     32
     &#34;&#34;&#34;
 
+
     def __init__(self, f, **kwargs):
-        from idict.core.idict_ import Idict
-        super().__init__(f, kwargs, dict_type=Idict, fs_type=iFunctionSpace)</code></pre>
+        super().__init__(f, Idict, **kwargs)</code></pre>
 </details>
 </section>
 <section>
@@ -215,7 +210,7 @@ class iLet(AbstractLet):
 &gt;&gt;&gt; f_a
 λ{'a': 0}
 &gt;&gt;&gt; d = idict(x=5,y=7)
-&gt;&gt;&gt; d2 = d &gt;&gt; f_a
+ &gt;&gt;&gt; d2 = d &gt;&gt; f_a
 &gt;&gt;&gt; print(d2)
 {
     &quot;z&quot;: &quot;→(a x y)&quot;,
@@ -269,15 +264,7 @@ class iLet(AbstractLet):
     }
 }
 &gt;&gt;&gt; let(f, a=5) &gt;&gt; {&quot;x&quot;: 5, &quot;y&quot;: 7}
-«λ{'a': 5} × {
-    &quot;x&quot;: 5,
-    &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&quot;,
-    &quot;ids&quot;: {
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
-    }
-}»
+«λ{'a': 5} × {'x': 5, 'y': 7}»
 &gt;&gt;&gt; print(idict({&quot;x&quot;: 5, &quot;y&quot;: 7}) &gt;&gt; let(f, a=5))
 {
     &quot;z&quot;: &quot;→(a x y)&quot;,
@@ -303,13 +290,13 @@ class iLet(AbstractLet):
 &gt;&gt;&gt; from random import Random
 &gt;&gt;&gt; let(f, a=5) &gt;&gt; [&quot;mycache&quot;]
 «λ{'a': 5} × ^»
-&gt;&gt;&gt; from idict.parameter.ifunctionspace import iFunctionSpace
-&gt;&gt;&gt; let(f, a=5) &gt;&gt; iFunctionSpace()
-«λ{'a': 5}»
-&gt;&gt;&gt; iFunctionSpace() &gt;&gt; let(f, a=5)
+&gt;&gt;&gt; from ldict.parameter.functionspace import FunctionSpace
+&gt;&gt;&gt; let(f, a=5) &gt;&gt; FunctionSpace()
+λ{'a': 5}
+&gt;&gt;&gt; FunctionSpace() &gt;&gt; let(f, a=5)
 «λ{'a': 5}»
 &gt;&gt;&gt; (lambda x: {&quot;z&quot;: x*8}) &gt;&gt; let(f, a=5)
-«λ × λ{'a': 5}»
+«λ{} × λ{'a': 5}»
 &gt;&gt;&gt; d = {&quot;x&quot;:3, &quot;y&quot;: 8} &gt;&gt; let(f, a=5)
 &gt;&gt;&gt; print(d)
 {
@@ -355,7 +342,7 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; f_a
     λ{&#39;a&#39;: 0}
     &gt;&gt;&gt; d = idict(x=5,y=7)
-    &gt;&gt;&gt; d2 = d &gt;&gt; f_a
+     &gt;&gt;&gt; d2 = d &gt;&gt; f_a
     &gt;&gt;&gt; print(d2)
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
@@ -409,15 +396,7 @@ class iLet(AbstractLet):
         }
     }
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; {&#34;x&#34;: 5, &#34;y&#34;: 7}
-    «λ{&#39;a&#39;: 5} × {
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&#34;,
-        &#34;ids&#34;: {
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }»
+    «λ{&#39;a&#39;: 5} × {&#39;x&#39;: 5, &#39;y&#39;: 7}»
     &gt;&gt;&gt; print(idict({&#34;x&#34;: 5, &#34;y&#34;: 7}) &gt;&gt; let(f, a=5))
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
@@ -443,13 +422,13 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; from random import Random
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; [&#34;mycache&#34;]
     «λ{&#39;a&#39;: 5} × ^»
-    &gt;&gt;&gt; from idict.parameter.ifunctionspace import iFunctionSpace
-    &gt;&gt;&gt; let(f, a=5) &gt;&gt; iFunctionSpace()
-    «λ{&#39;a&#39;: 5}»
-    &gt;&gt;&gt; iFunctionSpace() &gt;&gt; let(f, a=5)
+    &gt;&gt;&gt; from ldict.parameter.functionspace import FunctionSpace
+    &gt;&gt;&gt; let(f, a=5) &gt;&gt; FunctionSpace()
+    λ{&#39;a&#39;: 5}
+    &gt;&gt;&gt; FunctionSpace() &gt;&gt; let(f, a=5)
     «λ{&#39;a&#39;: 5}»
     &gt;&gt;&gt; (lambda x: {&#34;z&#34;: x*8}) &gt;&gt; let(f, a=5)
-    «λ × λ{&#39;a&#39;: 5}»
+    «λ{} × λ{&#39;a&#39;: 5}»
     &gt;&gt;&gt; d = {&#34;x&#34;:3, &#34;y&#34;: 8} &gt;&gt; let(f, a=5)
     &gt;&gt;&gt; print(d)
     {
@@ -482,13 +461,13 @@ class iLet(AbstractLet):
     32
     &#34;&#34;&#34;
 
+
     def __init__(self, f, **kwargs):
-        from idict.core.idict_ import Idict
-        super().__init__(f, kwargs, dict_type=Idict, fs_type=iFunctionSpace)</code></pre>
+        super().__init__(f, Idict, **kwargs)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li>ldict.parameter.base.abslet.AbstractLet</li>
+<li>ldict.parameter.abslet.AbstractLet</li>
 </ul>
 </dd>
 </dl>

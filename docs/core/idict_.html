@@ -54,11 +54,10 @@ from random import Random
 from typing import Dict, TypeVar, Union, Callable
 
 from garoupa import ø40
-from ldict.core.base import AbstractMutableLazyDict
+from ldict import FunctionSpace
+from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
-from ldict.parameter.base.abslet import AbstractLet
-
-from idict.parameter.ifunctionspace import iFunctionSpace
+from ldict.parameter.abslet import AbstractLet
 
 VT = TypeVar(&#34;VT&#34;)
 
@@ -287,9 +286,9 @@ class Idict(AbstractMutableLazyDict):
 
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
-        return Idict(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
+        return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
+    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; print({&#34;x&#34;: 5} &gt;&gt; Idict(y=2))
         {
@@ -310,32 +309,19 @@ class Idict(AbstractMutableLazyDict):
             }
         }»
         &#34;&#34;&#34;
-        if isinstance(other, Dict):
-            return Idict(other) &gt;&gt; self
-        if callable(other):
-            return iFunctionSpace(other, self)
-        return NotImplemented  # pragma: no cover
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = left &gt;&gt; self.frozen
+        return clone
 
-    def __rshift__(self, other: Union[Dict, &#39;Idict&#39;, Callable, AbstractLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; d = Idict(x=2) &gt;&gt; (lambda x: {&#34;y&#34;: 2 * x})
         &gt;&gt;&gt; d.ids
         {&#39;y&#39;: &#39;zJmLy1B8VQU8.Kji0iqU0zIrDWpWqcXxhrGWdepm&#39;, &#39;x&#39;: &#39;og_0f0d4c16437fb2a4c1bff594d68a486791c45&#39;}
         &#34;&#34;&#34;
-        from idict import iEmpty
-        if isinstance(other, iEmpty):
-            return self
-        clone = Idict(identity=self.identity)
+        clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen &gt;&gt; other
         return clone
-        # if isinstance(other, AbstractLazyDict):
-        #     return self.clone(handle_dict(self.frozen.data, other, other.rnd), rnd=other.rnd)
-        # if isinstance(other, Dict):
-        #     return self.clone(handle_dict(self.frozen.data, other, self.rnd))
-        # if isinstance(other, iFunctionSpace):
-        #     return reduce(operator.rshift, (self,) + other.functions)
-        # if callable(other) or isinstance(other, Let):
-        #     return NotImplemented
 
     def __ne__(self, other):
         &#34;&#34;&#34;
@@ -734,9 +720,9 @@ True
 
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
-        return Idict(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
+        return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
+    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; print({&#34;x&#34;: 5} &gt;&gt; Idict(y=2))
         {
@@ -757,32 +743,19 @@ True
             }
         }»
         &#34;&#34;&#34;
-        if isinstance(other, Dict):
-            return Idict(other) &gt;&gt; self
-        if callable(other):
-            return iFunctionSpace(other, self)
-        return NotImplemented  # pragma: no cover
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = left &gt;&gt; self.frozen
+        return clone
 
-    def __rshift__(self, other: Union[Dict, &#39;Idict&#39;, Callable, AbstractLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; d = Idict(x=2) &gt;&gt; (lambda x: {&#34;y&#34;: 2 * x})
         &gt;&gt;&gt; d.ids
         {&#39;y&#39;: &#39;zJmLy1B8VQU8.Kji0iqU0zIrDWpWqcXxhrGWdepm&#39;, &#39;x&#39;: &#39;og_0f0d4c16437fb2a4c1bff594d68a486791c45&#39;}
         &#34;&#34;&#34;
-        from idict import iEmpty
-        if isinstance(other, iEmpty):
-            return self
-        clone = Idict(identity=self.identity)
+        clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen &gt;&gt; other
         return clone
-        # if isinstance(other, AbstractLazyDict):
-        #     return self.clone(handle_dict(self.frozen.data, other, other.rnd), rnd=other.rnd)
-        # if isinstance(other, Dict):
-        #     return self.clone(handle_dict(self.frozen.data, other, self.rnd))
-        # if isinstance(other, iFunctionSpace):
-        #     return reduce(operator.rshift, (self,) + other.functions)
-        # if callable(other) or isinstance(other, Let):
-        #     return NotImplemented
 
     def __ne__(self, other):
         &#34;&#34;&#34;
@@ -928,7 +901,7 @@ def hoshes(self):
 </summary>
 <pre><code class="python">def clone(self, data=None, rnd=None, _cloned=None):
     cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
-    return Idict(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)</code></pre>
+    return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)</code></pre>
 </details>
 </dd>
 <dt id="idict.core.idict_.Idict.evaluate"><code class="name flex">

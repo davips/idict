@@ -201,61 +201,6 @@ class Idict(AbstractMutableLazyDict):
         hosh = reduce(operator.mul, [self.identity] + list(hoshes.values()))
         self.frozen = self.frozen.clone(data, _cloned=dict(blobs=blobs, hashes=hashes, hoshes=hoshes, hosh=hosh))
 
-    def __getattr__(self, item):
-        return self.frozen[item]
-
-    def __repr__(self):
-        return repr(self.frozen)
-
-    def __str__(self):
-        return str(self.frozen)
-
-    def evaluate(self):
-        """
-        >>> from idict import idict
-        >>> f = lambda x: {"y": x+2}
-        >>> d = idict(x=3)
-        >>> a = d >> f
-        >>> print(a)
-        {
-            "y": "→(x)",
-            "x": 3,
-            "id": "tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe",
-            "ids": {
-                "y": "BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe",
-                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
-            }
-        }
-        >>> a.evaluate()
-        >>> print(a)
-        {
-            "y": 5,
-            "x": 3,
-            "id": "tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe",
-            "ids": {
-                "y": "BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe",
-                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
-            }
-        }
-        """
-        self.frozen.evaluate()
-
-    @property
-    def asdict(self):
-        """
-        >>> from idict import idict
-        >>> d = idict(x=7, y=8)
-        >>> e = idict(x=7, y=8, d=d)
-        >>> e.asdict
-        {'x': 7, 'y': 8, 'd': {'x': 7, 'y': 8, 'id': 'sl_e71f88df59515edb262b26ea29b4c6470e3a7', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde'}}, 'id': '5F_a0d66f8882d3b43a5c4676da42798d242c74f', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': 'Fj_7dc836b829c2eb5e262b00ef19b4c6fc1e3a7'}}
-        >>> from idict.core.identification import key2id
-        >>> d.hosh == e.hoshes["d"]
-        False
-        >>> d.hosh == e.hoshes["d"] // key2id("d", e.hosh.digits)
-        True
-        """
-        return self.frozen.asdict
-
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
@@ -294,27 +239,6 @@ class Idict(AbstractMutableLazyDict):
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen >> other
         return clone
-
-    def __ne__(self, other):
-        """
-        >>> from idict.frozenidentifieddict import FrozenIdentifiedDict
-        >>> {"x": 5} == Idict({"x": 5})
-        True
-        >>> {"w": 5} == Idict({"x": 5})
-        False
-        >>> {"x": 4} == Idict({"x": 5})
-        False
-        >>> {"x": 5} == FrozenIdentifiedDict({"x": 5})
-        True
-        >>> {"w": 5} == FrozenIdentifiedDict({"x": 5})
-        False
-        >>> {"x": 4} == FrozenIdentifiedDict({"x": 5})
-        False
-        """
-        return not (self == other)
-
-    def __eq__(self, other):
-        return self.frozen == other
 
     def show(self, colored=True):
         self.frozen.show(colored)

@@ -156,6 +156,5 @@ class iLet(AbstractLet):
     32
     """
 
-
     def __init__(self, f, **kwargs):
         super().__init__(f, Idict, **kwargs)

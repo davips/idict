@@ -310,9 +310,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         return self.__repr__(all=True)
 
-    def __ne__(self, other):
-        return not (self == other)
-
     def __eq__(self, other):
         if isinstance(other, Dict):
             if "id" in other:
