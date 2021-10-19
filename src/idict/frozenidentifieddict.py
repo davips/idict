@@ -243,32 +243,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         return self.frozen.asdic
 
-    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
-        if isinstance(left, Random):
-            return self.clone(rnd=left)
-        if isinstance(left, Dict) and not isinstance(left, AbstractLazyDict):
-            return FrozenIdentifiedDict(left) >> self
-        if callable(left):
-            return FunctionSpace(left, self)
-        return NotImplemented
-
-    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
-        from idict import iEmpty
-        from idict.core.rshift import application, ihandle_dict
-        if isinstance(other, iEmpty):
-            return self
-        if isinstance(other, Random):
-            return self.clone(rnd=other)
-        if isinstance(other, FunctionSpace):
-            return reduce(operator.rshift, (self,) + other.functions)
-        if isinstance(other, AbstractLet):
-            return application(self, other, other.f, other.asdict.encode())
-        if callable(other):
-            return application(self, other, other, self.identity)
-        if isinstance(other, Dict):
-            return ihandle_dict(self, other)
-        return NotImplemented
-
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return FrozenIdentifiedDict(
@@ -330,3 +304,53 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             del data["ids"]
             return data == other
         raise TypeError(f"Cannot compare {type(self)} and {type(other)}")  # pragma: no cover
+
+    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
+        if isinstance(left, Random):
+            return self.clone(rnd=left)
+        if isinstance(left, Dict) and not isinstance(left, AbstractLazyDict):
+            return FrozenIdentifiedDict(left) >> self
+        if callable(left):
+            return FunctionSpace(left, self)
+        return NotImplemented
+
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
+        from idict import iEmpty
+        from idict.core.rshift import application, ihandle_dict
+        if isinstance(other, iEmpty):
+            return self
+        if isinstance(other, Random):
+            return self.clone(rnd=other)
+        if isinstance(other, FunctionSpace):
+            return reduce(operator.rshift, (self,) + other.functions)
+        if isinstance(other, AbstractLet):
+            return application(self, other, other.f, other.asdict.encode())
+        if callable(other):
+            return application(self, other, other, self.identity)
+        if isinstance(other, Dict):
+            return ihandle_dict(self, other)
+        return NotImplemented
+
+
+
+
+
+
+
+
+        if isinstance(other, list):
+            d = self
+            for cache in other:
+                d = cached(d, cache)
+            return d
+        return NotImplemented
+
+    def __rxor__(self, other: Union[Dict, Callable]):
+        if isinstance(other, Dict) and not isinstance(other, Ldict):
+            return Ldict(other) >= self
+        return NotImplemented
+    def __xor__(self, other: Union[Dict, Callable]):
+        # from ldict import Empty
+        # if isinstance(other, FunctionSpace) and isinstance(other[0], Empty):
+        #     raise EmptyNextToGlobalCache("Cannot use ø after ^ due to Python precedence rules.")
+        return cached(self, GLOBAL["cache"]) >> other
