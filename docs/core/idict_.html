@@ -229,61 +229,6 @@ class Idict(AbstractMutableLazyDict):
         hosh = reduce(operator.mul, [self.identity] + list(hoshes.values()))
         self.frozen = self.frozen.clone(data, _cloned=dict(blobs=blobs, hashes=hashes, hoshes=hoshes, hosh=hosh))
 
-    def __getattr__(self, item):
-        return self.frozen[item]
-
-    def __repr__(self):
-        return repr(self.frozen)
-
-    def __str__(self):
-        return str(self.frozen)
-
-    def evaluate(self):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict import idict
-        &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x+2}
-        &gt;&gt;&gt; d = idict(x=3)
-        &gt;&gt;&gt; a = d &gt;&gt; f
-        &gt;&gt;&gt; print(a)
-        {
-            &#34;y&#34;: &#34;→(x)&#34;,
-            &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
-            }
-        }
-        &gt;&gt;&gt; a.evaluate()
-        &gt;&gt;&gt; print(a)
-        {
-            &#34;y&#34;: 5,
-            &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
-            }
-        }
-        &#34;&#34;&#34;
-        self.frozen.evaluate()
-
-    @property
-    def asdict(self):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict import idict
-        &gt;&gt;&gt; d = idict(x=7, y=8)
-        &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
-        &gt;&gt;&gt; e.asdict
-        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;id&#39;: &#39;sl_e71f88df59515edb262b26ea29b4c6470e3a7&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;}}, &#39;id&#39;: &#39;5F_a0d66f8882d3b43a5c4676da42798d242c74f&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;Fj_7dc836b829c2eb5e262b00ef19b4c6fc1e3a7&#39;}}
-        &gt;&gt;&gt; from idict.core.identification import key2id
-        &gt;&gt;&gt; d.hosh == e.hoshes[&#34;d&#34;]
-        False
-        &gt;&gt;&gt; d.hosh == e.hoshes[&#34;d&#34;] // key2id(&#34;d&#34;, e.hosh.digits)
-        True
-        &#34;&#34;&#34;
-        return self.frozen.asdict
-
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
@@ -322,27 +267,6 @@ class Idict(AbstractMutableLazyDict):
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen &gt;&gt; other
         return clone
-
-    def __ne__(self, other):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict
-        &gt;&gt;&gt; {&#34;x&#34;: 5} == Idict({&#34;x&#34;: 5})
-        True
-        &gt;&gt;&gt; {&#34;w&#34;: 5} == Idict({&#34;x&#34;: 5})
-        False
-        &gt;&gt;&gt; {&#34;x&#34;: 4} == Idict({&#34;x&#34;: 5})
-        False
-        &gt;&gt;&gt; {&#34;x&#34;: 5} == FrozenIdentifiedDict({&#34;x&#34;: 5})
-        True
-        &gt;&gt;&gt; {&#34;w&#34;: 5} == FrozenIdentifiedDict({&#34;x&#34;: 5})
-        False
-        &gt;&gt;&gt; {&#34;x&#34;: 4} == FrozenIdentifiedDict({&#34;x&#34;: 5})
-        False
-        &#34;&#34;&#34;
-        return not (self == other)
-
-    def __eq__(self, other):
-        return self.frozen == other
 
     def show(self, colored=True):
         self.frozen.show(colored)</code></pre>
@@ -663,61 +587,6 @@ True
         hosh = reduce(operator.mul, [self.identity] + list(hoshes.values()))
         self.frozen = self.frozen.clone(data, _cloned=dict(blobs=blobs, hashes=hashes, hoshes=hoshes, hosh=hosh))
 
-    def __getattr__(self, item):
-        return self.frozen[item]
-
-    def __repr__(self):
-        return repr(self.frozen)
-
-    def __str__(self):
-        return str(self.frozen)
-
-    def evaluate(self):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict import idict
-        &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x+2}
-        &gt;&gt;&gt; d = idict(x=3)
-        &gt;&gt;&gt; a = d &gt;&gt; f
-        &gt;&gt;&gt; print(a)
-        {
-            &#34;y&#34;: &#34;→(x)&#34;,
-            &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
-            }
-        }
-        &gt;&gt;&gt; a.evaluate()
-        &gt;&gt;&gt; print(a)
-        {
-            &#34;y&#34;: 5,
-            &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
-            }
-        }
-        &#34;&#34;&#34;
-        self.frozen.evaluate()
-
-    @property
-    def asdict(self):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict import idict
-        &gt;&gt;&gt; d = idict(x=7, y=8)
-        &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
-        &gt;&gt;&gt; e.asdict
-        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;id&#39;: &#39;sl_e71f88df59515edb262b26ea29b4c6470e3a7&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;}}, &#39;id&#39;: &#39;5F_a0d66f8882d3b43a5c4676da42798d242c74f&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;Fj_7dc836b829c2eb5e262b00ef19b4c6fc1e3a7&#39;}}
-        &gt;&gt;&gt; from idict.core.identification import key2id
-        &gt;&gt;&gt; d.hosh == e.hoshes[&#34;d&#34;]
-        False
-        &gt;&gt;&gt; d.hosh == e.hoshes[&#34;d&#34;] // key2id(&#34;d&#34;, e.hosh.digits)
-        True
-        &#34;&#34;&#34;
-        return self.frozen.asdict
-
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
@@ -757,27 +626,6 @@ True
         clone.frozen = self.frozen &gt;&gt; other
         return clone
 
-    def __ne__(self, other):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict
-        &gt;&gt;&gt; {&#34;x&#34;: 5} == Idict({&#34;x&#34;: 5})
-        True
-        &gt;&gt;&gt; {&#34;w&#34;: 5} == Idict({&#34;x&#34;: 5})
-        False
-        &gt;&gt;&gt; {&#34;x&#34;: 4} == Idict({&#34;x&#34;: 5})
-        False
-        &gt;&gt;&gt; {&#34;x&#34;: 5} == FrozenIdentifiedDict({&#34;x&#34;: 5})
-        True
-        &gt;&gt;&gt; {&#34;w&#34;: 5} == FrozenIdentifiedDict({&#34;x&#34;: 5})
-        False
-        &gt;&gt;&gt; {&#34;x&#34;: 4} == FrozenIdentifiedDict({&#34;x&#34;: 5})
-        False
-        &#34;&#34;&#34;
-        return not (self == other)
-
-    def __eq__(self, other):
-        return self.frozen == other
-
     def show(self, colored=True):
         self.frozen.show(colored)</code></pre>
 </details>
@@ -805,40 +653,6 @@ True
 </dl>
 <h3>Instance variables</h3>
 <dl>
-<dt id="idict.core.idict_.Idict.asdict"><code class="name">var <span class="ident">asdict</span></code></dt>
-<dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
-&gt;&gt;&gt; d = idict(x=7, y=8)
-&gt;&gt;&gt; e = idict(x=7, y=8, d=d)
-&gt;&gt;&gt; e.asdict
-{'x': 7, 'y': 8, 'd': {'x': 7, 'y': 8, 'id': 'sl_e71f88df59515edb262b26ea29b4c6470e3a7', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde'}}, 'id': '5F_a0d66f8882d3b43a5c4676da42798d242c74f', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': 'Fj_7dc836b829c2eb5e262b00ef19b4c6fc1e3a7'}}
-&gt;&gt;&gt; from idict.core.identification import key2id
-&gt;&gt;&gt; d.hosh == e.hoshes[&quot;d&quot;]
-False
-&gt;&gt;&gt; d.hosh == e.hoshes[&quot;d&quot;] // key2id(&quot;d&quot;, e.hosh.digits)
-True
-</code></pre></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def asdict(self):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import idict
-    &gt;&gt;&gt; d = idict(x=7, y=8)
-    &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
-    &gt;&gt;&gt; e.asdict
-    {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;id&#39;: &#39;sl_e71f88df59515edb262b26ea29b4c6470e3a7&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;}}, &#39;id&#39;: &#39;5F_a0d66f8882d3b43a5c4676da42798d242c74f&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;Fj_7dc836b829c2eb5e262b00ef19b4c6fc1e3a7&#39;}}
-    &gt;&gt;&gt; from idict.core.identification import key2id
-    &gt;&gt;&gt; d.hosh == e.hoshes[&#34;d&#34;]
-    False
-    &gt;&gt;&gt; d.hosh == e.hoshes[&#34;d&#34;] // key2id(&#34;d&#34;, e.hosh.digits)
-    True
-    &#34;&#34;&#34;
-    return self.frozen.asdict</code></pre>
-</details>
-</dd>
 <dt id="idict.core.idict_.Idict.blobs"><code class="name">var <span class="ident">blobs</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -904,71 +718,6 @@ def hoshes(self):
     return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)</code></pre>
 </details>
 </dd>
-<dt id="idict.core.idict_.Idict.evaluate"><code class="name flex">
-<span>def <span class="ident">evaluate</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
-&gt;&gt;&gt; f = lambda x: {&quot;y&quot;: x+2}
-&gt;&gt;&gt; d = idict(x=3)
-&gt;&gt;&gt; a = d &gt;&gt; f
-&gt;&gt;&gt; print(a)
-{
-    &quot;y&quot;: &quot;→(x)&quot;,
-    &quot;x&quot;: 3,
-    &quot;id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
-    &quot;ids&quot;: {
-        &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
-        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
-    }
-}
-&gt;&gt;&gt; a.evaluate()
-&gt;&gt;&gt; print(a)
-{
-    &quot;y&quot;: 5,
-    &quot;x&quot;: 3,
-    &quot;id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
-    &quot;ids&quot;: {
-        &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
-        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
-    }
-}
-</code></pre></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def evaluate(self):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import idict
-    &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x+2}
-    &gt;&gt;&gt; d = idict(x=3)
-    &gt;&gt;&gt; a = d &gt;&gt; f
-    &gt;&gt;&gt; print(a)
-    {
-        &#34;y&#34;: &#34;→(x)&#34;,
-        &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-        &#34;ids&#34;: {
-            &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
-        }
-    }
-    &gt;&gt;&gt; a.evaluate()
-    &gt;&gt;&gt; print(a)
-    {
-        &#34;y&#34;: 5,
-        &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-        &#34;ids&#34;: {
-            &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
-        }
-    }
-    &#34;&#34;&#34;
-    self.frozen.evaluate()</code></pre>
-</details>
-</dd>
 <dt id="idict.core.idict_.Idict.show"><code class="name flex">
 <span>def <span class="ident">show</span></span>(<span>self, colored=True)</span>
 </code></dt>
@@ -1003,10 +752,8 @@ def hoshes(self):
 <li>
 <h4><code><a title="idict.core.idict_.Idict" href="#idict.core.idict_.Idict">Idict</a></code></h4>
 <ul class="two-column">
-<li><code><a title="idict.core.idict_.Idict.asdict" href="#idict.core.idict_.Idict.asdict">asdict</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.blobs" href="#idict.core.idict_.Idict.blobs">blobs</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.clone" href="#idict.core.idict_.Idict.clone">clone</a></code></li>
-<li><code><a title="idict.core.idict_.Idict.evaluate" href="#idict.core.idict_.Idict.evaluate">evaluate</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.frozen" href="#idict.core.idict_.Idict.frozen">frozen</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.hashes" href="#idict.core.idict_.Idict.hashes">hashes</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.hosh" href="#idict.core.idict_.Idict.hosh">hosh</a></code></li>
