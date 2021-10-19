@@ -17,12 +17,12 @@ def simplefun(x, y):
     return {"z": x * y}
 
 
-# Creating an empty ldict. Alternatively: d = ldict().
+# Creating an empty idict. Alternatively: d = idict().
 d = Ø >> {}
 d.show(colored=False)
 # ...
 
-# Putting some values. Alternatively: d = ldict(x=5, y=7).
+# Putting some values. Alternatively: d = idict(x=5, y=7).
 d["x"] = 5
 d["y"] = 7
 d.show(colored=False)

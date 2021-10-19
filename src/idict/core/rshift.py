@@ -25,8 +25,8 @@ from functools import reduce
 from typing import Dict
 
 from garoupa import Hosh
-from ldict.parameter.let import Let
 
+from idict import iLet
 from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
 from idict.frozenidentifieddict import FrozenIdentifiedDict
 
@@ -172,7 +172,7 @@ def ihandle_dict(self, dictlike):
         if v is None:
             clone = delete(clone, k)
         elif k not in ["id", "ids"]:
-            if isinstance(v, Let):
+            if isinstance(v, iLet):
                 clone = application(clone, v, v.f, v.asdict.encode(), k)
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)

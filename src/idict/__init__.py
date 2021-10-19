@@ -19,11 +19,10 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from .parameter.ilet import iLet
-
 from .config import setup
 from .core.idict_ import Idict as idict
 from .iempty import iEmpty
+from .parameter.ilet import iLet
 
 empty = iEmpty()
 """The empty object is used to induce a ldict from a dict"""

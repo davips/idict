@@ -20,7 +20,7 @@ A lazy `dict` with universally unique deterministic identifiers.
 
 ### See also
 
-* laziness+identity ([ldict](https://pypi.org/project/ldict))
+* laziness ([ldict](https://pypi.org/project/ldict))
 * laziness+identity+persistence ([cdict](https://pypi.org/project/cdict))
 
 ## Overview
@@ -526,7 +526,7 @@ def simplefun(x, y):
     return {"z": x * y}
 
 
-# Creating an empty ldict. Alternatively: d = ldict().
+# Creating an empty idict. Alternatively: d = idict().
 d = Ø >> {}
 d.show(colored=False)
 """
@@ -539,7 +539,7 @@ d.show(colored=False)
 
 ```python3
 
-# Putting some values. Alternatively: d = ldict(x=5, y=7).
+# Putting some values. Alternatively: d = idict(x=5, y=7).
 d["x"] = 5
 d["y"] = 7
 d.show(colored=False)
@@ -704,7 +704,7 @@ def h(z, c=[1, 2, 3]):
 fun = Ø >> g >> h  # 'empty' or 'Ø' enable the cartesian product of the subsequent sets of functions within the expression.
 print(fun)
 """
-«<function g at 0x7fe88fdbddc0> × <function h at 0x7fe88fdc3af0>»
+«λ{} × λ»
 """
 ```
 
@@ -719,9 +719,9 @@ print(d)
     "z": "→(c z→(a b x y))",
     "x": 5,
     "y": 7,
-    "id": "fxUC9sbaX2rNuWEutGTJHWKMV5Af0h9G8FLRPWeq",
+    "id": "9Cl8wQmnbvNBF8upBxrlH6Njosz0cq8CrzBYHeJO",
     "ids": {
-        "z": "o5r8PbsxYejqtbjdN0p22yhwpgDf0h9G8FLRPWeq",
+        "z": "I3rJa4yiMmMpKq88VTYF1Kj3UCC0cq8CrzBYHeJO",
         "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
         "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
     }

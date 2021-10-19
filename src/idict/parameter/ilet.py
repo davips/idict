@@ -1,27 +1,30 @@
 #  Copyright (c) 2021. Davi Pereira dos Santos
-#  This file is part of the ldict project.
+#  This file is part of the idict project.
 #  Please respect the license - more about this in the section (*) below.
 #
-#  ldict is free software: you can redistribute it and/or modify
+#  idict is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
-#  ldict is distributed in the hope that it will be useful,
+#  idict is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with ldict.  If not, see <http://www.gnu.org/licenses/>.
+#  along with idict.  If not, see <http://www.gnu.org/licenses/>.
 #
 #  (*) Removing authorship by any means, e.g. by distribution of derived
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from ldict.parameter.base.abslet import AbstractLet
+from random import Random
 
-from idict.parameter.ifunctionspace import iFunctionSpace
+from ldict.parameter.abslet import AbstractLet
+from ldict.parameter.functionspace import FunctionSpace
+
+from idict.core.idict_ import Idict
 
 
 class iLet(AbstractLet):
@@ -34,7 +37,7 @@ class iLet(AbstractLet):
     >>> f_a
     λ{'a': 0}
     >>> d = idict(x=5,y=7)
-    >>> d2 = d >> f_a
+     >>> d2 = d >> f_a
     >>> print(d2)
     {
         "z": "→(a x y)",
@@ -88,15 +91,7 @@ class iLet(AbstractLet):
         }
     }
     >>> let(f, a=5) >> {"x": 5, "y": 7}
-    «λ{'a': 5} × {
-        "x": 5,
-        "y": 7,
-        "id": "mP_2d615fd34f97ac906e162c6fc6aedadc4d140",
-        "ids": {
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
-        }
-    }»
+    «λ{'a': 5} × {'x': 5, 'y': 7}»
     >>> print(idict({"x": 5, "y": 7}) >> let(f, a=5))
     {
         "z": "→(a x y)",
@@ -122,13 +117,13 @@ class iLet(AbstractLet):
     >>> from random import Random
     >>> let(f, a=5) >> ["mycache"]
     «λ{'a': 5} × ^»
-    >>> from idict.parameter.ifunctionspace import iFunctionSpace
-    >>> let(f, a=5) >> iFunctionSpace()
-    «λ{'a': 5}»
-    >>> iFunctionSpace() >> let(f, a=5)
+    >>> from ldict.parameter.functionspace import FunctionSpace
+    >>> let(f, a=5) >> FunctionSpace()
+    λ{'a': 5}
+    >>> FunctionSpace() >> let(f, a=5)
     «λ{'a': 5}»
     >>> (lambda x: {"z": x*8}) >> let(f, a=5)
-    «λ × λ{'a': 5}»
+    «λ{} × λ{'a': 5}»
     >>> d = {"x":3, "y": 8} >> let(f, a=5)
     >>> print(d)
     {
@@ -161,6 +156,6 @@ class iLet(AbstractLet):
     32
     """
 
+
     def __init__(self, f, **kwargs):
-        from idict.core.idict_ import Idict
-        super().__init__(f, kwargs, dict_type=Idict, fs_type=iFunctionSpace)
+        super().__init__(f, Idict, **kwargs)

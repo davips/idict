@@ -26,11 +26,10 @@ from random import Random
 from typing import Dict, TypeVar, Union, Callable
 
 from garoupa import ø40
-from ldict.core.base import AbstractMutableLazyDict
+from ldict import FunctionSpace
+from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
-from ldict.parameter.base.abslet import AbstractLet
-
-from idict.parameter.ifunctionspace import iFunctionSpace
+from ldict.parameter.abslet import AbstractLet
 
 VT = TypeVar("VT")
 
@@ -259,9 +258,9 @@ class Idict(AbstractMutableLazyDict):
 
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
-        return Idict(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
+        return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
+    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
         """
         >>> print({"x": 5} >> Idict(y=2))
         {
@@ -282,32 +281,19 @@ class Idict(AbstractMutableLazyDict):
             }
         }»
         """
-        if isinstance(other, Dict):
-            return Idict(other) >> self
-        if callable(other):
-            return iFunctionSpace(other, self)
-        return NotImplemented  # pragma: no cover
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = left >> self.frozen
+        return clone
 
-    def __rshift__(self, other: Union[Dict, 'Idict', Callable, AbstractLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
         """
         >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
         >>> d.ids
         {'y': 'zJmLy1B8VQU8.Kji0iqU0zIrDWpWqcXxhrGWdepm', 'x': 'og_0f0d4c16437fb2a4c1bff594d68a486791c45'}
         """
-        from idict import iEmpty
-        if isinstance(other, iEmpty):
-            return self
-        clone = Idict(identity=self.identity)
+        clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen >> other
         return clone
-        # if isinstance(other, AbstractLazyDict):
-        #     return self.clone(handle_dict(self.frozen.data, other, other.rnd), rnd=other.rnd)
-        # if isinstance(other, Dict):
-        #     return self.clone(handle_dict(self.frozen.data, other, self.rnd))
-        # if isinstance(other, iFunctionSpace):
-        #     return reduce(operator.rshift, (self,) + other.functions)
-        # if callable(other) or isinstance(other, Let):
-        #     return NotImplemented
 
     def __ne__(self, other):
         """

@@ -26,13 +26,13 @@ from random import Random
 from typing import Dict, TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
+from ldict import FunctionSpace
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.frozenlazydict import FrozenLazyDict
-from ldict.parameter.base.abslet import AbstractLet
+from ldict.parameter.abslet import AbstractLet
 
 from idict.appearance import decolorize, ldict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
-from idict.parameter.ifunctionspace import iFunctionSpace
 
 VT = TypeVar("VT")
 
@@ -243,21 +243,23 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         return self.frozen.asdic
 
-    def __rrshift__(self, other: Union[Dict, Callable, iFunctionSpace]):
-        if isinstance(other, Dict):
-            return FrozenIdentifiedDict(other) >> self
-        if callable(other):
-            return iFunctionSpace(other, self)
+    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
+        if isinstance(left, Random):
+            return self.clone(rnd=left)
+        if isinstance(left, Dict) and not isinstance(left, AbstractLazyDict):
+            return FrozenIdentifiedDict(left) >> self
+        if callable(left):
+            return FunctionSpace(left, self)
         return NotImplemented
 
-    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
         from idict import iEmpty
         from idict.core.rshift import application, ihandle_dict
         if isinstance(other, iEmpty):
             return self
         if isinstance(other, Random):
             return self.clone(rnd=other)
-        if isinstance(other, iFunctionSpace):
+        if isinstance(other, FunctionSpace):
             return reduce(operator.rshift, (self,) + other.functions)
         if isinstance(other, AbstractLet):
             return application(self, other, other.f, other.asdict.encode())
