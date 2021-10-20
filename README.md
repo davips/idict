@@ -20,8 +20,8 @@ A lazy `dict` with universally unique deterministic identifiers.
 
 ### See also
 
-* laziness ([ldict](https://pypi.org/project/ldict))
-* laziness+identity+persistence ([cdict](https://pypi.org/project/cdict))
+* identification package used by `idict`: [garoupa](https://pypi.org/project/garoupa)
+* only laziness, i.e., without the identification part: [ldict](https://pypi.org/project/ldict)
 
 ## Overview
 
