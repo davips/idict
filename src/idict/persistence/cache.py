@@ -19,35 +19,43 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from typing import Callable, Dict, Union
 
-from ldict.core.base import AbstractLazyDict
+from abc import ABC, abstractmethod
+from typing import TypeVar
 
-from idict.parameter.ilet import iLet
-from idict.core.idict_ import Idict
-from idict.frozenidentifieddict import FrozenIdentifiedDict
+VT = TypeVar("VT")
 
 
-class iEmpty(FrozenIdentifiedDict):
-    def __init__(self):
-        super().__init__()
+class Cache(ABC):  # pragma: no cover
 
-    def __rrshift__(self, left: Union[Dict, Callable, iLet]):
-        if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
-            return Idict(left)
-        if callable(left):
-            return iLet(left)
-        if isinstance(left, iLet):
-            return left
-        return NotImplemented  # pragma: no cover
+    @abstractmethod
+    def __contains__(self, item):
+        raise NotImplementedError
 
-    def __rshift__(self, other: Union[Dict, Callable]):
-        if isinstance(other, AbstractLazyDict):
-            return other
-        if isinstance(other, dict):
-            return Idict(other)
-        if callable(other):
-            return iLet(other)
-        return NotImplemented  # pragma: no cover
+    @abstractmethod
+    def __setitem__(self, key, value):
+        raise NotImplementedError
 
-    __mul__ = __rshift__
+    @abstractmethod
+    def __getitem__(self, key):
+        raise NotImplementedError
+
+    @abstractmethod
+    def __delitem__(self, key):
+        raise NotImplementedError
+
+    @abstractmethod
+    def __len__(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def __iter__(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def __repr__(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def copy(self):
+        raise NotImplementedError

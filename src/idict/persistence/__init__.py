@@ -19,35 +19,3 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from typing import Callable, Dict, Union
-
-from ldict.core.base import AbstractLazyDict
-
-from idict.parameter.ilet import iLet
-from idict.core.idict_ import Idict
-from idict.frozenidentifieddict import FrozenIdentifiedDict
-
-
-class iEmpty(FrozenIdentifiedDict):
-    def __init__(self):
-        super().__init__()
-
-    def __rrshift__(self, left: Union[Dict, Callable, iLet]):
-        if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
-            return Idict(left)
-        if callable(left):
-            return iLet(left)
-        if isinstance(left, iLet):
-            return left
-        return NotImplemented  # pragma: no cover
-
-    def __rshift__(self, other: Union[Dict, Callable]):
-        if isinstance(other, AbstractLazyDict):
-            return other
-        if isinstance(other, dict):
-            return Idict(other)
-        if callable(other):
-            return iLet(other)
-        return NotImplemented  # pragma: no cover
-
-    __mul__ = __rshift__

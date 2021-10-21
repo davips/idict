@@ -66,6 +66,7 @@ source venv/bin/activate
 # Install from PyPI...
 pip install --upgrade pip
 pip install -U idict
+pip install -U idict[full]  # use the flag 'full' for extra functionality (recommended)
 
 # ...or, install from updated source code.
 pip install git+https://github.com/davips/idict
@@ -76,6 +77,7 @@ pip install git+https://github.com/davips/idict
 git clone https://github.com/davips/idict
 cd idict
 poetry install
+poetry install -E full  # use the flag 'full' for extra functionality (recommended)
 ```
 
 ## Examples
@@ -790,13 +792,7 @@ print(e.z)
 </p>
 </details>
 
-<!--- ## Persistence
-Extra dependencies can be installed to support saving data to disk or to a server in the network. 
-
-**[still an ongoing work...]**
-
-`poetry install -E full`
---->
+<persistence>
 
 ## Concept
 

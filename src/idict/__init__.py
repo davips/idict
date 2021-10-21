@@ -25,9 +25,9 @@ from .iempty import iEmpty
 from .parameter.ilet import iLet
 
 empty = iEmpty()
-"""The empty object is used to induce a ldict from a dict"""
+"""The empty object is used to induce an empty idict"""
 
 Ø = empty
-"""UTF-8 alias for the empty object, it is used to induce a ldict from a dict. AltGr+Shift+o in most keyboards."""
+"""UTF-8 alias for the empty object, it is used to induce an empty idict. AltGr+Shift+o in most keyboards."""
 
 let = iLet
