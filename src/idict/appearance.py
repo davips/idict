@@ -44,15 +44,15 @@ def decolorize(txt):
     return ansi_escape.sub("", txt)
 
 
-def ldict2txt(d, all):
+def idict2txt(d, all):
     r"""
     Textual representation of a ldict object
 
     >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> d = idict(x=1,y=2)
-    >>> decolorize(ldict2txt(d, False))
+    >>> decolorize(idict2txt(d, False))
     '{\n    "x": 1,\n    "y": 2,\n    "id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "ids": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n}'
-    >>> decolorize(ldict2txt(d, True))
+    >>> decolorize(idict2txt(d, True))
     '{\n    "x": 1,\n    "y": 2,\n    "id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "ids": {\n        "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",\n        "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n    }\n}'
 
     Parameters
@@ -76,13 +76,13 @@ def ldict2txt(d, all):
 
 
 def ldict2dict(d, all):
-    from ldict.core.base import AbstractLazyDict
+    # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
     for k, v in d.data.items():
-        if isinstance(v, LazyVal):
-            dic[k] = str(v)
-        elif isinstance(v, AbstractLazyDict):
-            dic[k] = ldict2dict(v, all)
+        # if isinstance(v, LazyVal):
+        #     dic[k] = str(v)
+        # elif isinstance(v, AbstractLazyDict):
+        #     dic[k] = ldict2dict(v, all)
         if not all:
             if len(d.ids) < 3:
                 dic["ids"] = " ".join(d.ids.values())

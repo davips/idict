@@ -31,8 +31,10 @@ from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.frozenlazydict import FrozenLazyDict
 from ldict.parameter.abslet import AbstractLet
 
-from idict.appearance import decolorize, ldict2txt
+from idict.appearance import decolorize, idict2txt
+from idict.config import GLOBAL
 from idict.core.identification import key2id, blobs_hashes_hoshes
+from idict.persistence.cached import cached
 
 VT = TypeVar("VT")
 
@@ -269,7 +271,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return print(self.all if colored else decolorize(self.all))
 
     def __repr__(self, all=False):
-        return ldict2txt(self, all)
+        return idict2txt(self, all)
 
     @property
     def all(self):
@@ -329,15 +331,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             return application(self, other, other, self.identity)
         if isinstance(other, Dict):
             return ihandle_dict(self, other)
-        return NotImplemented
-
-
-
-
-
-
-
-
         if isinstance(other, list):
             d = self
             for cache in other:
@@ -346,9 +339,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rxor__(self, other: Union[Dict, Callable]):
-        if isinstance(other, Dict) and not isinstance(other, Ldict):
-            return Ldict(other) >= self
+        if isinstance(other, Dict) and not isinstance(other, FrozenIdentifiedDict):
+            return FrozenIdentifiedDict(other) >= self
         return NotImplemented
+
     def __xor__(self, other: Union[Dict, Callable]):
         # from ldict import Empty
         # if isinstance(other, FunctionSpace) and isinstance(other[0], Empty):
