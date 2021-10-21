@@ -23,6 +23,57 @@ from ldict.lazyval import LazyVal
 
 
 def cached(d, cache):
+    """
+    >>> from idict import idict
+    >>> f = lambda x,y: {"z":x+y}
+    >>> d = idict(x=5, y=7)
+    >>> d2 = d >> f
+    >>> d2.show(colored=False)
+    {
+        "z": "→(x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c = {}
+    >>> d3 = cached(d2, c)
+    >>> d3.show(colored=False)
+    {
+        "z": "→(^ x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c
+    {}
+    >>> d3.z
+    12
+    >>> c
+    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+    >>> d3.show(colored=False)
+    {
+        "z": 12,
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    """
+
     def closure(id, ids, data, output_field):
 
         def func(**kwargs):
@@ -32,12 +83,12 @@ def cached(d, cache):
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
             result = None
-            for field, fid in ids.items():
-                if isinstance(data[field], LazyVal):
-                    data[field] = data[field]()
-                cache[ids[field]] = data[field]
-                if field == output_field:
-                    result = data[field]
+            for k, fid in ids.items():
+                if isinstance(data[k], LazyVal):
+                    data[k] = data[k](**kwargs)
+                cache[ids[k]] = data[k]
+                if k == output_field:
+                    result = {k: data[k]}
             if result is None:
                 raise Exception(f"{output_field=} not in fields: {ids.items}")
 
@@ -46,11 +97,14 @@ def cached(d, cache):
 
         return func
 
-    clone = d.clone()
-    for field, v in list(clone.data.items())[2:]:
+    data = d.data.copy()
+    lazies = []
+    for field, v in list(data.items())[:-2]:
         if isinstance(v, LazyVal):
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
             deps = {"^": None}
             deps.update(v.deps)
-            clone.data[field] = LazyVal(field, closure(id, d.ids, d.data, field), deps)
-    return clone
+            lazy = LazyVal(field, closure(id, d.ids, d.data, field), deps, lazies)
+            data[field] = lazy
+            lazies.append(lazy)
+    return d.clone(data)
