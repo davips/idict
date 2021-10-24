@@ -30,8 +30,8 @@ from typing import Dict, TypeVar, Union, Callable
 from garoupa import ø40, Hosh
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.frozenlazydict import FrozenLazyDict
-from ldict.parameter.abslet import AbstractLet
 
+from idict.parameter.ilet import iLet
 from idict.config import GLOBAL
 from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
@@ -181,9 +181,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     }
     >>> c = {}
     >>> setup(cache=c)
-    >>> d3 = d ^ f
-    >>> type(d)
-    >>> type(f)
+    >>> d3 = d >> f ^ Ø
     >>> d3.show(colored=False)
     {
         "z": "→(^ x y)",
@@ -286,7 +284,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     def evaluate(self):
         """
-        >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
         >>> f = lambda x: {"y": x+2}
         >>> d = idict(x=3)
         >>> a = d >> f
@@ -317,7 +315,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     @property
     def asdict(self):
         """
-        >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
         >>> d = idict(x=3, y=5)
         >>> d.id
         'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35'
@@ -362,8 +360,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         r"""
         Usage:
 
-        >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
-        >>> from idict.appearance import decolorize
+        >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
+        >>> from idict.core.appearance import decolorize
         >>> out = idict(x=134124, y= 56).all
         >>> decolorize(out)
         '{\n    "x": 134124,\n    "y": 56,\n    "id": "dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f",\n    "ids": {\n        "x": "gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe",\n        "y": "Zs_c473399e77e6c2d2f69914891a488a3732bb0"\n    }\n}'
@@ -400,13 +398,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             return self.clone(rnd=left)
         return NotImplemented
 
-    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         from idict.core.rshift import application, ihandle_dict
         if isinstance(other, dict):
             return ihandle_dict(self, other)
         if isinstance(other, Random):
             return self.clone(rnd=other)
-        if isinstance(other, AbstractLet):
+        if isinstance(other, iLet):
             return application(self, other, other.f, str(other.config).encode())
         if callable(other):
             return application(self, other, other, self.identity)
@@ -420,20 +418,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rxor__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
-        if isinstance(left, (dict, list, Random)) or callable(left):
+        if (isinstance(left, (dict, list, Random)) or callable(left)) and not isinstance(left, AbstractLazyDict):
             return iFunctionSpace(left, cop, self)
         return NotImplemented
 
-    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
-        if isinstance(other, (dict, Random, list)):
-            return iFunctionSpace(self, cop, other)
-        if callable(other) or isinstance(other, AbstractLet):
+    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
+        if callable(other) or isinstance(other, (dict, Random, list, iLet)):
             return cached(self, GLOBAL["cache"]) >> other
-        if isinstance(other, list):
-            d = self
-            for cache in other:
-                d = cached(d, cache)
-            return d
         if isinstance(other, iFunctionSpace):
             return reduce3(lambda a, op, b: op(a, b), (self, cop) + other.functions)
         return NotImplemented

@@ -30,8 +30,8 @@ from typing import TypeVar, Union, Callable
 from garoupa import ø40
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
-from ldict.parameter.abslet import AbstractLet
 
+from idict.parameter.ilet import iLet
 from idict.parameter.ifunctionspace import iFunctionSpace
 
 VT = TypeVar("VT")
@@ -169,6 +169,87 @@ class Idict(AbstractMutableLazyDict):
             "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
         }
     }
+    >>> f = lambda x,y: {"z":x+y}
+    >>> d = idict(x=5, y=7)
+    >>> d2 = d >> f
+    >>> d2.show(colored=False)
+    {
+        "z": "→(x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c = {}
+    >>> d3 = d2 >> [c]
+    >>> d3.show(colored=False)
+    {
+        "z": "→(^ x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c
+    {}
+    >>> d3.z
+    12
+    >>> c
+    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+    >>> d3.show(colored=False)
+    {
+        "z": 12,
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c = {}
+    >>> from idict import setup
+    >>> setup(cache=c)
+    >>> d3 = d >> f ^ Ø
+    >>> d3.show(colored=False)
+    {
+        "z": "→(^ x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c
+    {}
+    >>> d3.z
+    12
+    >>> c
+    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+    >>> d3.show(colored=False)
+    {
+        "z": 12,
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
     """
 
     # noinspection PyMissingConstructor
@@ -238,7 +319,7 @@ class Idict(AbstractMutableLazyDict):
         clone.frozen = left >> self.frozen
         return clone
 
-    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         """
         >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
         >>> d.ids
@@ -255,7 +336,7 @@ class Idict(AbstractMutableLazyDict):
         clone.frozen = left ^ self.frozen
         return clone
 
-    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen ^ other
         return clone

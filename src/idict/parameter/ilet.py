@@ -26,10 +26,11 @@ from random import Random
 from typing import Union, Callable
 
 from ldict.core.base import AbstractLazyDict
+from ldict.parameter.abslet import AbstractLet
 from ldict.parameter.functionspace import FunctionSpace
 
 
-class iLet:
+class iLet(AbstractLet):
     """
     Set values or sampling intervals for parameterized functions
 
@@ -45,9 +46,9 @@ class iLet:
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "id": "tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S",
+        "id": "EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B",
         "ids": {
-            "z": "Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S",
+            "z": "YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -58,9 +59,9 @@ class iLet:
         "z": 7,
         "x": 5,
         "y": 7,
-        "id": "tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S",
+        "id": "EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B",
         "ids": {
-            "z": "Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S",
+            "z": "YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -72,9 +73,9 @@ class iLet:
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "id": "qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv",
+        "id": "qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN",
         "ids": {
-            "z": "Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv",
+            "z": "adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -85,9 +86,9 @@ class iLet:
         "z": 52,
         "x": 5,
         "y": 7,
-        "id": "qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv",
+        "id": "qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN",
         "ids": {
-            "z": "Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv",
+            "z": "adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -99,9 +100,9 @@ class iLet:
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "id": "rrC7MbIwMVR4rAPcSEgs3kSbJnJuCMS1F1k3.VfQ",
+        "id": "EZ0UWP-muXoeuN-1BPnRtJdGwOSYWVP8n81Tsn4K",
         "ids": {
-            "z": "XLoMEFGNqF52tTtX9.NMpXoXcyMuCMS1F1k3.VfQ",
+            "z": "V5mOMy3Zrrywy-EMU9V9QkMp0ZVYWVP8n81Tsn4K",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -116,25 +117,24 @@ class iLet:
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
     }»
-    >>> from random import Random
     >>> let(f, a=5) >> ["mycache"]
     «λ{'a': 5} × ^»
-    >>> from ldict.parameter.functionspace import FunctionSpace
-    >>> let(f, a=5) >> FunctionSpace()
-    λ{'a': 5}
-    >>> FunctionSpace() >> let(f, a=5)
+    >>> from idict.parameter.ifunctionspace import iFunctionSpace
+    >>> let(f, a=5) >> iFunctionSpace()
+    «λ{'a': 5}»
+    >>> iFunctionSpace() >> let(f, a=5)
     «λ{'a': 5}»
     >>> (lambda x: {"z": x*8}) >> let(f, a=5)
-    «λ{} × λ{'a': 5}»
+    «λ × λ{'a': 5}»
     >>> d = {"x":3, "y": 8} >> let(f, a=5)
     >>> print(d)
     {
         "z": "→(a x y)",
         "x": 3,
         "y": 8,
-        "id": "cKaaEdvxmlKTqsyOsb8eAJMl4aCuCMS1F1k3.VfQ",
+        "id": "6o0JC4icwTJXeYH2CFgBvfV1fONYWVP8n81Tsn4K",
         "ids": {
-            "z": "7WQXcDiKAKIjnfIwETM9UknKD9CuCMS1F1k3.VfQ",
+            "z": "ArvV6lQlezPBNMRMNlVwPSvqONNYWVP8n81Tsn4K",
             "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
             "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde"
         }
@@ -147,9 +147,9 @@ class iLet:
         "z": "→(a x y)",
         "x": 3,
         "y": 8,
-        "id": "5Q7U4sm-DkzdUwGKY.9IrQRTpFLMIhJOSvWYkxt-",
+        "id": "um3mdZK7S78uxdCOrbyGh2VQsKXXZ8.hgd0IScLe",
         "ids": {
-            "z": "oOhgGymI3OqJG1As8IODMrsgZELMIhJOSvWYkxt-",
+            "z": "aj-1mwXeaJv3r3MwDTaCBFvd0KXXZ8.hgd0IScLe",
             "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
             "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde"
         }
@@ -170,7 +170,7 @@ class iLet:
         return "λ" + str(self.config)
 
     def __rrshift__(self, left: Union[dict, list, Random, Callable, 'iLet']):
-        if isinstance(left, dict):
+        if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
             return Idict(left) >> self
         if isinstance(left, (list, Random, Callable)):
@@ -179,19 +179,19 @@ class iLet:
         return NotImplemented
 
     def __rshift__(self, other: Union[dict, list, Random, Callable, 'iLet', AbstractLazyDict]):
-        if isinstance(other, (dict, list, Random, Callable, iLet, AbstractLazyDict)):
+        if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, aop, other)
         return NotImplemented
 
     def __rxor__(self, left: Union[dict, list, Random, Callable, 'iLet']):
-        if isinstance(left, (dict, list, Random, Callable)):
+        if isinstance(left, (dict, list, Random, Callable)) and not isinstance(left, AbstractLazyDict):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(left, cop, self)
         return NotImplemented
 
     def __xor__(self, other: Union[dict, list, Random, Callable, 'iLet', AbstractLazyDict]):
-        if isinstance(other, (dict, list, Random, Callable, iLet, AbstractLazyDict)):
+        if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, cop, other)
         return NotImplemented

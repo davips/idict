@@ -26,33 +26,43 @@ from typing import Union, Callable
 
 from ldict.core.base import AbstractLazyDict
 
-from .ilet import iLet
+from idict.parameter.ilet import iLet
 
 
 class iFunctionSpace:
     """Aglutination for future application
 
-    >>> from ldict import ldict, empty
-    >>> empty >> FunctionSpace()
-    {}
-    >>> fs = FunctionSpace() >> empty
-    >>> fs >>= {"x": 5}
+    >>> from idict import idict, empty
+    >>> fs = iFunctionSpace({"x": 5})
     >>> fs
-    «{} × {'x': 5}»
-    >>> ldict(y=7) >> fs
+    «{'x': 5}»
+    >>> (idict(y=7) >> fs).show(colored=False)
     {
         "y": 7,
-        "x": 5
+        "x": 5,
+        "id": "mP_2d615fd34f97ac906e162c6fc6aedadc4d140",
+        "ids": {
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+        }
     }
-    >>> fs >>= ldict(y=7)
+    >>> fs >>= idict(y=7)
     >>> fs
-    «{} × {'x': 5} × {
-        "y": 7
+    «{'x': 5} × {
+        "y": 7,
+        "id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+        "ids": {
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
     }»
     >>> fs >>= lambda x,y: {"z": x*y}
     >>> fs
-    «{} × {'x': 5} × {
-        "y": 7
+    «{'x': 5} × {
+        "y": 7,
+        "id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+        "ids": {
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
     } × λ»
     """
 
@@ -60,6 +70,9 @@ class iFunctionSpace:
         self.functions = args
 
     def __rrshift__(self, left: Union[dict, list, Random, Callable, iLet]):
+        if isinstance(left, AbstractLazyDict):
+            from idict.core.idict_ import Idict
+            return reduce3(lambda a, op, b: op(a, b), (left, aop) + self.functions)
         if isinstance(left, dict):
             from idict.core.idict_ import Idict
             return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions)
@@ -68,14 +81,14 @@ class iFunctionSpace:
         return NotImplemented
 
     def __rshift__(self, other: Union[dict, list, Random, Callable, iLet, AbstractLazyDict, 'iFunctionSpace']):
-        if isinstance(other, (dict, list, Random, Callable, iLet, AbstractLazyDict)):
+        if isinstance(other, (dict, list, Random, Callable, iLet)):
             return iFunctionSpace(*self.functions, aop, other)
         if isinstance(other, iFunctionSpace):
             return iFunctionSpace(*self.functions, aop, *other.functions)
         return NotImplemented
 
     def __rxor__(self, left: Union[dict, list, Random, Callable, iLet]):
-        if isinstance(left, (dict, list, Random, Callable, iLet)):
+        if isinstance(left, (dict, list, Random, Callable, iLet)) and not isinstance(left, AbstractLazyDict):
             return iFunctionSpace(left, aop, *self.functions)
         return NotImplemented
 
@@ -89,6 +102,8 @@ class iFunctionSpace:
     def __repr__(self):
         txt = []
         for f in self.functions:
+            if str(f).startswith("<built-in "):  # Skip >> and ^.
+                continue
             if isinstance(f, list):
                 s = "^"
             elif isinstance(f, Random):
@@ -114,4 +129,4 @@ def reduce3(f, lst):
         except StopIteration:
             break
         next_args = [f(*next_args)]
-    return next_args
+    return next_args[0]

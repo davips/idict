@@ -48,7 +48,7 @@ def idict2txt(d, all):
     r"""
     Textual representation of a ldict object
 
-    >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> d = idict(x=1,y=2)
     >>> decolorize(idict2txt(d, False))
     '{\n    "x": 1,\n    "y": 2,\n    "id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "ids": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n}'

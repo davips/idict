@@ -56,4 +56,11 @@ def cached(d, cache):
             lazy = LazyVal(field, closure(id, d.ids, d.data, field), deps, lazies)
             data[field] = lazy
             lazies.append(lazy)
+
+    # Eager saving when there are no lazies.
+    if len(lazies) == 0:
+        for k, v in list(data.items())[:-2]:
+            if k not in cache:
+                cache[k] = data[k]
+
     return d.clone(data)

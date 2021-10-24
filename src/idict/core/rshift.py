@@ -112,7 +112,7 @@ def delete(self, k):
 
 def ihandle_dict(self, dictlike):
     """
-    >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> d = idict(x=5, y=7, z=8)
     >>> di = ihandle_dict(d, {"y":None})
     >>> print(di)
@@ -207,7 +207,7 @@ def placeholder(key, f_hosh, identity, hoshes: Dict[str, Hosh]):
 
 def solve(hoshes, output, uf: Hosh):
     """
-    >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> a = idict(x=3)
     >>> a.show(colored=False)
     {
