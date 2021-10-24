@@ -48,14 +48,15 @@
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
 from functools import cached_property
+from json import dumps
 from operator import rshift as aop
 from operator import xor as cop
 from random import Random
 from typing import Union, Callable
 
 from ldict.core.base import AbstractLazyDict
+from ldict.customjson import CustomJSONEncoder
 from ldict.parameter.abslet import AbstractLet
-from ldict.parameter.functionspace import FunctionSpace
 
 
 class iLet(AbstractLet):
@@ -74,9 +75,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B&#34;,
+        &#34;id&#34;: &#34;tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B&#34;,
+            &#34;z&#34;: &#34;Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -87,9 +88,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: 7,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B&#34;,
+        &#34;id&#34;: &#34;tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B&#34;,
+            &#34;z&#34;: &#34;Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -101,9 +102,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN&#34;,
+        &#34;id&#34;: &#34;qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN&#34;,
+            &#34;z&#34;: &#34;Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -114,9 +115,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: 52,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN&#34;,
+        &#34;id&#34;: &#34;qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN&#34;,
+            &#34;z&#34;: &#34;Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -128,9 +129,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;EZ0UWP-muXoeuN-1BPnRtJdGwOSYWVP8n81Tsn4K&#34;,
+        &#34;id&#34;: &#34;rrC7MbIwMVR4rAPcSEgs3kSbJnJuCMS1F1k3.VfQ&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;V5mOMy3Zrrywy-EMU9V9QkMp0ZVYWVP8n81Tsn4K&#34;,
+            &#34;z&#34;: &#34;XLoMEFGNqF52tTtX9.NMpXoXcyMuCMS1F1k3.VfQ&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -160,9 +161,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;id&#34;: &#34;6o0JC4icwTJXeYH2CFgBvfV1fONYWVP8n81Tsn4K&#34;,
+        &#34;id&#34;: &#34;cKaaEdvxmlKTqsyOsb8eAJMl4aCuCMS1F1k3.VfQ&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;ArvV6lQlezPBNMRMNlVwPSvqONNYWVP8n81Tsn4K&#34;,
+            &#34;z&#34;: &#34;7WQXcDiKAKIjnfIwETM9UknKD9CuCMS1F1k3.VfQ&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
             &#34;y&#34;: &#34;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#34;
         }
@@ -175,9 +176,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;id&#34;: &#34;um3mdZK7S78uxdCOrbyGh2VQsKXXZ8.hgd0IScLe&#34;,
+        &#34;id&#34;: &#34;5Q7U4sm-DkzdUwGKY.9IrQRTpFLMIhJOSvWYkxt-&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;aj-1mwXeaJv3r3MwDTaCBFvd0KXXZ8.hgd0IScLe&#34;,
+            &#34;z&#34;: &#34;oOhgGymI3OqJG1As8IODMrsgZELMIhJOSvWYkxt-&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
             &#34;y&#34;: &#34;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#34;
         }
@@ -189,40 +190,57 @@ class iLet(AbstractLet):
     def __init__(self, f, **kwargs):
         self.f = f
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
+        self.asdict = self.config
 
     @cached_property
-    def asdict(self):
-        return self.config
+    def bytes(self):
+        return dumps(self.config, sort_keys=True, cls=CustomJSONEncoder).encode()
 
     def __repr__(self):
         return &#34;λ&#34; + str(self.config)
 
     def __rrshift__(self, left: Union[dict, list, Random, Callable, &#39;iLet&#39;]):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.parameter.ilet import iLet
+        &gt;&gt;&gt; {&#34;x&#34;:5} &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
+        {
+            &#34;x&#34;: &#34;→(x)&#34;,
+            &#34;id&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;,
+            &#34;ids&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;
+        }
+        &gt;&gt;&gt; [1] &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
+        «^ × λ{&#39;x&#39;: 5}»
+        &#34;&#34;&#34;
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
             return Idict(left) &gt;&gt; self
         if isinstance(left, (list, Random, Callable)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(left, aop, self)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __rshift__(self, other: Union[dict, list, Random, Callable, &#39;iLet&#39;, AbstractLazyDict]):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5) &gt;&gt; [1]
+        «λ{&#39;x&#39;: 5} × ^»
+        &#34;&#34;&#34;
+
         if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, aop, other)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __rxor__(self, left: Union[dict, list, Random, Callable, &#39;iLet&#39;]):
         if isinstance(left, (dict, list, Random, Callable)) and not isinstance(left, AbstractLazyDict):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(left, cop, self)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __xor__(self, other: Union[dict, list, Random, Callable, &#39;iLet&#39;, AbstractLazyDict]):
         if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, cop, other)
-        return NotImplemented</code></pre>
+        return NotImplemented  # pragma: no cover</code></pre>
 </details>
 </section>
 <section>
@@ -252,9 +270,9 @@ class iLet(AbstractLet):
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B&quot;,
+    &quot;id&quot;: &quot;tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S&quot;,
     &quot;ids&quot;: {
-        &quot;z&quot;: &quot;YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B&quot;,
+        &quot;z&quot;: &quot;Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
     }
@@ -265,9 +283,9 @@ class iLet(AbstractLet):
     &quot;z&quot;: 7,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B&quot;,
+    &quot;id&quot;: &quot;tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S&quot;,
     &quot;ids&quot;: {
-        &quot;z&quot;: &quot;YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B&quot;,
+        &quot;z&quot;: &quot;Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
     }
@@ -279,9 +297,9 @@ class iLet(AbstractLet):
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN&quot;,
+    &quot;id&quot;: &quot;qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv&quot;,
     &quot;ids&quot;: {
-        &quot;z&quot;: &quot;adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN&quot;,
+        &quot;z&quot;: &quot;Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
     }
@@ -292,9 +310,9 @@ class iLet(AbstractLet):
     &quot;z&quot;: 52,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN&quot;,
+    &quot;id&quot;: &quot;qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv&quot;,
     &quot;ids&quot;: {
-        &quot;z&quot;: &quot;adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN&quot;,
+        &quot;z&quot;: &quot;Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
     }
@@ -306,9 +324,9 @@ class iLet(AbstractLet):
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;EZ0UWP-muXoeuN-1BPnRtJdGwOSYWVP8n81Tsn4K&quot;,
+    &quot;id&quot;: &quot;rrC7MbIwMVR4rAPcSEgs3kSbJnJuCMS1F1k3.VfQ&quot;,
     &quot;ids&quot;: {
-        &quot;z&quot;: &quot;V5mOMy3Zrrywy-EMU9V9QkMp0ZVYWVP8n81Tsn4K&quot;,
+        &quot;z&quot;: &quot;XLoMEFGNqF52tTtX9.NMpXoXcyMuCMS1F1k3.VfQ&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
     }
@@ -338,9 +356,9 @@ class iLet(AbstractLet):
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 3,
     &quot;y&quot;: 8,
-    &quot;id&quot;: &quot;6o0JC4icwTJXeYH2CFgBvfV1fONYWVP8n81Tsn4K&quot;,
+    &quot;id&quot;: &quot;cKaaEdvxmlKTqsyOsb8eAJMl4aCuCMS1F1k3.VfQ&quot;,
     &quot;ids&quot;: {
-        &quot;z&quot;: &quot;ArvV6lQlezPBNMRMNlVwPSvqONNYWVP8n81Tsn4K&quot;,
+        &quot;z&quot;: &quot;7WQXcDiKAKIjnfIwETM9UknKD9CuCMS1F1k3.VfQ&quot;,
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
         &quot;y&quot;: &quot;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&quot;
     }
@@ -353,9 +371,9 @@ class iLet(AbstractLet):
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 3,
     &quot;y&quot;: 8,
-    &quot;id&quot;: &quot;um3mdZK7S78uxdCOrbyGh2VQsKXXZ8.hgd0IScLe&quot;,
+    &quot;id&quot;: &quot;5Q7U4sm-DkzdUwGKY.9IrQRTpFLMIhJOSvWYkxt-&quot;,
     &quot;ids&quot;: {
-        &quot;z&quot;: &quot;aj-1mwXeaJv3r3MwDTaCBFvd0KXXZ8.hgd0IScLe&quot;,
+        &quot;z&quot;: &quot;oOhgGymI3OqJG1As8IODMrsgZELMIhJOSvWYkxt-&quot;,
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
         &quot;y&quot;: &quot;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&quot;
     }
@@ -383,9 +401,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B&#34;,
+        &#34;id&#34;: &#34;tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B&#34;,
+            &#34;z&#34;: &#34;Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -396,9 +414,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: 7,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B&#34;,
+        &#34;id&#34;: &#34;tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B&#34;,
+            &#34;z&#34;: &#34;Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -410,9 +428,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN&#34;,
+        &#34;id&#34;: &#34;qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN&#34;,
+            &#34;z&#34;: &#34;Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -423,9 +441,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: 52,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN&#34;,
+        &#34;id&#34;: &#34;qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN&#34;,
+            &#34;z&#34;: &#34;Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -437,9 +455,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;EZ0UWP-muXoeuN-1BPnRtJdGwOSYWVP8n81Tsn4K&#34;,
+        &#34;id&#34;: &#34;rrC7MbIwMVR4rAPcSEgs3kSbJnJuCMS1F1k3.VfQ&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;V5mOMy3Zrrywy-EMU9V9QkMp0ZVYWVP8n81Tsn4K&#34;,
+            &#34;z&#34;: &#34;XLoMEFGNqF52tTtX9.NMpXoXcyMuCMS1F1k3.VfQ&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
@@ -469,9 +487,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;id&#34;: &#34;6o0JC4icwTJXeYH2CFgBvfV1fONYWVP8n81Tsn4K&#34;,
+        &#34;id&#34;: &#34;cKaaEdvxmlKTqsyOsb8eAJMl4aCuCMS1F1k3.VfQ&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;ArvV6lQlezPBNMRMNlVwPSvqONNYWVP8n81Tsn4K&#34;,
+            &#34;z&#34;: &#34;7WQXcDiKAKIjnfIwETM9UknKD9CuCMS1F1k3.VfQ&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
             &#34;y&#34;: &#34;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#34;
         }
@@ -484,9 +502,9 @@ class iLet(AbstractLet):
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;id&#34;: &#34;um3mdZK7S78uxdCOrbyGh2VQsKXXZ8.hgd0IScLe&#34;,
+        &#34;id&#34;: &#34;5Q7U4sm-DkzdUwGKY.9IrQRTpFLMIhJOSvWYkxt-&#34;,
         &#34;ids&#34;: {
-            &#34;z&#34;: &#34;aj-1mwXeaJv3r3MwDTaCBFvd0KXXZ8.hgd0IScLe&#34;,
+            &#34;z&#34;: &#34;oOhgGymI3OqJG1As8IODMrsgZELMIhJOSvWYkxt-&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
             &#34;y&#34;: &#34;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#34;
         }
@@ -498,40 +516,57 @@ class iLet(AbstractLet):
     def __init__(self, f, **kwargs):
         self.f = f
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
+        self.asdict = self.config
 
     @cached_property
-    def asdict(self):
-        return self.config
+    def bytes(self):
+        return dumps(self.config, sort_keys=True, cls=CustomJSONEncoder).encode()
 
     def __repr__(self):
         return &#34;λ&#34; + str(self.config)
 
     def __rrshift__(self, left: Union[dict, list, Random, Callable, &#39;iLet&#39;]):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict.parameter.ilet import iLet
+        &gt;&gt;&gt; {&#34;x&#34;:5} &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
+        {
+            &#34;x&#34;: &#34;→(x)&#34;,
+            &#34;id&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;,
+            &#34;ids&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;
+        }
+        &gt;&gt;&gt; [1] &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
+        «^ × λ{&#39;x&#39;: 5}»
+        &#34;&#34;&#34;
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
             return Idict(left) &gt;&gt; self
         if isinstance(left, (list, Random, Callable)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(left, aop, self)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __rshift__(self, other: Union[dict, list, Random, Callable, &#39;iLet&#39;, AbstractLazyDict]):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5) &gt;&gt; [1]
+        «λ{&#39;x&#39;: 5} × ^»
+        &#34;&#34;&#34;
+
         if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, aop, other)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __rxor__(self, left: Union[dict, list, Random, Callable, &#39;iLet&#39;]):
         if isinstance(left, (dict, list, Random, Callable)) and not isinstance(left, AbstractLazyDict):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(left, cop, self)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __xor__(self, other: Union[dict, list, Random, Callable, &#39;iLet&#39;, AbstractLazyDict]):
         if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, cop, other)
-        return NotImplemented</code></pre>
+        return NotImplemented  # pragma: no cover</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -539,7 +574,7 @@ class iLet(AbstractLet):
 </ul>
 <h3>Instance variables</h3>
 <dl>
-<dt id="idict.parameter.ilet.iLet.asdict"><code class="name">var <span class="ident">asdict</span></code></dt>
+<dt id="idict.parameter.ilet.iLet.bytes"><code class="name">var <span class="ident">bytes</span></code></dt>
 <dd>
 <div class="desc"></div>
 <details class="source">
@@ -599,7 +634,7 @@ class iLet(AbstractLet):
 <li>
 <h4><code><a title="idict.parameter.ilet.iLet" href="#idict.parameter.ilet.iLet">iLet</a></code></h4>
 <ul class="">
-<li><code><a title="idict.parameter.ilet.iLet.asdict" href="#idict.parameter.ilet.iLet.asdict">asdict</a></code></li>
+<li><code><a title="idict.parameter.ilet.iLet.bytes" href="#idict.parameter.ilet.iLet.bytes">bytes</a></code></li>
 </ul>
 </li>
 </ul>

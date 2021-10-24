@@ -397,7 +397,26 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return self.__repr__(all=True)
 
     def __eq__(self, other):
-        if isinstance(other, Dict):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict import idict
+        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3}
+        True
+        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;id&#34;: idict(x=3).id}
+        True
+        &gt;&gt;&gt; idict(x=3) == idict(x=3)
+        True
+        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 4}
+        True
+        &gt;&gt;&gt; idict(x=3) != idict(x=4)
+        True
+        &gt;&gt;&gt; idict(x=3) != {&#34;y&#34;: 3}
+        True
+        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;id&#34;: (~idict(x=3).hosh).id}
+        True
+        &gt;&gt;&gt; idict(x=3) != idict(y=3)
+        True
+        &#34;&#34;&#34;
+        if isinstance(other, dict):
             if &#34;id&#34; in other:
                 return self.id == other[&#34;id&#34;]
             if list(self.keys())[:-2] != list(other.keys()):
@@ -410,7 +429,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 return False
             other.evaluate()
             return self.data == other.data
-        if isinstance(other, Dict):
+        if isinstance(other, dict):
             data = self.data.copy()
             del data[&#34;id&#34;]
             del data[&#34;ids&#34;]
@@ -433,7 +452,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         if isinstance(other, Random):
             return self.clone(rnd=other)
         if isinstance(other, iLet):
-            return application(self, other, other.f, str(other.config).encode())
+            return application(self, other, other.f, other.bytes)
         if callable(other):
             return application(self, other, other, self.identity)
         if isinstance(other, list):
@@ -973,7 +992,26 @@ True
         return self.__repr__(all=True)
 
     def __eq__(self, other):
-        if isinstance(other, Dict):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict import idict
+        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3}
+        True
+        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;id&#34;: idict(x=3).id}
+        True
+        &gt;&gt;&gt; idict(x=3) == idict(x=3)
+        True
+        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 4}
+        True
+        &gt;&gt;&gt; idict(x=3) != idict(x=4)
+        True
+        &gt;&gt;&gt; idict(x=3) != {&#34;y&#34;: 3}
+        True
+        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;id&#34;: (~idict(x=3).hosh).id}
+        True
+        &gt;&gt;&gt; idict(x=3) != idict(y=3)
+        True
+        &#34;&#34;&#34;
+        if isinstance(other, dict):
             if &#34;id&#34; in other:
                 return self.id == other[&#34;id&#34;]
             if list(self.keys())[:-2] != list(other.keys()):
@@ -986,7 +1024,7 @@ True
                 return False
             other.evaluate()
             return self.data == other.data
-        if isinstance(other, Dict):
+        if isinstance(other, dict):
             data = self.data.copy()
             del data[&#34;id&#34;]
             del data[&#34;ids&#34;]
@@ -1009,7 +1047,7 @@ True
         if isinstance(other, Random):
             return self.clone(rnd=other)
         if isinstance(other, iLet):
-            return application(self, other, other.f, str(other.config).encode())
+            return application(self, other, other.f, other.bytes)
         if callable(other):
             return application(self, other, other, self.identity)
         if isinstance(other, list):
