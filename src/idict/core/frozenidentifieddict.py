@@ -276,6 +276,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         del self.frozen[key]
 
     def __getattr__(self, item):
+        if item == "all":
+            return self.all
+        if item == "asdict":
+            return self.asdict
         return getattr(self.frozen, item)
 
     def __repr__(self):
