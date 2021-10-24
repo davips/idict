@@ -55,8 +55,6 @@ from idict.persistence.disk import Disk
 VT = TypeVar(&#34;VT&#34;)
 
 GLOBAL = {
-    &#34;ids&#34;: True,
-    &#34;history&#34;: False,
     &#34;cache&#34;: Disk(f&#34;{Path.home()}/{&#39;.idict/shelve.db&#39;}&#34;),
     &#34;compression_cache&#34;: {},
     &#34;compression_cachesize&#34;: 0,
@@ -64,26 +62,18 @@ GLOBAL = {
 }
 
 
-def setup(ids: bool = None, history: bool = None, cache: Union[Disk, Dict[str, VT]] = None,
-          compression_cachelimit_MB: float = None):
+def setup(cache: Union[Disk, Dict[str, VT]] = None, compression_cachelimit_MB: float = None):
     &#34;&#34;&#34;
     Global behavior of idict
 
     Parameters
     ----------
-    ids
-    history
-        Whether every transformation should be kept in a &#34;list&#34; in memory.
     cache
         Dict-like storage accessed through &#39;^&#39; operator.
     compression_cachelimit_MB
         Amount of MBs reserved for keeping compressed values in memory.
         Higher values accelerate persisting original values as compression is already done at hashing.
     &#34;&#34;&#34;
-    if ids is not None:
-        GLOBAL[&#34;ids&#34;] = ids
-    if history is not None:
-        GLOBAL[&#34;history&#34;] = history
     if cache is not None:
         GLOBAL[&#34;cache&#34;] = cache
     if compression_cachelimit_MB is not None:
@@ -98,16 +88,12 @@ def setup(ids: bool = None, history: bool = None, cache: Union[Disk, Dict[str, V
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.config.setup"><code class="name flex">
-<span>def <span class="ident">setup</span></span>(<span>ids: bool = None, history: bool = None, cache: Union[<a title="idict.persistence.disk.Disk" href="persistence/disk.html#idict.persistence.disk.Disk">Disk</a>, Dict[str, ~VT]] = None, compression_cachelimit_MB: float = None)</span>
+<span>def <span class="ident">setup</span></span>(<span>cache: Union[<a title="idict.persistence.disk.Disk" href="persistence/disk.html#idict.persistence.disk.Disk">Disk</a>, Dict[str, ~VT]] = None, compression_cachelimit_MB: float = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Global behavior of idict</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>ids</code></strong></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>history</code></strong></dt>
-<dd>Whether every transformation should be kept in a "list" in memory.</dd>
 <dt><strong><code>cache</code></strong></dt>
 <dd>Dict-like storage accessed through '^' operator.</dd>
 <dt><strong><code>compression_cachelimit_MB</code></strong></dt>
@@ -118,26 +104,18 @@ Higher values accelerate persisting original values as compression is already do
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setup(ids: bool = None, history: bool = None, cache: Union[Disk, Dict[str, VT]] = None,
-          compression_cachelimit_MB: float = None):
+<pre><code class="python">def setup(cache: Union[Disk, Dict[str, VT]] = None, compression_cachelimit_MB: float = None):
     &#34;&#34;&#34;
     Global behavior of idict
 
     Parameters
     ----------
-    ids
-    history
-        Whether every transformation should be kept in a &#34;list&#34; in memory.
     cache
         Dict-like storage accessed through &#39;^&#39; operator.
     compression_cachelimit_MB
         Amount of MBs reserved for keeping compressed values in memory.
         Higher values accelerate persisting original values as compression is already done at hashing.
     &#34;&#34;&#34;
-    if ids is not None:
-        GLOBAL[&#34;ids&#34;] = ids
-    if history is not None:
-        GLOBAL[&#34;history&#34;] = history
     if cache is not None:
         GLOBAL[&#34;cache&#34;] = cache
     if compression_cachelimit_MB is not None:

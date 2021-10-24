@@ -56,7 +56,7 @@ from garoupa import Hosh
 
 from idict import iLet
 from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
-from idict.frozenidentifieddict import FrozenIdentifiedDict
+from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
 
 def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
@@ -140,7 +140,7 @@ def delete(self, k):
 
 def ihandle_dict(self, dictlike):
     &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
     &gt;&gt;&gt; di = ihandle_dict(d, {&#34;y&#34;:None})
     &gt;&gt;&gt; print(di)
@@ -193,7 +193,7 @@ def ihandle_dict(self, dictlike):
         }
     }
     &#34;&#34;&#34;
-    from idict.frozenidentifieddict import FrozenIdentifiedDict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
     for k, v in dictlike.items():
@@ -201,7 +201,7 @@ def ihandle_dict(self, dictlike):
             clone = delete(clone, k)
         elif k not in [&#34;id&#34;, &#34;ids&#34;]:
             if isinstance(v, iLet):
-                clone = application(clone, v, v.f, v.asdict.encode(), k)
+                clone = application(clone, v, v.f, str(v.config).encode(), k)
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)
             else:
@@ -235,7 +235,7 @@ def placeholder(key, f_hosh, identity, hoshes: Dict[str, Hosh]):
 
 def solve(hoshes, output, uf: Hosh):
     &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; a = idict(x=3)
     &gt;&gt;&gt; a.show(colored=False)
     {
@@ -303,7 +303,7 @@ def rho(c, digits):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.core.rshift.application"><code class="name flex">
-<span>def <span class="ident">application</span></span>(<span>self: <a title="idict.frozenidentifieddict.FrozenIdentifiedDict" href="../frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a>, other, f, config_hosh, output=None)</span>
+<span>def <span class="ident">application</span></span>(<span>self: <a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a>, other, f, config_hosh, output=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import let
@@ -421,7 +421,7 @@ True
 <span>def <span class="ident">ihandle_dict</span></span>(<span>self, dictlike)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
 &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
 &gt;&gt;&gt; di = ihandle_dict(d, {&quot;y&quot;:None})
 &gt;&gt;&gt; print(di)
@@ -480,7 +480,7 @@ True
 </summary>
 <pre><code class="python">def ihandle_dict(self, dictlike):
     &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
     &gt;&gt;&gt; di = ihandle_dict(d, {&#34;y&#34;:None})
     &gt;&gt;&gt; print(di)
@@ -533,7 +533,7 @@ True
         }
     }
     &#34;&#34;&#34;
-    from idict.frozenidentifieddict import FrozenIdentifiedDict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
     for k, v in dictlike.items():
@@ -541,7 +541,7 @@ True
             clone = delete(clone, k)
         elif k not in [&#34;id&#34;, &#34;ids&#34;]:
             if isinstance(v, iLet):
-                clone = application(clone, v, v.f, v.asdict.encode(), k)
+                clone = application(clone, v, v.f, str(v.config).encode(), k)
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)
             else:
@@ -599,7 +599,7 @@ True
 <span>def <span class="ident">solve</span></span>(<span>hoshes, output, uf: garoupa.hosh.Hosh)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
 &gt;&gt;&gt; a = idict(x=3)
 &gt;&gt;&gt; a.show(colored=False)
 {
@@ -654,7 +654,7 @@ True
 </summary>
 <pre><code class="python">def solve(hoshes, output, uf: Hosh):
     &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; a = idict(x=3)
     &gt;&gt;&gt; a.show(colored=False)
     {

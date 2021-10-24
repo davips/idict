@@ -50,14 +50,17 @@
 #
 import operator
 from functools import reduce
+from operator import rshift as aop
+from operator import xor as cop
 from random import Random
-from typing import Dict, TypeVar, Union, Callable
+from typing import TypeVar, Union, Callable
 
 from garoupa import ø40
-from ldict import FunctionSpace
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
-from ldict.parameter.abslet import AbstractLet
+
+from idict.parameter.ilet import iLet
+from idict.parameter.ifunctionspace import iFunctionSpace
 
 VT = TypeVar(&#34;VT&#34;)
 
@@ -194,12 +197,93 @@ class Idict(AbstractMutableLazyDict):
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
     }
+    &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
+    &gt;&gt;&gt; d = idict(x=5, y=7)
+    &gt;&gt;&gt; d2 = d &gt;&gt; f
+    &gt;&gt;&gt; d2.show(colored=False)
+    {
+        &#34;z&#34;: &#34;→(x y)&#34;,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c = {}
+    &gt;&gt;&gt; d3 = d2 &gt;&gt; [c]
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: &#34;→(^ x y)&#34;,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c
+    {}
+    &gt;&gt;&gt; d3.z
+    12
+    &gt;&gt;&gt; c
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7}
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: 12,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c = {}
+    &gt;&gt;&gt; from idict import setup
+    &gt;&gt;&gt; setup(cache=c)
+    &gt;&gt;&gt; d3 = d &gt;&gt; f ^ Ø
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: &#34;→(^ x y)&#34;,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c
+    {}
+    &gt;&gt;&gt; d3.z
+    12
+    &gt;&gt;&gt; c
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7}
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: 12,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.identity = identity
-        from idict.frozenidentifieddict import FrozenIdentifiedDict
+        from idict.core.frozenidentifieddict import FrozenIdentifiedDict
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(_dictionary, id, ids, rnd, identity, _cloned, **kwargs)
 
     @property
@@ -233,7 +317,10 @@ class Idict(AbstractMutableLazyDict):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
+    def show(self, colored=True):
+        self.frozen.show(colored)
+
+    def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; print({&#34;x&#34;: 5} &gt;&gt; Idict(y=2))
         {
@@ -254,11 +341,13 @@ class Idict(AbstractMutableLazyDict):
             }
         }»
         &#34;&#34;&#34;
+        if isinstance(left, list) or callable(left):
+            return iFunctionSpace(left, aop, self)
         clone = self.__class__(identity=self.identity)
         clone.frozen = left &gt;&gt; self.frozen
         return clone
 
-    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
+    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; d = Idict(x=2) &gt;&gt; (lambda x: {&#34;y&#34;: 2 * x})
         &gt;&gt;&gt; d.ids
@@ -268,8 +357,17 @@ class Idict(AbstractMutableLazyDict):
         clone.frozen = self.frozen &gt;&gt; other
         return clone
 
-    def show(self, colored=True):
-        self.frozen.show(colored)</code></pre>
+    def __rxor__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
+        if isinstance(left, list) or callable(left):
+            return iFunctionSpace(left, cop, self)
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = left ^ self.frozen
+        return clone
+
+    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = self.frozen ^ other
+        return clone</code></pre>
 </details>
 </section>
 <section>
@@ -415,6 +513,87 @@ True
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
     }
 }
+&gt;&gt;&gt; f = lambda x,y: {&quot;z&quot;:x+y}
+&gt;&gt;&gt; d = idict(x=5, y=7)
+&gt;&gt;&gt; d2 = d &gt;&gt; f
+&gt;&gt;&gt; d2.show(colored=False)
+{
+    &quot;z&quot;: &quot;→(x y)&quot;,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c = {}
+&gt;&gt;&gt; d3 = d2 &gt;&gt; [c]
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: &quot;→(^ x y)&quot;,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c
+{}
+&gt;&gt;&gt; d3.z
+12
+&gt;&gt;&gt; c
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: 12,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c = {}
+&gt;&gt;&gt; from idict import setup
+&gt;&gt;&gt; setup(cache=c)
+&gt;&gt;&gt; d3 = d &gt;&gt; f ^ Ø
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: &quot;→(^ x y)&quot;,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c
+{}
+&gt;&gt;&gt; d3.z
+12
+&gt;&gt;&gt; c
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: 12,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
 </code></pre></div>
 <details class="source">
 <summary>
@@ -552,12 +731,93 @@ True
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
     }
+    &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
+    &gt;&gt;&gt; d = idict(x=5, y=7)
+    &gt;&gt;&gt; d2 = d &gt;&gt; f
+    &gt;&gt;&gt; d2.show(colored=False)
+    {
+        &#34;z&#34;: &#34;→(x y)&#34;,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c = {}
+    &gt;&gt;&gt; d3 = d2 &gt;&gt; [c]
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: &#34;→(^ x y)&#34;,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c
+    {}
+    &gt;&gt;&gt; d3.z
+    12
+    &gt;&gt;&gt; c
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7}
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: 12,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c = {}
+    &gt;&gt;&gt; from idict import setup
+    &gt;&gt;&gt; setup(cache=c)
+    &gt;&gt;&gt; d3 = d &gt;&gt; f ^ Ø
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: &#34;→(^ x y)&#34;,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; c
+    {}
+    &gt;&gt;&gt; d3.z
+    12
+    &gt;&gt;&gt; c
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7}
+    &gt;&gt;&gt; d3.show(colored=False)
+    {
+        &#34;z&#34;: 12,
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;ids&#34;: {
+            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.identity = identity
-        from idict.frozenidentifieddict import FrozenIdentifiedDict
+        from idict.core.frozenidentifieddict import FrozenIdentifiedDict
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(_dictionary, id, ids, rnd, identity, _cloned, **kwargs)
 
     @property
@@ -591,7 +851,10 @@ True
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
+    def show(self, colored=True):
+        self.frozen.show(colored)
+
+    def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; print({&#34;x&#34;: 5} &gt;&gt; Idict(y=2))
         {
@@ -612,11 +875,13 @@ True
             }
         }»
         &#34;&#34;&#34;
+        if isinstance(left, list) or callable(left):
+            return iFunctionSpace(left, aop, self)
         clone = self.__class__(identity=self.identity)
         clone.frozen = left &gt;&gt; self.frozen
         return clone
 
-    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
+    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; d = Idict(x=2) &gt;&gt; (lambda x: {&#34;y&#34;: 2 * x})
         &gt;&gt;&gt; d.ids
@@ -626,8 +891,17 @@ True
         clone.frozen = self.frozen &gt;&gt; other
         return clone
 
-    def show(self, colored=True):
-        self.frozen.show(colored)</code></pre>
+    def __rxor__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
+        if isinstance(left, list) or callable(left):
+            return iFunctionSpace(left, cop, self)
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = left ^ self.frozen
+        return clone
+
+    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = self.frozen ^ other
+        return clone</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">

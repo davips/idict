@@ -51,57 +51,6 @@ from ldict.lazyval import LazyVal
 
 
 def cached(d, cache):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import idict
-    &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
-    &gt;&gt;&gt; d = idict(x=5, y=7)
-    &gt;&gt;&gt; d2 = d &gt;&gt; f
-    &gt;&gt;&gt; d2.show(colored=False)
-    {
-        &#34;z&#34;: &#34;→(x y)&#34;,
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }
-    &gt;&gt;&gt; c = {}
-    &gt;&gt;&gt; d3 = cached(d2, c)
-    &gt;&gt;&gt; d3.show(colored=False)
-    {
-        &#34;z&#34;: &#34;→(^ x y)&#34;,
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }
-    &gt;&gt;&gt; c
-    {}
-    &gt;&gt;&gt; d3.z
-    12
-    &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7}
-    &gt;&gt;&gt; d3.show(colored=False)
-    {
-        &#34;z&#34;: 12,
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }
-    &#34;&#34;&#34;
-
     def closure(id, ids, data, output_field):
 
         def func(**kwargs):
@@ -135,6 +84,13 @@ def cached(d, cache):
             lazy = LazyVal(field, closure(id, d.ids, d.data, field), deps, lazies)
             data[field] = lazy
             lazies.append(lazy)
+
+    # Eager saving when there are no lazies.
+    if len(lazies) == 0:
+        for k, v in list(data.items())[:-2]:
+            if k not in cache:
+                cache[k] = data[k]
+
     return d.clone(data)</code></pre>
 </details>
 </section>
@@ -149,111 +105,12 @@ def cached(d, cache):
 <span>def <span class="ident">cached</span></span>(<span>d, cache)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
-&gt;&gt;&gt; f = lambda x,y: {&quot;z&quot;:x+y}
-&gt;&gt;&gt; d = idict(x=5, y=7)
-&gt;&gt;&gt; d2 = d &gt;&gt; f
-&gt;&gt;&gt; d2.show(colored=False)
-{
-    &quot;z&quot;: &quot;→(x y)&quot;,
-    &quot;x&quot;: 5,
-    &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
-    }
-}
-&gt;&gt;&gt; c = {}
-&gt;&gt;&gt; d3 = cached(d2, c)
-&gt;&gt;&gt; d3.show(colored=False)
-{
-    &quot;z&quot;: &quot;→(^ x y)&quot;,
-    &quot;x&quot;: 5,
-    &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
-    }
-}
-&gt;&gt;&gt; c
-{}
-&gt;&gt;&gt; d3.z
-12
-&gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
-&gt;&gt;&gt; d3.show(colored=False)
-{
-    &quot;z&quot;: 12,
-    &quot;x&quot;: 5,
-    &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
-    }
-}
-</code></pre></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def cached(d, cache):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import idict
-    &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
-    &gt;&gt;&gt; d = idict(x=5, y=7)
-    &gt;&gt;&gt; d2 = d &gt;&gt; f
-    &gt;&gt;&gt; d2.show(colored=False)
-    {
-        &#34;z&#34;: &#34;→(x y)&#34;,
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }
-    &gt;&gt;&gt; c = {}
-    &gt;&gt;&gt; d3 = cached(d2, c)
-    &gt;&gt;&gt; d3.show(colored=False)
-    {
-        &#34;z&#34;: &#34;→(^ x y)&#34;,
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }
-    &gt;&gt;&gt; c
-    {}
-    &gt;&gt;&gt; d3.z
-    12
-    &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7}
-    &gt;&gt;&gt; d3.show(colored=False)
-    {
-        &#34;z&#34;: 12,
-        &#34;x&#34;: 5,
-        &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
-    }
-    &#34;&#34;&#34;
-
     def closure(id, ids, data, output_field):
 
         def func(**kwargs):
@@ -287,6 +144,13 @@ def cached(d, cache):
             lazy = LazyVal(field, closure(id, d.ids, d.data, field), deps, lazies)
             data[field] = lazy
             lazies.append(lazy)
+
+    # Eager saving when there are no lazies.
+    if len(lazies) == 0:
+        for k, v in list(data.items())[:-2]:
+            if k not in cache:
+                cache[k] = data[k]
+
     return d.clone(data)</code></pre>
 </details>
 </dd>

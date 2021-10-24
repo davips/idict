@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>idict.iempty API documentation</title>
+<title>idict.core.iempty API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>idict.iempty</code></h1>
+<h1 class="title">Module <code>idict.core.iempty</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -53,7 +53,7 @@ from ldict.core.base import AbstractLazyDict
 
 from idict.parameter.ilet import iLet
 from idict.core.idict_ import Idict
-from idict.frozenidentifieddict import FrozenIdentifiedDict
+from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
 
 class iEmpty(FrozenIdentifiedDict):
@@ -90,13 +90,13 @@ class iEmpty(FrozenIdentifiedDict):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="idict.iempty.iEmpty"><code class="flex name class">
+<dt id="idict.core.iempty.iEmpty"><code class="flex name class">
 <span>class <span class="ident">iEmpty</span></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Immutable lazy universally identified dict for serializable (picklable) pairs str-&gt;value</p>
 <p>Usage:</p>
-<pre><code class="language-python-repl">&gt;&gt;&gt; from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+<pre><code class="language-python-repl">&gt;&gt;&gt; idict = FrozenIdentifiedDict
 &gt;&gt;&gt; print(idict())
 {
     &quot;id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
@@ -172,7 +172,7 @@ True
 }
 &gt;&gt;&gt; d == d2
 True
-&gt;&gt;&gt; from idict import Ø
+&gt;&gt;&gt; from idict import Ø, setup
 &gt;&gt;&gt; d = idict() &gt;&gt; {&quot;x&quot;: &quot;more content&quot;}
 &gt;&gt;&gt; print(d)
 {
@@ -180,6 +180,86 @@ True
     &quot;id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
     &quot;ids&quot;: {
         &quot;x&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;
+    }
+}
+&gt;&gt;&gt; f = lambda x,y: {&quot;z&quot;:x+y}
+&gt;&gt;&gt; d = idict(x=5, y=7)
+&gt;&gt;&gt; d2 = d &gt;&gt; f
+&gt;&gt;&gt; d2.show(colored=False)
+{
+    &quot;z&quot;: &quot;→(x y)&quot;,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c = {}
+&gt;&gt;&gt; d3 = d2 &gt;&gt; [c]
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: &quot;→(^ x y)&quot;,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c
+{}
+&gt;&gt;&gt; d3.z
+12
+&gt;&gt;&gt; c
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: 12,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c = {}
+&gt;&gt;&gt; setup(cache=c)
+&gt;&gt;&gt; d3 = d &gt;&gt; f ^ Ø
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: &quot;→(^ x y)&quot;,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; c
+{}
+&gt;&gt;&gt; d3.z
+12
+&gt;&gt;&gt; c
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+&gt;&gt;&gt; d3.show(colored=False)
+{
+    &quot;z&quot;: 12,
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;ids&quot;: {
+        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
     }
 }
 </code></pre></div>
@@ -213,7 +293,7 @@ True
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="idict.frozenidentifieddict.FrozenIdentifiedDict" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a></li>
+<li><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a></li>
 <li>ldict.core.base.AbstractLazyDict</li>
 <li>collections.UserDict</li>
 <li>collections.abc.MutableMapping</li>
@@ -227,19 +307,19 @@ True
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="idict.iempty.iEmpty.hosh"><code class="name">var <span class="ident">hosh</span> : garoupa.hosh.Hosh</code></dt>
+<dt id="idict.core.iempty.iEmpty.hosh"><code class="name">var <span class="ident">hosh</span> : garoupa.hosh.Hosh</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="idict.frozenidentifieddict.FrozenIdentifiedDict" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a></b></code>:
+<li><code><b><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict">FrozenIdentifiedDict</a></b></code>:
 <ul class="hlist">
-<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.all" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.all">all</a></code></li>
-<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.asdict" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.asdict">asdict</a></code></li>
-<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.evaluate" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.evaluate">evaluate</a></code></li>
-<li><code><a title="idict.frozenidentifieddict.FrozenIdentifiedDict.show" href="frozenidentifieddict.html#idict.frozenidentifieddict.FrozenIdentifiedDict.show">show</a></code></li>
+<li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.all" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.all">all</a></code></li>
+<li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.asdict" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.asdict">asdict</a></code></li>
+<li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.evaluate" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.evaluate">evaluate</a></code></li>
+<li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.show" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.show">show</a></code></li>
 </ul>
 </li>
 </ul>
@@ -255,15 +335,15 @@ True
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="idict" href="index.html">idict</a></code></li>
+<li><code><a title="idict.core" href="index.html">idict.core</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="idict.iempty.iEmpty" href="#idict.iempty.iEmpty">iEmpty</a></code></h4>
+<h4><code><a title="idict.core.iempty.iEmpty" href="#idict.core.iempty.iEmpty">iEmpty</a></code></h4>
 <ul class="">
-<li><code><a title="idict.iempty.iEmpty.hosh" href="#idict.iempty.iEmpty.hosh">hosh</a></code></li>
+<li><code><a title="idict.core.iempty.iEmpty.hosh" href="#idict.core.iempty.iEmpty.hosh">hosh</a></code></li>
 </ul>
 </li>
 </ul>
