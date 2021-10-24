@@ -20,7 +20,7 @@ A lazy `dict` with universally unique deterministic identifiers.
 
 ### See also
 
-* identification package used by `idict`: [garoupa](https://pypi.org/project/garoupa)
+* identification package used by `idict`: [GaROUPa](https://pypi.org/project/garoupa)
 * only laziness, i.e., without the identification part: [ldict](https://pypi.org/project/ldict)
 
 ## Overview

@@ -317,8 +317,8 @@ class Idict(AbstractMutableLazyDict):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def show(self, colored=True):
-        self.frozen.show(colored)
+    def show(self, colored=True, width=None):
+        self.frozen.show(colored, width)
 
     def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
         &#34;&#34;&#34;
@@ -851,8 +851,8 @@ True
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def show(self, colored=True):
-        self.frozen.show(colored)
+    def show(self, colored=True, width=None):
+        self.frozen.show(colored, width)
 
     def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
         &#34;&#34;&#34;
@@ -993,7 +993,7 @@ def hoshes(self):
 </details>
 </dd>
 <dt id="idict.core.idict_.Idict.show"><code class="name flex">
-<span>def <span class="ident">show</span></span>(<span>self, colored=True)</span>
+<span>def <span class="ident">show</span></span>(<span>self, colored=True, width=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -1001,8 +1001,8 @@ def hoshes(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def show(self, colored=True):
-    self.frozen.show(colored)</code></pre>
+<pre><code class="python">def show(self, colored=True, width=None):
+    self.frozen.show(colored, width)</code></pre>
 </details>
 </dd>
 </dl>

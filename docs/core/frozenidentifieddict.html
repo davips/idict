@@ -53,17 +53,18 @@ from functools import reduce
 from operator import rshift as aop
 from operator import xor as cop
 from random import Random
-from typing import Dict, TypeVar, Union, Callable
+from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
 from ldict.frozenlazydict import FrozenLazyDict
 
-from idict.parameter.ilet import iLet
 from idict.config import GLOBAL
 from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
+from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached
 
 VT = TypeVar(&#34;VT&#34;)
@@ -364,7 +365,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def __hash__(self):
         return hash(self.hosh)
 
-    def show(self, colored=True):
+    def show(self, colored=True, width=None):
         r&#34;&#34;&#34;
         &gt;&gt;&gt; idict = FrozenIdentifiedDict
         &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
@@ -378,6 +379,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             }
         }
         &#34;&#34;&#34;
+        CustomJSONEncoder.width = width
         return print(self.all if colored else decolorize(self.all))
 
     def __repr__(self, all=False):
@@ -959,7 +961,7 @@ True
     def __hash__(self):
         return hash(self.hosh)
 
-    def show(self, colored=True):
+    def show(self, colored=True, width=None):
         r&#34;&#34;&#34;
         &gt;&gt;&gt; idict = FrozenIdentifiedDict
         &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
@@ -973,6 +975,7 @@ True
             }
         }
         &#34;&#34;&#34;
+        CustomJSONEncoder.width = width
         return print(self.all if colored else decolorize(self.all))
 
     def __repr__(self, all=False):
@@ -1241,7 +1244,7 @@ def asdict(self):
 </details>
 </dd>
 <dt id="idict.core.frozenidentifieddict.FrozenIdentifiedDict.show"><code class="name flex">
-<span>def <span class="ident">show</span></span>(<span>self, colored=True)</span>
+<span>def <span class="ident">show</span></span>(<span>self, colored=True, width=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; idict = FrozenIdentifiedDict
@@ -1260,7 +1263,7 @@ def asdict(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def show(self, colored=True):
+<pre><code class="python">def show(self, colored=True, width=None):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; idict = FrozenIdentifiedDict
     &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
@@ -1274,6 +1277,7 @@ def asdict(self):
         }
     }
     &#34;&#34;&#34;
+    CustomJSONEncoder.width = width
     return print(self.all if colored else decolorize(self.all))</code></pre>
 </details>
 </dd>
