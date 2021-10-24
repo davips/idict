@@ -22,18 +22,20 @@
 #
 import operator
 from functools import reduce
+from operator import rshift as aop
+from operator import xor as cop
 from random import Random
 from typing import Dict, TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-from ldict import FunctionSpace
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.frozenlazydict import FrozenLazyDict
 from ldict.parameter.abslet import AbstractLet
 
-from idict.appearance import decolorize, idict2txt
 from idict.config import GLOBAL
+from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
+from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.persistence.cached import cached
 
 VT = TypeVar("VT")
@@ -44,7 +46,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     Usage:
 
-    >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+    >>> idict = FrozenIdentifiedDict
     >>> print(idict())
     {
         "id": "0000000000000000000000000000000000000000",
@@ -120,7 +122,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     }
     >>> d == d2
     True
-    >>> from idict import Ø
+    >>> from idict import Ø, setup
     >>> d = idict() >> {"x": "more content"}
     >>> print(d)
     {
@@ -128,6 +130,88 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         "id": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff",
         "ids": {
             "x": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff"
+        }
+    }
+    >>> f = lambda x,y: {"z":x+y}
+    >>> d = idict(x=5, y=7)
+    >>> d2 = d >> f
+    >>> d2.show(colored=False)
+    {
+        "z": "→(x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c = {}
+    >>> d3 = d2 >> [c]
+    >>> d3.show(colored=False)
+    {
+        "z": "→(^ x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c
+    {}
+    >>> d3.z
+    12
+    >>> c
+    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+    >>> d3.show(colored=False)
+    {
+        "z": 12,
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c = {}
+    >>> setup(cache=c)
+    >>> d3 = d ^ f
+    >>> type(d)
+    >>> type(f)
+    >>> d3.show(colored=False)
+    {
+        "z": "→(^ x y)",
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> c
+    {}
+    >>> d3.z
+    12
+    >>> c
+    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7}
+    >>> d3.show(colored=False)
+    {
+        "z": 12,
+        "x": 5,
+        "y": 7,
+        "id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "ids": {
+            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
     }
     """
@@ -256,7 +340,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     def show(self, colored=True):
         r"""
-        >>> from idict.frozenidentifieddict import FrozenIdentifiedDict as idict
+        >>> idict = FrozenIdentifiedDict
         >>> idict(x=134124, y= 56).show(colored=False)
         {
             "x": 134124,
@@ -307,44 +391,49 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             return data == other
         raise TypeError(f"Cannot compare {type(self)} and {type(other)}")  # pragma: no cover
 
-    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
+    def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
+        if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
+            return FrozenIdentifiedDict(left) >> self
+        if isinstance(left, list) or callable(left):
+            return iFunctionSpace(left, aop, self)
         if isinstance(left, Random):
             return self.clone(rnd=left)
-        if isinstance(left, Dict) and not isinstance(left, AbstractLazyDict):
-            return FrozenIdentifiedDict(left) >> self
-        if callable(left):
-            return FunctionSpace(left, self)
         return NotImplemented
 
-    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
-        from idict import iEmpty
+    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
         from idict.core.rshift import application, ihandle_dict
-        if isinstance(other, iEmpty):
-            return self
+        if isinstance(other, dict):
+            return ihandle_dict(self, other)
         if isinstance(other, Random):
             return self.clone(rnd=other)
-        if isinstance(other, FunctionSpace):
-            return reduce(operator.rshift, (self,) + other.functions)
         if isinstance(other, AbstractLet):
-            return application(self, other, other.f, other.asdict.encode())
+            return application(self, other, other.f, str(other.config).encode())
         if callable(other):
             return application(self, other, other, self.identity)
-        if isinstance(other, Dict):
-            return ihandle_dict(self, other)
         if isinstance(other, list):
             d = self
             for cache in other:
                 d = cached(d, cache)
             return d
+        if isinstance(other, iFunctionSpace):
+            return reduce3(lambda a, op, b: op(a, b), (self, aop) + other.functions)
         return NotImplemented
 
-    def __rxor__(self, other: Union[Dict, Callable]):
-        if isinstance(other, Dict) and not isinstance(other, FrozenIdentifiedDict):
-            return FrozenIdentifiedDict(other) >= self
+    def __rxor__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
+        if isinstance(left, (dict, list, Random)) or callable(left):
+            return iFunctionSpace(left, cop, self)
         return NotImplemented
 
-    def __xor__(self, other: Union[Dict, Callable]):
-        # from ldict import Empty
-        # if isinstance(other, FunctionSpace) and isinstance(other[0], Empty):
-        #     raise EmptyNextToGlobalCache("Cannot use ø after ^ due to Python precedence rules.")
-        return cached(self, GLOBAL["cache"]) >> other
+    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+        if isinstance(other, (dict, Random, list)):
+            return iFunctionSpace(self, cop, other)
+        if callable(other) or isinstance(other, AbstractLet):
+            return cached(self, GLOBAL["cache"]) >> other
+        if isinstance(other, list):
+            d = self
+            for cache in other:
+                d = cached(d, cache)
+            return d
+        if isinstance(other, iFunctionSpace):
+            return reduce3(lambda a, op, b: op(a, b), (self, cop) + other.functions)
+        return NotImplemented

@@ -21,7 +21,7 @@
 #  time spent here.
 from .config import setup
 from .core.idict_ import Idict as idict
-from .iempty import iEmpty
+from idict.core.iempty import iEmpty
 from .parameter.ilet import iLet
 
 empty = iEmpty()

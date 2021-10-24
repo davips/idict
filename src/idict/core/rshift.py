@@ -28,7 +28,7 @@ from garoupa import Hosh
 
 from idict import iLet
 from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
-from idict.frozenidentifieddict import FrozenIdentifiedDict
+from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
 
 def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
@@ -165,7 +165,7 @@ def ihandle_dict(self, dictlike):
         }
     }
     """
-    from idict.frozenidentifieddict import FrozenIdentifiedDict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
     for k, v in dictlike.items():
@@ -173,7 +173,7 @@ def ihandle_dict(self, dictlike):
             clone = delete(clone, k)
         elif k not in ["id", "ids"]:
             if isinstance(v, iLet):
-                clone = application(clone, v, v.f, v.asdict.encode(), k)
+                clone = application(clone, v, v.f, str(v.config).encode(), k)
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)
             else:

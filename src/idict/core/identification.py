@@ -28,7 +28,7 @@ from garoupa import Hosh, UT40_4
 from ldict.exception import NoInputException
 from orjson import dumps
 
-from idict.compression import pack
+from idict.core.compression import pack
 
 
 def fhosh(f, version):
@@ -113,7 +113,7 @@ def blobs_hashes_hoshes(data, identity, ids):
         }
     }
     """
-    from idict.frozenidentifieddict import FrozenIdentifiedDict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from idict.core.idict_ import Idict
     blobs = {}
     hashes = {}

@@ -25,7 +25,7 @@ from ldict.core.base import AbstractLazyDict
 
 from idict.parameter.ilet import iLet
 from idict.core.idict_ import Idict
-from idict.frozenidentifieddict import FrozenIdentifiedDict
+from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
 
 class iEmpty(FrozenIdentifiedDict):

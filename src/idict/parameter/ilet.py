@@ -19,15 +19,17 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
+from functools import cached_property
+from operator import rshift as aop
+from operator import xor as cop
 from random import Random
+from typing import Union, Callable
 
-from ldict.parameter.abslet import AbstractLet
+from ldict.core.base import AbstractLazyDict
 from ldict.parameter.functionspace import FunctionSpace
 
-from idict.core.idict_ import Idict
 
-
-class iLet(AbstractLet):
+class iLet:
     """
     Set values or sampling intervals for parameterized functions
 
@@ -157,4 +159,39 @@ class iLet(AbstractLet):
     """
 
     def __init__(self, f, **kwargs):
-        super().__init__(f, Idict, **kwargs)
+        self.f = f
+        self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
+
+    @cached_property
+    def asdict(self):
+        return self.config
+
+    def __repr__(self):
+        return "λ" + str(self.config)
+
+    def __rrshift__(self, left: Union[dict, list, Random, Callable, 'iLet']):
+        if isinstance(left, dict):
+            from idict.core.idict_ import Idict
+            return Idict(left) >> self
+        if isinstance(left, (list, Random, Callable)):
+            from idict.parameter.ifunctionspace import iFunctionSpace
+            return iFunctionSpace(left, aop, self)
+        return NotImplemented
+
+    def __rshift__(self, other: Union[dict, list, Random, Callable, 'iLet', AbstractLazyDict]):
+        if isinstance(other, (dict, list, Random, Callable, iLet, AbstractLazyDict)):
+            from idict.parameter.ifunctionspace import iFunctionSpace
+            return iFunctionSpace(self, aop, other)
+        return NotImplemented
+
+    def __rxor__(self, left: Union[dict, list, Random, Callable, 'iLet']):
+        if isinstance(left, (dict, list, Random, Callable)):
+            from idict.parameter.ifunctionspace import iFunctionSpace
+            return iFunctionSpace(left, cop, self)
+        return NotImplemented
+
+    def __xor__(self, other: Union[dict, list, Random, Callable, 'iLet', AbstractLazyDict]):
+        if isinstance(other, (dict, list, Random, Callable, iLet, AbstractLazyDict)):
+            from idict.parameter.ifunctionspace import iFunctionSpace
+            return iFunctionSpace(self, cop, other)
+        return NotImplemented

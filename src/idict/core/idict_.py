@@ -22,14 +22,17 @@
 #
 import operator
 from functools import reduce
+from operator import rshift as aop
+from operator import xor as cop
 from random import Random
-from typing import Dict, TypeVar, Union, Callable
+from typing import TypeVar, Union, Callable
 
 from garoupa import ø40
-from ldict import FunctionSpace
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
 from ldict.parameter.abslet import AbstractLet
+
+from idict.parameter.ifunctionspace import iFunctionSpace
 
 VT = TypeVar("VT")
 
@@ -171,7 +174,7 @@ class Idict(AbstractMutableLazyDict):
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.identity = identity
-        from idict.frozenidentifieddict import FrozenIdentifiedDict
+        from idict.core.frozenidentifieddict import FrozenIdentifiedDict
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(_dictionary, id, ids, rnd, identity, _cloned, **kwargs)
 
     @property
@@ -205,7 +208,10 @@ class Idict(AbstractMutableLazyDict):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def __rrshift__(self, left: Union[Random, Dict, Callable, FunctionSpace]):
+    def show(self, colored=True):
+        self.frozen.show(colored)
+
+    def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
         """
         >>> print({"x": 5} >> Idict(y=2))
         {
@@ -226,11 +232,13 @@ class Idict(AbstractMutableLazyDict):
             }
         }»
         """
+        if isinstance(left, list) or callable(left):
+            return iFunctionSpace(left, aop, self)
         clone = self.__class__(identity=self.identity)
         clone.frozen = left >> self.frozen
         return clone
 
-    def __rshift__(self, other: Union[Dict, AbstractLazyDict, Callable, AbstractLet, FunctionSpace, Random]):
+    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
         """
         >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
         >>> d.ids
@@ -240,5 +248,14 @@ class Idict(AbstractMutableLazyDict):
         clone.frozen = self.frozen >> other
         return clone
 
-    def show(self, colored=True):
-        self.frozen.show(colored)
+    def __rxor__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
+        if isinstance(left, list) or callable(left):
+            return iFunctionSpace(left, cop, self)
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = left ^ self.frozen
+        return clone
+
+    def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, AbstractLet, iFunctionSpace, Random]):
+        clone = self.__class__(identity=self.identity)
+        clone.frozen = self.frozen ^ other
+        return clone
