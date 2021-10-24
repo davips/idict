@@ -20,14 +20,15 @@
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
 from functools import cached_property
+from json import dumps
 from operator import rshift as aop
 from operator import xor as cop
 from random import Random
 from typing import Union, Callable
 
 from ldict.core.base import AbstractLazyDict
+from ldict.customjson import CustomJSONEncoder
 from ldict.parameter.abslet import AbstractLet
-from ldict.parameter.functionspace import FunctionSpace
 
 
 class iLet(AbstractLet):
@@ -46,9 +47,9 @@ class iLet(AbstractLet):
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "id": "EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B",
+        "id": "tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S",
         "ids": {
-            "z": "YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B",
+            "z": "Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -59,9 +60,9 @@ class iLet(AbstractLet):
         "z": 7,
         "x": 5,
         "y": 7,
-        "id": "EeRXDcBiRneJFZEhOmpvOhPbUz-LzcpgoIkKP10B",
+        "id": "tsKSa7giKVTZC-s0qQVQy3nO923A59f327Jd.05S",
         "ids": {
-            "z": "YdFXcXZvVdSoGcj06JWP8VlXnK1MzcpgoIkKP10B",
+            "z": "Cv907SXx1qXi0b7LJar9VGVxFc6A59f327Jd.05S",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -73,9 +74,9 @@ class iLet(AbstractLet):
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "id": "qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN",
+        "id": "qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv",
         "ids": {
-            "z": "adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN",
+            "z": "Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -86,9 +87,9 @@ class iLet(AbstractLet):
         "z": 52,
         "x": 5,
         "y": 7,
-        "id": "qpPpHLgdd.4gDiRaaVAxvrVZGC.jEKWXeSzgXRsN",
+        "id": "qMwvsA4Ll3c7CLVlafJo6o3yP5dEhLZPNh9QkVgv",
         "ids": {
-            "z": "adrKf2tXiNmHzyvVtf6SR2sJaN2kEKWXeSzgXRsN",
+            "z": "Fir2J-MamdlPkZz4uBeJs.BhjggEhLZPNh9QkVgv",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -100,9 +101,9 @@ class iLet(AbstractLet):
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "id": "EZ0UWP-muXoeuN-1BPnRtJdGwOSYWVP8n81Tsn4K",
+        "id": "rrC7MbIwMVR4rAPcSEgs3kSbJnJuCMS1F1k3.VfQ",
         "ids": {
-            "z": "V5mOMy3Zrrywy-EMU9V9QkMp0ZVYWVP8n81Tsn4K",
+            "z": "XLoMEFGNqF52tTtX9.NMpXoXcyMuCMS1F1k3.VfQ",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
@@ -132,9 +133,9 @@ class iLet(AbstractLet):
         "z": "→(a x y)",
         "x": 3,
         "y": 8,
-        "id": "6o0JC4icwTJXeYH2CFgBvfV1fONYWVP8n81Tsn4K",
+        "id": "cKaaEdvxmlKTqsyOsb8eAJMl4aCuCMS1F1k3.VfQ",
         "ids": {
-            "z": "ArvV6lQlezPBNMRMNlVwPSvqONNYWVP8n81Tsn4K",
+            "z": "7WQXcDiKAKIjnfIwETM9UknKD9CuCMS1F1k3.VfQ",
             "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
             "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde"
         }
@@ -147,9 +148,9 @@ class iLet(AbstractLet):
         "z": "→(a x y)",
         "x": 3,
         "y": 8,
-        "id": "um3mdZK7S78uxdCOrbyGh2VQsKXXZ8.hgd0IScLe",
+        "id": "5Q7U4sm-DkzdUwGKY.9IrQRTpFLMIhJOSvWYkxt-",
         "ids": {
-            "z": "aj-1mwXeaJv3r3MwDTaCBFvd0KXXZ8.hgd0IScLe",
+            "z": "oOhgGymI3OqJG1As8IODMrsgZELMIhJOSvWYkxt-",
             "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
             "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde"
         }
@@ -161,37 +162,54 @@ class iLet(AbstractLet):
     def __init__(self, f, **kwargs):
         self.f = f
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
+        self.asdict = self.config
 
     @cached_property
-    def asdict(self):
-        return self.config
+    def bytes(self):
+        return dumps(self.config, sort_keys=True, cls=CustomJSONEncoder).encode()
 
     def __repr__(self):
         return "λ" + str(self.config)
 
     def __rrshift__(self, left: Union[dict, list, Random, Callable, 'iLet']):
+        """
+        >>> from idict.parameter.ilet import iLet
+        >>> {"x":5} >> iLet(lambda x:{"x": x**2}, x=5)
+        {
+            "x": "→(x)",
+            "id": "LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j",
+            "ids": "LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j"
+        }
+        >>> [1] >> iLet(lambda x:{"x": x**2}, x=5)
+        «^ × λ{'x': 5}»
+        """
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
             return Idict(left) >> self
         if isinstance(left, (list, Random, Callable)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(left, aop, self)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __rshift__(self, other: Union[dict, list, Random, Callable, 'iLet', AbstractLazyDict]):
+        """
+        >>> iLet(lambda x:{"x": x**2}, x=5) >> [1]
+        «λ{'x': 5} × ^»
+        """
+
         if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, aop, other)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __rxor__(self, left: Union[dict, list, Random, Callable, 'iLet']):
         if isinstance(left, (dict, list, Random, Callable)) and not isinstance(left, AbstractLazyDict):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(left, cop, self)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover
 
     def __xor__(self, other: Union[dict, list, Random, Callable, 'iLet', AbstractLazyDict]):
         if isinstance(other, (dict, list, Random, Callable, iLet)):
             from idict.parameter.ifunctionspace import iFunctionSpace
             return iFunctionSpace(self, cop, other)
-        return NotImplemented
+        return NotImplemented  # pragma: no cover

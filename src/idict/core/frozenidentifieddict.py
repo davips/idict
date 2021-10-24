@@ -369,7 +369,26 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return self.__repr__(all=True)
 
     def __eq__(self, other):
-        if isinstance(other, Dict):
+        """
+        >>> from idict import idict
+        >>> idict(x=3) == {"x": 3}
+        True
+        >>> idict(x=3) == {"x": 3, "id": idict(x=3).id}
+        True
+        >>> idict(x=3) == idict(x=3)
+        True
+        >>> idict(x=3) != {"x": 4}
+        True
+        >>> idict(x=3) != idict(x=4)
+        True
+        >>> idict(x=3) != {"y": 3}
+        True
+        >>> idict(x=3) != {"x": 3, "id": (~idict(x=3).hosh).id}
+        True
+        >>> idict(x=3) != idict(y=3)
+        True
+        """
+        if isinstance(other, dict):
             if "id" in other:
                 return self.id == other["id"]
             if list(self.keys())[:-2] != list(other.keys()):
@@ -382,7 +401,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 return False
             other.evaluate()
             return self.data == other.data
-        if isinstance(other, Dict):
+        if isinstance(other, dict):
             data = self.data.copy()
             del data["id"]
             del data["ids"]
@@ -405,7 +424,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         if isinstance(other, Random):
             return self.clone(rnd=other)
         if isinstance(other, iLet):
-            return application(self, other, other.f, str(other.config).encode())
+            return application(self, other, other.f, other.bytes)
         if callable(other):
             return application(self, other, other, self.identity)
         if isinstance(other, list):

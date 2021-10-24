@@ -26,7 +26,7 @@ from typing import Dict
 
 from garoupa import Hosh
 
-from idict import iLet
+from idict.parameter.ilet import iLet
 from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
@@ -173,7 +173,7 @@ def ihandle_dict(self, dictlike):
             clone = delete(clone, k)
         elif k not in ["id", "ids"]:
             if isinstance(v, iLet):
-                clone = application(clone, v, v.f, str(v.config).encode(), k)
+                clone = application(clone, v, v.f, v.bytes, k)
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)
             else:
