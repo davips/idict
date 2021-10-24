@@ -289,8 +289,8 @@ class Idict(AbstractMutableLazyDict):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
 
-    def show(self, colored=True):
-        self.frozen.show(colored)
+    def show(self, colored=True, width=None):
+        self.frozen.show(colored, width)
 
     def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
         """

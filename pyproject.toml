@@ -20,7 +20,7 @@ pdoc3 = "^0.10.0"
 pandas = { version = "^1.3.3", optional = true }
 SQLAlchemy = { version = "^1.4.26", optional = true }
 lz4 = "^3.1.3"
-ldict = "^3.211024.1"
+ldict = "^3.211024.2"
 
 [tool.poetry.dev-dependencies]
 autoreadme = "^0.2102.20"

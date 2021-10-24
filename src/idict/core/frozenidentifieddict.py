@@ -25,17 +25,18 @@ from functools import reduce
 from operator import rshift as aop
 from operator import xor as cop
 from random import Random
-from typing import Dict, TypeVar, Union, Callable
+from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
 from ldict.frozenlazydict import FrozenLazyDict
 
-from idict.parameter.ilet import iLet
 from idict.config import GLOBAL
 from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
+from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached
 
 VT = TypeVar("VT")
@@ -336,7 +337,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def __hash__(self):
         return hash(self.hosh)
 
-    def show(self, colored=True):
+    def show(self, colored=True, width=None):
         r"""
         >>> idict = FrozenIdentifiedDict
         >>> idict(x=134124, y= 56).show(colored=False)
@@ -350,6 +351,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             }
         }
         """
+        CustomJSONEncoder.width = width
         return print(self.all if colored else decolorize(self.all))
 
     def __repr__(self, all=False):
