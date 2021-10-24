@@ -277,9 +277,9 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     def __getattr__(self, item):
         if item == "all":
-            return self.all
+            return self.__repr__(all=True)
         if item == "asdict":
-            return self.asdict
+            return self.frozen.asdict
         return getattr(self.frozen, item)
 
     def __repr__(self):
@@ -330,7 +330,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> d.hosh ** key2id("d", d.identity.digits) == e.hoshes["d"]
         True
         """
-        return self.frozen.asdic
+        return self.frozen.asdict
 
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)

@@ -304,6 +304,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         del self.frozen[key]
 
     def __getattr__(self, item):
+        if item == &#34;all&#34;:
+            return self.__repr__(all=True)
+        if item == &#34;asdict&#34;:
+            return self.frozen.asdict
         return getattr(self.frozen, item)
 
     def __repr__(self):
@@ -354,7 +358,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
         True
         &#34;&#34;&#34;
-        return self.frozen.asdic
+        return self.frozen.asdict
 
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
@@ -900,6 +904,10 @@ True
         del self.frozen[key]
 
     def __getattr__(self, item):
+        if item == &#34;all&#34;:
+            return self.__repr__(all=True)
+        if item == &#34;asdict&#34;:
+            return self.frozen.asdict
         return getattr(self.frozen, item)
 
     def __repr__(self):
@@ -950,7 +958,7 @@ True
         &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
         True
         &#34;&#34;&#34;
-        return self.frozen.asdic
+        return self.frozen.asdict
 
     def clone(self, data=None, rnd=None, _cloned=None):
         cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
@@ -1156,7 +1164,7 @@ def asdict(self):
     &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
     True
     &#34;&#34;&#34;
-    return self.frozen.asdic</code></pre>
+    return self.frozen.asdict</code></pre>
 </details>
 </dd>
 </dl>
