@@ -83,49 +83,16 @@ class Disk(Cache):  # pragma:  cover
     &#34;&#34;&#34;
 
     def __init__(self, file):
-        super().__init__()
-        self.file = file
-
-    def __contains__(self, item):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return item in db
-
-    def __setitem__(self, key, value):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            db[key] = value
-
-    def __getitem__(self, key):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return db[key]
-
-    def __delitem__(self, key):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            del db[key]
-
-    def __len__(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return len(db)
+        super().__init__(lambda: shelve.open(file, &#34;c&#34;))
 
     def __iter__(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
+        with self.decorator() as db:
             keys = list(db.keys())
         return iter(keys)
 
-    def __repr__(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return &#34;Disk→&#34; + str(type(db))
-
-    def copy(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            dic = dict(db)
-            return dic
-
-    def keys(self):
-        return iter(self)
-
-    def items(self):
-        for k in self.keys():
-            yield k, self[k]</code></pre>
+    def __len__(self):
+        with self.decorator() as db:
+            return len(db)</code></pre>
 </details>
 </section>
 <section>
@@ -197,100 +164,22 @@ Disk→&lt;class 'shelve.DbfilenameShelf'&gt;
     &#34;&#34;&#34;
 
     def __init__(self, file):
-        super().__init__()
-        self.file = file
-
-    def __contains__(self, item):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return item in db
-
-    def __setitem__(self, key, value):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            db[key] = value
-
-    def __getitem__(self, key):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return db[key]
-
-    def __delitem__(self, key):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            del db[key]
-
-    def __len__(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return len(db)
+        super().__init__(lambda: shelve.open(file, &#34;c&#34;))
 
     def __iter__(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
+        with self.decorator() as db:
             keys = list(db.keys())
         return iter(keys)
 
-    def __repr__(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            return &#34;Disk→&#34; + str(type(db))
-
-    def copy(self):
-        with shelve.open(self.file, &#34;c&#34;) as db:
-            dic = dict(db)
-            return dic
-
-    def keys(self):
-        return iter(self)
-
-    def items(self):
-        for k in self.keys():
-            yield k, self[k]</code></pre>
+    def __len__(self):
+        with self.decorator() as db:
+            return len(db)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="idict.persistence.cache.Cache" href="cache.html#idict.persistence.cache.Cache">Cache</a></li>
 <li>abc.ABC</li>
 </ul>
-<h3>Methods</h3>
-<dl>
-<dt id="idict.persistence.disk.Disk.copy"><code class="name flex">
-<span>def <span class="ident">copy</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def copy(self):
-    with shelve.open(self.file, &#34;c&#34;) as db:
-        dic = dict(db)
-        return dic</code></pre>
-</details>
-</dd>
-<dt id="idict.persistence.disk.Disk.items"><code class="name flex">
-<span>def <span class="ident">items</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def items(self):
-    for k in self.keys():
-        yield k, self[k]</code></pre>
-</details>
-</dd>
-<dt id="idict.persistence.disk.Disk.keys"><code class="name flex">
-<span>def <span class="ident">keys</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def keys(self):
-    return iter(self)</code></pre>
-</details>
-</dd>
-</dl>
 </dd>
 </dl>
 </section>
@@ -310,11 +199,6 @@ Disk→&lt;class 'shelve.DbfilenameShelf'&gt;
 <ul>
 <li>
 <h4><code><a title="idict.persistence.disk.Disk" href="#idict.persistence.disk.Disk">Disk</a></code></h4>
-<ul class="">
-<li><code><a title="idict.persistence.disk.Disk.copy" href="#idict.persistence.disk.Disk.copy">copy</a></code></li>
-<li><code><a title="idict.persistence.disk.Disk.items" href="#idict.persistence.disk.Disk.items">items</a></code></li>
-<li><code><a title="idict.persistence.disk.Disk.keys" href="#idict.persistence.disk.Disk.keys">keys</a></code></li>
-</ul>
 </li>
 </ul>
 </li>

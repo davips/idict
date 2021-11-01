@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "idict"
-version = "0.211024.5"
+version = "0.211024.6"
 description = "Lazy dict with universally unique identifier for values"
 authors = ["davips <dpsabc@gmail.com>"]
 license = "GPL"
@@ -20,7 +20,7 @@ pdoc3 = "^0.10.0"
 pandas = { version = "^1.3.3", optional = true }
 SQLAlchemy = { version = "^1.4.26", optional = true }
 lz4 = "^3.1.3"
-ldict = "^3.211024.3"
+ldict = "^3.211031.1"
 
 [tool.poetry.dev-dependencies]
 autoreadme = "^0.2102.20"

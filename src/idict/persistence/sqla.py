@@ -19,92 +19,57 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from contextlib import contextmanager
-from typing import Dict, TypeVar
+from typing import TypeVar
 
-from sqlalchemy import Column, String, BLOB, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session
+from idict.core.compression import unpack, pack
+from idict.persistence.cache import Cache
+from idict.persistence.raw.sqladict import sqladict, check, Content
 
 VT = TypeVar("VT")
-Base = declarative_base()
 
 
-class Content(Base):
-    __tablename__ = 'content'
-    id = Column(String(40), primary_key=True)
-    blob = Column(BLOB)
+class SQLA(Cache):  # pragma:  cover
+    """Save to/retrieve from disk.
 
+    Based on built-in module shelve. Open and close at every transaction.
+    To keep open, please use shelve context manager itself.
 
-def check(key):
-    if not isinstance(key, str):
-        raise WrongKeyType(f"Key must be string, not {type(key)}.", key)
-
-
-@contextmanager
-def sqla(url="sqlite+pysqlite:///:memory:", debug=False):
-    engine = create_engine(url, echo=debug)
-    Base.metadata.create_all(engine)
-    with Session(engine) as session:
-        yield SQLAdict(session)
-
-
-class SQLAdict(Dict[str, VT]):
-    """
-    Dict-like persistence based on SQLAlchemy
-    
-    40-digit keys only
-
-    Usage:
-
-    >>> with sqla("sqlite+pysqlite:////tmp/sqla.db") as db:
-    ...     "x" in db
-    False
-    >>> with sqla("sqlite+pysqlite:////tmp/sqla.db") as db:
-    ...     db["x"] = b"5"
-    >>> with sqla("sqlite+pysqlite:////tmp/sqla.db") as db:
-    ...     "x" in db
+    >>> d = SQLA("sqlite+pysqlite:////tmp/sqla-doctest.db")
+    >>> d["x"] = 5
+    >>> d["x"]
+    5
+    >>> for k,v in d.items():
+    ...     print(k, v)
+    x 5
+    >>> "x" in d
     True
-    >>> with sqla("sqlite+pysqlite:////tmp/sqla.db") as db:
-    ...     db.x == b"5"
-    True
-    >>> with sqla("sqlite+pysqlite:////tmp/sqla.db") as db:
-    ...     del db["x"]
-    ...     "x" in db
+    >>> len(d)
+    1
+    >>> del d["x"]
+    >>> "x" in d
     False
-
+    >>> d
+    SQLA→<class 'idict.persistence.raw.sqladict.SQLAdict'>
     """
 
-    def __init__(self, session):
-        super().__init__()
-        self.session = session
-
-    def __contains__(self, key):
-        check(key)
-        return self.session.query(Content).all()
+    def __init__(self, url="sqlite+pysqlite:///:memory:", debug=False):
+        super().__init__(lambda: sqladict(url, debug))
 
     def __setitem__(self, key: str, value):
         check(key)
-        content = Content(id=key, blob=value)
-        self.session.add(content)
-        self.session.commit()
+        super().__setitem__(key, pack(value))
 
     def __getitem__(self, key):
         check(key)
-        return self.session.query(Content).get(key).blob
+        return unpack(super().__getitem__(key))
 
-    def __delitem__(self, key):
-        check(key)
-        content = self.session.query(Content).get(key)
-        self.session.delete(content)
-        self.session.commit()
+    def __iter__(self):
+        with self.decorator() as db:
+            return (c.id for c in db.session.query(Content).all())
 
-    def __getattr__(self, key):
-        check(key)
-        if key in self:
-            return self[key]
-        return self.__getattribute__(key)
+    def __len__(self):
+        with self.decorator() as db:
+            return db.session.query(Content).count()
 
-
-class WrongKeyType(Exception):
-    pass
+    def copy(self):
+        raise NotImplementedError

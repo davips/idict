@@ -23,7 +23,7 @@ from ldict.lazyval import LazyVal
 
 
 def cached(d, cache):
-    def closure(id, ids, data, output_field):
+    def closure(outputf, id, ids, data, output_fields):
 
         def func(**kwargs):
             # Try loading.
@@ -31,15 +31,19 @@ def cached(d, cache):
                 return cache[id]
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
-            result = None
+            result = k = None
             for k, fid in ids.items():
+                # TODO: all lazies are evaluated, but show() still shows deps as lazy.
+                #    Fortunately the dep is evaluated only once.
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
-                cache[ids[k]] = data[k]
-                if k == output_field:
-                    result = {k: data[k]}
+                cache[fid] = data[k]
+                if k == outputf:
+                    result = data[k]
             if result is None:
-                raise Exception(f"{output_field=} not in fields: {ids.items}")
+                if k is None:
+                    raise Exception(f"No ids")
+                raise Exception(f"{k=} not in output fields: {output_fields}. ids: {ids.items()}")
 
             # Return requested value.
             return result
@@ -47,18 +51,20 @@ def cached(d, cache):
         return func
 
     data = d.data.copy()
-    lazies = []
+    lazies = False
+    output_fields = []
     for field, v in list(data.items())[:-2]:
         if isinstance(v, LazyVal):
+            output_fields.append(field)
+            lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
             deps = {"^": None}
             deps.update(v.deps)
-            lazy = LazyVal(field, closure(id, d.ids, d.data, field), deps, lazies)
+            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields), deps, None)
             data[field] = lazy
-            lazies.append(lazy)
 
     # Eager saving when there are no lazies.
-    if len(lazies) == 0:
+    if not lazies:
         for k, v in list(data.items())[:-2]:
             if k not in cache:
                 cache[k] = data[k]

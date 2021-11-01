@@ -27,35 +27,41 @@ VT = TypeVar("VT")
 
 
 class Cache(ABC):  # pragma: no cover
+    def __init__(self, decorator):
+        self.decorator = decorator
 
-    @abstractmethod
     def __contains__(self, item):
-        raise NotImplementedError
+        with self.decorator() as db:
+            return item in db
 
-    @abstractmethod
     def __setitem__(self, key, value):
-        raise NotImplementedError
+        with self.decorator() as db:
+            db[key] = value
 
-    @abstractmethod
     def __getitem__(self, key):
-        raise NotImplementedError
+        with self.decorator() as db:
+            return db[key]
 
-    @abstractmethod
     def __delitem__(self, key):
-        raise NotImplementedError
-
-    @abstractmethod
-    def __len__(self):
-        raise NotImplementedError
+        with self.decorator() as db:
+            del db[key]
 
     @abstractmethod
     def __iter__(self):
         raise NotImplementedError
 
-    @abstractmethod
     def __repr__(self):
-        raise NotImplementedError
+        with self.decorator() as db:
+            return self.__class__.__name__ + "→" + str(type(db))
 
-    @abstractmethod
     def copy(self):
-        raise NotImplementedError
+        with self.decorator() as db:
+            dic = dict(db)
+            return dic
+
+    def keys(self):
+        return iter(self)
+
+    def items(self):
+        for k in self.keys():
+            yield k, self[k]
