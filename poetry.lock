@@ -175,6 +175,22 @@ python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
 docs = ["sphinx"]
 
 [[package]]
+name = "importlib-metadata"
+version = "4.8.2"
+description = "Read metadata from Python packages"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+zipp = ">=0.5"
+
+[package.extras]
+docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
+perf = ["ipython"]
+testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "packaging", "pep517", "pyfakefs", "flufl.flake8", "pytest-perf (>=0.9.2)", "pytest-black (>=0.3.7)", "pytest-mypy", "importlib-resources (>=1.3)"]
+
+[[package]]
 name = "iniconfig"
 version = "1.1.1"
 description = "iniconfig: brain-dead simple config-ini parsing"
@@ -290,7 +306,7 @@ tests = ["pytest (!=3.3.0)", "psutil", "pytest-cov"]
 
 [[package]]
 name = "mako"
-version = "1.1.5"
+version = "1.1.6"
 description = "A super-fast templating language that borrows the  best ideas from the existing templating languages."
 category = "main"
 optional = false
@@ -305,11 +321,14 @@ lingua = ["lingua"]
 
 [[package]]
 name = "markdown"
-version = "3.3.5"
+version = "3.3.6"
 description = "Python implementation of Markdown."
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[package.dependencies]
+importlib-metadata = {version = ">=4.4", markers = "python_version < \"3.10\""}
 
 [package.extras]
 testing = ["coverage", "pyyaml"]
@@ -746,6 +765,18 @@ python-versions = "*"
 click = "*"
 six = ">=1.10.0"
 
+[[package]]
+name = "zipp"
+version = "3.6.0"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
+
 [extras]
 full = ["pandas"]
 
@@ -928,6 +959,10 @@ greenlet = [
     {file = "greenlet-1.1.2-cp39-cp39-win_amd64.whl", hash = "sha256:013d61294b6cd8fe3242932c1c5e36e5d1db2c8afb58606c5a67efce62c1f5fd"},
     {file = "greenlet-1.1.2.tar.gz", hash = "sha256:e30f5ea4ae2346e62cedde8794a56858a67b878dd79f7df76a0767e356b1744a"},
 ]
+importlib-metadata = [
+    {file = "importlib_metadata-4.8.2-py3-none-any.whl", hash = "sha256:53ccfd5c134223e497627b9815d5030edf77d2ed573922f7a0b8f8bb81a1c100"},
+    {file = "importlib_metadata-4.8.2.tar.gz", hash = "sha256:75bdec14c397f528724c1bfd9709d660b33a4d2e77387a3358f20b848bb5e5fb"},
+]
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
@@ -1010,12 +1045,12 @@ lz4 = [
     {file = "lz4-3.1.3.tar.gz", hash = "sha256:081ef0a3b5941cb03127f314229a1c78bd70c9c220bb3f4dd80033e707feaa18"},
 ]
 mako = [
-    {file = "Mako-1.1.5-py2.py3-none-any.whl", hash = "sha256:6804ee66a7f6a6416910463b00d76a7b25194cd27f1918500c5bd7be2a088a23"},
-    {file = "Mako-1.1.5.tar.gz", hash = "sha256:169fa52af22a91900d852e937400e79f535496191c63712e3b9fda5a9bed6fc3"},
+    {file = "Mako-1.1.6-py2.py3-none-any.whl", hash = "sha256:afaf8e515d075b22fad7d7b8b30e4a1c90624ff2f3733a06ec125f5a5f043a57"},
+    {file = "Mako-1.1.6.tar.gz", hash = "sha256:4e9e345a41924a954251b95b4b28e14a301145b544901332e658907a7464b6b2"},
 ]
 markdown = [
-    {file = "Markdown-3.3.5-py3-none-any.whl", hash = "sha256:0d2d09f75cb8d1ffc6770c65c61770b23a61708101f47bda416a002a0edbc480"},
-    {file = "Markdown-3.3.5.tar.gz", hash = "sha256:26e9546bfbcde5fcd072bd8f612c9c1b6e2677cb8aadbdf65206674f46dde069"},
+    {file = "Markdown-3.3.6-py3-none-any.whl", hash = "sha256:9923332318f843411e9932237530df53162e29dc7a4e2b91e35764583c46c9a3"},
+    {file = "Markdown-3.3.6.tar.gz", hash = "sha256:76df8ae32294ec39dcf89340382882dfa12975f87f45c3ed1ecdb1e8cefc7006"},
 ]
 markupsafe = [
     {file = "MarkupSafe-2.0.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:d8446c54dc28c01e5a2dbac5a25f071f6653e6e40f3a8818e8b45d790fe6ef53"},
@@ -1485,4 +1520,8 @@ xdis = [
     {file = "xdis-6.0.3-py37-none-any.whl", hash = "sha256:d30c4293f28679749cbd801ea5ab04387cdc492c6012c01345f6e2043a70652a"},
     {file = "xdis-6.0.3-py38-none-any.whl", hash = "sha256:5ab1b6c582d7c44ebc1f2c3139277baa4ca5992093b7717a478a9205ae4f3776"},
     {file = "xdis-6.0.3.tar.gz", hash = "sha256:97f776f1c626e6a9e3babd0c1ca5ef394e879d7027580c54ae0be873122f9ebc"},
+]
+zipp = [
+    {file = "zipp-3.6.0-py3-none-any.whl", hash = "sha256:9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"},
+    {file = "zipp-3.6.0.tar.gz", hash = "sha256:71c644c5369f4a6e07636f0aa966270449561fcea2e3d6747b8d23efaa9d7832"},
 ]
