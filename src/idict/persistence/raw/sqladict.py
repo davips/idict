@@ -84,7 +84,7 @@ class SQLAdict(Dict[str, VT]):
 
     def __contains__(self, key):
         check(key)
-        return self.session.query(Content).all()
+        return self.session.query(Content).filter_by(id=key).first() is not None
 
     def __iter__(self):
         return (c.id for c in self.session.query(Content).all())

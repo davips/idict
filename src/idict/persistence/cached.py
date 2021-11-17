@@ -23,27 +23,29 @@ from ldict.lazyval import LazyVal
 
 
 def cached(d, cache):
-    def closure(outputf, id, ids, data, output_fields):
+    def closure(outputf, fid, fids, data, output_fields, id):
 
         def func(**kwargs):
             # Try loading.
-            if id in cache:
-                return cache[id]
+            if fid in cache:
+                return cache[fid]
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
             result = k = None
-            for k, fid in ids.items():
+            for k, v in fids.items():
                 # TODO: all lazies are evaluated, but show() still shows deps as lazy.
                 #    Fortunately the dep is evaluated only once.
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
-                cache[fid] = data[k]
+                cache[v] = data[k]
                 if k == outputf:
                     result = data[k]
             if result is None:
                 if k is None:
                     raise Exception(f"No ids")
-                raise Exception(f"{k=} not in output fields: {output_fields}. ids: {ids.items()}")
+                raise Exception(f"{k=} not in output fields: {output_fields}. ids: {fids.items()}")
+            if id not in cache:
+                cache[id] = {"ids": fids}
 
             # Return requested value.
             return result
@@ -60,7 +62,7 @@ def cached(d, cache):
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
             deps = {"^": None}
             deps.update(v.deps)
-            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields), deps, None)
+            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, None)
             data[field] = lazy
 
     # Eager saving when there are no lazies.
@@ -68,5 +70,7 @@ def cached(d, cache):
         for k, id in d.ids.items():
             if id not in cache:
                 cache[id] = data[k]
+        if id not in cache:
+            cache[id] = {"ids": d.ids}
 
     return d.clone(data)
