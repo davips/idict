@@ -65,8 +65,8 @@ def cached(d, cache):
 
     # Eager saving when there are no lazies.
     if not lazies:
-        for k, v in list(data.items())[:-2]:
-            if k not in cache:
-                cache[k] = data[k]
+        for k, id in d.ids.items():
+            if id not in cache:
+                cache[id] = data[k]
 
     return d.clone(data)
