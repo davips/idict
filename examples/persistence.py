@@ -8,7 +8,7 @@ from idict import idict, Ø, setup, let
 # The cache can be set globally.
 # It is as simple as a dict, or any dict-like implementation mapping str to serializable (pickable) content.
 # Implementations can, e.g., store data on disk or in a remote computer.
-from idict.persistence.raw.sqladict import sqla
+from idict.persistence.sqla import SQLA
 
 setup(cache={})
 
@@ -81,13 +81,17 @@ e.show()
 
 print()
 # Persisting to SQLAlchemy is also trivial.
-with sqla("sqlite+pysqlite:////tmp/sqla-example.db") as db:
-    d = idict(a=a, b=b) >> measure_distance
-    print(d)
-    d >>= db
-    print(db)
-    print(d)
+db = SQLA("sqlite+pysqlite:////tmp/sqla-example.db")
+d = idict(a=a, b=b) >> measure_distance
+print(d)
+d >>= [db]
+print(db)
+print(d)
+# ...
 
-    print(d.distance)
-    print(db)
+print(d.distance)
+print(list(db.items()))
+# ...
+
+
 

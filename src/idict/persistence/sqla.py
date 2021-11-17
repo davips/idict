@@ -29,7 +29,7 @@ VT = TypeVar("VT")
 
 
 class SQLA(Cache):  # pragma:  cover
-    """Save to/retrieve from disk.
+    """Save to/retrieve from SQLAlchemy.
 
     Based on built-in module shelve. Open and close at every transaction.
     To keep open, please use shelve context manager itself.
@@ -73,3 +73,6 @@ class SQLA(Cache):  # pragma:  cover
 
     def copy(self):
         raise NotImplementedError
+
+
+# TODO: fazer decorator sqla
