@@ -113,7 +113,7 @@ def key2id(key, digits):
     &#34;&#34;&#34;
     prefix = key[:2].ljust(2, &#34;-&#34;) + &#34;_&#34;
     rest = key[2:].encode().hex().ljust(digits - 3, &#34;0&#34;)
-    return prefix + rest[:digits - 3]
+    return prefix + rest[: digits - 3]
 
 
 def removal_id(template, field):
@@ -122,19 +122,19 @@ def removal_id(template, field):
     &gt;&gt;&gt; removal_id(ø.delete, &#34;myfield&#34;)
     &#39;--------------------.............myfield&#39;
     &#34;&#34;&#34;
-    return template[:-len(field)] + field
+    return template[: -len(field)] + field
 
 
 def blobs_hashes_hoshes(data, identity, ids):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
-    &gt;&gt;&gt; idict(x=1, y=2, z=3, ids={&#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;}).show(colored=False)
+    &gt;&gt;&gt; idict(x=1, y=2, z=3, _ids={&#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;}).show(colored=False)
     {
         &#34;x&#34;: 1,
         &#34;y&#34;: 2,
         &#34;z&#34;: 3,
-        &#34;id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
             &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd&#34;
@@ -143,6 +143,7 @@ def blobs_hashes_hoshes(data, identity, ids):
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from idict.core.idict_ import Idict
+
     blobs = {}
     hashes = {}
     hoshes = {}
@@ -171,13 +172,13 @@ def blobs_hashes_hoshes(data, identity, ids):
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
-&gt;&gt;&gt; idict(x=1, y=2, z=3, ids={&quot;y&quot;: &quot;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&quot;}).show(colored=False)
+&gt;&gt;&gt; idict(x=1, y=2, z=3, _ids={&quot;y&quot;: &quot;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&quot;}).show(colored=False)
 {
     &quot;x&quot;: 1,
     &quot;y&quot;: 2,
     &quot;z&quot;: 3,
-    &quot;id&quot;: &quot;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&quot;,
         &quot;y&quot;: &quot;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&quot;,
         &quot;z&quot;: &quot;YB_957059a720926191bcc15ebde8f1b960282cd&quot;
@@ -191,13 +192,13 @@ def blobs_hashes_hoshes(data, identity, ids):
 <pre><code class="python">def blobs_hashes_hoshes(data, identity, ids):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
-    &gt;&gt;&gt; idict(x=1, y=2, z=3, ids={&#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;}).show(colored=False)
+    &gt;&gt;&gt; idict(x=1, y=2, z=3, _ids={&#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;}).show(colored=False)
     {
         &#34;x&#34;: 1,
         &#34;y&#34;: 2,
         &#34;z&#34;: 3,
-        &#34;id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
             &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd&#34;
@@ -206,6 +207,7 @@ def blobs_hashes_hoshes(data, identity, ids):
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from idict.core.idict_ import Idict
+
     blobs = {}
     hashes = {}
     hoshes = {}
@@ -320,7 +322,7 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
     &#34;&#34;&#34;
     prefix = key[:2].ljust(2, &#34;-&#34;) + &#34;_&#34;
     rest = key[2:].encode().hex().ljust(digits - 3, &#34;0&#34;)
-    return prefix + rest[:digits - 3]</code></pre>
+    return prefix + rest[: digits - 3]</code></pre>
 </details>
 </dd>
 <dt id="idict.core.identification.removal_id"><code class="name flex">
@@ -341,7 +343,7 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
     &gt;&gt;&gt; removal_id(ø.delete, &#34;myfield&#34;)
     &#39;--------------------.............myfield&#39;
     &#34;&#34;&#34;
-    return template[:-len(field)] + field</code></pre>
+    return template[: -len(field)] + field</code></pre>
 </details>
 </dd>
 </dl>

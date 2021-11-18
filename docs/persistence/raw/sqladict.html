@@ -59,7 +59,7 @@ Base = declarative_base()
 
 
 class Content(Base):
-    __tablename__ = &#39;content&#39;
+    __tablename__ = &#34;content&#34;
     id = Column(String(40), primary_key=True)
     blob = Column(BLOB)
 
@@ -80,7 +80,7 @@ def sqladict(url=&#34;sqlite+pysqlite:///:memory:&#34;, debug=False):
 class SQLAdict(Dict[str, VT]):
     &#34;&#34;&#34;
     Dict-like persistence based on SQLAlchemy
-    
+
     40-digit keys only
 
     Usage:
@@ -216,7 +216,7 @@ for example, any mapped columns or relationships.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Content(Base):
-    __tablename__ = &#39;content&#39;
+    __tablename__ = &#34;content&#34;
     id = Column(String(40), primary_key=True)
     blob = Column(BLOB)</code></pre>
 </details>
@@ -313,7 +313,7 @@ False
 <pre><code class="python">class SQLAdict(Dict[str, VT]):
     &#34;&#34;&#34;
     Dict-like persistence based on SQLAlchemy
-    
+
     40-digit keys only
 
     Usage:

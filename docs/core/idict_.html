@@ -73,16 +73,16 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; print(idict())
     {
-        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
-        &#34;ids&#34;: {}
+        &#34;_id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;_ids&#34;: {}
     }
     &gt;&gt;&gt; d = idict(x=5, y=3)
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd&#34;
         }
@@ -93,8 +93,8 @@ class Idict(AbstractMutableLazyDict):
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -103,8 +103,8 @@ class Idict(AbstractMutableLazyDict):
     {
         &#34;y&#34;: 88,
         &#34;x&#34;: 123123,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;
         }
@@ -122,8 +122,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;z&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
@@ -134,14 +134,14 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; print(d2)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -153,8 +153,8 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
         }
     }
@@ -162,8 +162,8 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
         }
     }
@@ -175,8 +175,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;w&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
@@ -190,8 +190,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;w&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 77,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;x&#34;: &#34;JF_093a985add7d5e2d319c2662db9ae954648b4&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
@@ -205,8 +205,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;z&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -219,8 +219,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -231,14 +231,14 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -253,8 +253,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -265,14 +265,14 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -281,10 +281,13 @@ class Idict(AbstractMutableLazyDict):
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
-    def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
+    def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.identity = identity
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-        self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(_dictionary, id, ids, rnd, identity, _cloned, **kwargs)
+
+        self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(
+            _dictionary, _id, _ids, rnd, identity, _cloned, **kwargs
+        )
 
     @property
     def hosh(self):
@@ -326,8 +329,8 @@ class Idict(AbstractMutableLazyDict):
         {
             &#34;x&#34;: 5,
             &#34;y&#34;: 2,
-            &#34;id&#34;: &#34;o8_4c07d34b8963338a275e43bfcac9c37f125cc&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;o8_4c07d34b8963338a275e43bfcac9c37f125cc&#34;,
+            &#34;_ids&#34;: {
                 &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
                 &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;
             }
@@ -335,8 +338,8 @@ class Idict(AbstractMutableLazyDict):
         &gt;&gt;&gt; print((lambda x: {&#34;y&#34;: 5*x}) &gt;&gt; Idict(y=2))
         «λ × {
             &#34;y&#34;: 2,
-            &#34;id&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;,
+            &#34;_ids&#34;: {
                 &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;
             }
         }»
@@ -381,7 +384,7 @@ class Idict(AbstractMutableLazyDict):
 <dl>
 <dt id="idict.core.idict_.Idict"><code class="flex name class">
 <span>class <span class="ident">Idict</span></span>
-<span>(</span><span>id=None, ids=None, rnd=None, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m, **kwargs)</span>
+<span>(</span><span>rnd=None, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Mutable lazy identified dict for serializable (picklable) pairs str-&gt;value</p>
@@ -389,16 +392,16 @@ class Idict(AbstractMutableLazyDict):
 <pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
 &gt;&gt;&gt; print(idict())
 {
-    &quot;id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
-    &quot;ids&quot;: {}
+    &quot;_id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
+    &quot;_ids&quot;: {}
 }
 &gt;&gt;&gt; d = idict(x=5, y=3)
 &gt;&gt;&gt; print(d)
 {
     &quot;x&quot;: 5,
     &quot;y&quot;: 3,
-    &quot;id&quot;: &quot;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;XB_1cba4912b6826191bcc15ebde8f1b960282cd&quot;
     }
@@ -409,8 +412,8 @@ class Idict(AbstractMutableLazyDict):
 {
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
     }
@@ -419,8 +422,8 @@ class Idict(AbstractMutableLazyDict):
 {
     &quot;y&quot;: 88,
     &quot;x&quot;: 123123,
-    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_ids&quot;: {
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;,
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;
     }
@@ -438,8 +441,8 @@ True
     &quot;z&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&quot;,
+    &quot;_ids&quot;: {
         &quot;w&quot;: &quot;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&quot;,
         &quot;z&quot;: &quot;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&quot;,
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
@@ -450,14 +453,14 @@ True
 &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y}) &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
 &gt;&gt;&gt; dic = d.asdict  # Converting to dict
 &gt;&gt;&gt; dic
-{'x': 123123, 'y': 88, 'id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', 'ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
+{'x': 123123, 'y': 88, '_id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', '_ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
 &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
 &gt;&gt;&gt; print(d2)
 {
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
     }
@@ -469,8 +472,8 @@ True
 &gt;&gt;&gt; print(d)
 {
     &quot;x&quot;: &quot;more content&quot;,
-    &quot;id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;
     }
 }
@@ -478,8 +481,8 @@ True
 &gt;&gt;&gt; print(d)
 {
     &quot;x&quot;: &quot;more content&quot;,
-    &quot;id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;
     }
 }
@@ -491,8 +494,8 @@ dict_keys(['w', 'z', 'x', 'y'])
     &quot;w&quot;: &quot;→(x y)&quot;,
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5&quot;,
+    &quot;_ids&quot;: {
         &quot;w&quot;: &quot;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&quot;,
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
@@ -506,8 +509,8 @@ True
     &quot;w&quot;: &quot;→(x y)&quot;,
     &quot;x&quot;: 77,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5&quot;,
+    &quot;_ids&quot;: {
         &quot;w&quot;: &quot;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&quot;,
         &quot;x&quot;: &quot;JF_093a985add7d5e2d319c2662db9ae954648b4&quot;,
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
@@ -521,8 +524,8 @@ True
     &quot;z&quot;: &quot;→(x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -535,8 +538,8 @@ True
     &quot;z&quot;: &quot;→(^ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -547,14 +550,14 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -569,8 +572,8 @@ True
     &quot;z&quot;: &quot;→(^ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -581,14 +584,14 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -607,16 +610,16 @@ True
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; print(idict())
     {
-        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
-        &#34;ids&#34;: {}
+        &#34;_id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;_ids&#34;: {}
     }
     &gt;&gt;&gt; d = idict(x=5, y=3)
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd&#34;
         }
@@ -627,8 +630,8 @@ True
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -637,8 +640,8 @@ True
     {
         &#34;y&#34;: 88,
         &#34;x&#34;: 123123,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;
         }
@@ -656,8 +659,8 @@ True
         &#34;z&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
@@ -668,14 +671,14 @@ True
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; print(d2)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -687,8 +690,8 @@ True
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
         }
     }
@@ -696,8 +699,8 @@ True
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
         }
     }
@@ -709,8 +712,8 @@ True
         &#34;w&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
@@ -724,8 +727,8 @@ True
         &#34;w&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 77,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;x&#34;: &#34;JF_093a985add7d5e2d319c2662db9ae954648b4&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
@@ -739,8 +742,8 @@ True
         &#34;z&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -753,8 +756,8 @@ True
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -765,14 +768,14 @@ True
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -787,8 +790,8 @@ True
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -799,14 +802,14 @@ True
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -815,10 +818,13 @@ True
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
-    def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
+    def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.identity = identity
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-        self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(_dictionary, id, ids, rnd, identity, _cloned, **kwargs)
+
+        self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(
+            _dictionary, _id, _ids, rnd, identity, _cloned, **kwargs
+        )
 
     @property
     def hosh(self):
@@ -860,8 +866,8 @@ True
         {
             &#34;x&#34;: 5,
             &#34;y&#34;: 2,
-            &#34;id&#34;: &#34;o8_4c07d34b8963338a275e43bfcac9c37f125cc&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;o8_4c07d34b8963338a275e43bfcac9c37f125cc&#34;,
+            &#34;_ids&#34;: {
                 &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
                 &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;
             }
@@ -869,8 +875,8 @@ True
         &gt;&gt;&gt; print((lambda x: {&#34;y&#34;: 5*x}) &gt;&gt; Idict(y=2))
         «λ × {
             &#34;y&#34;: 2,
-            &#34;id&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;,
+            &#34;_ids&#34;: {
                 &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;
             }
         }»

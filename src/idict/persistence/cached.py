@@ -65,8 +65,10 @@ def cached(d, cache):
     data = d.data.copy()
     lazies = False
     output_fields = []
-    for field, v in list(data.items())[:-2]:
+    for field, v in list(data.items()):
         if isinstance(v, LazyVal):
+            if field.startswith("_"):
+                raise Exception("Cannot have a lazy value in a metafield.", field)
             output_fields.append(field)
             lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id

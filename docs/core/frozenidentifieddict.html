@@ -78,16 +78,16 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; idict = FrozenIdentifiedDict
     &gt;&gt;&gt; print(idict())
     {
-        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
-        &#34;ids&#34;: {}
+        &#34;_id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;_ids&#34;: {}
     }
     &gt;&gt;&gt; d = idict(x=5, y=3)
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd&#34;
         }
@@ -98,8 +98,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -108,8 +108,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     {
         &#34;y&#34;: 88,
         &#34;x&#34;: 123123,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;
         }
@@ -125,8 +125,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
@@ -137,14 +137,14 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; print(d2)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -156,8 +156,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
         }
     }
@@ -169,8 +169,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -183,8 +183,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -195,14 +195,14 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -216,8 +216,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -228,24 +228,25 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
     }
     &#34;&#34;&#34;
+
     hosh: Hosh
 
     # noinspection PyMissingConstructor
-    def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
+    def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.rnd = rnd
         self.identity = identity
         data = _dictionary or {}
@@ -262,35 +263,35 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             self.hoshes = _cloned[&#34;hoshes&#34;]
             self.hosh = _cloned[&#34;hosh&#34;]
         else:
-            if &#34;id&#34; in data:
-                if id:  # pragma: no cover
-                    raise Exception(f&#34;Conflicting &#39;id&#39; values: {id} and {data[&#39;id&#39;]}&#34;)
-                id = data.pop(&#34;id&#34;)
-            if &#34;ids&#34; in data:
-                if ids:  # pragma: no cover
-                    raise Exception(f&#34;Conflicting &#39;ids&#39; values: {ids} and {data[&#39;ids&#39;]}&#34;)
-                ids = data.pop(&#34;ids&#34;)
+            if &#34;_id&#34; in data:
+                if _id:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;id&#39; values: {_id} and {data[&#39;_id&#39;]}&#34;)
+                _id = data.pop(&#34;_id&#34;)
+            if &#34;_ids&#34; in data:
+                if _ids:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;ids&#39; values: {_ids} and {data[&#39;_ids&#39;]}&#34;)
+                _ids = data.pop(&#34;_ids&#34;)
 
-            if id:
-                if ids is None:  # pragma: no cover
-                    raise Exception(f&#34;&#39;id&#39; {id} given, but &#39;ids&#39; is missing.&#34;)
+            if _id:
+                if _ids is None:  # pragma: no cover
+                    raise Exception(f&#34;&#39;id&#39; {_id} given, but &#39;ids&#39; is missing.&#34;)
                 self.blobs = {}
                 self.hashes = {}
-                self.hoshes = {k: identity * v for k, v in ids.items()}
+                self.hoshes = {k: identity * v for k, v in _ids.items()}
             else:
-                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(data, identity, ids or {}).values()
+                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(data, identity, _ids or {}).values()
             self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
 
-        if id is None:
-            id = self.hosh.id
+        if _id is None:
+            _id = self.hosh.id
             try:
-                ids = {k: v.id for k, v in self.hoshes.items()}
+                _ids = {k: v.id for k, v in self.hoshes.items()}
             except:
                 print(self.hoshes)
                 raise Exception()
 
         # Store as an immutable lazy dict.
-        self.frozen = FrozenLazyDict(data, id=id, ids=ids, rnd=rnd)
+        self.frozen = FrozenLazyDict(data, _id=_id, _ids=_ids, rnd=rnd)
         self.data = self.frozen.data
         self.id = self.hosh.id
 
@@ -325,8 +326,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             &#34;y&#34;: &#34;→(x)&#34;,
             &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_ids&#34;: {
                 &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
                 &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
             }
@@ -336,8 +337,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             &#34;y&#34;: 5,
             &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_ids&#34;: {
                 &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
                 &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
             }
@@ -354,7 +355,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
         &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
         &gt;&gt;&gt; e.asdict
-        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;_id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
         &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
         True
         &#34;&#34;&#34;
@@ -376,8 +377,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             &#34;x&#34;: 134124,
             &#34;y&#34;: 56,
-            &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+            &#34;_ids&#34;: {
                 &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,
                 &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;
             }
@@ -398,7 +399,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &gt;&gt;&gt; from idict.core.appearance import decolorize
         &gt;&gt;&gt; out = idict(x=134124, y= 56).all
         &gt;&gt;&gt; decolorize(out)
-        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
+        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
         &#34;&#34;&#34;
         return self.__repr__(all=True)
 
@@ -407,7 +408,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &gt;&gt;&gt; from idict import idict
         &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3}
         True
-        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;id&#34;: idict(x=3).id}
+        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;_id&#34;: idict(x=3).id}
         True
         &gt;&gt;&gt; idict(x=3) == idict(x=3)
         True
@@ -417,17 +418,18 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         True
         &gt;&gt;&gt; idict(x=3) != {&#34;y&#34;: 3}
         True
-        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;id&#34;: (~idict(x=3).hosh).id}
+        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;_id&#34;: (~idict(x=3).hosh).id}
         True
         &gt;&gt;&gt; idict(x=3) != idict(y=3)
         True
         &#34;&#34;&#34;
         if isinstance(other, dict):
-            if &#34;id&#34; in other:
-                return self.id == other[&#34;id&#34;]
+            if &#34;_id&#34; in other:
+                return self.id == other[&#34;_id&#34;]
             if list(self.keys())[:-2] != list(other.keys()):
                 return False
         from idict.core.idict_ import Idict
+
         if isinstance(other, (FrozenIdentifiedDict, Idict)):
             return self.hosh == other.hosh
         if isinstance(other, AbstractLazyDict):
@@ -437,8 +439,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             return self.data == other.data
         if isinstance(other, dict):
             data = self.data.copy()
-            del data[&#34;id&#34;]
-            del data[&#34;ids&#34;]
+            del data[&#34;_id&#34;]
+            del data[&#34;_ids&#34;]
             return data == other
         raise TypeError(f&#34;Cannot compare {type(self)} and {type(other)}&#34;)  # pragma: no cover
 
@@ -453,6 +455,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         from idict.core.rshift import application, ihandle_dict
+
         if isinstance(other, dict):
             return ihandle_dict(self, other)
         if isinstance(other, Random):
@@ -494,7 +497,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 <dl>
 <dt id="idict.core.frozenidentifieddict.FrozenIdentifiedDict"><code class="flex name class">
 <span>class <span class="ident">FrozenIdentifiedDict</span></span>
-<span>(</span><span>id=None, ids=None, rnd=None, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m, **kwargs)</span>
+<span>(</span><span>rnd=None, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Immutable lazy universally identified dict for serializable (picklable) pairs str-&gt;value</p>
@@ -502,16 +505,16 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 <pre><code class="language-python-repl">&gt;&gt;&gt; idict = FrozenIdentifiedDict
 &gt;&gt;&gt; print(idict())
 {
-    &quot;id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
-    &quot;ids&quot;: {}
+    &quot;_id&quot;: &quot;0000000000000000000000000000000000000000&quot;,
+    &quot;_ids&quot;: {}
 }
 &gt;&gt;&gt; d = idict(x=5, y=3)
 &gt;&gt;&gt; print(d)
 {
     &quot;x&quot;: 5,
     &quot;y&quot;: 3,
-    &quot;id&quot;: &quot;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;XB_1cba4912b6826191bcc15ebde8f1b960282cd&quot;
     }
@@ -522,8 +525,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 {
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
     }
@@ -532,8 +535,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 {
     &quot;y&quot;: 88,
     &quot;x&quot;: 123123,
-    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_ids&quot;: {
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;,
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;
     }
@@ -549,8 +552,8 @@ True
     &quot;z&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&quot;,
+    &quot;_ids&quot;: {
         &quot;w&quot;: &quot;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&quot;,
         &quot;z&quot;: &quot;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&quot;,
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
@@ -561,14 +564,14 @@ True
 &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y}) &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
 &gt;&gt;&gt; dic = d.asdict  # Converting to dict
 &gt;&gt;&gt; dic
-{'x': 123123, 'y': 88, 'id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', 'ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
+{'x': 123123, 'y': 88, '_id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', '_ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
 &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
 &gt;&gt;&gt; print(d2)
 {
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
         &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
     }
@@ -580,8 +583,8 @@ True
 &gt;&gt;&gt; print(d)
 {
     &quot;x&quot;: &quot;more content&quot;,
-    &quot;id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;
     }
 }
@@ -593,8 +596,8 @@ True
     &quot;z&quot;: &quot;→(x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -607,8 +610,8 @@ True
     &quot;z&quot;: &quot;→(^ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -619,14 +622,14 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -640,8 +643,8 @@ True
     &quot;z&quot;: &quot;→(^ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -652,14 +655,14 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_ids&quot;: {
         &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
@@ -678,16 +681,16 @@ True
     &gt;&gt;&gt; idict = FrozenIdentifiedDict
     &gt;&gt;&gt; print(idict())
     {
-        &#34;id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
-        &#34;ids&#34;: {}
+        &#34;_id&#34;: &#34;0000000000000000000000000000000000000000&#34;,
+        &#34;_ids&#34;: {}
     }
     &gt;&gt;&gt; d = idict(x=5, y=3)
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd&#34;
         }
@@ -698,8 +701,8 @@ True
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -708,8 +711,8 @@ True
     {
         &#34;y&#34;: 88,
         &#34;x&#34;: 123123,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;
         }
@@ -725,8 +728,8 @@ True
         &#34;z&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
             &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
@@ -737,14 +740,14 @@ True
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; print(d2)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
             &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
         }
@@ -756,8 +759,8 @@ True
     &gt;&gt;&gt; print(d)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
         }
     }
@@ -769,8 +772,8 @@ True
         &#34;z&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -783,8 +786,8 @@ True
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -795,14 +798,14 @@ True
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -816,8 +819,8 @@ True
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
@@ -828,24 +831,25 @@ True
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_ids&#34;: {
             &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
     }
     &#34;&#34;&#34;
+
     hosh: Hosh
 
     # noinspection PyMissingConstructor
-    def __init__(self, /, _dictionary=None, id=None, ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
+    def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         self.rnd = rnd
         self.identity = identity
         data = _dictionary or {}
@@ -862,35 +866,35 @@ True
             self.hoshes = _cloned[&#34;hoshes&#34;]
             self.hosh = _cloned[&#34;hosh&#34;]
         else:
-            if &#34;id&#34; in data:
-                if id:  # pragma: no cover
-                    raise Exception(f&#34;Conflicting &#39;id&#39; values: {id} and {data[&#39;id&#39;]}&#34;)
-                id = data.pop(&#34;id&#34;)
-            if &#34;ids&#34; in data:
-                if ids:  # pragma: no cover
-                    raise Exception(f&#34;Conflicting &#39;ids&#39; values: {ids} and {data[&#39;ids&#39;]}&#34;)
-                ids = data.pop(&#34;ids&#34;)
+            if &#34;_id&#34; in data:
+                if _id:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;id&#39; values: {_id} and {data[&#39;_id&#39;]}&#34;)
+                _id = data.pop(&#34;_id&#34;)
+            if &#34;_ids&#34; in data:
+                if _ids:  # pragma: no cover
+                    raise Exception(f&#34;Conflicting &#39;ids&#39; values: {_ids} and {data[&#39;_ids&#39;]}&#34;)
+                _ids = data.pop(&#34;_ids&#34;)
 
-            if id:
-                if ids is None:  # pragma: no cover
-                    raise Exception(f&#34;&#39;id&#39; {id} given, but &#39;ids&#39; is missing.&#34;)
+            if _id:
+                if _ids is None:  # pragma: no cover
+                    raise Exception(f&#34;&#39;id&#39; {_id} given, but &#39;ids&#39; is missing.&#34;)
                 self.blobs = {}
                 self.hashes = {}
-                self.hoshes = {k: identity * v for k, v in ids.items()}
+                self.hoshes = {k: identity * v for k, v in _ids.items()}
             else:
-                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(data, identity, ids or {}).values()
+                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(data, identity, _ids or {}).values()
             self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
 
-        if id is None:
-            id = self.hosh.id
+        if _id is None:
+            _id = self.hosh.id
             try:
-                ids = {k: v.id for k, v in self.hoshes.items()}
+                _ids = {k: v.id for k, v in self.hoshes.items()}
             except:
                 print(self.hoshes)
                 raise Exception()
 
         # Store as an immutable lazy dict.
-        self.frozen = FrozenLazyDict(data, id=id, ids=ids, rnd=rnd)
+        self.frozen = FrozenLazyDict(data, _id=_id, _ids=_ids, rnd=rnd)
         self.data = self.frozen.data
         self.id = self.hosh.id
 
@@ -925,8 +929,8 @@ True
         {
             &#34;y&#34;: &#34;→(x)&#34;,
             &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_ids&#34;: {
                 &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
                 &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
             }
@@ -936,8 +940,8 @@ True
         {
             &#34;y&#34;: 5,
             &#34;x&#34;: 3,
-            &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_ids&#34;: {
                 &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
                 &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
             }
@@ -954,7 +958,7 @@ True
         &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
         &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
         &gt;&gt;&gt; e.asdict
-        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;_id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
         &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
         True
         &#34;&#34;&#34;
@@ -976,8 +980,8 @@ True
         {
             &#34;x&#34;: 134124,
             &#34;y&#34;: 56,
-            &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
-            &#34;ids&#34;: {
+            &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+            &#34;_ids&#34;: {
                 &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,
                 &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;
             }
@@ -998,7 +1002,7 @@ True
         &gt;&gt;&gt; from idict.core.appearance import decolorize
         &gt;&gt;&gt; out = idict(x=134124, y= 56).all
         &gt;&gt;&gt; decolorize(out)
-        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
+        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
         &#34;&#34;&#34;
         return self.__repr__(all=True)
 
@@ -1007,7 +1011,7 @@ True
         &gt;&gt;&gt; from idict import idict
         &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3}
         True
-        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;id&#34;: idict(x=3).id}
+        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;_id&#34;: idict(x=3).id}
         True
         &gt;&gt;&gt; idict(x=3) == idict(x=3)
         True
@@ -1017,17 +1021,18 @@ True
         True
         &gt;&gt;&gt; idict(x=3) != {&#34;y&#34;: 3}
         True
-        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;id&#34;: (~idict(x=3).hosh).id}
+        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;_id&#34;: (~idict(x=3).hosh).id}
         True
         &gt;&gt;&gt; idict(x=3) != idict(y=3)
         True
         &#34;&#34;&#34;
         if isinstance(other, dict):
-            if &#34;id&#34; in other:
-                return self.id == other[&#34;id&#34;]
+            if &#34;_id&#34; in other:
+                return self.id == other[&#34;_id&#34;]
             if list(self.keys())[:-2] != list(other.keys()):
                 return False
         from idict.core.idict_ import Idict
+
         if isinstance(other, (FrozenIdentifiedDict, Idict)):
             return self.hosh == other.hosh
         if isinstance(other, AbstractLazyDict):
@@ -1037,8 +1042,8 @@ True
             return self.data == other.data
         if isinstance(other, dict):
             data = self.data.copy()
-            del data[&#34;id&#34;]
-            del data[&#34;ids&#34;]
+            del data[&#34;_id&#34;]
+            del data[&#34;_ids&#34;]
             return data == other
         raise TypeError(f&#34;Cannot compare {type(self)} and {type(other)}&#34;)  # pragma: no cover
 
@@ -1053,6 +1058,7 @@ True
 
     def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         from idict.core.rshift import application, ihandle_dict
+
         if isinstance(other, dict):
             return ihandle_dict(self, other)
         if isinstance(other, Random):
@@ -1115,7 +1121,7 @@ True
 &gt;&gt;&gt; from idict.core.appearance import decolorize
 &gt;&gt;&gt; out = idict(x=134124, y= 56).all
 &gt;&gt;&gt; decolorize(out)
-'{\n    &quot;x&quot;: 134124,\n    &quot;y&quot;: 56,\n    &quot;id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,\n    &quot;ids&quot;: {\n        &quot;x&quot;: &quot;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&quot;,\n        &quot;y&quot;: &quot;Zs_c473399e77e6c2d2f69914891a488a3732bb0&quot;\n    }\n}'
+'{\n    &quot;x&quot;: 134124,\n    &quot;y&quot;: 56,\n    &quot;_id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&quot;,\n        &quot;y&quot;: &quot;Zs_c473399e77e6c2d2f69914891a488a3732bb0&quot;\n    }\n}'
 </code></pre></div>
 <details class="source">
 <summary>
@@ -1130,7 +1136,7 @@ def all(self):
     &gt;&gt;&gt; from idict.core.appearance import decolorize
     &gt;&gt;&gt; out = idict(x=134124, y= 56).all
     &gt;&gt;&gt; decolorize(out)
-    &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;\n    }\n}&#39;
     &#34;&#34;&#34;
     return self.__repr__(all=True)</code></pre>
 </details>
@@ -1143,7 +1149,7 @@ def all(self):
 'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35'
 &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
 &gt;&gt;&gt; e.asdict
-{'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5, 'id': 'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35', 'ids': {'x': 'WB_e55a47230d67db81bcc1aecde8f1b950282cd', 'y': '0U_e2a86ff72e226d5365aea336044f7b4270977'}}, 'id': 'AN_650bae25143e28c5489bfbc806f5fb55c6fdc', 'ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': '8s_1ccd1655bae1d9e91270e5eddc31351eb8b35'}}
+{'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5, '_id': 'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35', '_ids': {'x': 'WB_e55a47230d67db81bcc1aecde8f1b950282cd', 'y': '0U_e2a86ff72e226d5365aea336044f7b4270977'}}, '_id': 'AN_650bae25143e28c5489bfbc806f5fb55c6fdc', '_ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': '8s_1ccd1655bae1d9e91270e5eddc31351eb8b35'}}
 &gt;&gt;&gt; d.hosh ** key2id(&quot;d&quot;, d.identity.digits) == e.hoshes[&quot;d&quot;]
 True
 </code></pre></div>
@@ -1160,7 +1166,7 @@ def asdict(self):
     &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
     &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
     &gt;&gt;&gt; e.asdict
-    {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+    {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;_id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
     &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
     True
     &#34;&#34;&#34;
@@ -1198,8 +1204,8 @@ def asdict(self):
 {
     &quot;y&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 3,
-    &quot;id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
+    &quot;_ids&quot;: {
         &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
     }
@@ -1209,8 +1215,8 @@ def asdict(self):
 {
     &quot;y&quot;: 5,
     &quot;x&quot;: 3,
-    &quot;id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
+    &quot;_ids&quot;: {
         &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
     }
@@ -1230,8 +1236,8 @@ def asdict(self):
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
@@ -1241,8 +1247,8 @@ def asdict(self):
     {
         &#34;y&#34;: 5,
         &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
@@ -1260,8 +1266,8 @@ def asdict(self):
 {
     &quot;x&quot;: 134124,
     &quot;y&quot;: 56,
-    &quot;id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&quot;,
         &quot;y&quot;: &quot;Zs_c473399e77e6c2d2f69914891a488a3732bb0&quot;
     }
@@ -1278,8 +1284,8 @@ def asdict(self):
     {
         &#34;x&#34;: 134124,
         &#34;y&#34;: 56,
-        &#34;id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe&#34;,
             &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0&#34;
         }

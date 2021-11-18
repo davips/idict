@@ -53,10 +53,9 @@ from functools import reduce
 from typing import Dict
 
 from garoupa import Hosh
-
-from idict.parameter.ilet import iLet
-from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
+from idict.parameter.ilet import iLet
 
 
 def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
@@ -71,8 +70,8 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
@@ -80,7 +79,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     &gt;&gt;&gt; d2.hosh / f.id == d.id
     True
     &#34;&#34;&#34;
-    f_hosh = f.id if hasattr(f,&#34;id&#34;) else fhosh(f, self.identity.version)
+    f_hosh = f.id if hasattr(f, &#34;id&#34;) else fhosh(f, self.identity.version)
     f_hosh_full = config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
     if output:
         frozen = self.frozen &gt;&gt; {output: other}
@@ -92,7 +91,12 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     ufu_1 = lambda: solve(self.hoshes, outputs, uf)
 
     # Reorder items.
-    newdata, newhoshes, newblobs, newhashes, = {}, {}, self.blobs.copy(), self.hashes.copy()
+    newdata, newhoshes, newblobs, newhashes, = (
+        {},
+        {},
+        self.blobs.copy(),
+        self.hashes.copy(),
+    )
     noutputs = len(outputs)
     if noutputs == 1:
         k = outputs[0]
@@ -129,7 +133,11 @@ def delete(self, k):
     uf = self.hosh * f_hosh
     newdata = self.data.copy()
     newdata[k] = None
-    newhoshes, newblobs, newhashes, = self.hoshes.copy(), self.blobs.copy(), self.hashes.copy()
+    newhoshes, newblobs, newhashes, = (
+        self.hoshes.copy(),
+        self.blobs.copy(),
+        self.hashes.copy(),
+    )
     newhoshes[k] = placeholder(k, f_hosh, self.identity, self.hoshes)
     if k in newblobs:
         del newblobs[k]
@@ -148,8 +156,8 @@ def ihandle_dict(self, dictlike):
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;id&#34;: &#34;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
             &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
@@ -162,8 +170,8 @@ def ihandle_dict(self, dictlike):
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;id&#34;: &#34;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
@@ -176,8 +184,8 @@ def ihandle_dict(self, dictlike):
         &#34;x&#34;: 55555,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;id&#34;: &#34;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
             &#34;x&#34;: &#34;T7_37f7565449f62df2f074952f6484ea6581b77&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
@@ -187,19 +195,20 @@ def ihandle_dict(self, dictlike):
     &gt;&gt;&gt; print(ihandle_dict(idict(), {&#34;x&#34;: 1555}))
     {
         &#34;x&#34;: 1555,
-        &#34;id&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;
         }
     }
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
+
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
     for k, v in dictlike.items():
         if v is None:
             clone = delete(clone, k)
-        elif k not in [&#34;id&#34;, &#34;ids&#34;]:
+        elif k not in [&#34;_id&#34;, &#34;_ids&#34;]:
             if isinstance(v, iLet):
                 clone = application(clone, v, v.f, v.bytes, k)
             elif callable(v):
@@ -212,10 +221,12 @@ def ihandle_dict(self, dictlike):
                     clone.hashes[k] = internals[&#34;hashes&#34;][k]
                 clone.hoshes[k] = internals[&#34;hoshes&#34;][k]
                 internals[&#34;blobs&#34;], internals[&#34;hashes&#34;], internals[&#34;hoshes&#34;] = clone.blobs, clone.hashes, clone.hoshes
-                hosh = reduce(operator.mul, [self.identity] + list(self.hoshes.values()))
+                hosh = reduce(
+                    operator.mul, [self.identity] + [v for k, v in self.hoshes.items() if not k.startswith(&#34;_&#34;)]
+                )
                 internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
-                del clone.data[&#34;id&#34;]
-                del clone.data[&#34;ids&#34;]
+                del clone.data[&#34;_id&#34;]
+                del clone.data[&#34;_ids&#34;]
                 clone = FrozenIdentifiedDict(clone.data, rnd=clone.rnd, _cloned=internals, **{k: v})
     return clone
 
@@ -240,8 +251,8 @@ def solve(hoshes, output, uf: Hosh):
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
     }
@@ -249,8 +260,8 @@ def solve(hoshes, output, uf: Hosh):
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: &#34;→(x)&#34;,
-        &#34;id&#34;: &#34;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&#34;
         }
     }
@@ -275,8 +286,8 @@ def solve(hoshes, output, uf: Hosh):
         &#34;y&#34;: &#34;→(w x y)&#34;,
         &#34;w&#34;: 2,
         &#34;z&#34;: 1,
-        &#34;id&#34;: &#34;4k236R0oT.PI6-c2KLgmahWdNOzzkEFdqK4B1zjh&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;4k236R0oT.PI6-c2KLgmahWdNOzzkEFdqK4B1zjh&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji&#34;,
             &#34;y&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
             &#34;w&#34;: &#34;ng_5dad44381c5ac2a4c1bfe594d68a486791c45&#34;,
@@ -316,8 +327,8 @@ def rho(c, digits):
 {
     &quot;y&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 3,
-    &quot;id&quot;: &quot;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&quot;,
+    &quot;_ids&quot;: {
         &quot;y&quot;: &quot;WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff&quot;,
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
     }
@@ -341,8 +352,8 @@ True
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&#34;,
+        &#34;_ids&#34;: {
             &#34;y&#34;: &#34;WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff&#34;,
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
@@ -350,7 +361,7 @@ True
     &gt;&gt;&gt; d2.hosh / f.id == d.id
     True
     &#34;&#34;&#34;
-    f_hosh = f.id if hasattr(f,&#34;id&#34;) else fhosh(f, self.identity.version)
+    f_hosh = f.id if hasattr(f, &#34;id&#34;) else fhosh(f, self.identity.version)
     f_hosh_full = config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
     if output:
         frozen = self.frozen &gt;&gt; {output: other}
@@ -362,7 +373,12 @@ True
     ufu_1 = lambda: solve(self.hoshes, outputs, uf)
 
     # Reorder items.
-    newdata, newhoshes, newblobs, newhashes, = {}, {}, self.blobs.copy(), self.hashes.copy()
+    newdata, newhoshes, newblobs, newhashes, = (
+        {},
+        {},
+        self.blobs.copy(),
+        self.hashes.copy(),
+    )
     noutputs = len(outputs)
     if noutputs == 1:
         k = outputs[0]
@@ -408,7 +424,11 @@ True
     uf = self.hosh * f_hosh
     newdata = self.data.copy()
     newdata[k] = None
-    newhoshes, newblobs, newhashes, = self.hoshes.copy(), self.blobs.copy(), self.hashes.copy()
+    newhoshes, newblobs, newhashes, = (
+        self.hoshes.copy(),
+        self.blobs.copy(),
+        self.hashes.copy(),
+    )
     newhoshes[k] = placeholder(k, f_hosh, self.identity, self.hoshes)
     if k in newblobs:
         del newblobs[k]
@@ -429,8 +449,8 @@ True
     &quot;x&quot;: 5,
     &quot;y&quot;: null,
     &quot;z&quot;: 8,
-    &quot;id&quot;: &quot;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&quot;,
         &quot;z&quot;: &quot;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&quot;
@@ -443,8 +463,8 @@ True
     &quot;x&quot;: 5,
     &quot;y&quot;: null,
     &quot;z&quot;: 8,
-    &quot;id&quot;: &quot;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&quot;,
+    &quot;_ids&quot;: {
         &quot;w&quot;: &quot;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&quot;,
         &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
         &quot;y&quot;: &quot;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&quot;,
@@ -457,8 +477,8 @@ True
     &quot;x&quot;: 55555,
     &quot;y&quot;: null,
     &quot;z&quot;: 8,
-    &quot;id&quot;: &quot;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&quot;,
+    &quot;_ids&quot;: {
         &quot;w&quot;: &quot;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&quot;,
         &quot;x&quot;: &quot;T7_37f7565449f62df2f074952f6484ea6581b77&quot;,
         &quot;y&quot;: &quot;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&quot;,
@@ -468,8 +488,8 @@ True
 &gt;&gt;&gt; print(ihandle_dict(idict(), {&quot;x&quot;: 1555}))
 {
     &quot;x&quot;: 1555,
-    &quot;id&quot;: &quot;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&quot;
     }
 }
@@ -488,8 +508,8 @@ True
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;id&#34;: &#34;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
             &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
@@ -502,8 +522,8 @@ True
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;id&#34;: &#34;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
             &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
@@ -516,8 +536,8 @@ True
         &#34;x&#34;: 55555,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;id&#34;: &#34;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&#34;,
+        &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
             &#34;x&#34;: &#34;T7_37f7565449f62df2f074952f6484ea6581b77&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
@@ -527,19 +547,20 @@ True
     &gt;&gt;&gt; print(ihandle_dict(idict(), {&#34;x&#34;: 1555}))
     {
         &#34;x&#34;: 1555,
-        &#34;id&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;
         }
     }
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
+
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
     for k, v in dictlike.items():
         if v is None:
             clone = delete(clone, k)
-        elif k not in [&#34;id&#34;, &#34;ids&#34;]:
+        elif k not in [&#34;_id&#34;, &#34;_ids&#34;]:
             if isinstance(v, iLet):
                 clone = application(clone, v, v.f, v.bytes, k)
             elif callable(v):
@@ -552,10 +573,12 @@ True
                     clone.hashes[k] = internals[&#34;hashes&#34;][k]
                 clone.hoshes[k] = internals[&#34;hoshes&#34;][k]
                 internals[&#34;blobs&#34;], internals[&#34;hashes&#34;], internals[&#34;hoshes&#34;] = clone.blobs, clone.hashes, clone.hoshes
-                hosh = reduce(operator.mul, [self.identity] + list(self.hoshes.values()))
+                hosh = reduce(
+                    operator.mul, [self.identity] + [v for k, v in self.hoshes.items() if not k.startswith(&#34;_&#34;)]
+                )
                 internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
-                del clone.data[&#34;id&#34;]
-                del clone.data[&#34;ids&#34;]
+                del clone.data[&#34;_id&#34;]
+                del clone.data[&#34;_ids&#34;]
                 clone = FrozenIdentifiedDict(clone.data, rnd=clone.rnd, _cloned=internals, **{k: v})
     return clone</code></pre>
 </details>
@@ -604,8 +627,8 @@ True
 &gt;&gt;&gt; a.show(colored=False)
 {
     &quot;x&quot;: 3,
-    &quot;id&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
     }
 }
@@ -613,8 +636,8 @@ True
 &gt;&gt;&gt; a.show(colored=False)
 {
     &quot;x&quot;: &quot;→(x)&quot;,
-    &quot;id&quot;: &quot;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&quot;
     }
 }
@@ -639,8 +662,8 @@ True
     &quot;y&quot;: &quot;→(w x y)&quot;,
     &quot;w&quot;: 2,
     &quot;z&quot;: 1,
-    &quot;id&quot;: &quot;4k236R0oT.PI6-c2KLgmahWdNOzzkEFdqK4B1zjh&quot;,
-    &quot;ids&quot;: {
+    &quot;_id&quot;: &quot;4k236R0oT.PI6-c2KLgmahWdNOzzkEFdqK4B1zjh&quot;,
+    &quot;_ids&quot;: {
         &quot;x&quot;: &quot;RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji&quot;,
         &quot;y&quot;: &quot;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&quot;,
         &quot;w&quot;: &quot;ng_5dad44381c5ac2a4c1bfe594d68a486791c45&quot;,
@@ -659,8 +682,8 @@ True
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
     }
@@ -668,8 +691,8 @@ True
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: &#34;→(x)&#34;,
-        &#34;id&#34;: &#34;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8&#34;
         }
     }
@@ -694,8 +717,8 @@ True
         &#34;y&#34;: &#34;→(w x y)&#34;,
         &#34;w&#34;: 2,
         &#34;z&#34;: 1,
-        &#34;id&#34;: &#34;4k236R0oT.PI6-c2KLgmahWdNOzzkEFdqK4B1zjh&#34;,
-        &#34;ids&#34;: {
+        &#34;_id&#34;: &#34;4k236R0oT.PI6-c2KLgmahWdNOzzkEFdqK4B1zjh&#34;,
+        &#34;_ids&#34;: {
             &#34;x&#34;: &#34;RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji&#34;,
             &#34;y&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
             &#34;w&#34;: &#34;ng_5dad44381c5ac2a4c1bfe594d68a486791c45&#34;,
