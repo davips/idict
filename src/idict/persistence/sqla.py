@@ -82,4 +82,5 @@ class SQLA(Cache):  # pragma:  cover
     def copy(self):
         raise NotImplementedError
 
+
 # TODO: fazer decorator sqla

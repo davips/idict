@@ -85,7 +85,7 @@ def key2id(key, digits):
     """
     prefix = key[:2].ljust(2, "-") + "_"
     rest = key[2:].encode().hex().ljust(digits - 3, "0")
-    return prefix + rest[:digits - 3]
+    return prefix + rest[: digits - 3]
 
 
 def removal_id(template, field):
@@ -94,19 +94,19 @@ def removal_id(template, field):
     >>> removal_id(ø.delete, "myfield")
     '--------------------.............myfield'
     """
-    return template[:-len(field)] + field
+    return template[: -len(field)] + field
 
 
 def blobs_hashes_hoshes(data, identity, ids):
     """
     >>> from idict import idict
-    >>> idict(x=1, y=2, z=3, ids={"y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"}).show(colored=False)
+    >>> idict(x=1, y=2, z=3, _ids={"y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"}).show(colored=False)
     {
         "x": 1,
         "y": 2,
         "z": 3,
-        "id": "Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy",
-        "ids": {
+        "_id": "Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy",
+        "_ids": {
             "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",
             "y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
             "z": "YB_957059a720926191bcc15ebde8f1b960282cd"
@@ -115,6 +115,7 @@ def blobs_hashes_hoshes(data, identity, ids):
     """
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from idict.core.idict_ import Idict
+
     blobs = {}
     hashes = {}
     hoshes = {}

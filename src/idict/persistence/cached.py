@@ -32,7 +32,6 @@ def cached(d, cache):
         did2 = None
 
     def closure(outputf, fid, fids, data, output_fields, id):
-
         def func(**kwargs):
             # Try loading.
             if fid in cache:
@@ -56,7 +55,7 @@ def cached(d, cache):
                 raise Exception(f"{k=} not in output fields: {output_fields}. ids: {fids.items()}")
             did = did2 or id
             if did not in cache:
-                cache[did] = {"ids": fids}
+                cache[did] = {"_ids": fids}
 
             # Return requested value.
             return result
@@ -83,6 +82,6 @@ def cached(d, cache):
                 cache[id] = data[k]
         did = did2 or id
         if did not in cache:
-            cache[did] = {"ids": d.ids}
+            cache[did] = {"_ids": d.ids}
 
     return d.clone(data)

@@ -40,8 +40,8 @@ class iFunctionSpace:
     {
         "y": 7,
         "x": 5,
-        "id": "mP_2d615fd34f97ac906e162c6fc6aedadc4d140",
-        "ids": {
+        "_id": "mP_2d615fd34f97ac906e162c6fc6aedadc4d140",
+        "_ids": {
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
             "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
         }
@@ -50,8 +50,8 @@ class iFunctionSpace:
     >>> fs
     «{'x': 5} × {
         "y": 7,
-        "id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-        "ids": {
+        "_id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+        "_ids": {
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
     }»
@@ -59,8 +59,8 @@ class iFunctionSpace:
     >>> fs
     «{'x': 5} × {
         "y": 7,
-        "id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-        "ids": {
+        "_id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+        "_ids": {
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
     } × λ»
@@ -72,15 +72,17 @@ class iFunctionSpace:
     def __rrshift__(self, left: Union[dict, list, Random, Callable, iLet]):
         if isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
+
             return reduce3(lambda a, op, b: op(a, b), (left, aop) + self.functions)
         if isinstance(left, dict):
             from idict.core.idict_ import Idict
+
             return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions)
         if isinstance(left, (list, Random, Callable, iLet)):
             return iFunctionSpace(left, aop, *self.functions)
         return NotImplemented
 
-    def __rshift__(self, other: Union[dict, list, Random, Callable, iLet, AbstractLazyDict, 'iFunctionSpace']):
+    def __rshift__(self, other: Union[dict, list, Random, Callable, iLet, AbstractLazyDict, "iFunctionSpace"]):
         if isinstance(other, (dict, list, Random, Callable, iLet)):
             return iFunctionSpace(*self.functions, aop, other)
         if isinstance(other, iFunctionSpace):
@@ -92,7 +94,7 @@ class iFunctionSpace:
             return iFunctionSpace(left, aop, *self.functions)
         return NotImplemented
 
-    def __xor__(self, other: Union[dict, list, Random, Callable, iLet, AbstractLazyDict, 'iFunctionSpace']):
+    def __xor__(self, other: Union[dict, list, Random, Callable, iLet, AbstractLazyDict, "iFunctionSpace"]):
         if isinstance(other, (dict, list, Random, Callable, iLet, AbstractLazyDict)):
             return iFunctionSpace(*self.functions, cop, other)
         if isinstance(other, iFunctionSpace):

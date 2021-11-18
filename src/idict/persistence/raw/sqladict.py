@@ -31,7 +31,7 @@ Base = declarative_base()
 
 
 class Content(Base):
-    __tablename__ = 'content'
+    __tablename__ = "content"
     id = Column(String(40), primary_key=True)
     blob = Column(BLOB)
 
@@ -52,7 +52,7 @@ def sqladict(url="sqlite+pysqlite:///:memory:", debug=False):
 class SQLAdict(Dict[str, VT]):
     """
     Dict-like persistence based on SQLAlchemy
-    
+
     40-digit keys only
 
     Usage:
@@ -124,4 +124,3 @@ class SQLAdict(Dict[str, VT]):
 
 class WrongKeyType(Exception):
     pass
-

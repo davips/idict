@@ -51,9 +51,9 @@ def idict2txt(d, all):
     >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> d = idict(x=1,y=2)
     >>> decolorize(idict2txt(d, False))
-    '{\n    "x": 1,\n    "y": 2,\n    "id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "ids": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "_ids": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n}'
     >>> decolorize(idict2txt(d, True))
-    '{\n    "x": 1,\n    "y": 2,\n    "id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "ids": {\n        "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",\n        "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n    }\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "_ids": {\n        "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",\n        "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n    }\n}'
 
     Parameters
     ----------
@@ -67,7 +67,7 @@ def idict2txt(d, all):
     dic = ldict2dict(d, all)
     txt = json.dumps(dic, indent=4, ensure_ascii=False, cls=CustomJSONEncoder)
     for k, v in dic.items():
-        if k == "id":
+        if k == "_id":
             txt = txt.replace(dic[k], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
@@ -85,10 +85,10 @@ def ldict2dict(d, all):
         #     dic[k] = ldict2dict(v, all)
         if not all:
             if len(d.ids) < 3:
-                dic["ids"] = " ".join(d.ids.values())
+                dic["_ids"] = " ".join(d.ids.values())
             else:
                 ids = list(d.ids.values())
-                dic["ids"] = f"{ids[0]}... +{len(d) - 4} ...{ids[-1]}"
-        elif k == "ids":
-            dic["ids"] = d.ids.copy()
+                dic["_ids"] = f"{ids[0]}... +{len(d) - 4} ...{ids[-1]}"
+        elif k == "_ids":
+            dic["_ids"] = d.ids.copy()
     return dic

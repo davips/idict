@@ -30,7 +30,7 @@ GLOBAL = {
     "cache": Disk(f"{Path.home()}/{'.idict/shelve.db'}"),
     "compression_cache": {},
     "compression_cachesize": 0,
-    "compression_cachelimit": 1_000_000_000
+    "compression_cachelimit": 1_000_000_000,
 }
 
 

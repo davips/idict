@@ -34,9 +34,12 @@ class TestLdict(TestCase):
         self.assertEqual(a, b)
         self.assertFalse(a == {"a": 3})
         self.assertNotEqual(a, {"a": 3})
-        d = {'id': 'Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4',
-             'ids': {'x': 'tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f',
-                     'y': 'pg_7d1eecc7838558a4c1bf9584d68a487791c45'}, 'x': 1, 'y': 2}
+        d = {
+            "_id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",
+            "_ids": {"x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f", "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"},
+            "x": 1,
+            "y": 2,
+        }
         self.assertEqual(a.asdict, d)
 
     def test_illdefined_function(self):
@@ -55,8 +58,8 @@ class TestLdict(TestCase):
     "x": 3,
     "y": 4,
     "z": 5,
-    "id": "Pd_7f559308b2f3bf28c9dfd54cf6ba43b636504",
-    "ids": {
+    "_id": "Pd_7f559308b2f3bf28c9dfd54cf6ba43b636504",
+    "_ids": {
         "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
         "y": "SL_6e8b071c1bc6504ea76f407e1a791e887d9ce",
         "z": "1U_fdd682399a475d5365aeb336044f7b4270977"
@@ -76,8 +79,8 @@ class TestLdict(TestCase):
     "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
-    "ids": {
+    "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
+    "_ids": {
         "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
         "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
         "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
@@ -93,13 +96,17 @@ class TestLdict(TestCase):
         d["y"] = 5
         d >>= lambda x, y: {"z": x * y}
         d.evaluate()
-        de = {'id': 'dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg',
-              'ids': {'x': 'WB_e55a47230d67db81bcc1aecde8f1b950282cd',
-                      'y': '0U_e2a86ff72e226d5365aea336044f7b4270977',
-                      'z': 'm3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg'},
-              'x': 3,
-              'y': 5,
-              'z': 15}
+        de = {
+            "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
+            "_ids": {
+                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+                "y": "0U_e2a86ff72e226d5365aea336044f7b4270977",
+                "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
+            },
+            "x": 3,
+            "y": 5,
+            "z": 15,
+        }
         self.assertEqual(d, de)
 
         # Overwrite same value.
@@ -124,8 +131,8 @@ class TestLdict(TestCase):
     "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
-    "ids": {
+    "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
+    "_ids": {
         "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
         "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
         "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
@@ -156,13 +163,20 @@ class TestLdict(TestCase):
         old = d
         d >>= lambda x, y, z: {"z": x + y * z}  # 7
         self.assertNotEqual(old, d)
-        self.assertEqual(d, {'id': 'NU4YLiIschNCZX9.tuBycZ6n4BOCresH0ccu3pl7',
-                             'ids': {'x': 'tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f',
-                                     'y': 'pg_7d1eecc7838558a4c1bf9584d68a487791c45',
-                                     'z': '2CwHWARvJhPEk2cDYuPicC7tfnLCresH0ccu3pl7'},
-                             'x': 1,
-                             'y': 2,
-                             'z': 7})
+        self.assertEqual(
+            d,
+            {
+                "_id": "NU4YLiIschNCZX9.tuBycZ6n4BOCresH0ccu3pl7",
+                "_ids": {
+                    "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",
+                    "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45",
+                    "z": "2CwHWARvJhPEk2cDYuPicC7tfnLCresH0ccu3pl7",
+                },
+                "x": 1,
+                "y": 2,
+                "z": 7,
+            },
+        )
 
         # Reapply same function.
         old = d
@@ -173,13 +187,20 @@ class TestLdict(TestCase):
         old = d
         d >>= lambda x, y, z: {"z": x + y * z}  # 31
         self.assertNotEqual(old, d)
-        self.assertEqual(d, {'id': 'q-F.7ZpdwiDTmX16eHsfJRN7DIJdmHk22sAqab0m',
-                             'ids': {'x': 'tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f',
-                                     'y': 'pg_7d1eecc7838558a4c1bf9584d68a487791c45',
-                                     'z': 'SwpdBZEt4A2Po04KIHG.IuOdOuGdmHk22sAqab0m'},
-                             'x': 1,
-                             'y': 2,
-                             'z': 31})
+        self.assertEqual(
+            d,
+            {
+                "_id": "q-F.7ZpdwiDTmX16eHsfJRN7DIJdmHk22sAqab0m",
+                "_ids": {
+                    "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",
+                    "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45",
+                    "z": "SwpdBZEt4A2Po04KIHG.IuOdOuGdmHk22sAqab0m",
+                },
+                "x": 1,
+                "y": 2,
+                "z": 31,
+            },
+        )
 
         def f(x):
             return {"z": x + 2}
