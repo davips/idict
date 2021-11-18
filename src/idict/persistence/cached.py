@@ -25,7 +25,7 @@ from ldict.lazyval import LazyVal
 def cached(d, cache):
     # REMINDER: When the dict is a singleton, we have to use id² as dict id to be able to recover the field name.
     if len(d.ids) == 1:
-        fid2 = d.id * d.id
+        fid2 = (d.hosh * d.hosh).id
         if fid2 in cache:
             return cache[fid2]
     else:
