@@ -80,17 +80,24 @@ class SQLA(Cache):  # pragma:  cover
     SQLA→&lt;class &#39;idict.persistence.raw.sqladict.SQLAdict&#39;&gt;
     &#34;&#34;&#34;
 
-    def __init__(self, url=&#34;sqlite+pysqlite:///:memory:&#34;, debug=False):
+    def __init__(self, url=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, debug=False):
         super().__init__(lambda: sqladict(url, debug))
+        self.autopack = autopack
 
     def __setitem__(self, key: str, value):
         check(key)
-        super().__setitem__(key, pack(value))
+        if self.autopack:
+            super().__setitem__(key, pack(value))
+        else:
+            super().__setitem__(key, value)
 
     def __getitem__(self, key):
         check(key)
         ret = super().__getitem__(key)
-        return ret and unpack(ret)
+        if self.autopack:
+            return ret and unpack(ret)
+        else:
+            return ret and ret
 
     def __iter__(self):
         with self.decorator() as db:
@@ -102,7 +109,6 @@ class SQLA(Cache):  # pragma:  cover
 
     def copy(self):
         raise NotImplementedError
-
 
 # TODO: fazer decorator sqla</code></pre>
 </details>
@@ -118,7 +124,7 @@ class SQLA(Cache):  # pragma:  cover
 <dl>
 <dt id="idict.persistence.sqla.SQLA"><code class="flex name class">
 <span>class <span class="ident">SQLA</span></span>
-<span>(</span><span>url='sqlite+pysqlite:///:memory:', debug=False)</span>
+<span>(</span><span>url='sqlite+pysqlite:///:memory:', autopack=True, debug=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Save to/retrieve from SQLAlchemy.</p>
@@ -169,17 +175,24 @@ SQLA→&lt;class 'idict.persistence.raw.sqladict.SQLAdict'&gt;
     SQLA→&lt;class &#39;idict.persistence.raw.sqladict.SQLAdict&#39;&gt;
     &#34;&#34;&#34;
 
-    def __init__(self, url=&#34;sqlite+pysqlite:///:memory:&#34;, debug=False):
+    def __init__(self, url=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, debug=False):
         super().__init__(lambda: sqladict(url, debug))
+        self.autopack = autopack
 
     def __setitem__(self, key: str, value):
         check(key)
-        super().__setitem__(key, pack(value))
+        if self.autopack:
+            super().__setitem__(key, pack(value))
+        else:
+            super().__setitem__(key, value)
 
     def __getitem__(self, key):
         check(key)
         ret = super().__getitem__(key)
-        return ret and unpack(ret)
+        if self.autopack:
+            return ret and unpack(ret)
+        else:
+            return ret and ret
 
     def __iter__(self):
         with self.decorator() as db:
