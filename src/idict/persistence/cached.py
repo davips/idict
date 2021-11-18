@@ -45,7 +45,7 @@ def cached(d, cache):
             for k, v in fids.items():
                 if fid2:
                     v = fid2
-                # TODO: all lazies are evaluated, but show() still shows deps as lazy.
+                # minor TODO: all lazies are evaluated, but show() still shows deps as lazy.
                 #    Fortunately the dep is evaluated only once.
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)

@@ -97,7 +97,8 @@ class SQLAdict(Dict[str, VT]):
 
     def __getitem__(self, key):
         check(key)
-        return self.session.query(Content).get(key).blob
+        ret = self.session.query(Content).get(key)
+        return ret and ret.blob
 
     def __delitem__(self, key):
         check(key)
