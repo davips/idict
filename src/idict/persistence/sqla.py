@@ -52,17 +52,24 @@ class SQLA(Cache):  # pragma:  cover
     SQLA→<class 'idict.persistence.raw.sqladict.SQLAdict'>
     """
 
-    def __init__(self, url="sqlite+pysqlite:///:memory:", debug=False):
+    def __init__(self, url="sqlite+pysqlite:///:memory:", autopack=True, debug=False):
         super().__init__(lambda: sqladict(url, debug))
+        self.autopack = autopack
 
     def __setitem__(self, key: str, value):
         check(key)
-        super().__setitem__(key, pack(value))
+        if self.autopack:
+            super().__setitem__(key, pack(value))
+        else:
+            super().__setitem__(key, value)
 
     def __getitem__(self, key):
         check(key)
         ret = super().__getitem__(key)
-        return ret and unpack(ret)
+        if self.autopack:
+            return ret and unpack(ret)
+        else:
+            return ret and ret
 
     def __iter__(self):
         with self.decorator() as db:
@@ -74,6 +81,5 @@ class SQLA(Cache):  # pragma:  cover
 
     def copy(self):
         raise NotImplementedError
-
 
 # TODO: fazer decorator sqla
