@@ -61,7 +61,8 @@ class SQLA(Cache):  # pragma:  cover
 
     def __getitem__(self, key):
         check(key)
-        return unpack(super().__getitem__(key))
+        ret = super().__getitem__(key)
+        return ret and unpack(ret)
 
     def __iter__(self):
         with self.decorator() as db:
