@@ -83,4 +83,4 @@ class SQLA(Cache):  # pragma:  cover
         raise NotImplementedError
 
 
-# TODO: fazer decorator sqla
+# TODO: passar comentários da lousa pras docs das classes

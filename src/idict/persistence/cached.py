@@ -23,7 +23,12 @@ from ldict.lazyval import LazyVal
 
 
 def cached(d, cache):
-    # REMINDER: When the dict is a singleton, we have to use id² as dict id to be able to recover the field name.
+    """
+    Store each value (fid: value) and an extra value containing the fids (did: {"_ids": fids}).
+    When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
+
+    TODO: reconstruir idict via idict.fromcache("dafadfsadgfsddfgdsagasgd", client)
+    """
     if len(d.ids) == 1:
         did2 = (d.hosh * d.hosh).id
         if did2 in cache:
