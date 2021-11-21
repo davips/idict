@@ -13,14 +13,15 @@ echo "----------------- tested -----------------------"
 echo; echo
 
 echo
-echo "----------------- docs... -----------------------"
+echo "----------------- docs/black... -----------------------"
 read -p "press enter"
 rm docs -rf
+poetry run black -l120 src/ tests/
 poetry run pdoc --html --force idict -o docs
 mv docs/idict/* docs/
 rm docs/idict -rf
 git add docs
-echo "----------------- docs done -----------------------"
+echo "----------------- docs/black done -----------------------"
 echo; echo
 
 echo "---------------- readme ----------------"

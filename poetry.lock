@@ -16,7 +16,7 @@ python-versions = "*"
 
 [[package]]
 name = "astroid"
-version = "2.8.5"
+version = "2.8.6"
 description = "An abstract syntax tree for Python with inference support."
 category = "dev"
 optional = false
@@ -277,7 +277,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [[package]]
 name = "ldict"
-version = "3.211118.2"
+version = "3.211121.1"
 description = "Lazy dict"
 category = "main"
 optional = false
@@ -786,7 +786,7 @@ full = ["pandas"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.10"
-content-hash = "97116b25f66cfb2f4d12b37e7f51b1e03cf8b3b5a574c849e46163ab72f3a05b"
+content-hash = "8dd3d98f57f7b30d69acd02d76b41721e9803bb2d8a762917e6c1a8604480f93"
 
 [metadata.files]
 ansi2html = [
@@ -798,8 +798,8 @@ appnope = [
     {file = "appnope-0.1.2.tar.gz", hash = "sha256:dd83cd4b5b460958838f6eb3000c660b1f9caf2a5b1de4264e941512f603258a"},
 ]
 astroid = [
-    {file = "astroid-2.8.5-py3-none-any.whl", hash = "sha256:abc423a1e85bc1553954a14f2053473d2b7f8baf32eae62a328be24f436b5107"},
-    {file = "astroid-2.8.5.tar.gz", hash = "sha256:11f7356737b624c42e21e71fe85eea6875cb94c03c82ac76bd535a0ff10b0f25"},
+    {file = "astroid-2.8.6-py3-none-any.whl", hash = "sha256:cd8326b424c971e7d87678609cf6275d22028afd37d6ac59c16d47f1245882f6"},
+    {file = "astroid-2.8.6.tar.gz", hash = "sha256:5f6f75e45f15290e73b56f9dfde95b4bf96382284cde406ef4203e928335a495"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -1011,8 +1011,8 @@ lazy-object-proxy = [
     {file = "lazy_object_proxy-1.6.0-cp39-cp39-win_amd64.whl", hash = "sha256:f5144c75445ae3ca2057faac03fda5a902eff196702b0a24daf1d6ce0650514b"},
 ]
 ldict = [
-    {file = "ldict-3.211118.2-py3-none-any.whl", hash = "sha256:dbf13d0d440ecd7fb00af9ed4da0f1e6185ee6bdab12c40ae40b95da95cddd33"},
-    {file = "ldict-3.211118.2.tar.gz", hash = "sha256:064708358951e9f824554eae4e6052cc28acd73761265ea394ab26ba5aa6d129"},
+    {file = "ldict-3.211121.1-py3-none-any.whl", hash = "sha256:85cdb0491a36667974e460996b04ff008309fc10c5c29448d1ac9c6e6accc3f2"},
+    {file = "ldict-3.211121.1.tar.gz", hash = "sha256:bc8da1c3a62b1edc2f82ad43c5dc805ebc32edc36cb3906cdf00fd3d60591411"},
 ]
 lz4 = [
     {file = "lz4-3.1.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:5aa4dd12debc5cb90980e6bb26be8b1586e57b87aaf6c773b9b799bca16edd99"},

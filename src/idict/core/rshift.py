@@ -36,7 +36,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     >>> from garoupa import ø
     >>> d = FrozenIdentifiedDict(x=3)
     >>> f = lambda x: {"y": x**2}
-    >>> f.id = "ffffffffffffffffffffffffffffffffffffffff"
+    >>> f.metadata = {"id": "ffffffffffffffffffffffffffffffffffffffff"}
     >>> d2 = application(d, f, f, ø)
     >>> d2.show(colored=False)
     {
@@ -48,10 +48,10 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
             "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
         }
     }
-    >>> d2.hosh / f.id == d.id
+    >>> d2.hosh / f.metadata["id"] == d.id
     True
     """
-    f_hosh = f.id if hasattr(f, "id") else fhosh(f, self.identity.version)
+    f_hosh = f.metadata["id"] if hasattr(f, "metadata") and "id" in f.metadata else fhosh(f, self.identity.version)
     f_hosh_full = config_hosh * f_hosh  # d' = d * ħ(config) * f
     if output:
         frozen = self.frozen >> {output: other}

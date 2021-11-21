@@ -265,7 +265,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         # Store as an immutable lazy dict.
         self.frozen = FrozenLazyDict(data, _id=_id, _ids=_ids, rnd=rnd)
         self.data = self.frozen.data
-        self.id = self.hosh.id
+        self.id = _id
+        self.ids = _ids
 
     def __getitem__(self, item):
         return self.frozen[item]

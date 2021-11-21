@@ -250,6 +250,36 @@ class Idict(AbstractMutableLazyDict):
             "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
         }
     }
+    >>> f = lambda x: {"y": x ** 2, "_history": ...}
+    >>> g = lambda x: {"y":x + 1000, "_history": ...}
+    >>> f.metadata = {"id": "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87", "name": "squared", "description": "Some text."}
+    >>> g.metadata = {"id": "05d6efbc9820dafe0d8fbe87a79adbe9797abc87", "name": "add1000", "description": "Some text."}
+    >>> d = idict(x=3) >> f >> g
+    >>> d.show()
+    {
+        "y": "→(x)",
+        "_history": {
+            "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87": {
+                "id": "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87",
+                "name": "squared",
+                "description": "Some text."
+            },
+            "05d6efbc9820dafe0d8fbe87a79adbe9797abc87": {
+                "id": "05d6efbc9820dafe0d8fbe87a79adbe9797abc87",
+                "name": "add1000",
+                "description": "Some text."
+            }
+        },
+        "x": 3,
+        "_id": "iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge",
+        "_ids": {
+            "y": "hU2kCmLh9xRR3k67uI-QU54IAr6Ktmsieaekmogf",
+            "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+        }
+    }
+    >>> idict(x=3).hosh * "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87" * "05d6efbc9820dafe0d8fbe87a79adbe9797abc87"
+    iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     """
 
     # noinspection PyMissingConstructor
@@ -260,6 +290,14 @@ class Idict(AbstractMutableLazyDict):
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(
             _dictionary, _id, _ids, rnd, identity, _cloned, **kwargs
         )
+
+    @property
+    def id(self):
+        return self.hosh.id
+
+    @property
+    def ids(self):
+        return self.frozen.ids
 
     @property
     def hosh(self):
