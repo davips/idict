@@ -31,8 +31,9 @@ from garoupa import ø40
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
 
-from idict.parameter.ilet import iLet
 from idict.parameter.ifunctionspace import iFunctionSpace
+from idict.parameter.ilet import iLet
+from idict.persistence.cached import build
 
 VT = TypeVar("VT")
 
@@ -381,3 +382,33 @@ class Idict(AbstractMutableLazyDict):
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen ^ other
         return clone
+
+    @staticmethod
+    def fromid(id, cache, identity=ø40):
+        """
+        >>> from idict import idict
+        >>> cache = {}
+        >>> d = idict(x=5) >> (lambda x: {"y": x**2}) >> [cache]
+        >>> d
+        {
+            "y": "→(^ x)",
+            "x": 5,
+            "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
+            "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+        }
+        >>> d.y
+        25
+        >>> cache
+        {'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4': 25, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4': {'_ids': {'y': 'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977'}}}
+        >>> d2 = idict.fromid(d.id, cache)
+        >>> d2
+        {
+            "y": 25,
+            "x": 5,
+            "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
+            "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+        }
+        >>> d == d2
+        True
+        """
+        return build(id, cache, identity)

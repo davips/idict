@@ -19,6 +19,7 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
+from garoupa import ø40
 from ldict.lazyval import LazyVal
 
 
@@ -26,8 +27,6 @@ def cached(d, cache):
     """
     Store each value (fid: value) and an extra value containing the fids (did: {"_ids": fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
-
-    TODO: reconstruir idict via idict.fromcache("dafadfsadgfsddfgdsagasgd", client)
     """
     if len(d.ids) == 1:
         did2 = (d.hosh * d.hosh).id
@@ -92,3 +91,38 @@ def cached(d, cache):
             cache[did] = {"_ids": d.ids}
 
     return d.clone(data)
+
+
+def build(id, cache, identity=ø40):
+    """
+    >>> from idict import idict
+    >>> cache = {}
+    >>> d = idict(x=5) >> (lambda x: {"y": x**2}) >> [cache]
+    >>> d
+    {
+        "y": "→(^ x)",
+        "x": 5,
+        "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
+        "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+    }
+    >>> d.y
+    25
+    >>> cache
+    {'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4': 25, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4': {'_ids': {'y': 'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977'}}}
+    >>> d2 = idict.fromid(d.id, cache)
+    >>> d2
+    {
+        "y": 25,
+        "x": 5,
+        "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
+        "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+    }
+    >>> d == d2
+    True
+    """
+    ids = cache[id]["_ids"]
+    dic = {}
+    for k, v in ids.items():
+        dic[k] = cache[v]
+    from idict import idict
+    return idict(dic, _id=id, _ids=ids, identity=identity)
