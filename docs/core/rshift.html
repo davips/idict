@@ -64,7 +64,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     &gt;&gt;&gt; from garoupa import ø
     &gt;&gt;&gt; d = FrozenIdentifiedDict(x=3)
     &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x**2}
-    &gt;&gt;&gt; f.id = &#34;ffffffffffffffffffffffffffffffffffffffff&#34;
+    &gt;&gt;&gt; f.metadata = {&#34;id&#34;: &#34;ffffffffffffffffffffffffffffffffffffffff&#34;}
     &gt;&gt;&gt; d2 = application(d, f, f, ø)
     &gt;&gt;&gt; d2.show(colored=False)
     {
@@ -76,10 +76,10 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
     }
-    &gt;&gt;&gt; d2.hosh / f.id == d.id
+    &gt;&gt;&gt; d2.hosh / f.metadata[&#34;id&#34;] == d.id
     True
     &#34;&#34;&#34;
-    f_hosh = f.id if hasattr(f, &#34;id&#34;) else fhosh(f, self.identity.version)
+    f_hosh = f.metadata[&#34;id&#34;] if hasattr(f, &#34;metadata&#34;) and &#34;id&#34; in f.metadata else fhosh(f, self.identity.version)
     f_hosh_full = config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
     if output:
         frozen = self.frozen &gt;&gt; {output: other}
@@ -321,7 +321,7 @@ def rho(c, digits):
 &gt;&gt;&gt; from garoupa import ø
 &gt;&gt;&gt; d = FrozenIdentifiedDict(x=3)
 &gt;&gt;&gt; f = lambda x: {&quot;y&quot;: x**2}
-&gt;&gt;&gt; f.id = &quot;ffffffffffffffffffffffffffffffffffffffff&quot;
+&gt;&gt;&gt; f.metadata = {&quot;id&quot;: &quot;ffffffffffffffffffffffffffffffffffffffff&quot;}
 &gt;&gt;&gt; d2 = application(d, f, f, ø)
 &gt;&gt;&gt; d2.show(colored=False)
 {
@@ -333,7 +333,7 @@ def rho(c, digits):
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
     }
 }
-&gt;&gt;&gt; d2.hosh / f.id == d.id
+&gt;&gt;&gt; d2.hosh / f.metadata[&quot;id&quot;] == d.id
 True
 </code></pre></div>
 <details class="source">
@@ -346,7 +346,7 @@ True
     &gt;&gt;&gt; from garoupa import ø
     &gt;&gt;&gt; d = FrozenIdentifiedDict(x=3)
     &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x**2}
-    &gt;&gt;&gt; f.id = &#34;ffffffffffffffffffffffffffffffffffffffff&#34;
+    &gt;&gt;&gt; f.metadata = {&#34;id&#34;: &#34;ffffffffffffffffffffffffffffffffffffffff&#34;}
     &gt;&gt;&gt; d2 = application(d, f, f, ø)
     &gt;&gt;&gt; d2.show(colored=False)
     {
@@ -358,10 +358,10 @@ True
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
     }
-    &gt;&gt;&gt; d2.hosh / f.id == d.id
+    &gt;&gt;&gt; d2.hosh / f.metadata[&#34;id&#34;] == d.id
     True
     &#34;&#34;&#34;
-    f_hosh = f.id if hasattr(f, &#34;id&#34;) else fhosh(f, self.identity.version)
+    f_hosh = f.metadata[&#34;id&#34;] if hasattr(f, &#34;metadata&#34;) and &#34;id&#34; in f.metadata else fhosh(f, self.identity.version)
     f_hosh_full = config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
     if output:
         frozen = self.frozen &gt;&gt; {output: other}

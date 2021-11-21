@@ -278,6 +278,36 @@ class Idict(AbstractMutableLazyDict):
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
     }
+    &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x ** 2, &#34;_history&#34;: ...}
+    &gt;&gt;&gt; g = lambda x: {&#34;y&#34;:x + 1000, &#34;_history&#34;: ...}
+    &gt;&gt;&gt; f.metadata = {&#34;id&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;squared&#34;, &#34;description&#34;: &#34;Some text.&#34;}
+    &gt;&gt;&gt; g.metadata = {&#34;id&#34;: &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;add1000&#34;, &#34;description&#34;: &#34;Some text.&#34;}
+    &gt;&gt;&gt; d = idict(x=3) &gt;&gt; f &gt;&gt; g
+    &gt;&gt;&gt; d.show()
+    {
+        &#34;y&#34;: &#34;→(x)&#34;,
+        &#34;_history&#34;: {
+            &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;: {
+                &#34;id&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;,
+                &#34;name&#34;: &#34;squared&#34;,
+                &#34;description&#34;: &#34;Some text.&#34;
+            },
+            &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;: {
+                &#34;id&#34;: &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;,
+                &#34;name&#34;: &#34;add1000&#34;,
+                &#34;description&#34;: &#34;Some text.&#34;
+            }
+        },
+        &#34;x&#34;: 3,
+        &#34;_id&#34;: &#34;iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;hU2kCmLh9xRR3k67uI-QU54IAr6Ktmsieaekmogf&#34;,
+            &#34;_history&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;
+    iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
@@ -288,6 +318,14 @@ class Idict(AbstractMutableLazyDict):
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(
             _dictionary, _id, _ids, rnd, identity, _cloned, **kwargs
         )
+
+    @property
+    def id(self):
+        return self.hosh.id
+
+    @property
+    def ids(self):
+        return self.frozen.ids
 
     @property
     def hosh(self):
@@ -597,6 +635,36 @@ True
         &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
     }
 }
+&gt;&gt;&gt; f = lambda x: {&quot;y&quot;: x ** 2, &quot;_history&quot;: ...}
+&gt;&gt;&gt; g = lambda x: {&quot;y&quot;:x + 1000, &quot;_history&quot;: ...}
+&gt;&gt;&gt; f.metadata = {&quot;id&quot;: &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;, &quot;name&quot;: &quot;squared&quot;, &quot;description&quot;: &quot;Some text.&quot;}
+&gt;&gt;&gt; g.metadata = {&quot;id&quot;: &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;, &quot;name&quot;: &quot;add1000&quot;, &quot;description&quot;: &quot;Some text.&quot;}
+&gt;&gt;&gt; d = idict(x=3) &gt;&gt; f &gt;&gt; g
+&gt;&gt;&gt; d.show()
+{
+    &quot;y&quot;: &quot;→(x)&quot;,
+    &quot;_history&quot;: {
+        &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;: {
+            &quot;id&quot;: &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;,
+            &quot;name&quot;: &quot;squared&quot;,
+            &quot;description&quot;: &quot;Some text.&quot;
+        },
+        &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;: {
+            &quot;id&quot;: &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;,
+            &quot;name&quot;: &quot;add1000&quot;,
+            &quot;description&quot;: &quot;Some text.&quot;
+        }
+    },
+    &quot;x&quot;: 3,
+    &quot;_id&quot;: &quot;iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge&quot;,
+    &quot;_ids&quot;: {
+        &quot;y&quot;: &quot;hU2kCmLh9xRR3k67uI-QU54IAr6Ktmsieaekmogf&quot;,
+        &quot;_history&quot;: &quot;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&quot;,
+        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+    }
+}
+&gt;&gt;&gt; idict(x=3).hosh * &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot; * &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;
+iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
 </code></pre></div>
 <details class="source">
 <summary>
@@ -815,6 +883,36 @@ True
             &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
         }
     }
+    &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x ** 2, &#34;_history&#34;: ...}
+    &gt;&gt;&gt; g = lambda x: {&#34;y&#34;:x + 1000, &#34;_history&#34;: ...}
+    &gt;&gt;&gt; f.metadata = {&#34;id&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;squared&#34;, &#34;description&#34;: &#34;Some text.&#34;}
+    &gt;&gt;&gt; g.metadata = {&#34;id&#34;: &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;add1000&#34;, &#34;description&#34;: &#34;Some text.&#34;}
+    &gt;&gt;&gt; d = idict(x=3) &gt;&gt; f &gt;&gt; g
+    &gt;&gt;&gt; d.show()
+    {
+        &#34;y&#34;: &#34;→(x)&#34;,
+        &#34;_history&#34;: {
+            &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;: {
+                &#34;id&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;,
+                &#34;name&#34;: &#34;squared&#34;,
+                &#34;description&#34;: &#34;Some text.&#34;
+            },
+            &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;: {
+                &#34;id&#34;: &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;,
+                &#34;name&#34;: &#34;add1000&#34;,
+                &#34;description&#34;: &#34;Some text.&#34;
+            }
+        },
+        &#34;x&#34;: 3,
+        &#34;_id&#34;: &#34;iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;hU2kCmLh9xRR3k67uI-QU54IAr6Ktmsieaekmogf&#34;,
+            &#34;_history&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;
+    iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
@@ -825,6 +923,14 @@ True
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(
             _dictionary, _id, _ids, rnd, identity, _cloned, **kwargs
         )
+
+    @property
+    def id(self):
+        return self.hosh.id
+
+    @property
+    def ids(self):
+        return self.frozen.ids
 
     @property
     def hosh(self):
@@ -981,6 +1087,30 @@ def hoshes(self):
     return self.frozen.hoshes</code></pre>
 </details>
 </dd>
+<dt id="idict.core.idict_.Idict.id"><code class="name">var <span class="ident">id</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def id(self):
+    return self.hosh.id</code></pre>
+</details>
+</dd>
+<dt id="idict.core.idict_.Idict.ids"><code class="name">var <span class="ident">ids</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def ids(self):
+    return self.frozen.ids</code></pre>
+</details>
+</dd>
 </dl>
 <h3>Methods</h3>
 <dl>
@@ -1038,6 +1168,8 @@ def hoshes(self):
 <li><code><a title="idict.core.idict_.Idict.hashes" href="#idict.core.idict_.Idict.hashes">hashes</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.hosh" href="#idict.core.idict_.Idict.hosh">hosh</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.hoshes" href="#idict.core.idict_.Idict.hoshes">hoshes</a></code></li>
+<li><code><a title="idict.core.idict_.Idict.id" href="#idict.core.idict_.Idict.id">id</a></code></li>
+<li><code><a title="idict.core.idict_.Idict.ids" href="#idict.core.idict_.Idict.ids">ids</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.show" href="#idict.core.idict_.Idict.show">show</a></code></li>
 </ul>
 </li>

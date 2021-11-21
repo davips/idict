@@ -70,7 +70,7 @@ def key2id(key, digits):
     'y-_0000000000000000000000000000000000000'
 
     >>> key2id("_history", 40)
-    'hi_73746f7279000000000000000000000000000'
+    '-h_6973746f72790000000000000000000000000'
 
     >>> key2id("long bad field name", 40)
     'lo_6e6720626164206669656c64206e616d65000'
@@ -136,5 +136,7 @@ def blobs_hashes_hoshes(data, identity, ids):
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
             except KeyError as e:
-                raise Exception(f"{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield.")
+                raise Exception(
+                    f"{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield."
+                )
     return dict(blobs=blobs, hashes=hashes, hoshes=hoshes)

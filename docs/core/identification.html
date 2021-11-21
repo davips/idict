@@ -97,6 +97,9 @@ def key2id(key, digits):
     &gt;&gt;&gt; key2id(&#34;y&#34;, 40)
     &#39;y-_0000000000000000000000000000000000000&#39;
 
+    &gt;&gt;&gt; key2id(&#34;_history&#34;, 40)
+    &#39;-h_6973746f72790000000000000000000000000&#39;
+
     &gt;&gt;&gt; key2id(&#34;long bad field name&#34;, 40)
     &#39;lo_6e6720626164206669656c64206e616d65000&#39;
 
@@ -111,6 +114,8 @@ def key2id(key, digits):
     -------
 
     &#34;&#34;&#34;
+    if key.startswith(&#34;_&#34;):
+        key = &#34;-&#34; + key[1:]
     prefix = key[:2].ljust(2, &#34;-&#34;) + &#34;_&#34;
     rest = key[2:].encode().hex().ljust(digits - 3, &#34;0&#34;)
     return prefix + rest[: digits - 3]
@@ -156,7 +161,12 @@ def blobs_hashes_hoshes(data, identity, ids):
             else:
                 blobs[k] = pack(v)
                 hashes[k] = identity.h * blobs[k]
-            hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+            try:
+                hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+            except KeyError as e:
+                raise Exception(
+                    f&#34;{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield.&#34;
+                )
     return dict(blobs=blobs, hashes=hashes, hoshes=hoshes)</code></pre>
 </details>
 </section>
@@ -220,7 +230,12 @@ def blobs_hashes_hoshes(data, identity, ids):
             else:
                 blobs[k] = pack(v)
                 hashes[k] = identity.h * blobs[k]
-            hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+            try:
+                hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+            except KeyError as e:
+                raise Exception(
+                    f&#34;{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield.&#34;
+                )
     return dict(blobs=blobs, hashes=hashes, hoshes=hoshes)</code></pre>
 </details>
 </dd>
@@ -285,6 +300,9 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; key2id(&quot;y&quot;, 40)
 'y-_0000000000000000000000000000000000000'
 </code></pre>
+<pre><code class="language-python-repl">&gt;&gt;&gt; key2id(&quot;_history&quot;, 40)
+'-h_6973746f72790000000000000000000000000'
+</code></pre>
 <pre><code class="language-python-repl">&gt;&gt;&gt; key2id(&quot;long bad field name&quot;, 40)
 'lo_6e6720626164206669656c64206e616d65000'
 </code></pre>
@@ -306,6 +324,9 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
     &gt;&gt;&gt; key2id(&#34;y&#34;, 40)
     &#39;y-_0000000000000000000000000000000000000&#39;
 
+    &gt;&gt;&gt; key2id(&#34;_history&#34;, 40)
+    &#39;-h_6973746f72790000000000000000000000000&#39;
+
     &gt;&gt;&gt; key2id(&#34;long bad field name&#34;, 40)
     &#39;lo_6e6720626164206669656c64206e616d65000&#39;
 
@@ -320,6 +341,8 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
     -------
 
     &#34;&#34;&#34;
+    if key.startswith(&#34;_&#34;):
+        key = &#34;-&#34; + key[1:]
     prefix = key[:2].ljust(2, &#34;-&#34;) + &#34;_&#34;
     rest = key[2:].encode().hex().ljust(digits - 3, &#34;0&#34;)
     return prefix + rest[: digits - 3]</code></pre>
