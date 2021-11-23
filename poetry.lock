@@ -277,7 +277,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [[package]]
 name = "ldict"
-version = "3.211123.1"
+version = "3.211123.2"
 description = "Lazy dict"
 category = "main"
 optional = false
@@ -786,7 +786,7 @@ full = ["pandas"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.10"
-content-hash = "26004d4d9a7cd3ca4bfbd104719ca9d05954c5335514db8203c929f394520da9"
+content-hash = "6c8aebb69eca540546bbab6fafee8f9b1154e438cebad36ef8e633bdbd485f6a"
 
 [metadata.files]
 ansi2html = [
@@ -1011,8 +1011,8 @@ lazy-object-proxy = [
     {file = "lazy_object_proxy-1.6.0-cp39-cp39-win_amd64.whl", hash = "sha256:f5144c75445ae3ca2057faac03fda5a902eff196702b0a24daf1d6ce0650514b"},
 ]
 ldict = [
-    {file = "ldict-3.211123.1-py3-none-any.whl", hash = "sha256:d8439f9a7d561bbe728a25c6102990101a3ad02b284eebecc8c062ec1dc4f394"},
-    {file = "ldict-3.211123.1.tar.gz", hash = "sha256:b11d45c878ea3f01f666d1208cb50505a80baf65a65e92155bb8ce94ea773a0a"},
+    {file = "ldict-3.211123.2-py3-none-any.whl", hash = "sha256:ef95c2cfba6baebedf8aab5488153cd9de259cdd465f25d11961b21a4fc9f668"},
+    {file = "ldict-3.211123.2.tar.gz", hash = "sha256:93e3fade23b3a82aa66b0cd1d9dd05277ad012bcf656a2222d5b087c81ceabd5"},
 ]
 lz4 = [
     {file = "lz4-3.1.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:5aa4dd12debc5cb90980e6bb26be8b1586e57b87aaf6c773b9b799bca16edd99"},
