@@ -33,7 +33,7 @@ from ldict.exception import WrongKeyType
 
 from idict.parameter.ifunctionspace import iFunctionSpace
 from idict.parameter.ilet import iLet
-from idict.persistence.cached import build
+from idict.persistence.cached import build, get_following_pointers
 
 VT = TypeVar("VT")
 
@@ -204,7 +204,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d3.z
     12
     >>> c
-    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
     >>> d3.show(colored=False)
     {
         "z": 12,
@@ -238,7 +238,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d3.z
     12
     >>> c
-    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
     >>> d3.show(colored=False)
     {
         "z": 12,
@@ -256,7 +256,7 @@ class Idict(AbstractMutableLazyDict):
     >>> f.metadata = {"id": "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87", "name": "squared", "description": "Some text."}
     >>> g.metadata = {"id": "05d6efbc9820dafe0d8fbe87a79adbe9797abc87", "name": "add1000", "description": "Some text."}
     >>> d = idict(x=3) >> f >> g
-    >>> d.show()
+    >>> d.show(colored=False)
     {
         "y": "→(x)",
         "_history": {
@@ -279,8 +279,77 @@ class Idict(AbstractMutableLazyDict):
             "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
         }
     }
-    >>> idict(x=3).hosh * "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87" * "05d6efbc9820dafe0d8fbe87a79adbe9797abc87"
+    >>> (idict(x=3).hosh * "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87" * "05d6efbc9820dafe0d8fbe87a79adbe9797abc87").show(colored=False)
     iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
+    >>> a = idict(x=3)
+    >>> b = idict(y=5)
+    >>> b["d"] = lambda y: a
+    >>> cache = {}
+    >>> b >>= [cache]
+    >>> b.show(colored=False)
+    {
+        "d": "→(^ y)",
+        "y": 5,
+        "_id": "MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng",
+        "_ids": {
+            "d": "eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng",
+            "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
+        }
+    }
+    >>> b.d.show(colored=False)
+    {
+        "x": 3,
+        "_id": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+        "_ids": {
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+        }
+    }
+    >>> import json
+    >>> print(json.dumps(cache, indent=2))
+    {
+      "eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng": {
+        "_id": "_B_e55a47230d67db81bcc1aecde8f1b950282cd"
+      },
+      "WB_e55a47230d67db81bcc1aecde8f1b950282cd": 3,
+      "_B_e55a47230d67db81bcc1aecde8f1b950282cd": {
+        "_id": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+        "_ids": {
+          "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+        }
+      },
+      "0U_e2a86ff72e226d5365aea336044f7b4270977": 5,
+      "MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng": {
+        "_id": "MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng",
+        "_ids": {
+          "d": "eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng",
+          "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
+        }
+      }
+    }
+    >>> idict.fromid("WB_e55a47230d67db81bcc1aecde8f1b950282cd", cache).show(colored=False)
+    {
+        "x": 3,
+        "_id": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+        "_ids": {
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+        }
+    }
+    >>> idict.fromid("MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng", cache).show(colored=False)
+    {
+        "d": {
+            "x": 3,
+            "_id": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+            "_ids": {
+                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+            }
+        },
+        "y": 5,
+        "_id": "MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng",
+        "_ids": {
+            "d": "eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng",
+            "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
+        }
+    }
     """
 
     # noinspection PyMissingConstructor
@@ -389,26 +458,35 @@ class Idict(AbstractMutableLazyDict):
         >>> from idict import idict
         >>> cache = {}
         >>> d = idict(x=5) >> (lambda x: {"y": x**2}) >> [cache]
-        >>> d
+        >>> d.show(colored=False)
         {
             "y": "→(^ x)",
             "x": 5,
             "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
-            "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+            "_ids": {
+                "y": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4",
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+            }
         }
         >>> d.y
         25
         >>> cache
-        {'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4': 25, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4': {'_ids': {'y': 'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977'}}}
+        {'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4': 25, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4': {'_id': '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4', '_ids': {'y': 'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977'}}}
         >>> d2 = idict.fromid(d.id, cache)
-        >>> d2
+        >>> d2.show(colored=False)
         {
             "y": 25,
             "x": 5,
             "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
-            "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+            "_ids": {
+                "y": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4",
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+            }
         }
         >>> d == d2
         True
         """
-        return build(id, cache, identity)
+        if (newid := "_" + id[1:]) in cache:
+            id = newid
+        d = get_following_pointers(id, cache)
+        return build(d["_id"], d["_ids"], cache, identity)

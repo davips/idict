@@ -19,49 +19,47 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-from garoupa import ø40
+import json
+
 from ldict.lazyval import LazyVal
+
+from idict.core.identification import key2id
 
 
 def cached(d, cache):
     """
-    Store each value (fid: value) and an extra value containing the fids (did: {"_ids": fids}).
+    Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
     """
-    if len(d.ids) == 1:
-        did2 = (d.hosh * d.hosh).id
-        if did2 in cache:
-            return cache[did2]
-    else:
-        did2 = None
+    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. mas hash não é antecipável! 'cached' teria de fazer o ponteiro: ho -> {"_id": "..."}.  aproveitar pack() para guardar todo valor assim.
+    from idict.core.idict_ import Idict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+    front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
         def func(**kwargs):
             # Try loading.
             if fid in cache:
-                return cache[fid]
-            if did2 and did2 in cache:
-                return cache[did2]
+                return get_following_pointers(fid, cache)
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
-            result = k = None
+            k = None
             for k, v in fids.items():
                 # TODO (minor): all lazies are evaluated, but show() still shows deps as lazy.
                 #    Fortunately the dep is evaluated only once.
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
-                cache[v] = data[k]
-                if k == outputf:
-                    result = data[k]
-            if result is None:
+                if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
+                    cache[v] = {"_id": handle_singleton_id(data[k])}
+                    data[k] = cached(data[k], cache)
+                else:
+                    cache[v] = data[k]
+            if (result := data[outputf]) is None:
                 if k is None:
                     raise Exception(f"No ids")
-                raise Exception(f"{k=} not in output fields: {output_fields}. ids: {fids.items()}")
-            did = did2 or id
-            if did not in cache:
-                cache[did] = {"_ids": fids}
-
-            # Return requested value.
+                raise Exception(f"Key {k} not in output fields: {output_fields}. ids: {fids.items()}")
+            # if did not in cache:
+            cache[front_id] = {"_id": id, "_ids": fids}
             return result
 
         return func
@@ -83,46 +81,246 @@ def cached(d, cache):
 
     # Eager saving when there are no lazies.
     if not lazies:
-        for k, id in d.ids.items():
-            if id not in cache:
-                cache[id] = data[k]
-        did = did2 or id
-        if did not in cache:
-            cache[did] = {"_ids": d.ids}
+        for k, fid in d.ids.items():
+            if fid not in cache:
+                if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
+                    cache[fid] = {"_id": handle_singleton_id(data[k])}
+                    data[k] = cached(data[k], cache)
+                else:
+                    cache[fid] = data[k]
+        if front_id not in cache:
+            cache[front_id] = {"_id": d.id, "_ids": d.ids}
 
     return d.clone(data)
 
 
-def build(id, cache, identity=ø40):
-    """
+def build(id, ids, cache, identity):
+    """Build an idict from a given identity
+
     >>> from idict import idict
-    >>> cache = {}
-    >>> d = idict(x=5) >> (lambda x: {"y": x**2}) >> [cache]
-    >>> d
+    >>> a = idict(x=5,z=9)
+    >>> b = idict(y=7)
+    >>> b["d"] = a
+    >>> b >>= [cache := {}]
+    >>> print(json.dumps(cache, indent=2))
     {
-        "y": "→(^ x)",
-        "x": 5,
-        "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
-        "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
+      ".R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5": {
+        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5"
+      },
+      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
+      "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e": 9,
+      "OT_014642d46104ba6ba4d818c2307a4bc00f2c5": {
+        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+        "_ids": {
+          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+          "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+        }
+      },
+      "lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e": {
+        "_id": "lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e",
+        "_ids": {
+          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+          "d": ".R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5"
+        }
+      }
     }
-    >>> d.y
-    25
-    >>> cache
-    {'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4': 25, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4': {'_ids': {'y': 'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977'}}}
-    >>> d2 = idict.fromid(d.id, cache)
-    >>> d2
+    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
     {
-        "y": 25,
-        "x": 5,
-        "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
-        "_ids": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4 .T_f0bb8da3062cc75365ae0446044f7b3270977"
+        "y": 7,
+        "d": {
+            "x": 5,
+            "z": 9,
+            "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+            "_ids": {
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+                "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+            }
+        },
+        "_id": "lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e",
+        "_ids": {
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+            "d": ".R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5"
+        }
     }
-    >>> d == d2
-    True
+    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
+    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    >>> a = idict(x=5)
+    >>> b = idict(y=7)
+    >>> b["d"] = a
+    >>> b >>= [cache := {}]
+    >>> print(json.dumps(cache, indent=2))
+    {
+      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
+      "cS_64d1490a78c8ead565ae9d2bf34f7bf780977": {
+        "_id": "_T_f0bb8da3062cc75365ae0446044f7b3270977"
+      },
+      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
+      "_T_f0bb8da3062cc75365ae0446044f7b3270977": {
+        "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+        "_ids": {
+          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+        }
+      },
+      "zN_a9690b3ab169bf136e16c554c6aeda926d140": {
+        "_id": "zN_a9690b3ab169bf136e16c554c6aeda926d140",
+        "_ids": {
+          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+          "d": "cS_64d1490a78c8ead565ae9d2bf34f7bf780977"
+        }
+      }
+    }
+    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        "y": 7,
+        "d": {
+            "x": 5,
+            "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "_ids": {
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+            }
+        },
+        "_id": "zN_a9690b3ab169bf136e16c554c6aeda926d140",
+        "_ids": {
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+            "d": "cS_64d1490a78c8ead565ae9d2bf34f7bf780977"
+        }
+    }
+    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
+    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    >>> a = idict(x=5,z=9)
+    >>> b = idict(y=7)
+    >>> b["d"] = lambda y: a
+    >>> b >>= [cache := {}]
+    >>> _ = b.d
+    >>> print(json.dumps(cache, indent=2))
+    {
+      "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng": {
+        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5"
+      },
+      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
+      "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e": 9,
+      "OT_014642d46104ba6ba4d818c2307a4bc00f2c5": {
+        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+        "_ids": {
+          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+          "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+        }
+      },
+      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
+      ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng": {
+        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+        "_ids": {
+          "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
+          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+      }
+    }
+    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        "d": {
+            "x": 5,
+            "z": 9,
+            "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+            "_ids": {
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+                "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+            }
+        },
+        "y": 7,
+        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+        "_ids": {
+            "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
+    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    >>> a = idict(x=5)
+    >>> b = idict(y=7)
+    >>> b["d"] = lambda y: a
+    >>> b >>= [cache := {}]
+    >>> _ = b.d
+    >>> print(json.dumps(cache, indent=2))
+    {
+      "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng": {
+        "_id": "_T_f0bb8da3062cc75365ae0446044f7b3270977"
+      },
+      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
+      "_T_f0bb8da3062cc75365ae0446044f7b3270977": {
+        "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+        "_ids": {
+          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+        }
+      },
+      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
+      ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng": {
+        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+        "_ids": {
+          "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
+          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+      }
+    }
+    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        "d": {
+            "x": 5,
+            "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "_ids": {
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+            }
+        },
+        "y": 7,
+        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+        "_ids": {
+            "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        }
+    }
+    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
+    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
     """
-    ids = cache[id]["_ids"]
     dic = {}
-    for k, v in ids.items():
-        dic[k] = cache[v]
+    for k, fid in ids.items():
+        # REMINDER: An item id will never start with '_'. That only happens with singleton-idict id translated to cache.
+        if fid in cache:
+            value = get_following_pointers(fid, cache)
+            if isinstance(value, dict) and list(value.keys()) == ["_id", "_ids"]:
+                dic[k] = build(value["_id"], value["_ids"], cache, identity)
+            else:
+                dic[k] = cache[fid]
+        else:
+            raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
     from idict import idict
     return idict(dic, _id=id, _ids=ids, identity=identity)
+
+
+def get_following_pointers(fid, cache):
+    """Fetch item value from cache following pointers"""
+    result = cache[fid]
+    while isinstance(result, dict) and list(result.keys()) == ["_id"]:
+        result = cache[result["_id"]]
+    return result
+
+
+def handle_singleton_id(d):
+    return "_" + d.id[1:] if len(d.ids) == 1 else d.id
+
+# def get(objtype, id, cache, identity):
+#     result = None
+#     if objtype == "idict":  # not an item!
+#         if (id2 := "_" + id[1:]) in cache:
+#             result = cache[id2]
+#         elif id in cache:
+#             result = cache[id]
+#     elif objtype == "item" and id in cache:  # can be an idict!
+#         result = cache[id]
+#
+#     # Follow pointers.
+#     while isinstance(result, dict) and list(result.keys()) == ["_id"]:
+#         result = get(objtype, result["_id"], cache)
+#
+#     if isinstance(result, dict) and list(result.keys()) == ["_id", "_ids"]:
+#         return build(result["_id"], result["_ids"], cache, identity)
+#     return result
