@@ -80,7 +80,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     True
     &#34;&#34;&#34;
     f_hosh = f.metadata[&#34;id&#34;] if hasattr(f, &#34;metadata&#34;) and &#34;id&#34; in f.metadata else fhosh(f, self.identity.version)
-    f_hosh_full = config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
+    f_hosh_full = self.identity * config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
     if output:
         frozen = self.frozen &gt;&gt; {output: other}
         outputs = [output]
@@ -362,7 +362,7 @@ True
     True
     &#34;&#34;&#34;
     f_hosh = f.metadata[&#34;id&#34;] if hasattr(f, &#34;metadata&#34;) and &#34;id&#34; in f.metadata else fhosh(f, self.identity.version)
-    f_hosh_full = config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
+    f_hosh_full = self.identity * config_hosh * f_hosh  # d&#39; = d * ħ(config) * f
     if output:
         frozen = self.frozen &gt;&gt; {output: other}
         outputs = [output]
