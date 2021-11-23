@@ -34,6 +34,7 @@ def cached(d, cache):
     # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. mas hash não é antecipável! 'cached' teria de fazer o ponteiro: ho -> {"_id": "..."}.  aproveitar pack() para guardar todo valor assim.
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -293,6 +294,7 @@ def build(id, ids, cache, identity):
         else:
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
     from idict import idict
+
     return idict(dic, _id=id, _ids=ids, identity=identity)
 
 
@@ -306,6 +308,7 @@ def get_following_pointers(fid, cache):
 
 def handle_singleton_id(d):
     return "_" + d.id[1:] if len(d.ids) == 1 else d.id
+
 
 # def get(objtype, id, cache, identity):
 #     result = None

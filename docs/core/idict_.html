@@ -59,8 +59,9 @@ from garoupa import ø40
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
 
-from idict.parameter.ilet import iLet
 from idict.parameter.ifunctionspace import iFunctionSpace
+from idict.parameter.ilet import iLet
+from idict.persistence.cached import build, get_following_pointers
 
 VT = TypeVar(&#34;VT&#34;)
 
@@ -231,7 +232,7 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
@@ -265,7 +266,7 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
@@ -283,7 +284,7 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; f.metadata = {&#34;id&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;squared&#34;, &#34;description&#34;: &#34;Some text.&#34;}
     &gt;&gt;&gt; g.metadata = {&#34;id&#34;: &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;add1000&#34;, &#34;description&#34;: &#34;Some text.&#34;}
     &gt;&gt;&gt; d = idict(x=3) &gt;&gt; f &gt;&gt; g
-    &gt;&gt;&gt; d.show()
+    &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;_history&#34;: {
@@ -306,8 +307,77 @@ class Idict(AbstractMutableLazyDict):
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
     }
-    &gt;&gt;&gt; idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;
+    &gt;&gt;&gt; (idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;).show(colored=False)
     iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
+    &gt;&gt;&gt; a = idict(x=3)
+    &gt;&gt;&gt; b = idict(y=5)
+    &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
+    &gt;&gt;&gt; cache = {}
+    &gt;&gt;&gt; b &gt;&gt;= [cache]
+    &gt;&gt;&gt; b.show(colored=False)
+    {
+        &#34;d&#34;: &#34;→(^ y)&#34;,
+        &#34;y&#34;: 5,
+        &#34;_id&#34;: &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;
+        }
+    }
+    &gt;&gt;&gt; b.d.show(colored=False)
+    {
+        &#34;x&#34;: 3,
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; import json
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;_B_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+      },
+      &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;: 3,
+      &#34;_B_e55a47230d67db81bcc1aecde8f1b950282cd&#34;: {
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+      },
+      &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;: 5,
+      &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+          &#34;d&#34;: &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; idict.fromid(&#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;, cache).show(colored=False)
+    {
+        &#34;x&#34;: 3,
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; idict.fromid(&#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;, cache).show(colored=False)
+    {
+        &#34;d&#34;: {
+            &#34;x&#34;: 3,
+            &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            }
+        },
+        &#34;y&#34;: 5,
+        &#34;_id&#34;: &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;
+        }
+    }
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
@@ -408,7 +478,46 @@ class Idict(AbstractMutableLazyDict):
     def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen ^ other
-        return clone</code></pre>
+        return clone
+
+    @staticmethod
+    def fromid(id, cache, identity=ø40):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict import idict
+        &gt;&gt;&gt; cache = {}
+        &gt;&gt;&gt; d = idict(x=5) &gt;&gt; (lambda x: {&#34;y&#34;: x**2}) &gt;&gt; [cache]
+        &gt;&gt;&gt; d.show(colored=False)
+        {
+            &#34;y&#34;: &#34;→(^ x)&#34;,
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#34;,
+            &#34;_ids&#34;: {
+                &#34;y&#34;: &#34;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#34;,
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        }
+        &gt;&gt;&gt; d.y
+        25
+        &gt;&gt;&gt; cache
+        {&#39;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#39;: 25, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#39;: {&#39;_id&#39;: &#39;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#39;, &#39;_ids&#39;: {&#39;y&#39;: &#39;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;}}}
+        &gt;&gt;&gt; d2 = idict.fromid(d.id, cache)
+        &gt;&gt;&gt; d2.show(colored=False)
+        {
+            &#34;y&#34;: 25,
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#34;,
+            &#34;_ids&#34;: {
+                &#34;y&#34;: &#34;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#34;,
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        }
+        &gt;&gt;&gt; d == d2
+        True
+        &#34;&#34;&#34;
+        if (newid := &#34;_&#34; + id[1:]) in cache:
+            id = newid
+        d = get_following_pointers(id, cache)
+        return build(d[&#34;_id&#34;], d[&#34;_ids&#34;], cache, identity)</code></pre>
 </details>
 </section>
 <section>
@@ -588,7 +697,7 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
@@ -622,7 +731,7 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
@@ -640,7 +749,7 @@ True
 &gt;&gt;&gt; f.metadata = {&quot;id&quot;: &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;, &quot;name&quot;: &quot;squared&quot;, &quot;description&quot;: &quot;Some text.&quot;}
 &gt;&gt;&gt; g.metadata = {&quot;id&quot;: &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;, &quot;name&quot;: &quot;add1000&quot;, &quot;description&quot;: &quot;Some text.&quot;}
 &gt;&gt;&gt; d = idict(x=3) &gt;&gt; f &gt;&gt; g
-&gt;&gt;&gt; d.show()
+&gt;&gt;&gt; d.show(colored=False)
 {
     &quot;y&quot;: &quot;→(x)&quot;,
     &quot;_history&quot;: {
@@ -663,8 +772,77 @@ True
         &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
     }
 }
-&gt;&gt;&gt; idict(x=3).hosh * &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot; * &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;
+&gt;&gt;&gt; (idict(x=3).hosh * &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot; * &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;).show(colored=False)
 iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
+&gt;&gt;&gt; a = idict(x=3)
+&gt;&gt;&gt; b = idict(y=5)
+&gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
+&gt;&gt;&gt; cache = {}
+&gt;&gt;&gt; b &gt;&gt;= [cache]
+&gt;&gt;&gt; b.show(colored=False)
+{
+    &quot;d&quot;: &quot;→(^ y)&quot;,
+    &quot;y&quot;: 5,
+    &quot;_id&quot;: &quot;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+        &quot;d&quot;: &quot;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&quot;,
+        &quot;y&quot;: &quot;0U_e2a86ff72e226d5365aea336044f7b4270977&quot;
+    }
+}
+&gt;&gt;&gt; b.d.show(colored=False)
+{
+    &quot;x&quot;: 3,
+    &quot;_id&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
+    &quot;_ids&quot;: {
+        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+    }
+}
+&gt;&gt;&gt; import json
+&gt;&gt;&gt; print(json.dumps(cache, indent=2))
+{
+  &quot;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;_B_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+  },
+  &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;: 3,
+  &quot;_B_e55a47230d67db81bcc1aecde8f1b950282cd&quot;: {
+    &quot;_id&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
+    &quot;_ids&quot;: {
+      &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+    }
+  },
+  &quot;0U_e2a86ff72e226d5365aea336044f7b4270977&quot;: 5,
+  &quot;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+      &quot;d&quot;: &quot;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&quot;,
+      &quot;y&quot;: &quot;0U_e2a86ff72e226d5365aea336044f7b4270977&quot;
+    }
+  }
+}
+&gt;&gt;&gt; idict.fromid(&quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;, cache).show(colored=False)
+{
+    &quot;x&quot;: 3,
+    &quot;_id&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
+    &quot;_ids&quot;: {
+        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+    }
+}
+&gt;&gt;&gt; idict.fromid(&quot;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&quot;, cache).show(colored=False)
+{
+    &quot;d&quot;: {
+        &quot;x&quot;: 3,
+        &quot;_id&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;,
+        &quot;_ids&quot;: {
+            &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+        }
+    },
+    &quot;y&quot;: 5,
+    &quot;_id&quot;: &quot;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+        &quot;d&quot;: &quot;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&quot;,
+        &quot;y&quot;: &quot;0U_e2a86ff72e226d5365aea336044f7b4270977&quot;
+    }
+}
 </code></pre></div>
 <details class="source">
 <summary>
@@ -836,7 +1014,7 @@ iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
@@ -870,7 +1048,7 @@ iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
@@ -888,7 +1066,7 @@ iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     &gt;&gt;&gt; f.metadata = {&#34;id&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;squared&#34;, &#34;description&#34;: &#34;Some text.&#34;}
     &gt;&gt;&gt; g.metadata = {&#34;id&#34;: &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;, &#34;name&#34;: &#34;add1000&#34;, &#34;description&#34;: &#34;Some text.&#34;}
     &gt;&gt;&gt; d = idict(x=3) &gt;&gt; f &gt;&gt; g
-    &gt;&gt;&gt; d.show()
+    &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;_history&#34;: {
@@ -911,8 +1089,77 @@ iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
             &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
         }
     }
-    &gt;&gt;&gt; idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;
+    &gt;&gt;&gt; (idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;).show(colored=False)
     iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
+    &gt;&gt;&gt; a = idict(x=3)
+    &gt;&gt;&gt; b = idict(y=5)
+    &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
+    &gt;&gt;&gt; cache = {}
+    &gt;&gt;&gt; b &gt;&gt;= [cache]
+    &gt;&gt;&gt; b.show(colored=False)
+    {
+        &#34;d&#34;: &#34;→(^ y)&#34;,
+        &#34;y&#34;: 5,
+        &#34;_id&#34;: &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;
+        }
+    }
+    &gt;&gt;&gt; b.d.show(colored=False)
+    {
+        &#34;x&#34;: 3,
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; import json
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;_B_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+      },
+      &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;: 3,
+      &#34;_B_e55a47230d67db81bcc1aecde8f1b950282cd&#34;: {
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+      },
+      &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;: 5,
+      &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+          &#34;d&#34;: &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; idict.fromid(&#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;, cache).show(colored=False)
+    {
+        &#34;x&#34;: 3,
+        &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+        }
+    }
+    &gt;&gt;&gt; idict.fromid(&#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;, cache).show(colored=False)
+    {
+        &#34;d&#34;: {
+            &#34;x&#34;: 3,
+            &#34;_id&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            }
+        },
+        &#34;y&#34;: 5,
+        &#34;_id&#34;: &#34;MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;0U_e2a86ff72e226d5365aea336044f7b4270977&#34;
+        }
+    }
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
@@ -1013,7 +1260,46 @@ iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     def __xor__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen ^ other
-        return clone</code></pre>
+        return clone
+
+    @staticmethod
+    def fromid(id, cache, identity=ø40):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; from idict import idict
+        &gt;&gt;&gt; cache = {}
+        &gt;&gt;&gt; d = idict(x=5) &gt;&gt; (lambda x: {&#34;y&#34;: x**2}) &gt;&gt; [cache]
+        &gt;&gt;&gt; d.show(colored=False)
+        {
+            &#34;y&#34;: &#34;→(^ x)&#34;,
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#34;,
+            &#34;_ids&#34;: {
+                &#34;y&#34;: &#34;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#34;,
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        }
+        &gt;&gt;&gt; d.y
+        25
+        &gt;&gt;&gt; cache
+        {&#39;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#39;: 25, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#39;: {&#39;_id&#39;: &#39;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#39;, &#39;_ids&#39;: {&#39;y&#39;: &#39;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;}}}
+        &gt;&gt;&gt; d2 = idict.fromid(d.id, cache)
+        &gt;&gt;&gt; d2.show(colored=False)
+        {
+            &#34;y&#34;: 25,
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#34;,
+            &#34;_ids&#34;: {
+                &#34;y&#34;: &#34;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#34;,
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        }
+        &gt;&gt;&gt; d == d2
+        True
+        &#34;&#34;&#34;
+        if (newid := &#34;_&#34; + id[1:]) in cache:
+            id = newid
+        d = get_following_pointers(id, cache)
+        return build(d[&#34;_id&#34;], d[&#34;_ids&#34;], cache, identity)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1035,6 +1321,88 @@ iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
 <dt id="idict.core.idict_.Idict.frozen"><code class="name">var <span class="ident">frozen</span> : ldict.core.base.AbstractLazyDict</code></dt>
 <dd>
 <div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="idict.core.idict_.Idict.fromid"><code class="name flex">
+<span>def <span class="ident">fromid</span></span>(<span>id, cache, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m)</span>
+</code></dt>
+<dd>
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
+&gt;&gt;&gt; cache = {}
+&gt;&gt;&gt; d = idict(x=5) &gt;&gt; (lambda x: {&quot;y&quot;: x**2}) &gt;&gt; [cache]
+&gt;&gt;&gt; d.show(colored=False)
+{
+    &quot;y&quot;: &quot;→(^ x)&quot;,
+    &quot;x&quot;: 5,
+    &quot;_id&quot;: &quot;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&quot;,
+    &quot;_ids&quot;: {
+        &quot;y&quot;: &quot;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
+}
+&gt;&gt;&gt; d.y
+25
+&gt;&gt;&gt; cache
+{'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4': 25, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4': {'_id': '6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4', '_ids': {'y': 'RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977'}}}
+&gt;&gt;&gt; d2 = idict.fromid(d.id, cache)
+&gt;&gt;&gt; d2.show(colored=False)
+{
+    &quot;y&quot;: 25,
+    &quot;x&quot;: 5,
+    &quot;_id&quot;: &quot;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&quot;,
+    &quot;_ids&quot;: {
+        &quot;y&quot;: &quot;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
+}
+&gt;&gt;&gt; d == d2
+True
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def fromid(id, cache, identity=ø40):
+    &#34;&#34;&#34;
+    &gt;&gt;&gt; from idict import idict
+    &gt;&gt;&gt; cache = {}
+    &gt;&gt;&gt; d = idict(x=5) &gt;&gt; (lambda x: {&#34;y&#34;: x**2}) &gt;&gt; [cache]
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;y&#34;: &#34;→(^ x)&#34;,
+        &#34;x&#34;: 5,
+        &#34;_id&#34;: &#34;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
+    }
+    &gt;&gt;&gt; d.y
+    25
+    &gt;&gt;&gt; cache
+    {&#39;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#39;: 25, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#39;: {&#39;_id&#39;: &#39;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#39;, &#39;_ids&#39;: {&#39;y&#39;: &#39;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;}}}
+    &gt;&gt;&gt; d2 = idict.fromid(d.id, cache)
+    &gt;&gt;&gt; d2.show(colored=False)
+    {
+        &#34;y&#34;: 25,
+        &#34;x&#34;: 5,
+        &#34;_id&#34;: &#34;6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
+    }
+    &gt;&gt;&gt; d == d2
+    True
+    &#34;&#34;&#34;
+    if (newid := &#34;_&#34; + id[1:]) in cache:
+        id = newid
+    d = get_following_pointers(id, cache)
+    return build(d[&#34;_id&#34;], d[&#34;_ids&#34;], cache, identity)</code></pre>
+</details>
 </dd>
 </dl>
 <h3>Instance variables</h3>
@@ -1164,6 +1532,7 @@ def ids(self):
 <ul class="two-column">
 <li><code><a title="idict.core.idict_.Idict.blobs" href="#idict.core.idict_.Idict.blobs">blobs</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.clone" href="#idict.core.idict_.Idict.clone">clone</a></code></li>
+<li><code><a title="idict.core.idict_.Idict.fromid" href="#idict.core.idict_.Idict.fromid">fromid</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.frozen" href="#idict.core.idict_.Idict.frozen">frozen</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.hashes" href="#idict.core.idict_.Idict.hashes">hashes</a></code></li>
 <li><code><a title="idict.core.idict_.Idict.hosh" href="#idict.core.idict_.Idict.hosh">hosh</a></code></li>

@@ -202,11 +202,13 @@ class iLet(AbstractLet):
     def __rrshift__(self, left: Union[dict, list, Random, Callable, &#34;iLet&#34;]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; from idict.parameter.ilet import iLet
-        &gt;&gt;&gt; {&#34;x&#34;:5} &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
+        &gt;&gt;&gt; ({&#34;x&#34;:5} &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)).show(colored=False)
         {
             &#34;x&#34;: &#34;→(x)&#34;,
             &#34;_id&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;,
-            &#34;_ids&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;
+            }
         }
         &gt;&gt;&gt; [1] &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
         «^ × λ{&#39;x&#39;: 5}»
@@ -533,11 +535,13 @@ class iLet(AbstractLet):
     def __rrshift__(self, left: Union[dict, list, Random, Callable, &#34;iLet&#34;]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; from idict.parameter.ilet import iLet
-        &gt;&gt;&gt; {&#34;x&#34;:5} &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
+        &gt;&gt;&gt; ({&#34;x&#34;:5} &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)).show(colored=False)
         {
             &#34;x&#34;: &#34;→(x)&#34;,
             &#34;_id&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;,
-            &#34;_ids&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j&#34;
+            }
         }
         &gt;&gt;&gt; [1] &gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5)
         «^ × λ{&#39;x&#39;: 5}»

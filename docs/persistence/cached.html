@@ -47,50 +47,48 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
+import json
+
 from ldict.lazyval import LazyVal
+
+from idict.core.identification import key2id
 
 
 def cached(d, cache):
     &#34;&#34;&#34;
-    Store each value (fid: value) and an extra value containing the fids (did: {&#34;_ids&#34;: fids}).
+    Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
-
-    TODO: reconstruir idict via idict.fromcache(&#34;dafadfsadgfsddfgdsagasgd&#34;, client)
     &#34;&#34;&#34;
-    if len(d.ids) == 1:
-        did2 = (d.hosh * d.hosh).id
-        if did2 in cache:
-            return cache[did2]
-    else:
-        did2 = None
+    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;...&#34;}.  aproveitar pack() para guardar todo valor assim.
+    from idict.core.idict_ import Idict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
+    front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
         def func(**kwargs):
             # Try loading.
             if fid in cache:
-                return cache[fid]
-            if did2 and did2 in cache:
-                return cache[did2]
+                return get_following_pointers(fid, cache)
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
-            result = k = None
+            k = None
             for k, v in fids.items():
                 # TODO (minor): all lazies are evaluated, but show() still shows deps as lazy.
                 #    Fortunately the dep is evaluated only once.
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
-                cache[v] = data[k]
-                if k == outputf:
-                    result = data[k]
-            if result is None:
+                if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
+                    cache[v] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    data[k] = cached(data[k], cache)
+                else:
+                    cache[v] = data[k]
+            if (result := data[outputf]) is None:
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
-                raise Exception(f&#34;{k=} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
-            did = did2 or id
-            if did not in cache:
-                cache[did] = {&#34;_ids&#34;: fids}
-
-            # Return requested value.
+                raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
+            # if did not in cache:
+            cache[front_id] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
             return result
 
         return func
@@ -112,14 +110,251 @@ def cached(d, cache):
 
     # Eager saving when there are no lazies.
     if not lazies:
-        for k, id in d.ids.items():
-            if id not in cache:
-                cache[id] = data[k]
-        did = did2 or id
-        if did not in cache:
-            cache[did] = {&#34;_ids&#34;: d.ids}
+        for k, fid in d.ids.items():
+            if fid not in cache:
+                if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
+                    cache[fid] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    data[k] = cached(data[k], cache)
+                else:
+                    cache[fid] = data[k]
+        if front_id not in cache:
+            cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
-    return d.clone(data)</code></pre>
+    return d.clone(data)
+
+
+def build(id, ids, cache, identity):
+    &#34;&#34;&#34;Build an idict from a given identity
+
+    &gt;&gt;&gt; from idict import idict
+    &gt;&gt;&gt; a = idict(x=5,z=9)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
+      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+        }
+      },
+      &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;: {
+        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+        &#34;_ids&#34;: {
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+          &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;y&#34;: 7,
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;z&#34;: 9,
+            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+            }
+        },
+        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+            &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    &gt;&gt;&gt; a = idict(x=5)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;: {
+        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
+        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
+      },
+      &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;: {
+        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+        &#34;_ids&#34;: {
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+          &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;y&#34;: 7,
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        },
+        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+            &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    &gt;&gt;&gt; a = idict(x=5,z=9)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; _ = b.d
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
+      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+        }
+      },
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;z&#34;: 9,
+            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+            }
+        },
+        &#34;y&#34;: 7,
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    &gt;&gt;&gt; a = idict(x=5)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; _ = b.d
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
+        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
+      },
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        },
+        &#34;y&#34;: 7,
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    &#34;&#34;&#34;
+    dic = {}
+    for k, fid in ids.items():
+        # REMINDER: An item id will never start with &#39;_&#39;. That only happens with singleton-idict id translated to cache.
+        if fid in cache:
+            value = get_following_pointers(fid, cache)
+            if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
+                dic[k] = build(value[&#34;_id&#34;], value[&#34;_ids&#34;], cache, identity)
+            else:
+                dic[k] = cache[fid]
+        else:
+            raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
+    from idict import idict
+
+    return idict(dic, _id=id, _ids=ids, identity=identity)
+
+
+def get_following_pointers(fid, cache):
+    &#34;&#34;&#34;Fetch item value from cache following pointers&#34;&#34;&#34;
+    result = cache[fid]
+    while isinstance(result, dict) and list(result.keys()) == [&#34;_id&#34;]:
+        result = cache[result[&#34;_id&#34;]]
+    return result
+
+
+def handle_singleton_id(d):
+    return &#34;_&#34; + d.id[1:] if len(d.ids) == 1 else d.id
+
+
+# def get(objtype, id, cache, identity):
+#     result = None
+#     if objtype == &#34;idict&#34;:  # not an item!
+#         if (id2 := &#34;_&#34; + id[1:]) in cache:
+#             result = cache[id2]
+#         elif id in cache:
+#             result = cache[id]
+#     elif objtype == &#34;item&#34; and id in cache:  # can be an idict!
+#         result = cache[id]
+#
+#     # Follow pointers.
+#     while isinstance(result, dict) and list(result.keys()) == [&#34;_id&#34;]:
+#         result = get(objtype, result[&#34;_id&#34;], cache)
+#
+#     if isinstance(result, dict) and list(result.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
+#         return build(result[&#34;_id&#34;], result[&#34;_ids&#34;], cache, identity)
+#     return result</code></pre>
 </details>
 </section>
 <section>
@@ -129,58 +364,447 @@ def cached(d, cache):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="idict.persistence.cached.build"><code class="name flex">
+<span>def <span class="ident">build</span></span>(<span>id, ids, cache, identity)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Build an idict from a given identity</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
+&gt;&gt;&gt; a = idict(x=5,z=9)
+&gt;&gt;&gt; b = idict(y=7)
+&gt;&gt;&gt; b[&quot;d&quot;] = a
+&gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+&gt;&gt;&gt; print(json.dumps(cache, indent=2))
+{
+  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
+  &quot;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&quot;: {
+    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;
+  },
+  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
+  &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;: 9,
+  &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;: {
+    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+    &quot;_ids&quot;: {
+      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+      &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+    }
+  },
+  &quot;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&quot;: {
+    &quot;_id&quot;: &quot;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&quot;,
+    &quot;_ids&quot;: {
+      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
+      &quot;d&quot;: &quot;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&quot;
+    }
+  }
+}
+&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+{
+    &quot;y&quot;: 7,
+    &quot;d&quot;: {
+        &quot;x&quot;: 5,
+        &quot;z&quot;: 9,
+        &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+        &quot;_ids&quot;: {
+            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+            &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+        }
+    },
+    &quot;_id&quot;: &quot;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&quot;,
+    &quot;_ids&quot;: {
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
+        &quot;d&quot;: &quot;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&quot;
+    }
+}
+&gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
+.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+&gt;&gt;&gt; a = idict(x=5)
+&gt;&gt;&gt; b = idict(y=7)
+&gt;&gt;&gt; b[&quot;d&quot;] = a
+&gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+&gt;&gt;&gt; print(json.dumps(cache, indent=2))
+{
+  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
+  &quot;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&quot;: {
+    &quot;_id&quot;: &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+  },
+  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
+  &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: {
+    &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+    &quot;_ids&quot;: {
+      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
+  },
+  &quot;zN_a9690b3ab169bf136e16c554c6aeda926d140&quot;: {
+    &quot;_id&quot;: &quot;zN_a9690b3ab169bf136e16c554c6aeda926d140&quot;,
+    &quot;_ids&quot;: {
+      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
+      &quot;d&quot;: &quot;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&quot;
+    }
+  }
+}
+&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+{
+    &quot;y&quot;: 7,
+    &quot;d&quot;: {
+        &quot;x&quot;: 5,
+        &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;_ids&quot;: {
+            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+        }
+    },
+    &quot;_id&quot;: &quot;zN_a9690b3ab169bf136e16c554c6aeda926d140&quot;,
+    &quot;_ids&quot;: {
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
+        &quot;d&quot;: &quot;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&quot;
+    }
+}
+&gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
+cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+&gt;&gt;&gt; a = idict(x=5,z=9)
+&gt;&gt;&gt; b = idict(y=7)
+&gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
+&gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+&gt;&gt;&gt; _ = b.d
+&gt;&gt;&gt; print(json.dumps(cache, indent=2))
+{
+  &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;
+  },
+  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
+  &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;: 9,
+  &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;: {
+    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+    &quot;_ids&quot;: {
+      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+      &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+    }
+  },
+  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
+  &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+      &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
+      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+  }
+}
+&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+{
+    &quot;d&quot;: {
+        &quot;x&quot;: 5,
+        &quot;z&quot;: 9,
+        &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+        &quot;_ids&quot;: {
+            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+            &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+        }
+    },
+    &quot;y&quot;: 7,
+    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+        &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
+.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+&gt;&gt;&gt; a = idict(x=5)
+&gt;&gt;&gt; b = idict(y=7)
+&gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
+&gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+&gt;&gt;&gt; _ = b.d
+&gt;&gt;&gt; print(json.dumps(cache, indent=2))
+{
+  &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+  },
+  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
+  &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: {
+    &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+    &quot;_ids&quot;: {
+      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+    }
+  },
+  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
+  &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+      &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
+      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+  }
+}
+&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+{
+    &quot;d&quot;: {
+        &quot;x&quot;: 5,
+        &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;_ids&quot;: {
+            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+        }
+    },
+    &quot;y&quot;: 7,
+    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+        &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+    }
+}
+&gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
+cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def build(id, ids, cache, identity):
+    &#34;&#34;&#34;Build an idict from a given identity
+
+    &gt;&gt;&gt; from idict import idict
+    &gt;&gt;&gt; a = idict(x=5,z=9)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
+      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+        }
+      },
+      &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;: {
+        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+        &#34;_ids&#34;: {
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+          &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;y&#34;: 7,
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;z&#34;: 9,
+            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+            }
+        },
+        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+            &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    &gt;&gt;&gt; a = idict(x=5)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;: {
+        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
+        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
+      },
+      &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;: {
+        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+        &#34;_ids&#34;: {
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+          &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;y&#34;: 7,
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        },
+        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
+            &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    &gt;&gt;&gt; a = idict(x=5,z=9)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; _ = b.d
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
+      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
+        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+        }
+      },
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;z&#34;: 9,
+            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+            }
+        },
+        &#34;y&#34;: 7,
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    &gt;&gt;&gt; a = idict(x=5)
+    &gt;&gt;&gt; b = idict(y=7)
+    &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
+    &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
+    &gt;&gt;&gt; _ = b.d
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    {
+      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      },
+      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
+      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
+        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+        &#34;_ids&#34;: {
+          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+        }
+      },
+      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
+      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+      }
+    }
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    {
+        &#34;d&#34;: {
+            &#34;x&#34;: 5,
+            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_ids&#34;: {
+                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            }
+        },
+        &#34;y&#34;: 7,
+        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+        }
+    }
+    &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
+    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    &#34;&#34;&#34;
+    dic = {}
+    for k, fid in ids.items():
+        # REMINDER: An item id will never start with &#39;_&#39;. That only happens with singleton-idict id translated to cache.
+        if fid in cache:
+            value = get_following_pointers(fid, cache)
+            if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
+                dic[k] = build(value[&#34;_id&#34;], value[&#34;_ids&#34;], cache, identity)
+            else:
+                dic[k] = cache[fid]
+        else:
+            raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
+    from idict import idict
+
+    return idict(dic, _id=id, _ids=ids, identity=identity)</code></pre>
+</details>
+</dd>
 <dt id="idict.persistence.cached.cached"><code class="name flex">
 <span>def <span class="ident">cached</span></span>(<span>d, cache)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Store each value (fid: value) and an extra value containing the fids (did: {"_ids": fids}).
-When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.</p>
-<p>TODO: reconstruir idict via idict.fromcache("dafadfsadgfsddfgdsagasgd", client)</p></div>
+<div class="desc"><p>Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
+When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def cached(d, cache):
     &#34;&#34;&#34;
-    Store each value (fid: value) and an extra value containing the fids (did: {&#34;_ids&#34;: fids}).
+    Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
-
-    TODO: reconstruir idict via idict.fromcache(&#34;dafadfsadgfsddfgdsagasgd&#34;, client)
     &#34;&#34;&#34;
-    if len(d.ids) == 1:
-        did2 = (d.hosh * d.hosh).id
-        if did2 in cache:
-            return cache[did2]
-    else:
-        did2 = None
+    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;...&#34;}.  aproveitar pack() para guardar todo valor assim.
+    from idict.core.idict_ import Idict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
+    front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
         def func(**kwargs):
             # Try loading.
             if fid in cache:
-                return cache[fid]
-            if did2 and did2 in cache:
-                return cache[did2]
+                return get_following_pointers(fid, cache)
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
-            result = k = None
+            k = None
             for k, v in fids.items():
                 # TODO (minor): all lazies are evaluated, but show() still shows deps as lazy.
                 #    Fortunately the dep is evaluated only once.
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
-                cache[v] = data[k]
-                if k == outputf:
-                    result = data[k]
-            if result is None:
+                if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
+                    cache[v] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    data[k] = cached(data[k], cache)
+                else:
+                    cache[v] = data[k]
+            if (result := data[outputf]) is None:
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
-                raise Exception(f&#34;{k=} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
-            did = did2 or id
-            if did not in cache:
-                cache[did] = {&#34;_ids&#34;: fids}
-
-            # Return requested value.
+                raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
+            # if did not in cache:
+            cache[front_id] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
             return result
 
         return func
@@ -202,14 +826,47 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 
     # Eager saving when there are no lazies.
     if not lazies:
-        for k, id in d.ids.items():
-            if id not in cache:
-                cache[id] = data[k]
-        did = did2 or id
-        if did not in cache:
-            cache[did] = {&#34;_ids&#34;: d.ids}
+        for k, fid in d.ids.items():
+            if fid not in cache:
+                if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
+                    cache[fid] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    data[k] = cached(data[k], cache)
+                else:
+                    cache[fid] = data[k]
+        if front_id not in cache:
+            cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
     return d.clone(data)</code></pre>
+</details>
+</dd>
+<dt id="idict.persistence.cached.get_following_pointers"><code class="name flex">
+<span>def <span class="ident">get_following_pointers</span></span>(<span>fid, cache)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Fetch item value from cache following pointers</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_following_pointers(fid, cache):
+    &#34;&#34;&#34;Fetch item value from cache following pointers&#34;&#34;&#34;
+    result = cache[fid]
+    while isinstance(result, dict) and list(result.keys()) == [&#34;_id&#34;]:
+        result = cache[result[&#34;_id&#34;]]
+    return result</code></pre>
+</details>
+</dd>
+<dt id="idict.persistence.cached.handle_singleton_id"><code class="name flex">
+<span>def <span class="ident">handle_singleton_id</span></span>(<span>d)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def handle_singleton_id(d):
+    return &#34;_&#34; + d.id[1:] if len(d.ids) == 1 else d.id</code></pre>
 </details>
 </dd>
 </dl>
@@ -230,7 +887,10 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="idict.persistence.cached.build" href="#idict.persistence.cached.build">build</a></code></li>
 <li><code><a title="idict.persistence.cached.cached" href="#idict.persistence.cached.cached">cached</a></code></li>
+<li><code><a title="idict.persistence.cached.get_following_pointers" href="#idict.persistence.cached.get_following_pointers">get_following_pointers</a></code></li>
+<li><code><a title="idict.persistence.cached.handle_singleton_id" href="#idict.persistence.cached.handle_singleton_id">handle_singleton_id</a></code></li>
 </ul>
 </li>
 </ul>
