@@ -82,7 +82,7 @@ def encode(obj):
 
 
 def json_object_hook_decoder(dic):
-    if '_type' in dic:
+    if "_type" in dic:
         if "pandas" in (typ := dic.pop("_type")):
             m = check_package("pandas.core")
             if "DataFrame" in typ:

@@ -50,23 +50,27 @@
 
 
 import dis
+import pickle
 from inspect import signature
 
 from garoupa import Hosh, UT40_4
 from ldict.exception import NoInputException
 from orjson import dumps
 
-from idict.core.compression import pack
+from idict.data.compression import pack
 
 
 def fhosh(f, version):
     &#34;&#34;&#34;
-    Create hosh with etype=&#34;ordered&#34; using bytecodeof &#34;f&#34; as binary content.
+    Create hosh with etype=&#34;ordered&#34; using bytecode of &#34;f&#34; as binary content.
 
     Usage:
 
     &gt;&gt;&gt; print(fhosh(lambda x: {&#34;z&#34;: x**2}, UT40_4))
     qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
+
+    &gt;&gt;&gt; print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {&#34;z&#34;: x**2}, UT40_4))
+    vwVSMh5LQvq0bLgd5p2.K7XWZBQmRU7k6cfCqOmk
 
     Parameters
     ----------
@@ -78,10 +82,16 @@ def fhosh(f, version):
 
     &#34;&#34;&#34;
     # Add signature.
-    fargs = list(signature(f).parameters.keys())
+    pars = signature(f).parameters
+    fargs = list(pars.keys())
     if not fargs:
         raise NoInputException(f&#34;Missing function input parameters.&#34;)
     clean = [fargs]
+    only_kwargs = {
+        v.name: pickle.dumps(v.default, protocol=0).decode() for v in pars.values() if v.default is not v.empty
+    }
+    if only_kwargs:
+        clean.append(only_kwargs)
 
     # Clean line numbers.
     groups = [l for l in dis.Bytecode(f).dis().split(&#34;\n\n&#34;) if l]
@@ -243,10 +253,13 @@ def blobs_hashes_hoshes(data, identity, ids):
 <span>def <span class="ident">fhosh</span></span>(<span>f, version)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create hosh with etype="ordered" using bytecodeof "f" as binary content.</p>
+<div class="desc"><p>Create hosh with etype="ordered" using bytecode of "f" as binary content.</p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; print(fhosh(lambda x: {&quot;z&quot;: x**2}, UT40_4))
 qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
+</code></pre>
+<pre><code class="language-python-repl">&gt;&gt;&gt; print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {&quot;z&quot;: x**2}, UT40_4))
+vwVSMh5LQvq0bLgd5p2.K7XWZBQmRU7k6cfCqOmk
 </code></pre>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -262,12 +275,15 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
 </summary>
 <pre><code class="python">def fhosh(f, version):
     &#34;&#34;&#34;
-    Create hosh with etype=&#34;ordered&#34; using bytecodeof &#34;f&#34; as binary content.
+    Create hosh with etype=&#34;ordered&#34; using bytecode of &#34;f&#34; as binary content.
 
     Usage:
 
     &gt;&gt;&gt; print(fhosh(lambda x: {&#34;z&#34;: x**2}, UT40_4))
     qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
+
+    &gt;&gt;&gt; print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {&#34;z&#34;: x**2}, UT40_4))
+    vwVSMh5LQvq0bLgd5p2.K7XWZBQmRU7k6cfCqOmk
 
     Parameters
     ----------
@@ -279,10 +295,16 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
 
     &#34;&#34;&#34;
     # Add signature.
-    fargs = list(signature(f).parameters.keys())
+    pars = signature(f).parameters
+    fargs = list(pars.keys())
     if not fargs:
         raise NoInputException(f&#34;Missing function input parameters.&#34;)
     clean = [fargs]
+    only_kwargs = {
+        v.name: pickle.dumps(v.default, protocol=0).decode() for v in pars.values() if v.default is not v.empty
+    }
+    if only_kwargs:
+        clean.append(only_kwargs)
 
     # Clean line numbers.
     groups = [l for l in dis.Bytecode(f).dis().split(&#34;\n\n&#34;) if l]
