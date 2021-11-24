@@ -306,11 +306,21 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         del self.frozen[key]
 
     def __getattr__(self, item):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; d = FrozenIdentifiedDict(x=5)
+        &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x**x, &#34;_history&#34;: ...}
+        &gt;&gt;&gt; f.metadata = {&#34;name&#34;: &#34;function f&#34;}
+        &gt;&gt;&gt; (d &gt;&gt; f).history
+        {0: {&#39;name&#39;: &#39;function f&#39;}}
+        &#34;&#34;&#34;
         if item == &#34;all&#34;:
             return self.__repr__(all=True)
         if item == &#34;asdict&#34;:
             return self.frozen.asdict
-        return getattr(self.frozen, item)
+        try:
+            return getattr(self.frozen, item)
+        except (KeyError, AttributeError) as e:
+            return getattr(self.frozen, &#34;_&#34; + item)
 
     def __repr__(self):
         return repr(self.frozen)
@@ -910,11 +920,21 @@ True
         del self.frozen[key]
 
     def __getattr__(self, item):
+        &#34;&#34;&#34;
+        &gt;&gt;&gt; d = FrozenIdentifiedDict(x=5)
+        &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x**x, &#34;_history&#34;: ...}
+        &gt;&gt;&gt; f.metadata = {&#34;name&#34;: &#34;function f&#34;}
+        &gt;&gt;&gt; (d &gt;&gt; f).history
+        {0: {&#39;name&#39;: &#39;function f&#39;}}
+        &#34;&#34;&#34;
         if item == &#34;all&#34;:
             return self.__repr__(all=True)
         if item == &#34;asdict&#34;:
             return self.frozen.asdict
-        return getattr(self.frozen, item)
+        try:
+            return getattr(self.frozen, item)
+        except (KeyError, AttributeError) as e:
+            return getattr(self.frozen, &#34;_&#34; + item)
 
     def __repr__(self):
         return repr(self.frozen)

@@ -294,7 +294,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         except (KeyError, AttributeError) as e:
             return getattr(self.frozen, "_" + item)
 
-
     def __repr__(self):
         return repr(self.frozen)
 
