@@ -22,23 +22,27 @@
 
 
 import dis
+import pickle
 from inspect import signature
 
 from garoupa import Hosh, UT40_4
 from ldict.exception import NoInputException
 from orjson import dumps
 
-from idict.core.compression import pack
+from idict.data.compression import pack
 
 
 def fhosh(f, version):
     """
-    Create hosh with etype="ordered" using bytecodeof "f" as binary content.
+    Create hosh with etype="ordered" using bytecode of "f" as binary content.
 
     Usage:
 
     >>> print(fhosh(lambda x: {"z": x**2}, UT40_4))
     qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
+
+    >>> print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {"z": x**2}, UT40_4))
+    vwVSMh5LQvq0bLgd5p2.K7XWZBQmRU7k6cfCqOmk
 
     Parameters
     ----------
@@ -50,10 +54,14 @@ def fhosh(f, version):
 
     """
     # Add signature.
-    fargs = list(signature(f).parameters.keys())
+    pars = signature(f).parameters
+    fargs = list(pars.keys())
     if not fargs:
         raise NoInputException(f"Missing function input parameters.")
     clean = [fargs]
+    only_kwargs = {v.name: pickle.dumps(v.default, protocol=0).decode() for v in pars.values() if v.default is not v.empty}
+    if only_kwargs:
+        clean.append(only_kwargs)
 
     # Clean line numbers.
     groups = [l for l in dis.Bytecode(f).dis().split("\n\n") if l]
