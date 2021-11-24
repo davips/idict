@@ -413,6 +413,12 @@ class Idict(AbstractMutableLazyDict):
     def hoshes(self):
         return self.frozen.hoshes
 
+    def __getattr__(self, item):
+        try:
+            return getattr(self.frozen, item)
+        except (KeyError, AttributeError) as e:
+            return getattr(self.frozen, &#34;_&#34; + item)
+
     def __delitem__(self, key):
         if not isinstance(key, str):
             raise WrongKeyType(f&#34;Key must be string, not {type(key)}.&#34;, key)
@@ -1194,6 +1200,12 @@ iRo5VwisC3A-wNbp9iQ6DC6Z9kc1smsieeekmoge
     @property
     def hoshes(self):
         return self.frozen.hoshes
+
+    def __getattr__(self, item):
+        try:
+            return getattr(self.frozen, item)
+        except (KeyError, AttributeError) as e:
+            return getattr(self.frozen, &#34;_&#34; + item)
 
     def __delitem__(self, key):
         if not isinstance(key, str):
