@@ -27,7 +27,7 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">#  Copyright (c) 2021. Davi Pereira dos Santos
-#  This file is part of the idict project.
+#  This file is part of the i-dict project.
 #  Please respect the license - more about this in the section (*) below.
 #
 #  idict is free software: you can redistribute it and/or modify
@@ -52,6 +52,11 @@ import pickle
 import lz4.frame as lz4
 
 from idict.config import GLOBAL
+
+
+def obj2bytes(obj):
+    dump = pickle.dumps(obj, protocol=5)
+    return lz4.compress(dump)
 
 
 def pack(obj):
@@ -87,8 +92,7 @@ def pack(obj):
             del memo[memid]
 
     try:
-        dump = pickle.dumps(obj, protocol=5)
-        blob = lz4.compress(dump)
+        blob = obj2bytes(obj)
         GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
         memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
 
@@ -122,6 +126,20 @@ def unpack(blob):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="idict.data.compression.obj2bytes"><code class="name flex">
+<span>def <span class="ident">obj2bytes</span></span>(<span>obj)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obj2bytes(obj):
+    dump = pickle.dumps(obj, protocol=5)
+    return lz4.compress(dump)</code></pre>
+</details>
+</dd>
 <dt id="idict.data.compression.pack"><code class="name flex">
 <span>def <span class="ident">pack</span></span>(<span>obj)</span>
 </code></dt>
@@ -183,8 +201,7 @@ b'\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05
             del memo[memid]
 
     try:
-        dump = pickle.dumps(obj, protocol=5)
-        blob = lz4.compress(dump)
+        blob = obj2bytes(obj)
         GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
         memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
 
@@ -240,6 +257,7 @@ b'000011'
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="idict.data.compression.obj2bytes" href="#idict.data.compression.obj2bytes">obj2bytes</a></code></li>
 <li><code><a title="idict.data.compression.pack" href="#idict.data.compression.pack">pack</a></code></li>
 <li><code><a title="idict.data.compression.unpack" href="#idict.data.compression.unpack">unpack</a></code></li>
 </ul>

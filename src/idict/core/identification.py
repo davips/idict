@@ -59,10 +59,7 @@ def fhosh(f, version):
     if not fargs:
         raise NoInputException(f"Missing function input parameters.")
     clean = [fargs]
-    only_kwargs = {
-        v.name: str(pickle.dumps(v.default, protocol=5))
-        for v in pars.values() if v.default is not v.empty
-    }
+    only_kwargs = {v.name: str(pickle.dumps(v.default, protocol=5)) for v in pars.values() if v.default is not v.empty}
     if only_kwargs:
         clean.append(only_kwargs)
 
