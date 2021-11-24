@@ -278,11 +278,22 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         del self.frozen[key]
 
     def __getattr__(self, item):
+        """
+        >>> d = FrozenIdentifiedDict(x=5)
+        >>> f = lambda x: {"y": x**x, "_history": ...}
+        >>> f.metadata = {"name": "function f"}
+        >>> (d >> f).history
+        {0: {'name': 'function f'}}
+        """
         if item == "all":
             return self.__repr__(all=True)
         if item == "asdict":
             return self.frozen.asdict
-        return getattr(self.frozen, item)
+        try:
+            return getattr(self.frozen, item)
+        except (KeyError, AttributeError) as e:
+            return getattr(self.frozen, "_" + item)
+
 
     def __repr__(self):
         return repr(self.frozen)
