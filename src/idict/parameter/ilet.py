@@ -41,7 +41,7 @@ class iLet(AbstractLet):
     >>> f_a
     λ{'a': 0}
     >>> d = idict(x=5,y=7)
-     >>> d2 = d >> f_a
+    >>> d2 = d >> f_a
     >>> print(d2)
     {
         "z": "→(a x y)",
