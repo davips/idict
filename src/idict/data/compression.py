@@ -1,5 +1,5 @@
 #  Copyright (c) 2021. Davi Pereira dos Santos
-#  This file is part of the idict project.
+#  This file is part of the i-dict project.
 #  Please respect the license - more about this in the section (*) below.
 #
 #  idict is free software: you can redistribute it and/or modify
@@ -24,6 +24,11 @@ import pickle
 import lz4.frame as lz4
 
 from idict.config import GLOBAL
+
+
+def obj2bytes(obj):
+    dump = pickle.dumps(obj, protocol=5)
+    return lz4.compress(dump)
 
 
 def pack(obj):
@@ -59,8 +64,7 @@ def pack(obj):
             del memo[memid]
 
     try:
-        dump = pickle.dumps(obj, protocol=5)
-        blob = lz4.compress(dump)
+        blob = obj2bytes(obj)
         GLOBAL["compression_cachesize"] += len(blob)
         memo[memid] = {"unpacked": obj, "packed": blob}
 

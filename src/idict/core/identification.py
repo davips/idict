@@ -29,7 +29,7 @@ from garoupa import Hosh, UT40_4
 from ldict.exception import NoInputException
 from orjson import dumps
 
-from idict.data.compression import pack
+from idict.data.compression import pack, obj2bytes
 
 
 def fhosh(f, version):
@@ -42,7 +42,7 @@ def fhosh(f, version):
     qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
 
     >>> print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {"z": x**2}, UT40_4))
-    vwVSMh5LQvq0bLgd5p2.K7XWZBQmRU7k6cfCqOmk
+    46J.ooEM0K7JJjj3xzMzM4hish1FCLJCubuKBmw8
 
     Parameters
     ----------
@@ -60,7 +60,8 @@ def fhosh(f, version):
         raise NoInputException(f"Missing function input parameters.")
     clean = [fargs]
     only_kwargs = {
-        v.name: pickle.dumps(v.default, protocol=0).decode() for v in pars.values() if v.default is not v.empty
+        v.name: str(pickle.dumps(v.default, protocol=5))
+        for v in pars.values() if v.default is not v.empty
     }
     if only_kwargs:
         clean.append(only_kwargs)

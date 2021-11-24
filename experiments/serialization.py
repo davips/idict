@@ -40,45 +40,56 @@ for file in ["airlines50k.arff"]:  # , "airlines100k.arff"]:
     print()
     print(file)
 
-
-    def arff():
-        return loadarff(file)
+    x = [0, 0, 0, 0, 0, 0, 0]
 
 
     def df(ar):
-        return DataFrame(ar)
+        x[0] = DataFrame(ar)
+        return x[0]
 
 
     def pick(df):
-        return pickle.dumps(df)
+        x[1] = pickle.dumps(df, protocol=5)
+        return x[1]
 
 
     def comp(pi):
-        return lz4.compress(pi)
+        x[2] = lz4.compress(pi)
+        return x[2]
+
+
+    def tostr(p):
+        x[3] = str(p)
+        return x[3]
 
 
     def decomp(co):
-        return lz4.decompress(co)
+        x[4] = lz4.decompress(co)
+        return x[4]
 
 
     def unpick(de):
-        return pickle.loads(de)
+        x[5] = pickle.loads(de)
+        return x[5]
 
 
-    print("load arff", timeit(arff, number=1), sep="\t")
-    x = arff()
-    print("convert to pandas", timeit(lambda: df(x), number=1), sep="\t")
-    x = df(x)
-    print("pickle", timeit(lambda: pick(x), number=1), sep="\t")
-    x = pick(x)
-    print("pickle size:", len(x))
-    print("compress lz4", timeit(lambda: comp(x), number=1), sep="\t")
-    x = comp(x)
-    print("final size:", len(x))
-    print("uncompress lz4", timeit(lambda: decomp(x), number=1), sep="\t")
-    x = decomp(x)
-    print("unpickle", timeit(lambda: unpick(x), number=1), sep="\t")
-    x = unpick(x)
+    def f():
+        x[6] = loadarff(file)
+        return x[6]
+
+
+    print("load arff", timeit(f, number=1), sep="\t")
+    print("convert to pandas", timeit(lambda: df(x[6]), number=1), sep="\t")
+    print("pickle", timeit(lambda: pick(x[0]), number=1000), sep="\t")
+    print(">>>>>>>>>> to str", timeit(lambda: tostr(x[1]), number=1000), sep="\t")
+    print("pickle size:", len(x[0]))
+    print(">>>>>>>>>> str size:", len(x[1]))
+    print("compress lz4", timeit(lambda: comp(x[1]), number=1000), sep="\t")
+    print(">>>>>>>>>> to str [compressed]", timeit(lambda: tostr(x[2]), number=1000), sep="\t")
+    print("final size:", len(x[0]))
+    print(">>>>>>>>>> str size:", len(x[1]))
+    print("uncompress lz4", timeit(lambda: decomp(x[2]), number=1), sep="\t")
+    print("unpickle", timeit(lambda: unpick(x[4]), number=1), sep="\t")
 
 """
 airlines100k
