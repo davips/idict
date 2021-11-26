@@ -15,6 +15,18 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "arff2pandas"
+version = "1.0.1"
+description = "A bidirectional converter arff to pandas.DataFrame"
+category = "main"
+optional = true
+python-versions = ">=3"
+
+[package.dependencies]
+liac-arff = "*"
+pandas = "*"
+
+[[package]]
 name = "astroid"
 version = "2.8.6"
 description = "An abstract syntax tree for Python with inference support."
@@ -290,6 +302,14 @@ uncompyle6 = ">=3.7.4,<4.0.0"
 
 [package.extras]
 full = ["pandas (>=1.3.3,<2.0.0)"]
+
+[[package]]
+name = "liac-arff"
+version = "2.5.0"
+description = "A module for read and write ARFF files in Python."
+category = "main"
+optional = true
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "lz4"
@@ -694,6 +714,19 @@ pymysql = ["pymysql (<1)", "pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
+name = "testfixtures"
+version = "6.18.3"
+description = "A collection of helpers and mock objects for unit tests and doc tests."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.extras]
+build = ["setuptools-git", "wheel", "twine"]
+docs = ["sphinx", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
+test = ["pytest (>=3.6)", "pytest-cov", "pytest-django", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -781,12 +814,12 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [extras]
-full = ["pandas"]
+full = ["pandas", "arff2pandas", "SQLAlchemy"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.10"
-content-hash = "859bec3c88525a30cf7a1c31e276dcf7abe2a55bb8c5c9f3da57fdf9940d7966"
+content-hash = "a817a8d4e03203d5be5eafd9dc2722ef85b1a756b36beeb208181c59df032392"
 
 [metadata.files]
 ansi2html = [
@@ -796,6 +829,9 @@ ansi2html = [
 appnope = [
     {file = "appnope-0.1.2-py2.py3-none-any.whl", hash = "sha256:93aa393e9d6c54c5cd570ccadd8edad61ea0c4b9ea7a01409020c9aa019eb442"},
     {file = "appnope-0.1.2.tar.gz", hash = "sha256:dd83cd4b5b460958838f6eb3000c660b1f9caf2a5b1de4264e941512f603258a"},
+]
+arff2pandas = [
+    {file = "arff2pandas-1.0.1.tar.gz", hash = "sha256:034c673fed8008990996c72739077f6c7054190f7f2b6c7d1bab0d66497ac801"},
 ]
 astroid = [
     {file = "astroid-2.8.6-py3-none-any.whl", hash = "sha256:cd8326b424c971e7d87678609cf6275d22028afd37d6ac59c16d47f1245882f6"},
@@ -1013,6 +1049,9 @@ lazy-object-proxy = [
 ldict = [
     {file = "ldict-3.211124.1-py3-none-any.whl", hash = "sha256:7ed31da6dbdb3a8d8181e208c73d6f07a703d32d09cd58de8045f19dcaf2ccc3"},
     {file = "ldict-3.211124.1.tar.gz", hash = "sha256:7545b06f14086410da68fb5fd9458cd14c0d29c123fcbdf1da3a75a26aec336d"},
+]
+liac-arff = [
+    {file = "liac-arff-2.5.0.tar.gz", hash = "sha256:3220d0af6487c5aa71b47579be7ad1d94f3849ff1e224af3bf05ad49a0b5c4da"},
 ]
 lz4 = [
     {file = "lz4-3.1.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:5aa4dd12debc5cb90980e6bb26be8b1586e57b87aaf6c773b9b799bca16edd99"},
@@ -1426,6 +1465,10 @@ sqlalchemy = [
     {file = "SQLAlchemy-1.4.27-cp39-cp39-win32.whl", hash = "sha256:5beeff18b4e894f6cb73c8daf2c0d8768844ef40d97032bb187d75b1ec8de24b"},
     {file = "SQLAlchemy-1.4.27-cp39-cp39-win_amd64.whl", hash = "sha256:8dbe5f639e6d035778ebf700be6d573f82a13662c3c2c3aa0f1dba303b942806"},
     {file = "SQLAlchemy-1.4.27.tar.gz", hash = "sha256:d768359daeb3a86644f3854c6659e4496a3e6bba2b4651ecc87ce7ad415b320c"},
+]
+testfixtures = [
+    {file = "testfixtures-6.18.3-py2.py3-none-any.whl", hash = "sha256:6ddb7f56a123e1a9339f130a200359092bd0a6455e31838d6c477e8729bb7763"},
+    {file = "testfixtures-6.18.3.tar.gz", hash = "sha256:2600100ae96ffd082334b378e355550fef8b4a529a6fa4c34f47130905c7426d"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},

@@ -37,7 +37,13 @@ from idict.persistence.cached import build, get_following_pointers
 
 VT = TypeVar("VT")
 
+# TODO: idict as insertion f precisa manter Ids em vez de fazer como faz hoje, que trata ele como dict
 
+# TODO: Usar pickle da f/class pra gerar id? [pickle embute imports, mas não inclui seus codigos]
+
+# TODO: Criar Metadata na F pra servir de memoization
+# TODO: Aceitar function:... No Metadata. Vai ser pickleado  pois vai dentro do histórico,
+#  ou talvez tb num metafield se o usuário quiser tal como se quiser o _code.
 class Idict(AbstractMutableLazyDict):
     """Mutable lazy identified dict for serializable (picklable) pairs str->value
 
@@ -496,3 +502,52 @@ class Idict(AbstractMutableLazyDict):
             id = newid
         d = get_following_pointers(id, cache)
         return build(d["_id"], d["_ids"], cache, identity)
+
+    @staticmethod
+    def fromfile(name, field="df", output_format="df"):
+        """Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5
+        >>> from testfixtures import TempDirectory
+        >>> with TempDirectory() as tmp:  # doctest:+ELLIPSIS
+        ...     tmp.write("mini.arff", b"@RELATION mini\\n@ATTRIBUTE attr1	REAL\\n@ATTRIBUTE attr2 	REAL\\n@ATTRIBUTE class 	{0,1}\\n@DATA\\n5.1,3.5,0\\n3.1,4.5,1")
+        ...     d = Idict.fromfile(tmp.path + "/mini.arff")
+        '/tmp/.../mini.arff'
+        >>> d.show(colored=False)
+        {
+            "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
+            "_id": "iE_c636da60855b28845ca575d1f04fcca52671d",
+            "_ids": {
+                "df": "iE_c636da60855b28845ca575d1f04fcca52671d"
+            }
+        }
+        >>> d.df.head()
+           attr1@REAL  attr2@REAL class@{0,1}
+        0         5.1         3.5           0
+        1         3.1         4.5           1
+        >>> with TempDirectory() as tmp:  # doctest:+ELLIPSIS
+        ...     tmp.write("mini.csv", b"attr1,attr2,class\\n5.1,3.5,0\\n3.1,4.5,1")
+        ...     d = Idict.fromfile(tmp.path + "/mini.csv")
+        '/tmp/.../mini.csv'
+        >>> d.show(colored=False)
+        {
+            "df": "«{'attr1': {0: 5.1, 1: 3.1}, 'attr2': {0: 3.5, 1: 4.5}, 'class': {0: 0, 1: 1}}»",
+            "_id": "aa_985c4cfc1c4ec576ad9e2a02d5b8ba9609088",
+            "_ids": {
+                "df": "aa_985c4cfc1c4ec576ad9e2a02d5b8ba9609088"
+            }
+        }
+        >>> d.df.head()
+           attr1  attr2  class
+        0    5.1    3.5      0
+        1    3.1    4.5      1
+        """
+        if output_format == "df":
+            if name.endswith(".arff"):
+                from arff2pandas import a2p
+                with open(name) as f:
+                    df = a2p.load(f)
+                return Idict({field: df})
+            if name.endswith(".csv"):
+                from pandas import read_csv
+                return Idict({field: read_csv(name)})
+        else:  # pragma: no cover
+            raise Exception(f"Unknown {output_format=}.")
