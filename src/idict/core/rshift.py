@@ -164,7 +164,7 @@ def ihandle_dict(self, dictlike):
             "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde"
         }
     }
-    >>> print(ihandle_dict(idict(), {"x": 1555}))
+    >>> print(d := ihandle_dict(idict(), {"x": 1555}))
     {
         "x": 1555,
         "_id": "wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30",
@@ -172,11 +172,31 @@ def ihandle_dict(self, dictlike):
             "x": "wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30"
         }
     }
+    >>> d >>= lambda x: {"x": x**2}
+    >>> d.show(colored=False)
+    {
+        "x": "→(x)",
+        "_id": "3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh",
+        "_ids": {
+            "x": "3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh"
+        }
+    }
+    >>> e = idict(y=7) >> d
+    >>> e.show(colored=False)
+    {
+        "y": 7,
+        "x": "→(x)",
+        "_id": "3scU-U5036J7rqqAqwPVH7GgcIYs.g4HNqVBp-Sh",
+        "_ids": {
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
+            "x": "3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh"
+        }
+    }
     """
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
 
-    clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
+    clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self.clone()
     for k, v in dictlike.items():
         if v is None:
             clone = delete(clone, k)
@@ -192,9 +212,8 @@ def ihandle_dict(self, dictlike):
                 if k in internals["hashes"]:
                     clone.hashes[k] = internals["hashes"][k]
                 clone.hoshes[k] = internals["hoshes"][k]
-                internals["blobs"], internals["hashes"], internals["hoshes"] = clone.blobs, clone.hashes, clone.hoshes
                 hosh = reduce(
-                    operator.mul, [self.identity] + [v for k, v in self.hoshes.items() if not k.startswith("_")]
+                    operator.mul, [self.identity] + [v for k, v in clone.hoshes.items() if not k.startswith("_")]
                 )
                 internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
                 del clone.data["_id"]

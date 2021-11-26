@@ -436,9 +436,27 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             return self.clone(rnd=left)
         return NotImplemented
 
-    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[
+        dict, AbstractLazyDict, 'FrozenIdentifiedDict', Callable, iLet, iFunctionSpace, Random]):
         from idict.core.rshift import application, ihandle_dict
-
+        from idict.core.idict_ import Idict
+        if isinstance(other, (Idict, FrozenIdentifiedDict)):
+            clone = self.clone(rnd=other.rnd) if other.rnd else self.clone()
+            for k, v in other.data.items():
+                if k not in ["_id", "_ids"]:
+                    clone.data[k] = v
+                    if k in other.blobs:
+                        clone.blobs[k] = other.blobs[k]
+                    if k in other.hashes:
+                        clone.blobs[k] = other.hashes[k]
+                    clone.hoshes[k] = other.hoshes[k]
+            hosh = reduce(
+                operator.mul, [self.identity] + [v for k, v in clone.hoshes.items() if not k.startswith("_")]
+            )
+            internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
+            del clone.data["_id"]
+            del clone.data["_ids"]
+            return FrozenIdentifiedDict(clone.data, rnd=clone.rnd, _cloned=internals, **{k: v})
         if isinstance(other, dict):
             return ihandle_dict(self, other)
         if isinstance(other, Random):

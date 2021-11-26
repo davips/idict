@@ -37,7 +37,7 @@ from idict.persistence.cached import build, get_following_pointers
 
 VT = TypeVar("VT")
 
-# TODO: idict as insertion f precisa manter Ids em vez de fazer como faz hoje, que trata ele como dict
+# TODO: show() deve mostrar (no key: id do item sem key)
 
 # TODO: Usar pickle da f/class pra gerar id? [pickle embute imports, mas não inclui seus codigos]
 
