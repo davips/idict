@@ -37,9 +37,7 @@ from idict.persistence.cached import build, get_following_pointers
 
 VT = TypeVar("VT")
 
-# TODO: Criar Metadata na F pra servir de memoization
-# TODO: Aceitar function:... No Metadata. Vai ser pickleado  pois vai dentro do histórico,
-#  ou talvez tb num metafield se o usuário quiser tal como se quiser o _code.
+
 class Idict(AbstractMutableLazyDict):
     """Mutable lazy identified dict for serializable (picklable) pairs str->value
 

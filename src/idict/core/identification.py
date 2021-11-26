@@ -48,7 +48,12 @@ def fhosh(f, version):
     -------
 
     """
-    return Hosh(dill.dumps(f, protocol=5), "ordered", version=version)
+    if hasattr(f,"pickle_dump"):
+        dump = f.pickle_dump
+    else:
+        dump = dill.dumps(f, protocol=5)
+        f.pickle_dump = dump  # Memoize
+    return Hosh(dump, "ordered", version=version)
 
 
 def key2id(key, digits):

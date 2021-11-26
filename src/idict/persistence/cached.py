@@ -31,7 +31,8 @@ def cached(d, cache):
     Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
     """
-    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. mas hash não é antecipável! 'cached' teria de fazer o ponteiro: ho -> {"_id": "..."}.  aproveitar pack() para guardar todo valor assim.
+    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. [serve p/ poupar espaço. e tráfego se usar duplo cache local-remoto]
+    #  mas hash não é antecipável! 'cached' teria de fazer o ponteiro: ho -> {"_id": ". . ."}.  aproveitar pack() para guardar todo valor assim.
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
