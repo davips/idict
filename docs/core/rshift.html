@@ -73,7 +73,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         &#34;_id&#34;: &#34;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&#34;,
         &#34;_ids&#34;: {
             &#34;y&#34;: &#34;WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff&#34;,
-            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
         }
     }
     &gt;&gt;&gt; d2.hosh / f.metadata[&#34;id&#34;] == d.id
@@ -151,20 +151,20 @@ def ihandle_dict(self, dictlike):
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
     &gt;&gt;&gt; di = ihandle_dict(d, {&#34;y&#34;:None})
-    &gt;&gt;&gt; print(di)
+    &gt;&gt;&gt; di.show(colored=False)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
         &#34;_id&#34;: &#34;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
-            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
+            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&#34;
         }
     }
     &gt;&gt;&gt; di2 = ihandle_dict(di, {&#34;w&#34;:lambda x,z: x**z})
-    &gt;&gt;&gt; print(di2)
+    &gt;&gt;&gt; di2.show(colored=False)
     {
         &#34;w&#34;: &#34;→(x z)&#34;,
         &#34;x&#34;: 5,
@@ -173,12 +173,12 @@ def ihandle_dict(self, dictlike):
         &#34;_id&#34;: &#34;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
-            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
+            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&#34;
         }
     }
-    &gt;&gt;&gt; print(ihandle_dict(di2, {&#34;x&#34;: 55555}))
+    &gt;&gt;&gt; ihandle_dict(di2, {&#34;x&#34;: 55555}).show(colored=False)
     {
         &#34;w&#34;: &#34;→(x z)&#34;,
         &#34;x&#34;: 55555,
@@ -187,12 +187,12 @@ def ihandle_dict(self, dictlike):
         &#34;_id&#34;: &#34;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
-            &#34;x&#34;: &#34;T7_37f7565449f62df2f074952f6484ea6581b77&#34;,
+            &#34;x&#34;: &#34;T7_37f7565449f62df2f074952f6484ea6581b77 (no key: m9_0be75c1d3650af70f074ab2a7484eabf61b77)&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
-            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
+            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&#34;
         }
     }
-    &gt;&gt;&gt; print(ihandle_dict(idict(), {&#34;x&#34;: 1555}))
+    &gt;&gt;&gt; (d := ihandle_dict(idict(), {&#34;x&#34;: 1555})).show(colored=False)
     {
         &#34;x&#34;: 1555,
         &#34;_id&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;,
@@ -200,11 +200,31 @@ def ihandle_dict(self, dictlike):
             &#34;x&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;
         }
     }
+    &gt;&gt;&gt; d &gt;&gt;= lambda x: {&#34;x&#34;: x**2}
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;x&#34;: &#34;→(x)&#34;,
+        &#34;_id&#34;: &#34;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&#34;
+        }
+    }
+    &gt;&gt;&gt; e = idict(y=7) &gt;&gt; d
+    &gt;&gt;&gt; e.show(colored=False)
+    {
+        &#34;y&#34;: 7,
+        &#34;x&#34;: &#34;→(x)&#34;,
+        &#34;_id&#34;: &#34;3scU-U5036J7rqqAqwPVH7GgcIYs.g4HNqVBp-Sh&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;,
+            &#34;x&#34;: &#34;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&#34;
+        }
+    }
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
 
-    clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
+    clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self.clone()
     for k, v in dictlike.items():
         if v is None:
             clone = delete(clone, k)
@@ -220,9 +240,8 @@ def ihandle_dict(self, dictlike):
                 if k in internals[&#34;hashes&#34;]:
                     clone.hashes[k] = internals[&#34;hashes&#34;][k]
                 clone.hoshes[k] = internals[&#34;hoshes&#34;][k]
-                internals[&#34;blobs&#34;], internals[&#34;hashes&#34;], internals[&#34;hoshes&#34;] = clone.blobs, clone.hashes, clone.hoshes
                 hosh = reduce(
-                    operator.mul, [self.identity] + [v for k, v in self.hoshes.items() if not k.startswith(&#34;_&#34;)]
+                    operator.mul, [self.identity] + [v for k, v in clone.hoshes.items() if not k.startswith(&#34;_&#34;)]
                 )
                 internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
                 del clone.data[&#34;_id&#34;]
@@ -290,8 +309,8 @@ def solve(hoshes, output, uf: Hosh):
         &#34;_ids&#34;: {
             &#34;x&#34;: &#34;RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji&#34;,
             &#34;y&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
-            &#34;w&#34;: &#34;ng_5dad44381c5ac2a4c1bfe594d68a486791c45&#34;,
-            &#34;z&#34;: &#34;vY_6b073e90b397af73e43c1e6c4777abeeadb9f&#34;
+            &#34;w&#34;: &#34;ng_5dad44381c5ac2a4c1bfe594d68a486791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&#34;,
+            &#34;z&#34;: &#34;vY_6b073e90b397af73e43c1e6c4777abeeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -330,7 +349,7 @@ def rho(c, digits):
     &quot;_id&quot;: &quot;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&quot;,
     &quot;_ids&quot;: {
         &quot;y&quot;: &quot;WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff&quot;,
-        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd&quot;
+        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&quot;
     }
 }
 &gt;&gt;&gt; d2.hosh / f.metadata[&quot;id&quot;] == d.id
@@ -355,7 +374,7 @@ True
         &#34;_id&#34;: &#34;hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff&#34;,
         &#34;_ids&#34;: {
             &#34;y&#34;: &#34;WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff&#34;,
-            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#34;
+            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
         }
     }
     &gt;&gt;&gt; d2.hosh / f.metadata[&#34;id&#34;] == d.id
@@ -444,20 +463,20 @@ True
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
 &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
 &gt;&gt;&gt; di = ihandle_dict(d, {&quot;y&quot;:None})
-&gt;&gt;&gt; print(di)
+&gt;&gt;&gt; di.show(colored=False)
 {
     &quot;x&quot;: 5,
     &quot;y&quot;: null,
     &quot;z&quot;: 8,
     &quot;_id&quot;: &quot;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
         &quot;y&quot;: &quot;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&quot;,
-        &quot;z&quot;: &quot;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&quot;
+        &quot;z&quot;: &quot;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&quot;
     }
 }
 &gt;&gt;&gt; di2 = ihandle_dict(di, {&quot;w&quot;:lambda x,z: x**z})
-&gt;&gt;&gt; print(di2)
+&gt;&gt;&gt; di2.show(colored=False)
 {
     &quot;w&quot;: &quot;→(x z)&quot;,
     &quot;x&quot;: 5,
@@ -466,12 +485,12 @@ True
     &quot;_id&quot;: &quot;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&quot;,
     &quot;_ids&quot;: {
         &quot;w&quot;: &quot;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
         &quot;y&quot;: &quot;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&quot;,
-        &quot;z&quot;: &quot;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&quot;
+        &quot;z&quot;: &quot;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&quot;
     }
 }
-&gt;&gt;&gt; print(ihandle_dict(di2, {&quot;x&quot;: 55555}))
+&gt;&gt;&gt; ihandle_dict(di2, {&quot;x&quot;: 55555}).show(colored=False)
 {
     &quot;w&quot;: &quot;→(x z)&quot;,
     &quot;x&quot;: 55555,
@@ -480,17 +499,37 @@ True
     &quot;_id&quot;: &quot;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&quot;,
     &quot;_ids&quot;: {
         &quot;w&quot;: &quot;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&quot;,
-        &quot;x&quot;: &quot;T7_37f7565449f62df2f074952f6484ea6581b77&quot;,
+        &quot;x&quot;: &quot;T7_37f7565449f62df2f074952f6484ea6581b77 (no key: m9_0be75c1d3650af70f074ab2a7484eabf61b77)&quot;,
         &quot;y&quot;: &quot;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&quot;,
-        &quot;z&quot;: &quot;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&quot;
+        &quot;z&quot;: &quot;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&quot;
     }
 }
-&gt;&gt;&gt; print(ihandle_dict(idict(), {&quot;x&quot;: 1555}))
+&gt;&gt;&gt; (d := ihandle_dict(idict(), {&quot;x&quot;: 1555})).show(colored=False)
 {
     &quot;x&quot;: 1555,
     &quot;_id&quot;: &quot;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&quot;,
     &quot;_ids&quot;: {
         &quot;x&quot;: &quot;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&quot;
+    }
+}
+&gt;&gt;&gt; d &gt;&gt;= lambda x: {&quot;x&quot;: x**2}
+&gt;&gt;&gt; d.show(colored=False)
+{
+    &quot;x&quot;: &quot;→(x)&quot;,
+    &quot;_id&quot;: &quot;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&quot;,
+    &quot;_ids&quot;: {
+        &quot;x&quot;: &quot;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&quot;
+    }
+}
+&gt;&gt;&gt; e = idict(y=7) &gt;&gt; d
+&gt;&gt;&gt; e.show(colored=False)
+{
+    &quot;y&quot;: 7,
+    &quot;x&quot;: &quot;→(x)&quot;,
+    &quot;_id&quot;: &quot;3scU-U5036J7rqqAqwPVH7GgcIYs.g4HNqVBp-Sh&quot;,
+    &quot;_ids&quot;: {
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&quot;,
+        &quot;x&quot;: &quot;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&quot;
     }
 }
 </code></pre></div>
@@ -503,20 +542,20 @@ True
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
     &gt;&gt;&gt; di = ihandle_dict(d, {&#34;y&#34;:None})
-    &gt;&gt;&gt; print(di)
+    &gt;&gt;&gt; di.show(colored=False)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
         &#34;_id&#34;: &#34;dejCAhZMpV8N1ZR8s3HUnCi0-LP............y&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
-            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
+            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&#34;
         }
     }
     &gt;&gt;&gt; di2 = ihandle_dict(di, {&#34;w&#34;:lambda x,z: x**z})
-    &gt;&gt;&gt; print(di2)
+    &gt;&gt;&gt; di2.show(colored=False)
     {
         &#34;w&#34;: &#34;→(x z)&#34;,
         &#34;x&#34;: 5,
@@ -525,12 +564,12 @@ True
         &#34;_id&#34;: &#34;p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
-            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
+            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&#34;
         }
     }
-    &gt;&gt;&gt; print(ihandle_dict(di2, {&#34;x&#34;: 55555}))
+    &gt;&gt;&gt; ihandle_dict(di2, {&#34;x&#34;: 55555}).show(colored=False)
     {
         &#34;w&#34;: &#34;→(x z)&#34;,
         &#34;x&#34;: 55555,
@@ -539,12 +578,12 @@ True
         &#34;_id&#34;: &#34;4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5&#34;,
-            &#34;x&#34;: &#34;T7_37f7565449f62df2f074952f6484ea6581b77&#34;,
+            &#34;x&#34;: &#34;T7_37f7565449f62df2f074952f6484ea6581b77 (no key: m9_0be75c1d3650af70f074ab2a7484eabf61b77)&#34;,
             &#34;y&#34;: &#34;gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y&#34;,
-            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde&#34;
+            &#34;z&#34;: &#34;7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)&#34;
         }
     }
-    &gt;&gt;&gt; print(ihandle_dict(idict(), {&#34;x&#34;: 1555}))
+    &gt;&gt;&gt; (d := ihandle_dict(idict(), {&#34;x&#34;: 1555})).show(colored=False)
     {
         &#34;x&#34;: 1555,
         &#34;_id&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;,
@@ -552,11 +591,31 @@ True
             &#34;x&#34;: &#34;wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30&#34;
         }
     }
+    &gt;&gt;&gt; d &gt;&gt;= lambda x: {&#34;x&#34;: x**2}
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;x&#34;: &#34;→(x)&#34;,
+        &#34;_id&#34;: &#34;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&#34;
+        }
+    }
+    &gt;&gt;&gt; e = idict(y=7) &gt;&gt; d
+    &gt;&gt;&gt; e.show(colored=False)
+    {
+        &#34;y&#34;: 7,
+        &#34;x&#34;: &#34;→(x)&#34;,
+        &#34;_id&#34;: &#34;3scU-U5036J7rqqAqwPVH7GgcIYs.g4HNqVBp-Sh&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;,
+            &#34;x&#34;: &#34;3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh&#34;
+        }
+    }
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
     from ldict.core.base import AbstractLazyDict
 
-    clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self
+    clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self.clone()
     for k, v in dictlike.items():
         if v is None:
             clone = delete(clone, k)
@@ -572,9 +631,8 @@ True
                 if k in internals[&#34;hashes&#34;]:
                     clone.hashes[k] = internals[&#34;hashes&#34;][k]
                 clone.hoshes[k] = internals[&#34;hoshes&#34;][k]
-                internals[&#34;blobs&#34;], internals[&#34;hashes&#34;], internals[&#34;hoshes&#34;] = clone.blobs, clone.hashes, clone.hoshes
                 hosh = reduce(
-                    operator.mul, [self.identity] + [v for k, v in self.hoshes.items() if not k.startswith(&#34;_&#34;)]
+                    operator.mul, [self.identity] + [v for k, v in clone.hoshes.items() if not k.startswith(&#34;_&#34;)]
                 )
                 internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
                 del clone.data[&#34;_id&#34;]
@@ -666,8 +724,8 @@ True
     &quot;_ids&quot;: {
         &quot;x&quot;: &quot;RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji&quot;,
         &quot;y&quot;: &quot;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&quot;,
-        &quot;w&quot;: &quot;ng_5dad44381c5ac2a4c1bfe594d68a486791c45&quot;,
-        &quot;z&quot;: &quot;vY_6b073e90b397af73e43c1e6c4777abeeadb9f&quot;
+        &quot;w&quot;: &quot;ng_5dad44381c5ac2a4c1bfe594d68a486791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&quot;,
+        &quot;z&quot;: &quot;vY_6b073e90b397af73e43c1e6c4777abeeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&quot;
     }
 }
 </code></pre></div>
@@ -721,8 +779,8 @@ True
         &#34;_ids&#34;: {
             &#34;x&#34;: &#34;RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji&#34;,
             &#34;y&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
-            &#34;w&#34;: &#34;ng_5dad44381c5ac2a4c1bfe594d68a486791c45&#34;,
-            &#34;z&#34;: &#34;vY_6b073e90b397af73e43c1e6c4777abeeadb9f&#34;
+            &#34;w&#34;: &#34;ng_5dad44381c5ac2a4c1bfe594d68a486791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&#34;,
+            &#34;z&#34;: &#34;vY_6b073e90b397af73e43c1e6c4777abeeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;
         }
     }
     &#34;&#34;&#34;

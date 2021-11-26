@@ -70,27 +70,24 @@ class iFunctionSpace:
         &#34;x&#34;: 5,
         &#34;_id&#34;: &#34;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;
         }
     }
     &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
-    &gt;&gt;&gt; fs
+    &gt;&gt;&gt; from idict.core.appearance import decolorize
+    &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
         &#34;_id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-        &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
+        &#34;_ids&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
     }»
     &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&#34;z&#34;: x*y}
-    &gt;&gt;&gt; fs
+    &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
         &#34;_id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-        &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
+        &#34;_ids&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
     } × λ»
     &#34;&#34;&#34;
 
@@ -215,27 +212,24 @@ def reduce3(f, lst):
     &quot;x&quot;: 5,
     &quot;_id&quot;: &quot;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&quot;,
+        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;
     }
 }
 &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
-&gt;&gt;&gt; fs
+&gt;&gt;&gt; from idict.core.appearance import decolorize
+&gt;&gt;&gt; print(decolorize(str(fs)))
 «{'x': 5} × {
     &quot;y&quot;: 7,
     &quot;_id&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
-    &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
-    }
+    &quot;_ids&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
 }»
 &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&quot;z&quot;: x*y}
-&gt;&gt;&gt; fs
+&gt;&gt;&gt; print(decolorize(str(fs)))
 «{'x': 5} × {
     &quot;y&quot;: 7,
     &quot;_id&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
-    &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
-    }
+    &quot;_ids&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
 } × λ»
 </code></pre></div>
 <details class="source">
@@ -255,27 +249,24 @@ def reduce3(f, lst):
         &#34;x&#34;: 5,
         &#34;_id&#34;: &#34;mP_2d615fd34f97ac906e162c6fc6aedadc4d140&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;,
+            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;
         }
     }
     &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
-    &gt;&gt;&gt; fs
+    &gt;&gt;&gt; from idict.core.appearance import decolorize
+    &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
         &#34;_id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-        &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
+        &#34;_ids&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
     }»
     &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&#34;z&#34;: x*y}
-    &gt;&gt;&gt; fs
+    &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
         &#34;_id&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-        &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
-        }
+        &#34;_ids&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
     } × λ»
     &#34;&#34;&#34;
 

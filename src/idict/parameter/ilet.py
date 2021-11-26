@@ -31,7 +31,6 @@ from ldict.customjson import CustomJSONEncoder
 from ldict.parameter.abslet import AbstractLet
 
 
-
 class iLet(AbstractLet):
     """
     Set values or sampling intervals for parameterized functions
@@ -160,6 +159,7 @@ class iLet(AbstractLet):
 
     def __init__(self, f, **kwargs):
         from idict.core.idict_ import Idict
+
         super().__init__(f, Idict, config=None)
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
 
@@ -195,6 +195,7 @@ class iLet(AbstractLet):
         }
         """
         from idict import iEmpty
+
         if isinstance(left, iEmpty):
             from idict.parameter.ifunctionspace import iFunctionSpace
 

@@ -52,7 +52,8 @@ import json
 import re
 
 from ldict.customjson import CustomJSONEncoder
-from ldict.lazyval import LazyVal
+
+from idict.core.identification import key2id
 
 
 def decolorize(txt):
@@ -81,7 +82,7 @@ def idict2txt(d, all):
     &gt;&gt;&gt; decolorize(idict2txt(d, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&#34;,\n        &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,\n        &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&#34;\n    }\n}&#39;
 
     Parameters
     ----------
@@ -99,7 +100,8 @@ def idict2txt(d, all):
             txt = txt.replace(dic[k], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
-            txt = txt.replace(v.id, v.idc)  # REMINDER: workaround to avoid json messing with colors
+            nokey = f&#34; (no key: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
+            txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt
 
 
@@ -173,7 +175,7 @@ def ldict2dict(d, all):
 &gt;&gt;&gt; decolorize(idict2txt(d, False))
 '{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&quot;,\n    &quot;_ids&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45&quot;\n}'
 &gt;&gt;&gt; decolorize(idict2txt(d, True))
-'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&quot;,\n        &quot;y&quot;: &quot;pg_7d1eecc7838558a4c1bf9584d68a487791c45&quot;\n    }\n}'
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&quot;,\n        &quot;y&quot;: &quot;pg_7d1eecc7838558a4c1bf9584d68a487791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&quot;\n    }\n}'
 </code></pre>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -196,7 +198,7 @@ def ldict2dict(d, all):
     &gt;&gt;&gt; decolorize(idict2txt(d, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&#34;,\n        &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,\n        &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&#34;\n    }\n}&#39;
 
     Parameters
     ----------
@@ -214,7 +216,8 @@ def ldict2dict(d, all):
             txt = txt.replace(dic[k], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
-            txt = txt.replace(v.id, v.idc)  # REMINDER: workaround to avoid json messing with colors
+            nokey = f&#34; (no key: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
+            txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt</code></pre>
 </details>
 </dd>

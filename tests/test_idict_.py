@@ -27,6 +27,7 @@ from ldict.exception import DependenceException, NoInputException, WrongKeyType,
 from idict import empty, idict
 from idict.core.appearance import decolorize
 
+
 class TestLdict(TestCase):
     def test_identity(self):
         a = empty >> {"x": 1, "y": 2}

@@ -59,7 +59,8 @@ def cached(d, cache):
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
     &#34;&#34;&#34;
-    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;...&#34;}.  aproveitar pack() para guardar todo valor assim.
+    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. [serve p/ poupar espaço. e tráfego se usar duplo cache local-remoto]
+    #  mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;. . .&#34;}.  aproveitar pack() para guardar todo valor assim.
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
@@ -775,7 +776,8 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
     &#34;&#34;&#34;
-    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;...&#34;}.  aproveitar pack() para guardar todo valor assim.
+    # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. [serve p/ poupar espaço. e tráfego se usar duplo cache local-remoto]
+    #  mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;. . .&#34;}.  aproveitar pack() para guardar todo valor assim.
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 

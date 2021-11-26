@@ -73,10 +73,7 @@ def idict2txt(d, all):
     if all:
         for k, v in d.hoshes.items():
             nokey = f" (no key: {v // key2id(k, v.digits)})" if k in d.hashes else ""
-            txt = txt.replace(
-                v.id,
-                v.idc + nokey
-            )  # REMINDER: workaround to avoid json messing with colors
+            txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt
 
 

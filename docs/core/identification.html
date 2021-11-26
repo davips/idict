@@ -57,7 +57,7 @@ from garoupa import Hosh, UT40_4
 from ldict.exception import NoInputException
 from orjson import dumps
 
-from idict.data.compression import pack, obj2bytes
+from idict.data.compression import pack
 
 
 def fhosh(f, version):
@@ -81,6 +81,9 @@ def fhosh(f, version):
     -------
 
     &#34;&#34;&#34;
+    if hasattr(f, &#34;hosh&#34;):
+        return f.hosh
+
     # Add signature.
     pars = signature(f).parameters
     fargs = list(pars.keys())
@@ -97,7 +100,8 @@ def fhosh(f, version):
         lines = [segment for segment in group.split(&#34; &#34;) if segment][1:]
         clean.append(lines)
 
-    return Hosh(dumps(clean), &#34;ordered&#34;, version=version)
+    f.hosh = Hosh(dumps(clean), &#34;ordered&#34;, version=version)
+    return f.hosh
 
 
 def key2id(key, digits):
@@ -148,9 +152,9 @@ def blobs_hashes_hoshes(data, identity, ids):
         &#34;z&#34;: 3,
         &#34;_id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&#34;,
+            &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
-            &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd&#34;
+            &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -197,9 +201,9 @@ def blobs_hashes_hoshes(data, identity, ids):
     &quot;z&quot;: 3,
     &quot;_id&quot;: &quot;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&quot;,
+        &quot;x&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&quot;,
         &quot;y&quot;: &quot;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&quot;,
-        &quot;z&quot;: &quot;YB_957059a720926191bcc15ebde8f1b960282cd&quot;
+        &quot;z&quot;: &quot;YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&quot;
     }
 }
 </code></pre></div>
@@ -217,9 +221,9 @@ def blobs_hashes_hoshes(data, identity, ids):
         &#34;z&#34;: 3,
         &#34;_id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f&#34;,
+            &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
-            &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd&#34;
+            &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -292,6 +296,9 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
     -------
 
     &#34;&#34;&#34;
+    if hasattr(f, &#34;hosh&#34;):
+        return f.hosh
+
     # Add signature.
     pars = signature(f).parameters
     fargs = list(pars.keys())
@@ -308,7 +315,8 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
         lines = [segment for segment in group.split(&#34; &#34;) if segment][1:]
         clean.append(lines)
 
-    return Hosh(dumps(clean), &#34;ordered&#34;, version=version)</code></pre>
+    f.hosh = Hosh(dumps(clean), &#34;ordered&#34;, version=version)
+    return f.hosh</code></pre>
 </details>
 </dd>
 <dt id="idict.core.identification.key2id"><code class="name flex">

@@ -47,7 +47,7 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-import pickle
+import dill
 
 import lz4.frame as lz4
 
@@ -55,7 +55,7 @@ from idict.config import GLOBAL
 
 
 def obj2bytes(obj):
-    dump = pickle.dumps(obj, protocol=5)
+    dump = dill.dumps(obj, protocol=5)
     return lz4.compress(dump)
 
 
@@ -116,7 +116,7 @@ def unpack(blob):
     &gt;&gt;&gt; unpack(b&#39;\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;)
     b&#39;000011&#39;
     &#34;&#34;&#34;
-    return pickle.loads(lz4.decompress(blob))</code></pre>
+    return dill.loads(lz4.decompress(blob))</code></pre>
 </details>
 </section>
 <section>
@@ -136,7 +136,7 @@ def unpack(blob):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def obj2bytes(obj):
-    dump = pickle.dumps(obj, protocol=5)
+    dump = dill.dumps(obj, protocol=5)
     return lz4.compress(dump)</code></pre>
 </details>
 </dd>
@@ -236,7 +236,7 @@ b'000011'
     &gt;&gt;&gt; unpack(b&#39;\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;)
     b&#39;000011&#39;
     &#34;&#34;&#34;
-    return pickle.loads(lz4.decompress(blob))</code></pre>
+    return dill.loads(lz4.decompress(blob))</code></pre>
 </details>
 </dd>
 </dl>

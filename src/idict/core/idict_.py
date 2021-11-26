@@ -546,12 +546,13 @@ class Idict(AbstractMutableLazyDict):
         if output_format == "df":
             if name.endswith(".arff"):
                 from arff2pandas import a2p
+
                 with open(name) as f:
                     df = a2p.load(f)
                 return Idict({field: df})
             if name.endswith(".csv"):
                 from pandas import read_csv
+
                 return Idict({field: read_csv(name)})
         else:  # pragma: no cover
             raise Exception(f"Unknown {output_format=}.")
-
