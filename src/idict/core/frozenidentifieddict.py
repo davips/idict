@@ -285,19 +285,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> (d >> f).history
         {0: {'name': 'function f'}}
         """
-        if item == "all":
-            return self.__repr__(all=True)
-        if item == "asdict":
-            return self.frozen.asdict
         try:
             return getattr(self.frozen, item)
         except (KeyError, AttributeError) as e:
             return getattr(self.frozen, "_" + item)
-
-    def __repr__(self):
-        return repr(self.frozen)
-
-    __str__ = __repr__
 
     def evaluate(self):
         """
@@ -372,6 +363,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     def __repr__(self, all=False):
         return idict2txt(self, all)
+
+    __str__ = __repr__
 
     @property
     def all(self):
