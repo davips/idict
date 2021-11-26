@@ -14,13 +14,13 @@ packages = [
 full = ["pandas", "arff2pandas", "sqlalchemy"]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.10"
+python = "^3.8"  #">=3.8,<3.10"
 orjson = "^3.5.0"
 pdoc3 = "^0.10.0"
 pandas = { version = "^1.3.3", optional = true }
 SQLAlchemy = { version = "^1.4.26", optional = true }
 lz4 = "^3.1.3"
-ldict = "^3.211126.1"
+ldict = "^3.211126.2"
 arff2pandas = {version = "^1.0.1", optional = true}
 dill = "^0.3.4"
 
@@ -34,7 +34,6 @@ pylint = "^2.7.4"
 ipython = "^7.26.0"
 pandas = "^1.3.3"
 SQLAlchemy = "^1.4.26"
-numpy = "^1.21.2"
 pytest-cov = "^3.0.0"
 testfixtures = "^6.18.3"
 
