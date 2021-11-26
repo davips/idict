@@ -160,9 +160,9 @@ class iLet(AbstractLet):
     """
 
     def __init__(self, f, **kwargs):
-        self.f = f
+        from idict.core.idict_ import Idict
+        super().__init__(f, Idict, config=None)
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
-        self.asdict = self.config
 
     @cached_property
     def bytes(self):
@@ -174,17 +174,32 @@ class iLet(AbstractLet):
     def __rrshift__(self, left: Union[dict, list, Random, Callable, "iLet"]):
         """
         >>> from idict.parameter.ilet import iLet
-        >>> ({"x":5} >> iLet(lambda x:{"x": x**2}, x=5)).show(colored=False)
+        >>> ({"x":5} >> iLet(lambda x=None:{"x": x**2}, x=5)).show(colored=False)
         {
             "x": "→(x)",
-            "_id": "LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j",
+            "_id": "mnXcHdQBxbXvacMuFs5dXLIyKuZR-tw5D.nfk2Sv",
             "_ids": {
-                "x": "LEMLzqy0ijWZcJ8w37f8QE2tj-7QOh11-DoSoW4j"
+                "x": "mnXcHdQBxbXvacMuFs5dXLIyKuZR-tw5D.nfk2Sv"
             }
         }
-        >>> [1] >> iLet(lambda x:{"x": x**2}, x=5)
+        >>> [{}] >> iLet(lambda x=None:{"x": x**2}, x=5)
         «^ × λ{'x': 5}»
+        >>> from idict import Ø, idict
+        >>> d = idict() >> (Ø >> iLet(lambda x=None:{"x": x**2}, x=5))
+        >>> d.show(colored=False)
+        {
+            "x": "→(x)",
+            "_id": "in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv",
+            "_ids": {
+                "x": "in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv"
+            }
+        }
         """
+        from idict import iEmpty
+        if isinstance(left, iEmpty):
+            from idict.parameter.ifunctionspace import iFunctionSpace
+
+            return iFunctionSpace(self)
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
 
