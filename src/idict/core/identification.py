@@ -21,15 +21,20 @@
 #  time spent here.
 
 
-import dill
+import dis
+import pickle
+from inspect import signature
+
 from garoupa import Hosh, UT40_4
+from ldict.exception import NoInputException
+from orjson import dumps
 
 from idict.data.compression import pack
 
 
 def fhosh(f, version):
     """
-    Create hosh with etype="ordered" using pickle of "f" as binary content.
+    Create hosh with etype="ordered" using bytecode of "f" as binary content.
 
     Usage:
 
@@ -48,12 +53,27 @@ def fhosh(f, version):
     -------
 
     """
-    if hasattr(f,"pickle_dump"):
-        dump = f.pickle_dump
-    else:
-        dump = dill.dumps(f, protocol=5)
-        f.pickle_dump = dump  # Memoize
-    return Hosh(dump, "ordered", version=version)
+    if hasattr(f, "hosh"):
+        return f.hosh
+
+    # Add signature.
+    pars = signature(f).parameters
+    fargs = list(pars.keys())
+    if not fargs:
+        raise NoInputException(f"Missing function input parameters.")
+    clean = [fargs]
+    only_kwargs = {v.name: str(pickle.dumps(v.default, protocol=5)) for v in pars.values() if v.default is not v.empty}
+    if only_kwargs:
+        clean.append(only_kwargs)
+
+    # Clean line numbers.
+    groups = [l for l in dis.Bytecode(f).dis().split("\n\n") if l]
+    for group in groups:
+        lines = [segment for segment in group.split(" ") if segment][1:]
+        clean.append(lines)
+
+    f.hosh = Hosh(dumps(clean), "ordered", version=version)
+    return f.hosh
 
 
 def key2id(key, digits):
@@ -104,9 +124,9 @@ def blobs_hashes_hoshes(data, identity, ids):
         "z": 3,
         "_id": "Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy",
         "_ids": {
-            "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",
+            "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)",
             "y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-            "z": "YB_957059a720926191bcc15ebde8f1b960282cd"
+            "z": "YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
         }
     }
     """

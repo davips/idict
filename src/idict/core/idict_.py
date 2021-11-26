@@ -44,42 +44,42 @@ class Idict(AbstractMutableLazyDict):
     Usage:
 
     >>> from idict import idict
-    >>> print(idict())
+    >>> idict().show(colored=False)
     {
         "_id": "0000000000000000000000000000000000000000",
         "_ids": {}
     }
     >>> d = idict(x=5, y=3)
-    >>> print(d)
+    >>> d.show(colored=False)
     {
         "x": 5,
         "y": 3,
         "_id": "Xt_6cc13095bc5b4c671270fbe8ec313568a8b35",
         "_ids": {
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-            "y": "XB_1cba4912b6826191bcc15ebde8f1b960282cd"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "XB_1cba4912b6826191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
         }
     }
     >>> d["y"]
     3
-    >>> print(idict(x=123123, y=88))
+    >>> idict(x=123123, y=88).show(colored=False)
     {
         "x": 123123,
         "y": 88,
         "_id": "dR_5b58200b12d6f162541e09c570838ef5a429e",
         "_ids": {
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e",
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
+            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)",
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)"
         }
     }
-    >>> print(idict(y=88, x=123123))
+    >>> idict(y=88, x=123123).show(colored=False)
     {
         "y": 88,
         "x": 123123,
         "_id": "dR_5b58200b12d6f162541e09c570838ef5a429e",
         "_ids": {
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660",
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e"
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)",
+            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)"
         }
     }
     >>> d = idict(x=123123, y=88)
@@ -89,7 +89,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d2.hosh == d2.identity * d2.ids["z"] * d2.ids["x"] * d2.ids["y"]
     True
     >>> e = d2 >> (lambda x,y: {"w": x/y})
-    >>> print(e)
+    >>> e.show(colored=False)
     {
         "w": "→(x y)",
         "z": "→(x)",
@@ -99,8 +99,8 @@ class Idict(AbstractMutableLazyDict):
         "_ids": {
             "w": "1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5",
             "z": ".JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8",
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e",
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
+            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)",
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)"
         }
     }
     >>> a = d >> (lambda x: {"z": x**2}) >> (lambda x, y: {"w": x/y})
@@ -109,7 +109,7 @@ class Idict(AbstractMutableLazyDict):
     >>> dic
     {'x': 123123, 'y': 88, '_id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', '_ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
     >>> d2 = idict(dic)  # Reconstructing from a dict
-    >>> print(d2)
+    >>> d2.show(colored=False)
     {
         "x": 123123,
         "y": 88,
@@ -123,7 +123,7 @@ class Idict(AbstractMutableLazyDict):
     True
     >>> from idict import Ø
     >>> d = Ø >> {"x": "more content"}
-    >>> print(d)
+    >>> d.show(colored=False)
     {
         "x": "more content",
         "_id": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff",
@@ -132,7 +132,7 @@ class Idict(AbstractMutableLazyDict):
         }
     }
     >>> d = idict() >> {"x": "more content"}
-    >>> print(d)
+    >>> d.show(colored=False)
     {
         "x": "more content",
         "_id": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff",
@@ -142,8 +142,22 @@ class Idict(AbstractMutableLazyDict):
     }
     >>> e.ids.keys()
     dict_keys(['w', 'z', 'x', 'y'])
+    >>> e.show(colored=False)
+    {
+        "w": "→(x y)",
+        "z": "→(x)",
+        "x": 123123,
+        "y": 88,
+        "_id": "96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe",
+        "_ids": {
+            "w": "1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5",
+            "z": ".JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8",
+            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)",
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)"
+        }
+    }
     >>> del e["z"]
-    >>> print(e)
+    >>> e.show(colored=False)
     {
         "w": "→(x y)",
         "x": 123123,
@@ -151,14 +165,14 @@ class Idict(AbstractMutableLazyDict):
         "_id": "GAgXkH4fTORLS1ijp.SQg-6gRa0gTbFo4RK7M5M5",
         "_ids": {
             "w": "1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5",
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e",
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
+            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)",
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)"
         }
     }
     >>> e.hosh == e.identity * e.ids["w"] * e.ids["x"] * e.ids["y"]
     True
     >>> e["x"] = 77
-    >>> print(e)
+    >>> e.show(colored=False)
     {
         "w": "→(x y)",
         "x": 77,
@@ -166,8 +180,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "aGMqf9GsQ.SBkKYKE-l21EjPX4YfTbFo4RK7M5M5",
         "_ids": {
             "w": "1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5",
-            "x": "JF_093a985add7d5e2d319c2662db9ae954648b4",
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
+            "x": "JF_093a985add7d5e2d319c2662db9ae954648b4 (no key: cH_a1e50a91c6d6d0ba319c3c6ddb9ae9ae448b4)",
+            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)"
         }
     }
     >>> f = lambda x,y: {"z":x+y}
@@ -181,8 +195,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
         "_ids": {
             "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> c = {}
@@ -195,8 +209,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
         "_ids": {
             "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> c
@@ -213,8 +227,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
         "_ids": {
             "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> c = {}
@@ -229,8 +243,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
         "_ids": {
             "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> c
@@ -247,8 +261,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
         "_ids": {
             "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> f = lambda x: {"y": x ** 2, "_history": ...}
@@ -261,12 +275,10 @@ class Idict(AbstractMutableLazyDict):
         "y": "→(x)",
         "_history": {
             "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87": {
-                "id": "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87",
                 "name": "squared",
                 "description": "Some text."
             },
             "05d6efbc9820dafe0d8fbe87a79adbe9797abc87": {
-                "id": "05d6efbc9820dafe0d8fbe87a79adbe9797abc87",
                 "name": "add1000",
                 "description": "Some text."
             }
@@ -276,7 +288,7 @@ class Idict(AbstractMutableLazyDict):
         "_ids": {
             "y": "hU2kCmLh9xRR3k67uI-QU54IAr6Ktmsieaekmogf",
             "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
         }
     }
     >>> (idict(x=3).hosh * "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87" * "05d6efbc9820dafe0d8fbe87a79adbe9797abc87").show(colored=False)
@@ -293,7 +305,7 @@ class Idict(AbstractMutableLazyDict):
         "_id": "MQ84CFzaDgZ76Y3AEVci-xLqNXqZJVxChr1XgFng",
         "_ids": {
             "d": "eEX-SEecskyv9ECTEEdAZ.uYFXsZJVxChr1XgFng",
-            "y": "0U_e2a86ff72e226d5365aea336044f7b4270977"
+            "y": "0U_e2a86ff72e226d5365aea336044f7b4270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
         }
     }
     >>> b.d.show(colored=False)
@@ -411,23 +423,20 @@ class Idict(AbstractMutableLazyDict):
 
     def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
         """
-        >>> print({"x": 5} >> Idict(y=2))
+        >>> ({"x": 5} >> Idict(y=2)).show(colored=False)
         {
             "x": 5,
             "y": 2,
             "_id": "o8_4c07d34b8963338a275e43bfcac9c37f125cc",
             "_ids": {
-                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
                 "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"
             }
         }
-        >>> print((lambda x: {"y": 5*x}) >> Idict(y=2))
+        >>> from ldict import ldict
+        >>> (lambda x: {"y": 5*x}) >> ldict(y = 2)
         «λ × {
-            "y": 2,
-            "_id": "pg_7d1eecc7838558a4c1bf9584d68a487791c45",
-            "_ids": {
-                "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"
-            }
+            "y": 2
         }»
         """
         if isinstance(left, list) or callable(left):
@@ -471,7 +480,7 @@ class Idict(AbstractMutableLazyDict):
             "_id": "6CrMO8u.l0Bf.Mw-a4-5OncDYWeLRgUAfdP7HEp4",
             "_ids": {
                 "y": "RsjNt2f4bnIPB7PhbP-nORX85XgLRgUAfdP7HEp4",
-                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
             }
         }
         >>> d.y
@@ -508,9 +517,9 @@ class Idict(AbstractMutableLazyDict):
         >>> d.show(colored=False)
         {
             "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
-            "_id": "iE_c636da60855b28845ca575d1f04fcca52671d",
+            "_id": "P2_814055847cf79e848102e0584ccf9c55f4e02",
             "_ids": {
-                "df": "iE_c636da60855b28845ca575d1f04fcca52671d"
+                "df": "P2_814055847cf79e848102e0584ccf9c55f4e02"
             }
         }
         >>> d.df.head()
@@ -524,9 +533,9 @@ class Idict(AbstractMutableLazyDict):
         >>> d.show(colored=False)
         {
             "df": "«{'attr1': {0: 5.1, 1: 3.1}, 'attr2': {0: 3.5, 1: 4.5}, 'class': {0: 0, 1: 1}}»",
-            "_id": "aa_985c4cfc1c4ec576ad9e2a02d5b8ba9609088",
+            "_id": "BU_1a02390b409c10eac773556bca8e89b9f494c",
             "_ids": {
-                "df": "aa_985c4cfc1c4ec576ad9e2a02d5b8ba9609088"
+                "df": "BU_1a02390b409c10eac773556bca8e89b9f494c"
             }
         }
         >>> d.df.head()
@@ -545,3 +554,4 @@ class Idict(AbstractMutableLazyDict):
                 return Idict({field: read_csv(name)})
         else:  # pragma: no cover
             raise Exception(f"Unknown {output_format=}.")
+

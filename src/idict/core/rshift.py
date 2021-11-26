@@ -45,7 +45,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         "_id": "hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff",
         "_ids": {
             "y": "WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff",
-            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
         }
     }
     >>> d2.hosh / f.metadata["id"] == d.id
@@ -123,20 +123,20 @@ def ihandle_dict(self, dictlike):
     >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> d = idict(x=5, y=7, z=8)
     >>> di = ihandle_dict(d, {"y":None})
-    >>> print(di)
+    >>> di.show(colored=False)
     {
         "x": 5,
         "y": null,
         "z": 8,
         "_id": "dejCAhZMpV8N1ZR8s3HUnCi0-LP............y",
         "_ids": {
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
             "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde"
+            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
     >>> di2 = ihandle_dict(di, {"w":lambda x,z: x**z})
-    >>> print(di2)
+    >>> di2.show(colored=False)
     {
         "w": "→(x z)",
         "x": 5,
@@ -145,12 +145,12 @@ def ihandle_dict(self, dictlike):
         "_id": "p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE",
         "_ids": {
             "w": "APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
             "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde"
+            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
-    >>> print(ihandle_dict(di2, {"x": 55555}))
+    >>> ihandle_dict(di2, {"x": 55555}).show(colored=False)
     {
         "w": "→(x z)",
         "x": 55555,
@@ -159,12 +159,12 @@ def ihandle_dict(self, dictlike):
         "_id": "4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE",
         "_ids": {
             "w": "APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5",
-            "x": "T7_37f7565449f62df2f074952f6484ea6581b77",
+            "x": "T7_37f7565449f62df2f074952f6484ea6581b77 (no key: m9_0be75c1d3650af70f074ab2a7484eabf61b77)",
             "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde"
+            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
-    >>> print(d := ihandle_dict(idict(), {"x": 1555}))
+    >>> (d := ihandle_dict(idict(), {"x": 1555})).show(colored=False)
     {
         "x": 1555,
         "_id": "wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30",
@@ -281,8 +281,8 @@ def solve(hoshes, output, uf: Hosh):
         "_ids": {
             "x": "RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji",
             "y": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "w": "ng_5dad44381c5ac2a4c1bfe594d68a486791c45",
-            "z": "vY_6b073e90b397af73e43c1e6c4777abeeadb9f"
+            "w": "ng_5dad44381c5ac2a4c1bfe594d68a486791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)",
+            "z": "vY_6b073e90b397af73e43c1e6c4777abeeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)"
         }
     }
     """

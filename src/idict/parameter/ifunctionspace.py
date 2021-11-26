@@ -42,27 +42,24 @@ class iFunctionSpace:
         "x": 5,
         "_id": "mP_2d615fd34f97ac906e162c6fc6aedadc4d140",
         "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
         }
     }
     >>> fs >>= idict(y=7)
-    >>> fs
+    >>> from idict.core.appearance import decolorize
+    >>> print(decolorize(str(fs)))
     «{'x': 5} × {
         "y": 7,
         "_id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-        "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
-        }
+        "_ids": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
     }»
     >>> fs >>= lambda x,y: {"z": x*y}
-    >>> fs
+    >>> print(decolorize(str(fs)))
     «{'x': 5} × {
         "y": 7,
         "_id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-        "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
-        }
+        "_ids": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
     } × λ»
     """
 

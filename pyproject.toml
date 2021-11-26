@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "idict"
-version = "2.211126.0"
+version = "1.211126.0"
 description = "Lazy dict with predictable deterministic universally unique identifiers"
 authors = ["davips <dpsabc@gmail.com>"]
 license = "GPL"
@@ -20,7 +20,7 @@ pdoc3 = "^0.10.0"
 pandas = { version = "^1.3.3", optional = true }
 SQLAlchemy = { version = "^1.4.26", optional = true }
 lz4 = "^3.1.3"
-ldict = "^3.211124.1"
+ldict = "^3.211126.1"
 arff2pandas = {version = "^1.0.1", optional = true}
 dill = "^0.3.4"
 

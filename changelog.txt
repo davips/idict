@@ -1,5 +1,5 @@
 v2
-Adopt pickle(dill) instead of bytecode to calculate function hash
+Revert to bytecode after seeing undeterministic dill to calculate function hash
 Add nokey to show()
 Keep ids of insertion idict
 Add fromfile
