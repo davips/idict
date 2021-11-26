@@ -37,8 +37,6 @@ from idict.persistence.cached import build, get_following_pointers
 
 VT = TypeVar("VT")
 
-# TODO: show() deve mostrar (no key: id do item sem key)
-
 # TODO: Usar pickle da f/class pra gerar id? [pickle embute imports, mas não inclui seus codigos]
 
 # TODO: Criar Metadata na F pra servir de memoization
