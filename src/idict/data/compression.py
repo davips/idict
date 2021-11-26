@@ -19,7 +19,7 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
-import pickle
+import dill
 
 import lz4.frame as lz4
 
@@ -27,7 +27,7 @@ from idict.config import GLOBAL
 
 
 def obj2bytes(obj):
-    dump = pickle.dumps(obj, protocol=5)
+    dump = dill.dumps(obj, protocol=5)
     return lz4.compress(dump)
 
 
@@ -88,4 +88,4 @@ def unpack(blob):
     >>> unpack(b'\x04"M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00')
     b'000011'
     """
-    return pickle.loads(lz4.decompress(blob))
+    return dill.loads(lz4.decompress(blob))

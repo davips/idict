@@ -21,20 +21,15 @@
 #  time spent here.
 
 
-import dis
-import pickle
-from inspect import signature
-
+import dill
 from garoupa import Hosh, UT40_4
-from ldict.exception import NoInputException
-from orjson import dumps
 
-from idict.data.compression import pack, obj2bytes
+from idict.data.compression import pack
 
 
 def fhosh(f, version):
     """
-    Create hosh with etype="ordered" using bytecode of "f" as binary content.
+    Create hosh with etype="ordered" using pickle of "f" as binary content.
 
     Usage:
 
@@ -53,23 +48,7 @@ def fhosh(f, version):
     -------
 
     """
-    # Add signature.
-    pars = signature(f).parameters
-    fargs = list(pars.keys())
-    if not fargs:
-        raise NoInputException(f"Missing function input parameters.")
-    clean = [fargs]
-    only_kwargs = {v.name: str(pickle.dumps(v.default, protocol=5)) for v in pars.values() if v.default is not v.empty}
-    if only_kwargs:
-        clean.append(only_kwargs)
-
-    # Clean line numbers.
-    groups = [l for l in dis.Bytecode(f).dis().split("\n\n") if l]
-    for group in groups:
-        lines = [segment for segment in group.split(" ") if segment][1:]
-        clean.append(lines)
-
-    return Hosh(dumps(clean), "ordered", version=version)
+    return Hosh(dill.dumps(f, protocol=5), "ordered", version=version)
 
 
 def key2id(key, digits):

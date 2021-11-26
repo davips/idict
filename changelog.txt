@@ -1,2 +1,9 @@
+v2
+Adopt pickle(dill) instead of bytecode to calculate function hash
+Add nokey to show()
+Keep ids of insertion idict
+Add fromfile
+
+v1
 Add support to nested idict in cache
 Update garoupa for correct etype inducer on ldict.ø
