@@ -240,7 +240,9 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 self.hashes = {}
                 self.hoshes = {k: identity * v for k, v in _ids.items()}
             else:
-                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(data, identity, _ids or {}, self.identity.version).values()
+                self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(
+                    data, identity, _ids or {}, self.identity.version
+                ).values()
             self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
 
         if _id is None:

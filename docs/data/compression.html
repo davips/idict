@@ -51,6 +51,7 @@ import pickle
 
 import dill
 import lz4.frame as lz4
+
 from idict.config import GLOBAL
 
 
@@ -92,7 +93,7 @@ def pack(obj, nondeterministic_fallback=False):
             prefix = b&#34;pckl_&#34;
         except:
             if not nondeterministic_fallback:  # pragma: no cover
-                raise Exception(&#34;Cannot serialize deterministically.&#34;)
+                raise NondeterminismException(&#34;Cannot serialize deterministically.&#34;)
             dump = dill.dumps(obj, protocol=5)
             prefix = b&#34;dill_&#34;
 
@@ -125,7 +126,11 @@ def unpack(blob):
     if prefix == b&#34;pckl_&#34;:
         return pickle.loads(lz4.decompress(blob))
     elif prefix == b&#34;dill_&#34;:
-        return dill.loads(lz4.decompress(blob))</code></pre>
+        return dill.loads(lz4.decompress(blob))
+
+
+class NondeterminismException(Exception):
+    pass</code></pre>
 </details>
 </section>
 <section>
@@ -201,7 +206,7 @@ b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x8
             prefix = b&#34;pckl_&#34;
         except:
             if not nondeterministic_fallback:  # pragma: no cover
-                raise Exception(&#34;Cannot serialize deterministically.&#34;)
+                raise NondeterminismException(&#34;Cannot serialize deterministically.&#34;)
             dump = dill.dumps(obj, protocol=5)
             prefix = b&#34;dill_&#34;
 
@@ -251,6 +256,28 @@ b'000011'
 </dl>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="idict.data.compression.NondeterminismException"><code class="flex name class">
+<span>class <span class="ident">NondeterminismException</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Common base class for all non-exit exceptions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NondeterminismException(Exception):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -268,6 +295,13 @@ b'000011'
 <ul class="">
 <li><code><a title="idict.data.compression.pack" href="#idict.data.compression.pack">pack</a></code></li>
 <li><code><a title="idict.data.compression.unpack" href="#idict.data.compression.unpack">unpack</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="idict.data.compression.NondeterminismException" href="#idict.data.compression.NondeterminismException">NondeterminismException</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

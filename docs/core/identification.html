@@ -57,7 +57,7 @@ from garoupa import Hosh, UT40_4
 from ldict.exception import NoInputException
 from orjson import dumps
 
-from idict.data.compression import pack
+from idict.data.compression import pack, NondeterminismException
 
 
 def fhosh(f, version):
@@ -142,7 +142,7 @@ def removal_id(template, field):
     return template[: -len(field)] + field
 
 
-def blobs_hashes_hoshes(data, identity, ids):
+def blobs_hashes_hoshes(data, identity, ids, version):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; idict(x=1, y=2, z=3, _ids={&#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;}).show(colored=False)
@@ -171,8 +171,12 @@ def blobs_hashes_hoshes(data, identity, ids):
             if isinstance(v, (Idict, FrozenIdentifiedDict)):
                 hashes[k] = v.hosh
             else:
-                blobs[k] = pack(v, nondeterministic_fallback=False)
-                hashes[k] = identity.h * blobs[k]
+                try:
+                    blobs[k] = pack(v, nondeterministic_fallback=False)
+                    vhosh = identity.h * blobs[k]
+                except NondeterminismException:
+                    vhosh = fhosh(v, version)
+                hashes[k] = vhosh
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
             except KeyError as e:  # pragma: no cover
@@ -190,7 +194,7 @@ def blobs_hashes_hoshes(data, identity, ids):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.core.identification.blobs_hashes_hoshes"><code class="name flex">
-<span>def <span class="ident">blobs_hashes_hoshes</span></span>(<span>data, identity, ids)</span>
+<span>def <span class="ident">blobs_hashes_hoshes</span></span>(<span>data, identity, ids, version)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
@@ -211,7 +215,7 @@ def blobs_hashes_hoshes(data, identity, ids):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def blobs_hashes_hoshes(data, identity, ids):
+<pre><code class="python">def blobs_hashes_hoshes(data, identity, ids, version):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; idict(x=1, y=2, z=3, _ids={&#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;}).show(colored=False)
@@ -240,8 +244,12 @@ def blobs_hashes_hoshes(data, identity, ids):
             if isinstance(v, (Idict, FrozenIdentifiedDict)):
                 hashes[k] = v.hosh
             else:
-                blobs[k] = pack(v, nondeterministic_fallback=False)
-                hashes[k] = identity.h * blobs[k]
+                try:
+                    blobs[k] = pack(v, nondeterministic_fallback=False)
+                    vhosh = identity.h * blobs[k]
+                except NondeterminismException:
+                    vhosh = fhosh(v, version)
+                hashes[k] = vhosh
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
             except KeyError as e:  # pragma: no cover
