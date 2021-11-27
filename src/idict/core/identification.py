@@ -29,7 +29,7 @@ from garoupa import Hosh, UT40_4
 from ldict.exception import NoInputException
 from orjson import dumps
 
-from idict.data.compression import pack
+from idict.data.compression import pack, NondeterminismException
 
 
 def fhosh(f, version):
@@ -114,7 +114,7 @@ def removal_id(template, field):
     return template[: -len(field)] + field
 
 
-def blobs_hashes_hoshes(data, identity, ids):
+def blobs_hashes_hoshes(data, identity, ids, version):
     """
     >>> from idict import idict
     >>> idict(x=1, y=2, z=3, _ids={"y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"}).show(colored=False)
@@ -143,8 +143,12 @@ def blobs_hashes_hoshes(data, identity, ids):
             if isinstance(v, (Idict, FrozenIdentifiedDict)):
                 hashes[k] = v.hosh
             else:
-                blobs[k] = pack(v, nondeterministic_fallback=False)
-                hashes[k] = identity.h * blobs[k]
+                try:
+                    blobs[k] = pack(v, nondeterministic_fallback=False)
+                    vhosh = identity.h * blobs[k]
+                except NondeterminismException:
+                    vhosh = fhosh(v, version)
+                hashes[k] = vhosh
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
             except KeyError as e:  # pragma: no cover

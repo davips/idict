@@ -206,7 +206,7 @@ def ihandle_dict(self, dictlike):
             elif callable(v):
                 clone = application(clone, v, v, self.identity, k)
             else:
-                internals = blobs_hashes_hoshes({k: v}, self.identity, {})
+                internals = blobs_hashes_hoshes({k: v}, self.identity, {}, self.identity.version)
                 if k in internals["blobs"]:
                     clone.blobs[k] = internals["blobs"][k]
                 if k in internals["hashes"]:

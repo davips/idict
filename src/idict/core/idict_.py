@@ -319,6 +319,14 @@ class Idict(AbstractMutableLazyDict):
             "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
         }
     }
+    >>> idict(f=lambda x: 5).show(colored=False)  # doctest:+ELLIPSIS
+    {
+        "f": "<function <lambda> at 0x...>",
+        "_id": "NhULktUPKQW0kiK9Gen3yzxunKQ4yXDl70-yAzi4",
+        "_ids": {
+            "f": "NhULktUPKQW0kiK9Gen3yzxunKQ4yXDl70-yAzi4"
+        }
+    }
     """
 
     # noinspection PyMissingConstructor
