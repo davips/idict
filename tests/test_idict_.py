@@ -22,10 +22,10 @@
 from unittest import TestCase
 
 import pytest
-from ldict.exception import DependenceException, NoInputException, WrongKeyType, ReadOnlyLdict
-
 from idict import empty, idict
 from idict.core.appearance import decolorize
+from idict.data.compression import unpack, pack
+from ldict.exception import DependenceException, NoInputException, WrongKeyType, ReadOnlyLdict
 
 
 class TestLdict(TestCase):
@@ -35,12 +35,11 @@ class TestLdict(TestCase):
         self.assertEqual(a, b)
         self.assertFalse(a == {"a": 3})
         self.assertNotEqual(a, {"a": 3})
-        d = {
-            "_id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",
-            "_ids": {"x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f", "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45"},
-            "x": 1,
-            "y": 2,
-        }
+        d = {'_id': 'mH_70118e827bbcd88303202a006d34eb63e4fbd',
+             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
+                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b'},
+             'x': 1,
+             'y': 2}
         self.assertEqual(a.asdict, d)
 
     def test_illdefined_function(self):
@@ -59,11 +58,11 @@ class TestLdict(TestCase):
     "x": 3,
     "y": 4,
     "z": 5,
-    "_id": "Pd_7f559308b2f3bf28c9dfd54cf6ba43b636504",
+    "_id": "ol_e5c16dd16f412466a532f45ddb120cb746448",
     "_ids": {
-        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-        "y": "SL_6e8b071c1bc6504ea76f407e1a791e887d9ce (content: kN_8e281576102a3dbba76fb6892a791ec26d9ce)",
-        "z": "1U_fdd682399a475d5365aeb336044f7b4270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
+        "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+        "y": "I-_f967564db1ccce58af55d7fb75e2841e9c01d (content: a0_019baa6057e1ce58af55e7fb75e2841e9c01d)",
+        "z": "ji_e6b7ae77dbae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
     }
 }""",
             decolorize(d.all),
@@ -80,11 +79,11 @@ class TestLdict(TestCase):
     "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
+    "_id": "pLhQxcF.Yn8MyR0ND1666ZBx5-nadBnjS7VNt6Mg",
     "_ids": {
-        "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
-        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
+        "z": "LMgQzXnuVppb3md.0Q6E7oIkqjiadBnjS7VNt6Mg",
+        "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+        "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
     }
 }""",
             decolorize(d.all),
@@ -98,15 +97,15 @@ class TestLdict(TestCase):
         d >>= lambda x, y: {"z": x * y}
         d.evaluate()
         de = {
-            "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
-            "_ids": {
-                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
-                "y": "0U_e2a86ff72e226d5365aea336044f7b4270977",
-                "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
-            },
+            "z": "→(x y)",
             "x": 3,
             "y": 5,
-            "z": 15,
+            "_id": "pLhQxcF.Yn8MyR0ND1666ZBx5-nadBnjS7VNt6Mg",
+            "_ids": {
+                "z": "LMgQzXnuVppb3md.0Q6E7oIkqjiadBnjS7VNt6Mg",
+                "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+                "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+            }
         }
         self.assertEqual(d, de)
 
@@ -132,11 +131,11 @@ class TestLdict(TestCase):
     "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
+    "_id": "pLhQxcF.Yn8MyR0ND1666ZBx5-nadBnjS7VNt6Mg",
     "_ids": {
-        "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
-        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
+        "z": "LMgQzXnuVppb3md.0Q6E7oIkqjiadBnjS7VNt6Mg",
+        "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+        "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
     }
 }""",
             str(decolorize(d.all)),
@@ -166,17 +165,13 @@ class TestLdict(TestCase):
         self.assertNotEqual(old, d)
         self.assertEqual(
             d,
-            {
-                "_id": "NU4YLiIschNCZX9.tuBycZ6n4BOCresH0ccu3pl7",
-                "_ids": {
-                    "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",
-                    "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45",
-                    "z": "2CwHWARvJhPEk2cDYuPicC7tfnLCresH0ccu3pl7",
-                },
-                "x": 1,
-                "y": 2,
-                "z": 7,
-            },
+            {'_id': 'fO.GZwQORND3xRsNGdQPzNnw6DCCresH0ccu3pl7',
+             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
+                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b',
+                      'z': 'uuK12VIIPD7MTRotl-f4iPyMoNHCresH0ccu3pl7'},
+             'x': 1,
+             'y': 2,
+             'z': 7}
         )
 
         # Reapply same function.
@@ -190,17 +185,13 @@ class TestLdict(TestCase):
         self.assertNotEqual(old, d)
         self.assertEqual(
             d,
-            {
-                "_id": "q-F.7ZpdwiDTmX16eHsfJRN7DIJdmHk22sAqab0m",
-                "_ids": {
-                    "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f",
-                    "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45",
-                    "z": "SwpdBZEt4A2Po04KIHG.IuOdOuGdmHk22sAqab0m",
-                },
-                "x": 1,
-                "y": 2,
-                "z": 31,
-            },
+            {'_id': 'vEtxmz.hlCHyxdGZO-836Fe6wkHdmHk22sAqab0m',
+             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
+                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b',
+                      'z': 'qiyFKALstbn0GaCFtLAjQGpmOuMdmHk22sAqab0m'},
+             'x': 1,
+             'y': 2,
+             'z': 31}
         )
 
         def f(x):
@@ -237,3 +228,6 @@ class TestLdict(TestCase):
         #     d["d"]["x"] = 5
 
         # T = namedtuple("T", "hosh")
+
+    def test_compression(self):
+        self.assertTrue(callable(unpack(pack(lambda a:5, nondeterministic_fallback=True))))

@@ -26,7 +26,7 @@ import lz4.frame as lz4
 from idict.config import GLOBAL
 
 
-def pack(obj, nondeterministic_fallback):
+def pack(obj, nondeterministic_fallback=False):
     r"""
     >>> from idict import setup
     >>> setup(compression_cachelimit_MB=0.000_100)
@@ -34,19 +34,19 @@ def pack(obj, nondeterministic_fallback):
     >>> GLOBAL["compression_cachesize"] = 0
     >>> b = b"000011"
     >>> pack(b)
-    b'\x04"M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00'
+    b'pckl_\x04"M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00'
     >>> memo[id(b)]["unpacked"]
     b'000011'
     >>> len(memo), GLOBAL["compression_cachesize"], GLOBAL["compression_cachelimit"]
-    (1, 42, 100)
+    (1, 47, 100)
     >>> pack(b"asd")
-    b'\x04"M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00'
+    b'pckl_\x04"M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00'
     >>> len(memo), GLOBAL["compression_cachesize"], GLOBAL["compression_cachelimit"]
-    (2, 81, 100)
+    (2, 91, 100)
     >>> len(pack(b"123"))
-    39
+    44
     >>> len(memo), GLOBAL["compression_cachesize"], GLOBAL["compression_cachelimit"]
-    (2, 78, 100)
+    (2, 88, 100)
     """
     memid = id(obj)
     memo = GLOBAL["compression_cache"]
@@ -63,7 +63,7 @@ def pack(obj, nondeterministic_fallback):
             dump = pickle.dumps(obj, protocol=5)
             prefix = b"pckl_"
         except:
-            if not nondeterministic_fallback:
+            if not nondeterministic_fallback:  # pragma: no cover
                 raise Exception("Cannot serialize deterministically.")
             dump = dill.dumps(obj, protocol=5)
             prefix = b"dill_"
@@ -89,7 +89,7 @@ def pack(obj, nondeterministic_fallback):
 
 def unpack(blob):
     r"""
-    >>> unpack(b'\x04"M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00')
+    >>> unpack(b'pckl_\x04"M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00')
     b'000011'
     """
     prefix = blob[:5]

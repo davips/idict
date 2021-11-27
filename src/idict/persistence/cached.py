@@ -56,7 +56,7 @@ def cached(d, cache):
                     data[k] = cached(data[k], cache)
                 else:
                     cache[v] = data[k]
-            if (result := data[outputf]) is None:
+            if (result := data[outputf]) is None: # pragma: no cover
                 if k is None:
                     raise Exception(f"No ids")
                 raise Exception(f"Key {k} not in output fields: {output_fields}. ids: {fids.items()}")
@@ -71,7 +71,7 @@ def cached(d, cache):
     output_fields = []
     for field, v in list(data.items()):
         if isinstance(v, LazyVal):
-            if field.startswith("_"):
+            if field.startswith("_"): # pragma: no cover
                 raise Exception("Cannot have a lazy value in a metafield.", field)
             output_fields.append(field)
             lazies = True
@@ -106,24 +106,24 @@ def build(id, ids, cache, identity):
     >>> b >>= [cache := {}]
     >>> print(json.dumps(cache, indent=2))
     {
-      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
-      ".R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5": {
-        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5"
+      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
+      "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c": {
+        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c"
       },
-      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
-      "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e": 9,
-      "OT_014642d46104ba6ba4d818c2307a4bc00f2c5": {
-        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
+      "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c": 9,
+      "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c": {
+        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
         "_ids": {
-          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-          "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+          "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
         }
       },
-      "lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e": {
-        "_id": "lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e",
+      "ug_32623f744b4b879f8b0b91bca8ace13993b81": {
+        "_id": "ug_32623f744b4b879f8b0b91bca8ace13993b81",
         "_ids": {
-          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-          "d": ".R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5"
+          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
+          "d": "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c"
         }
       }
     }
@@ -133,42 +133,42 @@ def build(id, ids, cache, identity):
         "d": {
             "x": 5,
             "z": 9,
-            "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+            "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
             "_ids": {
-                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-                "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+                "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
             }
         },
-        "_id": "lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e",
+        "_id": "ug_32623f744b4b879f8b0b91bca8ace13993b81",
         "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-            "d": ".R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5"
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
+            "d": "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     >>> a = idict(x=5)
     >>> b = idict(y=7)
     >>> b["d"] = a
     >>> b >>= [cache := {}]
     >>> print(json.dumps(cache, indent=2))
     {
-      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
-      "cS_64d1490a78c8ead565ae9d2bf34f7bf780977": {
-        "_id": "_T_f0bb8da3062cc75365ae0446044f7b3270977"
+      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
+      "ug_65906b93071a1e38384abcb6a88fbde25cd8f": {
+        "_id": "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
       },
-      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
-      "_T_f0bb8da3062cc75365ae0446044f7b3270977": {
-        "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
+      "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": {
+        "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
         "_ids": {
-          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
         }
       },
-      "zN_a9690b3ab169bf136e16c554c6aeda926d140": {
-        "_id": "zN_a9690b3ab169bf136e16c554c6aeda926d140",
+      "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4": {
+        "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
         "_ids": {
-          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-          "d": "cS_64d1490a78c8ead565ae9d2bf34f7bf780977"
+          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
+          "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f"
         }
       }
     }
@@ -177,19 +177,19 @@ def build(id, ids, cache, identity):
         "y": 7,
         "d": {
             "x": 5,
-            "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
             "_ids": {
-                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
             }
         },
-        "_id": "zN_a9690b3ab169bf136e16c554c6aeda926d140",
+        "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
         "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-            "d": "cS_64d1490a78c8ead565ae9d2bf34f7bf780977"
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
+            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    ug_65906b93071a1e38384abcb6a88fbde25cd8f
     >>> a = idict(x=5,z=9)
     >>> b = idict(y=7)
     >>> b["d"] = lambda y: a
@@ -197,24 +197,24 @@ def build(id, ids, cache, identity):
     >>> _ = b.d
     >>> print(json.dumps(cache, indent=2))
     {
-      "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng": {
-        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5"
+      "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng": {
+        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c"
       },
-      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
-      "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e": 9,
-      "OT_014642d46104ba6ba4d818c2307a4bc00f2c5": {
-        "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
+      "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c": 9,
+      "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c": {
+        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
         "_ids": {
-          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-          "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+          "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
         }
       },
-      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
-      ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng": {
-        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
+      "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng": {
+        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
         "_ids": {
-          "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
-          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+          "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
+          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
         }
       }
     }
@@ -223,21 +223,21 @@ def build(id, ids, cache, identity):
         "d": {
             "x": 5,
             "z": 9,
-            "_id": "OT_014642d46104ba6ba4d818c2307a4bc00f2c5",
+            "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
             "_ids": {
-                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
-                "z": "O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e"
+                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+                "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
             }
         },
         "y": 7,
-        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
         "_ids": {
-            "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+            "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     >>> a = idict(x=5)
     >>> b = idict(y=7)
     >>> b["d"] = lambda y: a
@@ -245,22 +245,22 @@ def build(id, ids, cache, identity):
     >>> _ = b.d
     >>> print(json.dumps(cache, indent=2))
     {
-      "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng": {
-        "_id": "_T_f0bb8da3062cc75365ae0446044f7b3270977"
+      "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng": {
+        "_id": "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
       },
-      ".T_f0bb8da3062cc75365ae0446044f7b3270977": 5,
-      "_T_f0bb8da3062cc75365ae0446044f7b3270977": {
-        "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
+      "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": {
+        "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
         "_ids": {
-          "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
         }
       },
-      "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8": 7,
-      ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng": {
-        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
+      "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng": {
+        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
         "_ids": {
-          "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
-          "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+          "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
+          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
         }
       }
     }
@@ -268,20 +268,20 @@ def build(id, ids, cache, identity):
     {
         "d": {
             "x": 5,
-            "_id": ".T_f0bb8da3062cc75365ae0446044f7b3270977",
+            "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
             "_ids": {
-                "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977"
+                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
             }
         },
         "y": 7,
-        "_id": ".30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng",
+        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
         "_ids": {
-            "d": "mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+            "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    ug_65906b93071a1e38384abcb6a88fbde25cd8f
     """
     dic = {}
     for k, fid in ids.items():
@@ -292,7 +292,7 @@ def build(id, ids, cache, identity):
                 dic[k] = build(value["_id"], value["_ids"], cache, identity)
             else:
                 dic[k] = cache[fid]
-        else:
+        else: # pragma: no cover
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
     from idict import idict
 

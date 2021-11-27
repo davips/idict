@@ -42,10 +42,10 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     {
         "y": "→(x)",
         "x": 3,
-        "_id": "hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff",
+        "_id": "9CQTZ.-ZMrtDr6MTnOPpxL5.2gsfffffffffffff",
         "_ids": {
-            "y": "WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff",
-            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
+            "y": "-UXfi8wcv0uck6LcY6QOTpEl7arfffffffffffff",
+            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
     >>> d2.hosh / f.metadata["id"] == d.id
@@ -128,11 +128,11 @@ def ihandle_dict(self, dictlike):
         "x": 5,
         "y": null,
         "z": 8,
-        "_id": "dejCAhZMpV8N1ZR8s3HUnCi0-LP............y",
+        "_id": "d45pzBr6XLzQMA5yn1ft1TCeE9Y............y",
         "_ids": {
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
+            "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> di2 = ihandle_dict(di, {"w":lambda x,z: x**z})
@@ -142,12 +142,12 @@ def ihandle_dict(self, dictlike):
         "x": 5,
         "y": null,
         "z": 8,
-        "_id": "p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE",
+        "_id": "OdqXMcEK-0I1OFrjoL-TpeT4-2zs3d9r2rr8kHNE",
         "_ids": {
-            "w": "APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "w": "kpmkRxrgldVN9wJLVH8ofrbQWMts3d9r2rr8kHN5",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
+            "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> ihandle_dict(di2, {"x": 55555}).show(colored=False)
@@ -156,29 +156,29 @@ def ihandle_dict(self, dictlike):
         "x": 55555,
         "y": null,
         "z": 8,
-        "_id": "4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE",
+        "_id": "DQPsvv1oMlWaUDwPP1Sp7yOboYps3d9r2rr8kHNE",
         "_ids": {
-            "w": "APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5",
-            "x": "T7_37f7565449f62df2f074952f6484ea6581b77 (content: m9_0be75c1d3650af70f074ab2a7484eabf61b77)",
-            "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "w": "kpmkRxrgldVN9wJLVH8ofrbQWMts3d9r2rr8kHN5",
+            "x": "yU_9d40a5fbe9781c6e90f0eb45bd45cd962a94b (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)",
+            "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
+            "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> (d := ihandle_dict(idict(), {"x": 1555})).show(colored=False)
     {
         "x": 1555,
-        "_id": "wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30",
+        "_id": "RU_2b5abc50f25ebdae4523f9cc684d0d70823ba",
         "_ids": {
-            "x": "wD_4afbd1e993739c6d5a0dc5b075d9990f7dd30"
+            "x": "RU_2b5abc50f25ebdae4523f9cc684d0d70823ba"
         }
     }
     >>> d >>= lambda x: {"x": x**2}
     >>> d.show(colored=False)
     {
         "x": "→(x)",
-        "_id": "3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh",
+        "_id": "S.MNJJmbDWmOJ43tyUbWsrfAsCWs.g4HNqVBp-Sh",
         "_ids": {
-            "x": "3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh"
+            "x": "S.MNJJmbDWmOJ43tyUbWsrfAsCWs.g4HNqVBp-Sh"
         }
     }
     >>> e = idict(y=7) >> d
@@ -186,10 +186,10 @@ def ihandle_dict(self, dictlike):
     {
         "y": 7,
         "x": "→(x)",
-        "_id": "3scU-U5036J7rqqAqwPVH7GgcIYs.g4HNqVBp-Sh",
+        "_id": "FFTjF58Z264CW3VJZOM-sKQNAy5t.g4HNqVBp-Sh",
         "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)",
-            "x": "3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh"
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "x": "S.MNJJmbDWmOJ43tyUbWsrfAsCWs.g4HNqVBp-Sh"
         }
     }
     """
@@ -242,18 +242,18 @@ def solve(hoshes, output, uf: Hosh):
     >>> a.show(colored=False)
     {
         "x": 3,
-        "_id": "WB_e55a47230d67db81bcc1aecde8f1b950282cd",
+        "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
         "_ids": {
-            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd"
+            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
         }
     }
     >>> a >>= (lambda x: {"x": x+2})
     >>> a.show(colored=False)
     {
         "x": "→(x)",
-        "_id": "j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8",
+        "_id": "A78wiBU2iCnSlVZLwafVURwwvcLYDDRQkGiQ6qJ8",
         "_ids": {
-            "x": "j9i-.G4WwbjZsi8V.dLkkb5hhPDYDDRQkGiQ6qJ8"
+            "x": "A78wiBU2iCnSlVZLwafVURwwvcLYDDRQkGiQ6qJ8"
         }
     }
     >>> a = idict(x=3, y=5) >> (lambda x: {"x": x+2})
@@ -277,12 +277,12 @@ def solve(hoshes, output, uf: Hosh):
         "y": "→(w x y)",
         "w": 2,
         "z": 1,
-        "_id": "4k236R0oT.PI6-c2KLgmahWdNOzzkEFdqK4B1zjh",
+        "_id": "z-xyxdEPgkQLLVlkUTfstq99X3IzkEFdqK4B1zjh",
         "_ids": {
-            "x": "RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji",
+            "x": "hT7PAVVndMXDt04ypVbZgozMFOsgmEFdqG4B1zji",
             "y": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "w": "ng_5dad44381c5ac2a4c1bfe594d68a486791c45 (content: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)",
-            "z": "vY_6b073e90b397af73e43c1e6c4777abeeadb9f (content: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)"
+            "w": "uA_df37fcf59e3bd7d618d96ceccfe8a5ecb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)",
+            "z": "U6_9e5ffd6b1d6101bcea46bd139d4b36862f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)"
         }
     }
     """

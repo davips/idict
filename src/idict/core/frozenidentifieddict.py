@@ -28,16 +28,15 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
-from ldict.customjson import CustomJSONEncoder
-from ldict.frozenlazydict import FrozenLazyDict
-
 from idict.config import GLOBAL
 from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
+from ldict.frozenlazydict import FrozenLazyDict
 
 VT = TypeVar("VT")
 
@@ -58,32 +57,22 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     {
         "x": 5,
         "y": 3,
-        "_id": "Xt_6cc13095bc5b4c671270fbe8ec313568a8b35",
+        "_id": "Gm_5a27861eacedc78bf5dc236c663f77f39933b",
         "_ids": {
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "XB_1cba4912b6826191bcc15ebde8f1b960282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
     >>> d["y"]
     3
-    >>> idict(x=123123, y=88).show(colored=False)
-    {
-        "x": 123123,
-        "y": 88,
-        "_id": "dR_5b58200b12d6f162541e09c570838ef5a429e",
-        "_ids": {
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (content: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)",
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (content: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)"
-        }
-    }
     >>> idict(y=88, x=123123).show(colored=False)
     {
         "y": 88,
         "x": 123123,
-        "_id": "dR_5b58200b12d6f162541e09c570838ef5a429e",
+        "_id": "S-_6a05b897eed2728ea8200aa3f9e90651e952a",
         "_ids": {
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (content: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)",
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (content: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)"
+            "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)",
+            "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)"
         }
     }
     >>> d = idict(x=123123, y=88)
@@ -97,28 +86,28 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         "z": "→(x)",
         "x": 123123,
         "y": 88,
-        "_id": "96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe",
+        "_id": "jWguT1MkE.y2lbZAetjGw2tmoFRZsuLzkF84sOwe",
         "_ids": {
-            "w": "1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5",
-            "z": ".JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8",
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (content: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)",
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (content: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)"
+            "w": "rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5",
+            "z": "FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8",
+            "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
+            "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
     }
     >>> a = d >> (lambda x: {"z": x**2}) >> (lambda x, y: {"w": x/y})
     >>> b = d >> (lambda x, y: {"w": x/y}) >> (lambda x: {"z": x**2})
     >>> dic = d.asdict  # Converting to dict
     >>> dic
-    {'x': 123123, 'y': 88, '_id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', '_ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
+    {'x': 123123, 'y': 88, '_id': 'S-_6a05b897eed2728ea8200aa3f9e90651e952a', '_ids': {'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}}
     >>> d2 = idict(dic)  # Reconstructing from a dict
     >>> d2.show(colored=False)
     {
         "x": 123123,
         "y": 88,
-        "_id": "dR_5b58200b12d6f162541e09c570838ef5a429e",
+        "_id": "S-_6a05b897eed2728ea8200aa3f9e90651e952a",
         "_ids": {
-            "x": "4W_3331a1c01e3e27831cf08b7bde9b865db7b2e",
-            "y": "9X_c8cb257a04eba75c381df365a1e7f7e2dc660"
+            "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff",
+            "y": "EV_f4049757e5085edc56b4262974be71951792a"
         }
     }
     >>> d == d2
@@ -128,9 +117,9 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> d.show(colored=False)
     {
         "x": "more content",
-        "_id": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff",
+        "_id": "aF_64eaced14bf0114a6b9eceaac31744c2093df",
         "_ids": {
-            "x": "lU_2bc203cfa982e84748e044ad5f3a86dcf97ff"
+            "x": "aF_64eaced14bf0114a6b9eceaac31744c2093df"
         }
     }
     >>> f = lambda x,y: {"z":x+y}
@@ -141,11 +130,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         "z": "→(x y)",
         "x": 5,
         "y": 7,
-        "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
         "_ids": {
-            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c = {}
@@ -155,11 +144,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         "z": "→(^ x y)",
         "x": 5,
         "y": 7,
-        "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
         "_ids": {
-            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c
@@ -167,17 +156,17 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> d3.z
     12
     >>> c
-    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+    {'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
     >>> d3.show(colored=False)
     {
         "z": 12,
         "x": 5,
         "y": 7,
-        "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
         "_ids": {
-            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c = {}
@@ -188,11 +177,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         "z": "→(^ x y)",
         "x": 5,
         "y": 7,
-        "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
         "_ids": {
-            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c
@@ -200,17 +189,17 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> d3.z
     12
     >>> c
-    {'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+    {'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
     >>> d3.show(colored=False)
     {
         "z": 12,
         "x": 5,
         "y": 7,
-        "_id": "M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv",
+        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
         "_ids": {
-            "z": "0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     """
@@ -258,7 +247,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             _id = self.hosh.id
             try:
                 _ids = {k: v.id for k, v in self.hoshes.items()}
-            except:
+            except:  # pragma: no cover
                 print(self.hoshes)
                 raise Exception()
 
@@ -300,10 +289,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             "y": "→(x)",
             "x": 3,
-            "_id": "tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe",
+            "_id": "NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe",
             "_ids": {
-                "y": "BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe",
-                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
+                "y": "r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe",
+                "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
             }
         }
         >>> a.evaluate()
@@ -311,10 +300,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             "y": 5,
             "x": 3,
-            "_id": "tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe",
+            "_id": "NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe",
             "_ids": {
-                "y": "BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe",
-                "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
+                "y": "r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe",
+                "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
             }
         }
         """
@@ -326,10 +315,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
         >>> d = idict(x=3, y=5)
         >>> d.id
-        'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35'
+        'Gm_969c1762a9edc78bf5dc236c663f77f39933b'
         >>> e = idict(x=7, y=8, d=d)
         >>> e.asdict
-        {'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5, '_id': 'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35', '_ids': {'x': 'WB_e55a47230d67db81bcc1aecde8f1b950282cd', 'y': '0U_e2a86ff72e226d5365aea336044f7b4270977'}}, '_id': 'AN_650bae25143e28c5489bfbc806f5fb55c6fdc', '_ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': '8s_1ccd1655bae1d9e91270e5eddc31351eb8b35'}}
+        {'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5, '_id': 'Gm_969c1762a9edc78bf5dc236c663f77f39933b', '_ids': {'x': 'n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab', 'y': 'ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f'}}, '_id': 'dc_ecfbc17842ca0e082a02528315f3aee08ff89', '_ids': {'x': 'Ak_4864e8a41a20ba9d64284c45f82a491dd8065', 'y': 'Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8', 'd': 'Tk_c466af3b9f5f550ef5dc0d51663f77a9a933b'}}
         >>> d.hosh ** key2id("d", d.identity.digits) == e.hoshes["d"]
         True
         """
@@ -351,10 +340,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             "x": 134124,
             "y": 56,
-            "_id": "dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f",
+            "_id": "tV_c3c37026dc9a795bb61f18be755b7a8a094f2",
             "_ids": {
-                "x": "gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (content: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)",
-                "y": "Zs_c473399e77e6c2d2f69914891a488a3732bb0 (content: ru_25575c305f4aaf40f6998a942a488a7122bb0)"
+                "x": "Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)",
+                "y": "UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)"
             }
         }
         """
@@ -375,7 +364,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> from idict.core.appearance import decolorize
         >>> out = idict(x=134124, y= 56).all
         >>> decolorize(out)
-        '{\n    "x": 134124,\n    "y": 56,\n    "_id": "dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f",\n    "_ids": {\n        "x": "gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (content: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)",\n        "y": "Zs_c473399e77e6c2d2f69914891a488a3732bb0 (content: ru_25575c305f4aaf40f6998a942a488a7122bb0)"\n    }\n}'
+        '{\n    "x": 134124,\n    "y": 56,\n    "_id": "tV_c3c37026dc9a795bb61f18be755b7a8a094f2",\n    "_ids": {\n        "x": "Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)",\n        "y": "UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)"\n    }\n}'
         """
         return self.__repr__(all=True)
 
@@ -430,7 +419,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-        self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+            self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict

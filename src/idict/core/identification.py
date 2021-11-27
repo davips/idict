@@ -122,11 +122,11 @@ def blobs_hashes_hoshes(data, identity, ids):
         "x": 1,
         "y": 2,
         "z": 3,
-        "_id": "Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy",
+        "_id": "ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy",
         "_ids": {
-            "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (content: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)",
+            "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",
             "y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-            "z": "YB_957059a720926191bcc15ebde8f1b960282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
+            "z": "p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
     """
@@ -147,7 +147,7 @@ def blobs_hashes_hoshes(data, identity, ids):
                 hashes[k] = identity.h * blobs[k]
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
-            except KeyError as e:
+            except KeyError as e: # pragma: no cover
                 raise Exception(
                     f"{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield."
                 )

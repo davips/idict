@@ -40,10 +40,10 @@ class iFunctionSpace:
     {
         "y": 7,
         "x": 5,
-        "_id": "mP_2d615fd34f97ac906e162c6fc6aedadc4d140",
+        "_id": "TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4",
         "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
     >>> fs >>= idict(y=7)
@@ -51,15 +51,15 @@ class iFunctionSpace:
     >>> print(decolorize(str(fs)))
     «{'x': 5} × {
         "y": 7,
-        "_id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-        "_ids": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        "_id": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
+        "_ids": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
     }»
     >>> fs >>= lambda x,y: {"z": x*y}
     >>> print(decolorize(str(fs)))
     «{'x': 5} × {
         "y": 7,
-        "_id": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8",
-        "_ids": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8"
+        "_id": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
+        "_ids": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
     } × λ»
     """
 

@@ -52,9 +52,9 @@ def idict2txt(d, all):
     >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> d = idict(x=1,y=2)
     >>> decolorize(idict2txt(d, False))
-    '{\n    "x": 1,\n    "y": 2,\n    "_id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "_ids": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45"\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\n    "_ids": "S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b"\n}'
     >>> decolorize(idict2txt(d, True))
-    '{\n    "x": 1,\n    "y": 2,\n    "_id": "Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4",\n    "_ids": {\n        "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (content: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)",\n        "y": "pg_7d1eecc7838558a4c1bf9584d68a487791c45 (content: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)"\n    }\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\n    "_ids": {\n        "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",\n        "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"\n    }\n}'
 
     Parameters
     ----------
