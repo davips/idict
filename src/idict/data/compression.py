@@ -26,7 +26,7 @@ import lz4.frame as lz4
 from idict.config import GLOBAL
 
 
-def pack(obj, nondeterministic_fallback=False):
+def pack(obj, nondeterministic_fallback):
     r"""
     >>> from idict import setup
     >>> setup(compression_cachelimit_MB=0.000_100)
@@ -61,12 +61,12 @@ def pack(obj, nondeterministic_fallback=False):
     try:
         try:
             dump = pickle.dumps(obj, protocol=5)
-            prefix = "pckl_"
+            prefix = b"pckl_"
         except:
             if not nondeterministic_fallback:
                 raise Exception("Cannot serialize deterministically.")
             dump = dill.dumps(obj, protocol=5)
-            prefix = "dill_"
+            prefix = b"dill_"
 
         blob = prefix + lz4.compress(dump)
         GLOBAL["compression_cachesize"] += len(blob)
@@ -94,7 +94,7 @@ def unpack(blob):
     """
     prefix = blob[:5]
     blob = blob[5:]
-    if prefix == "pckl_":
+    if prefix == b"pckl_":
         return pickle.loads(lz4.decompress(blob))
-    elif prefix == "dill_":
+    elif prefix == b"dill_":
         return dill.loads(lz4.decompress(blob))

@@ -61,9 +61,9 @@ class TestLdict(TestCase):
     "z": 5,
     "_id": "Pd_7f559308b2f3bf28c9dfd54cf6ba43b636504",
     "_ids": {
-        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-        "y": "SL_6e8b071c1bc6504ea76f407e1a791e887d9ce (no key: kN_8e281576102a3dbba76fb6892a791ec26d9ce)",
-        "z": "1U_fdd682399a475d5365aeb336044f7b4270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
+        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
+        "y": "SL_6e8b071c1bc6504ea76f407e1a791e887d9ce (content: kN_8e281576102a3dbba76fb6892a791ec26d9ce)",
+        "z": "1U_fdd682399a475d5365aeb336044f7b4270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
     }
 }""",
             decolorize(d.all),
@@ -83,8 +83,8 @@ class TestLdict(TestCase):
     "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
     "_ids": {
         "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
-        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
+        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
+        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
     }
 }""",
             decolorize(d.all),
@@ -135,8 +135,8 @@ class TestLdict(TestCase):
     "_id": "dq32pdZalIcM-fc5ZX1PZjUhNSpadBnjS7VNt6Mg",
     "_ids": {
         "z": "m3S-qN-WiH188lwxKIguTF.2YniadBnjS7VNt6Mg",
-        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
+        "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
+        "y": "0U_e2a86ff72e226d5365aea336044f7b4270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)"
     }
 }""",
             str(decolorize(d.all)),

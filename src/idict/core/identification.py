@@ -124,9 +124,9 @@ def blobs_hashes_hoshes(data, identity, ids):
         "z": 3,
         "_id": "Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy",
         "_ids": {
-            "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)",
+            "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (content: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)",
             "y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-            "z": "YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
+            "z": "YB_957059a720926191bcc15ebde8f1b960282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
         }
     }
     """
@@ -143,7 +143,7 @@ def blobs_hashes_hoshes(data, identity, ids):
             if isinstance(v, (Idict, FrozenIdentifiedDict)):
                 hashes[k] = v.hosh
             else:
-                blobs[k] = pack(v)
+                blobs[k] = pack(v, nondeterministic_fallback=False)
                 hashes[k] = identity.h * blobs[k]
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)

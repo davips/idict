@@ -1,9 +1,9 @@
-v2
-Revert to bytecode after seeing undeterministic dill to calculate function hash
+v1.211126.3
+Add support to nested idict in cache
+Update garoupa for correct etype inducer on ldict.ø
+
+v2 [Withheld due to undeterministic dill behavior while calculating function hash]
+Revert to bytecode and get back to v1
 Add nokey to show()
 Keep ids of insertion idict
 Add fromfile
-
-v1
-Add support to nested idict in cache
-Update garoupa for correct etype inducer on ldict.ø

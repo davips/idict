@@ -50,8 +50,8 @@ class iLet(AbstractLet):
         "_id": "uonOfBfiCPJ6QL7yu19SF9BX6OaIf7PP0vTUHwdO",
         "_ids": {
             "z": "aTcq8LzhLxCZM1OgOnGa0N7HCYdIf7PP0vTUHwdO",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> d2.evaluate()
@@ -63,8 +63,8 @@ class iLet(AbstractLet):
         "_id": "uonOfBfiCPJ6QL7yu19SF9BX6OaIf7PP0vTUHwdO",
         "_ids": {
             "z": "aTcq8LzhLxCZM1OgOnGa0N7HCYdIf7PP0vTUHwdO",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> from random import Random
@@ -77,8 +77,8 @@ class iLet(AbstractLet):
         "_id": "0xMtdBRZKHKRN6wjmeVZv2te5.hMrJxAMFjv1ppr",
         "_ids": {
             "z": "fH3vqqaQB3J34ma2GAqiSF.ZA9lMrJxAMFjv1ppr",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> d2.evaluate()
@@ -90,8 +90,8 @@ class iLet(AbstractLet):
         "_id": "0xMtdBRZKHKRN6wjmeVZv2te5.hMrJxAMFjv1ppr",
         "_ids": {
             "z": "fH3vqqaQB3J34ma2GAqiSF.ZA9lMrJxAMFjv1ppr",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> let(f, a=5) >> {"x": 5, "y": 7}
@@ -104,8 +104,8 @@ class iLet(AbstractLet):
         "_id": "Q9TVKR-HVcye7.bIdDpsozCRZxSCMKqODpuKHpoM",
         "_ids": {
             "z": "butCwKlacHFJITvKwZWMag9BtIFCMKqODpuKHpoM",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)"
         }
     }
     >>> from idict.core.appearance import decolorize
@@ -134,8 +134,8 @@ class iLet(AbstractLet):
         "_id": ".weinknSzbRNQozgJ-lwxGUsk1QCMKqODpuKHpoM",
         "_ids": {
             "z": "8oEPYIznhYXapfJ-UG-rRhvRT0QCMKqODpuKHpoM",
-            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-            "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
+            "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
     >>> print(d.z)
@@ -149,8 +149,8 @@ class iLet(AbstractLet):
         "_id": "iyEXKNIq6t0iZRjQBBujMt73l49s9cp4PHp-q0TO",
         "_ids": {
             "z": "WNsBmRnrF.gFDFtyNh7f45KrU39s9cp4PHp-q0TO",
-            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
-            "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)",
+            "y": "6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
     >>> print(d.z)

@@ -45,7 +45,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         "_id": "hk15pNBEY5b14uMvNiMIKbSLcOlfffffffffffff",
         "_ids": {
             "y": "WOE7vLHOaw5gqWDkzk-5e-d.ujsfffffffffffff",
-            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
+            "x": "WB_e55a47230d67db81bcc1aecde8f1b950282cd (content: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)"
         }
     }
     >>> d2.hosh / f.metadata["id"] == d.id
@@ -130,9 +130,9 @@ def ihandle_dict(self, dictlike):
         "z": 8,
         "_id": "dejCAhZMpV8N1ZR8s3HUnCi0-LP............y",
         "_ids": {
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
             "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
     >>> di2 = ihandle_dict(di, {"w":lambda x,z: x**z})
@@ -145,9 +145,9 @@ def ihandle_dict(self, dictlike):
         "_id": "p.82XiVd66i7iZcpKpspLqJjTIqs3d9r2rr8kHNE",
         "_ids": {
             "w": "APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5",
-            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
+            "x": ".T_f0bb8da3062cc75365ae0446044f7b3270977 (content: uV_f849a33e2d854ad065ae1a41144f7b8c50977)",
             "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
     >>> ihandle_dict(di2, {"x": 55555}).show(colored=False)
@@ -159,9 +159,9 @@ def ihandle_dict(self, dictlike):
         "_id": "4It--fjPyar8ZE6gaxTIDiumYwBs3d9r2rr8kHNE",
         "_ids": {
             "w": "APe82rIDSl0OEtKebkaueUlhuQts3d9r2rr8kHN5",
-            "x": "T7_37f7565449f62df2f074952f6484ea6581b77 (no key: m9_0be75c1d3650af70f074ab2a7484eabf61b77)",
+            "x": "T7_37f7565449f62df2f074952f6484ea6581b77 (content: m9_0be75c1d3650af70f074ab2a7484eabf61b77)",
             "y": "gDcc4Rgrs4C3tMZUcb1Fp9KO53R............y",
-            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (no key: Ar_4fd69270474feb1c2da324cc665567f611bde)"
+            "z": "7q_3c95f44b01eb0f9e2da3bda1665567bc21bde (content: Ar_4fd69270474feb1c2da324cc665567f611bde)"
         }
     }
     >>> (d := ihandle_dict(idict(), {"x": 1555})).show(colored=False)
@@ -188,7 +188,7 @@ def ihandle_dict(self, dictlike):
         "x": "→(x)",
         "_id": "3scU-U5036J7rqqAqwPVH7GgcIYs.g4HNqVBp-Sh",
         "_ids": {
-            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)",
+            "y": "mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (content: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)",
             "x": "3B1TtaEj17qDxRNp4VoyjLmvjm.s.g4HNqVBp-Sh"
         }
     }
@@ -281,8 +281,8 @@ def solve(hoshes, output, uf: Hosh):
         "_ids": {
             "x": "RonX9OcL1opfeXE9CJXL1LtpNBqgmEFdqG4B1zji",
             "y": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "w": "ng_5dad44381c5ac2a4c1bfe594d68a486791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)",
-            "z": "vY_6b073e90b397af73e43c1e6c4777abeeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)"
+            "w": "ng_5dad44381c5ac2a4c1bfe594d68a486791c45 (content: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)",
+            "z": "vY_6b073e90b397af73e43c1e6c4777abeeadb9f (content: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)"
         }
     }
     """
