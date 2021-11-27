@@ -35,11 +35,12 @@ class TestLdict(TestCase):
         self.assertEqual(a, b)
         self.assertFalse(a == {"a": 3})
         self.assertNotEqual(a, {"a": 3})
-        d = {'_id': 'mH_70118e827bbcd88303202a006d34eb63e4fbd',
-             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
-                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b'},
-             'x': 1,
-             'y': 2}
+        d = {
+            "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",
+            "_ids": {"x": "S6_787ce43265467bacea460e239d4b36762f272", "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b"},
+            "x": 1,
+            "y": 2,
+        }
         self.assertEqual(a.asdict, d)
 
     def test_illdefined_function(self):
@@ -104,8 +105,8 @@ class TestLdict(TestCase):
             "_ids": {
                 "z": "LMgQzXnuVppb3md.0Q6E7oIkqjiadBnjS7VNt6Mg",
                 "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
-                "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
-            }
+                "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            },
         }
         self.assertEqual(d, de)
 
@@ -165,13 +166,17 @@ class TestLdict(TestCase):
         self.assertNotEqual(old, d)
         self.assertEqual(
             d,
-            {'_id': 'fO.GZwQORND3xRsNGdQPzNnw6DCCresH0ccu3pl7',
-             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
-                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b',
-                      'z': 'uuK12VIIPD7MTRotl-f4iPyMoNHCresH0ccu3pl7'},
-             'x': 1,
-             'y': 2,
-             'z': 7}
+            {
+                "_id": "fO.GZwQORND3xRsNGdQPzNnw6DCCresH0ccu3pl7",
+                "_ids": {
+                    "x": "S6_787ce43265467bacea460e239d4b36762f272",
+                    "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b",
+                    "z": "uuK12VIIPD7MTRotl-f4iPyMoNHCresH0ccu3pl7",
+                },
+                "x": 1,
+                "y": 2,
+                "z": 7,
+            },
         )
 
         # Reapply same function.
@@ -185,13 +190,17 @@ class TestLdict(TestCase):
         self.assertNotEqual(old, d)
         self.assertEqual(
             d,
-            {'_id': 'vEtxmz.hlCHyxdGZO-836Fe6wkHdmHk22sAqab0m',
-             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
-                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b',
-                      'z': 'qiyFKALstbn0GaCFtLAjQGpmOuMdmHk22sAqab0m'},
-             'x': 1,
-             'y': 2,
-             'z': 31}
+            {
+                "_id": "vEtxmz.hlCHyxdGZO-836Fe6wkHdmHk22sAqab0m",
+                "_ids": {
+                    "x": "S6_787ce43265467bacea460e239d4b36762f272",
+                    "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b",
+                    "z": "qiyFKALstbn0GaCFtLAjQGpmOuMdmHk22sAqab0m",
+                },
+                "x": 1,
+                "y": 2,
+                "z": 31,
+            },
         )
 
         def f(x):
@@ -230,4 +239,4 @@ class TestLdict(TestCase):
         # T = namedtuple("T", "hosh")
 
     def test_compression(self):
-        self.assertTrue(callable(unpack(pack(lambda a:5, nondeterministic_fallback=True))))
+        self.assertTrue(callable(unpack(pack(lambda a: 5, nondeterministic_fallback=True))))

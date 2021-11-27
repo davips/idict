@@ -47,19 +47,14 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
+import pickle
+
 import dill
-
 import lz4.frame as lz4
-
 from idict.config import GLOBAL
 
 
-def obj2bytes(obj):
-    dump = dill.dumps(obj, protocol=5)
-    return lz4.compress(dump)
-
-
-def pack(obj):
+def pack(obj, nondeterministic_fallback=False):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import setup
     &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
@@ -67,19 +62,19 @@ def pack(obj):
     &gt;&gt;&gt; GLOBAL[&#34;compression_cachesize&#34;] = 0
     &gt;&gt;&gt; b = b&#34;000011&#34;
     &gt;&gt;&gt; pack(b)
-    b&#39;\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
+    b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
     &gt;&gt;&gt; memo[id(b)][&#34;unpacked&#34;]
     b&#39;000011&#39;
     &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (1, 42, 100)
+    (1, 47, 100)
     &gt;&gt;&gt; pack(b&#34;asd&#34;)
-    b&#39;\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
+    b&#39;pckl_\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
     &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 81, 100)
+    (2, 91, 100)
     &gt;&gt;&gt; len(pack(b&#34;123&#34;))
-    39
+    44
     &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 78, 100)
+    (2, 88, 100)
     &#34;&#34;&#34;
     memid = id(obj)
     memo = GLOBAL[&#34;compression_cache&#34;]
@@ -92,7 +87,16 @@ def pack(obj):
             del memo[memid]
 
     try:
-        blob = obj2bytes(obj)
+        try:
+            dump = pickle.dumps(obj, protocol=5)
+            prefix = b&#34;pckl_&#34;
+        except:
+            if not nondeterministic_fallback:  # pragma: no cover
+                raise Exception(&#34;Cannot serialize deterministically.&#34;)
+            dump = dill.dumps(obj, protocol=5)
+            prefix = b&#34;dill_&#34;
+
+        blob = prefix + lz4.compress(dump)
         GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
         memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
 
@@ -113,10 +117,15 @@ def pack(obj):
 
 def unpack(blob):
     r&#34;&#34;&#34;
-    &gt;&gt;&gt; unpack(b&#39;\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;)
+    &gt;&gt;&gt; unpack(b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;)
     b&#39;000011&#39;
     &#34;&#34;&#34;
-    return dill.loads(lz4.decompress(blob))</code></pre>
+    prefix = blob[:5]
+    blob = blob[5:]
+    if prefix == b&#34;pckl_&#34;:
+        return pickle.loads(lz4.decompress(blob))
+    elif prefix == b&#34;dill_&#34;:
+        return dill.loads(lz4.decompress(blob))</code></pre>
 </details>
 </section>
 <section>
@@ -126,22 +135,8 @@ def unpack(blob):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="idict.data.compression.obj2bytes"><code class="name flex">
-<span>def <span class="ident">obj2bytes</span></span>(<span>obj)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def obj2bytes(obj):
-    dump = dill.dumps(obj, protocol=5)
-    return lz4.compress(dump)</code></pre>
-</details>
-</dd>
 <dt id="idict.data.compression.pack"><code class="name flex">
-<span>def <span class="ident">pack</span></span>(<span>obj)</span>
+<span>def <span class="ident">pack</span></span>(<span>obj, nondeterministic_fallback=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import setup
@@ -150,25 +145,25 @@ def unpack(blob):
 &gt;&gt;&gt; GLOBAL[&quot;compression_cachesize&quot;] = 0
 &gt;&gt;&gt; b = b&quot;000011&quot;
 &gt;&gt;&gt; pack(b)
-b'\x04&quot;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00'
+b'pckl_\x04&quot;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00'
 &gt;&gt;&gt; memo[id(b)][&quot;unpacked&quot;]
 b'000011'
 &gt;&gt;&gt; len(memo), GLOBAL[&quot;compression_cachesize&quot;], GLOBAL[&quot;compression_cachelimit&quot;]
-(1, 42, 100)
+(1, 47, 100)
 &gt;&gt;&gt; pack(b&quot;asd&quot;)
-b'\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00'
+b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00'
 &gt;&gt;&gt; len(memo), GLOBAL[&quot;compression_cachesize&quot;], GLOBAL[&quot;compression_cachelimit&quot;]
-(2, 81, 100)
+(2, 91, 100)
 &gt;&gt;&gt; len(pack(b&quot;123&quot;))
-39
+44
 &gt;&gt;&gt; len(memo), GLOBAL[&quot;compression_cachesize&quot;], GLOBAL[&quot;compression_cachelimit&quot;]
-(2, 78, 100)
+(2, 88, 100)
 </code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def pack(obj):
+<pre><code class="python">def pack(obj, nondeterministic_fallback=False):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import setup
     &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
@@ -176,19 +171,19 @@ b'\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05
     &gt;&gt;&gt; GLOBAL[&#34;compression_cachesize&#34;] = 0
     &gt;&gt;&gt; b = b&#34;000011&#34;
     &gt;&gt;&gt; pack(b)
-    b&#39;\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
+    b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
     &gt;&gt;&gt; memo[id(b)][&#34;unpacked&#34;]
     b&#39;000011&#39;
     &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (1, 42, 100)
+    (1, 47, 100)
     &gt;&gt;&gt; pack(b&#34;asd&#34;)
-    b&#39;\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
+    b&#39;pckl_\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
     &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 81, 100)
+    (2, 91, 100)
     &gt;&gt;&gt; len(pack(b&#34;123&#34;))
-    39
+    44
     &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 78, 100)
+    (2, 88, 100)
     &#34;&#34;&#34;
     memid = id(obj)
     memo = GLOBAL[&#34;compression_cache&#34;]
@@ -201,7 +196,16 @@ b'\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05
             del memo[memid]
 
     try:
-        blob = obj2bytes(obj)
+        try:
+            dump = pickle.dumps(obj, protocol=5)
+            prefix = b&#34;pckl_&#34;
+        except:
+            if not nondeterministic_fallback:  # pragma: no cover
+                raise Exception(&#34;Cannot serialize deterministically.&#34;)
+            dump = dill.dumps(obj, protocol=5)
+            prefix = b&#34;dill_&#34;
+
+        blob = prefix + lz4.compress(dump)
         GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
         memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
 
@@ -224,7 +228,7 @@ b'\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05
 <span>def <span class="ident">unpack</span></span>(<span>blob)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; unpack(b'\x04&quot;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00')
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; unpack(b'pckl_\x04&quot;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00')
 b'000011'
 </code></pre></div>
 <details class="source">
@@ -233,10 +237,15 @@ b'000011'
 </summary>
 <pre><code class="python">def unpack(blob):
     r&#34;&#34;&#34;
-    &gt;&gt;&gt; unpack(b&#39;\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;)
+    &gt;&gt;&gt; unpack(b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;)
     b&#39;000011&#39;
     &#34;&#34;&#34;
-    return dill.loads(lz4.decompress(blob))</code></pre>
+    prefix = blob[:5]
+    blob = blob[5:]
+    if prefix == b&#34;pckl_&#34;:
+        return pickle.loads(lz4.decompress(blob))
+    elif prefix == b&#34;dill_&#34;:
+        return dill.loads(lz4.decompress(blob))</code></pre>
 </details>
 </dd>
 </dl>
@@ -257,7 +266,6 @@ b'000011'
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="idict.data.compression.obj2bytes" href="#idict.data.compression.obj2bytes">obj2bytes</a></code></li>
 <li><code><a title="idict.data.compression.pack" href="#idict.data.compression.pack">pack</a></code></li>
 <li><code><a title="idict.data.compression.unpack" href="#idict.data.compression.unpack">unpack</a></code></li>
 </ul>

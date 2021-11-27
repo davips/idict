@@ -80,9 +80,9 @@ def idict2txt(d, all):
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,\n        &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
 
     Parameters
     ----------
@@ -100,7 +100,7 @@ def idict2txt(d, all):
             txt = txt.replace(dic[k], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
-            nokey = f&#34; (no key: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
+            nokey = f&#34; (content: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
             txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt
 
@@ -173,9 +173,9 @@ def ldict2dict(d, all):
 <pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
 &gt;&gt;&gt; d = idict(x=1,y=2)
 &gt;&gt;&gt; decolorize(idict2txt(d, False))
-'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&quot;,\n    &quot;_ids&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45&quot;\n}'
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&quot;\n}'
 &gt;&gt;&gt; decolorize(idict2txt(d, True))
-'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&quot;,\n        &quot;y&quot;: &quot;pg_7d1eecc7838558a4c1bf9584d68a487791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&quot;\n    }\n}'
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,\n        &quot;y&quot;: &quot;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;\n    }\n}'
 </code></pre>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -196,9 +196,9 @@ def ldict2dict(d, all):
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f pg_7d1eecc7838558a4c1bf9584d68a487791c45&#34;\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;Tc_fb3057e399a385aaa6ebade51ef1f31c5f7e4&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,\n        &#34;y&#34;: &#34;pg_7d1eecc7838558a4c1bf9584d68a487791c45 (no key: Th_59bbaaedafd83522c1bf0c9fd68a48b181c45)&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
 
     Parameters
     ----------
@@ -216,7 +216,7 @@ def ldict2dict(d, all):
             txt = txt.replace(dic[k], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
-            nokey = f&#34; (no key: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
+            nokey = f&#34; (content: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
             txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt</code></pre>
 </details>

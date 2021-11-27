@@ -150,11 +150,11 @@ def blobs_hashes_hoshes(data, identity, ids):
         &#34;x&#34;: 1,
         &#34;y&#34;: 2,
         &#34;z&#34;: 3,
-        &#34;_id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
+        &#34;_id&#34;: &#34;ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,
+            &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
-            &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+            &#34;z&#34;: &#34;p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -171,11 +171,11 @@ def blobs_hashes_hoshes(data, identity, ids):
             if isinstance(v, (Idict, FrozenIdentifiedDict)):
                 hashes[k] = v.hosh
             else:
-                blobs[k] = pack(v)
+                blobs[k] = pack(v, nondeterministic_fallback=False)
                 hashes[k] = identity.h * blobs[k]
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
-            except KeyError as e:
+            except KeyError as e:  # pragma: no cover
                 raise Exception(
                     f&#34;{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield.&#34;
                 )
@@ -199,11 +199,11 @@ def blobs_hashes_hoshes(data, identity, ids):
     &quot;x&quot;: 1,
     &quot;y&quot;: 2,
     &quot;z&quot;: 3,
-    &quot;_id&quot;: &quot;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&quot;,
+    &quot;_id&quot;: &quot;ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&quot;,
+        &quot;x&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,
         &quot;y&quot;: &quot;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&quot;,
-        &quot;z&quot;: &quot;YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&quot;
+        &quot;z&quot;: &quot;p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 </code></pre></div>
@@ -219,11 +219,11 @@ def blobs_hashes_hoshes(data, identity, ids):
         &#34;x&#34;: 1,
         &#34;y&#34;: 2,
         &#34;z&#34;: 3,
-        &#34;_id&#34;: &#34;Xkwes9zViTVf6Aj.LRFlhtrWYioyyyyyyyyyyyyy&#34;,
+        &#34;_id&#34;: &#34;ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f (no key: YZ_9a7dbd0368c59cf0e43c74875777ab299db9f)&#34;,
+            &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
-            &#34;z&#34;: &#34;YB_957059a720926191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+            &#34;z&#34;: &#34;p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -240,11 +240,11 @@ def blobs_hashes_hoshes(data, identity, ids):
             if isinstance(v, (Idict, FrozenIdentifiedDict)):
                 hashes[k] = v.hosh
             else:
-                blobs[k] = pack(v)
+                blobs[k] = pack(v, nondeterministic_fallback=False)
                 hashes[k] = identity.h * blobs[k]
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
-            except KeyError as e:
+            except KeyError as e:  # pragma: no cover
                 raise Exception(
                     f&#34;{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield.&#34;
                 )

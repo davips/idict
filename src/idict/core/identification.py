@@ -147,7 +147,7 @@ def blobs_hashes_hoshes(data, identity, ids):
                 hashes[k] = identity.h * blobs[k]
             try:
                 hoshes[k] = hashes[k] ** key2id(k, identity.digits)
-            except KeyError as e: # pragma: no cover
+            except KeyError as e:  # pragma: no cover
                 raise Exception(
                     f"{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield."
                 )

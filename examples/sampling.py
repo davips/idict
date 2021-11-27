@@ -25,17 +25,17 @@ d.show(colored=False)
 # Putting some values. Alternatively: d = idict(x=5, y=7).
 d["x"] = 5
 d["y"] = 7
-d.show(colored=False)
+print(d)
 # ...
 
 # Parameter values are uniformly sampled.
 d1 = d >> simplefun
-d1.show(colored=False)
+print(d1)
 print(d1.z)
 # ...
 
 d2 = d >> simplefun
-d2.show(colored=False)
+print(d2)
 print(d2.z)
 # ...
 
@@ -45,13 +45,13 @@ print(e.z)
 # ...
 
 # Not all parameters need to be set.
-e = d >> let(simplefun, a=5)
-print(e.z)
+e = d >> Random() >> let(fun, a=5)
+print("e =", e.z)
 # ...
 
 # Each run will be a different sample for the missing parameters.
-e = e >> let(simplefun, a=5)
-print(e.z)
+e = e >> Random() >> let(fun, a=5)
+print("e =", e.z)
 # ...
 
 # We can define the initial state of the random sampler.
@@ -76,3 +76,12 @@ print(e.z)
 e = d >> rnd >> let(fun, a=5)  # Alternative syntax.
 print(e.z)
 # ...
+
+# Output fields can be defined dynamically through parameter values.
+# Input fields can be defined dynamically through kwargs.
+copy = lambda source=None, target=None, **kwargs: {target: kwargs[source]}
+d = empty >> {"x": 5}
+d >>= let(copy, source="x", target="y")
+print(d)
+d.evaluate()
+print(d)

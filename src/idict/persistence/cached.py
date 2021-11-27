@@ -56,7 +56,7 @@ def cached(d, cache):
                     data[k] = cached(data[k], cache)
                 else:
                     cache[v] = data[k]
-            if (result := data[outputf]) is None: # pragma: no cover
+            if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f"No ids")
                 raise Exception(f"Key {k} not in output fields: {output_fields}. ids: {fids.items()}")
@@ -71,7 +71,7 @@ def cached(d, cache):
     output_fields = []
     for field, v in list(data.items()):
         if isinstance(v, LazyVal):
-            if field.startswith("_"): # pragma: no cover
+            if field.startswith("_"):  # pragma: no cover
                 raise Exception("Cannot have a lazy value in a metafield.", field)
             output_fields.append(field)
             lazies = True
@@ -292,7 +292,7 @@ def build(id, ids, cache, identity):
                 dic[k] = build(value["_id"], value["_ids"], cache, identity)
             else:
                 dic[k] = cache[fid]
-        else: # pragma: no cover
+        else:  # pragma: no cover
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
     from idict import idict
 

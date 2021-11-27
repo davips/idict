@@ -56,16 +56,15 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
-from ldict.customjson import CustomJSONEncoder
-from ldict.frozenlazydict import FrozenLazyDict
-
 from idict.config import GLOBAL
 from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
+from ldict.frozenlazydict import FrozenLazyDict
 
 VT = TypeVar(&#34;VT&#34;)
 
@@ -86,32 +85,22 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;_id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;_id&#34;: &#34;Gm_5a27861eacedc78bf5dc236c663f77f39933b&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; d[&#34;y&#34;]
     3
-    &gt;&gt;&gt; idict(x=123123, y=88).show(colored=False)
-    {
-        &#34;x&#34;: 123123,
-        &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&#34;,
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&#34;
-        }
-    }
     &gt;&gt;&gt; idict(y=88, x=123123).show(colored=False)
     {
         &#34;y&#34;: 88,
         &#34;x&#34;: 123123,
-        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_id&#34;: &#34;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&#34;,
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&#34;
+            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;,
+            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;
         }
     }
     &gt;&gt;&gt; d = idict(x=123123, y=88)
@@ -125,28 +114,28 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;_id&#34;: &#34;jWguT1MkE.y2lbZAetjGw2tmoFRZsuLzkF84sOwe&#34;,
         &#34;_ids&#34;: {
-            &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
-            &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&#34;,
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&#34;
+            &#34;w&#34;: &#34;rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5&#34;,
+            &#34;z&#34;: &#34;FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8&#34;,
+            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
+            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2}) &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y})
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#39;, &#39;y&#39;: &#39;EV_f4049757e5085edc56b4262974be71951792a&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; d2.show(colored=False)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_id&#34;: &#34;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#34;,
+            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a&#34;
         }
     }
     &gt;&gt;&gt; d == d2
@@ -156,9 +145,9 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_id&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
+            &#34;x&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;
         }
     }
     &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
@@ -169,11 +158,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -183,11 +172,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -195,17 +184,17 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -216,11 +205,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -228,17 +217,17 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -286,7 +275,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             _id = self.hosh.id
             try:
                 _ids = {k: v.id for k, v in self.hoshes.items()}
-            except:
+            except:  # pragma: no cover
                 print(self.hoshes)
                 raise Exception()
 
@@ -328,10 +317,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             &#34;y&#34;: &#34;→(x)&#34;,
             &#34;x&#34;: 3,
-            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_id&#34;: &#34;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&#34;,
             &#34;_ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+                &#34;y&#34;: &#34;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
             }
         }
         &gt;&gt;&gt; a.evaluate()
@@ -339,10 +328,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             &#34;y&#34;: 5,
             &#34;x&#34;: 3,
-            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_id&#34;: &#34;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&#34;,
             &#34;_ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+                &#34;y&#34;: &#34;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
             }
         }
         &#34;&#34;&#34;
@@ -354,10 +343,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
         &gt;&gt;&gt; d = idict(x=3, y=5)
         &gt;&gt;&gt; d.id
-        &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
+        &#39;Gm_969c1762a9edc78bf5dc236c663f77f39933b&#39;
         &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
         &gt;&gt;&gt; e.asdict
-        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;_id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Gm_969c1762a9edc78bf5dc236c663f77f39933b&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#39;, &#39;y&#39;: &#39;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&#39;}}, &#39;_id&#39;: &#39;dc_ecfbc17842ca0e082a02528315f3aee08ff89&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;Ak_4864e8a41a20ba9d64284c45f82a491dd8065&#39;, &#39;y&#39;: &#39;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8&#39;, &#39;d&#39;: &#39;Tk_c466af3b9f5f550ef5dc0d51663f77a9a933b&#39;}}
         &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
         True
         &#34;&#34;&#34;
@@ -379,10 +368,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         {
             &#34;x&#34;: 134124,
             &#34;y&#34;: 56,
-            &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+            &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&#34;,
-                &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&#34;
+                &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,
+                &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;
             }
         }
         &#34;&#34;&#34;
@@ -403,7 +392,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &gt;&gt;&gt; from idict.core.appearance import decolorize
         &gt;&gt;&gt; out = idict(x=134124, y= 56).all
         &gt;&gt;&gt; decolorize(out)
-        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&#34;\n    }\n}&#39;
+        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,\n        &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;\n    }\n}&#39;
         &#34;&#34;&#34;
         return self.__repr__(all=True)
 
@@ -535,32 +524,22 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 {
     &quot;x&quot;: 5,
     &quot;y&quot;: 3,
-    &quot;_id&quot;: &quot;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&quot;,
+    &quot;_id&quot;: &quot;Gm_5a27861eacedc78bf5dc236c663f77f39933b&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
-        &quot;y&quot;: &quot;XB_1cba4912b6826191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&quot;
+        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 &gt;&gt;&gt; d[&quot;y&quot;]
 3
-&gt;&gt;&gt; idict(x=123123, y=88).show(colored=False)
-{
-    &quot;x&quot;: 123123,
-    &quot;y&quot;: 88,
-    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
-    &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&quot;,
-        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&quot;
-    }
-}
 &gt;&gt;&gt; idict(y=88, x=123123).show(colored=False)
 {
     &quot;y&quot;: 88,
     &quot;x&quot;: 123123,
-    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_id&quot;: &quot;S-_6a05b897eed2728ea8200aa3f9e90651e952a&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&quot;,
-        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&quot;
+        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;,
+        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;
     }
 }
 &gt;&gt;&gt; d = idict(x=123123, y=88)
@@ -574,28 +553,28 @@ True
     &quot;z&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;_id&quot;: &quot;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&quot;,
+    &quot;_id&quot;: &quot;jWguT1MkE.y2lbZAetjGw2tmoFRZsuLzkF84sOwe&quot;,
     &quot;_ids&quot;: {
-        &quot;w&quot;: &quot;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&quot;,
-        &quot;z&quot;: &quot;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&quot;,
-        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&quot;,
-        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&quot;
+        &quot;w&quot;: &quot;rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5&quot;,
+        &quot;z&quot;: &quot;FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8&quot;,
+        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
+        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
     }
 }
 &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2}) &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y})
 &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y}) &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
 &gt;&gt;&gt; dic = d.asdict  # Converting to dict
 &gt;&gt;&gt; dic
-{'x': 123123, 'y': 88, '_id': 'dR_5b58200b12d6f162541e09c570838ef5a429e', '_ids': {'x': '4W_3331a1c01e3e27831cf08b7bde9b865db7b2e', 'y': '9X_c8cb257a04eba75c381df365a1e7f7e2dc660'}}
+{'x': 123123, 'y': 88, '_id': 'S-_6a05b897eed2728ea8200aa3f9e90651e952a', '_ids': {'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}}
 &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
 &gt;&gt;&gt; d2.show(colored=False)
 {
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;_id&quot;: &quot;dR_5b58200b12d6f162541e09c570838ef5a429e&quot;,
+    &quot;_id&quot;: &quot;S-_6a05b897eed2728ea8200aa3f9e90651e952a&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&quot;,
-        &quot;y&quot;: &quot;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&quot;
+        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff&quot;,
+        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a&quot;
     }
 }
 &gt;&gt;&gt; d == d2
@@ -605,9 +584,9 @@ True
 &gt;&gt;&gt; d.show(colored=False)
 {
     &quot;x&quot;: &quot;more content&quot;,
-    &quot;_id&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;,
+    &quot;_id&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&quot;
+        &quot;x&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;
     }
 }
 &gt;&gt;&gt; f = lambda x,y: {&quot;z&quot;:x+y}
@@ -618,11 +597,11 @@ True
     &quot;z&quot;: &quot;→(x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&quot;
+        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c = {}
@@ -632,11 +611,11 @@ True
     &quot;z&quot;: &quot;→(^ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&quot;
+        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c
@@ -644,17 +623,17 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&quot;
+        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c = {}
@@ -665,11 +644,11 @@ True
     &quot;z&quot;: &quot;→(^ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&quot;
+        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c
@@ -677,17 +656,17 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c
-{'0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv': 12, '.T_f0bb8da3062cc75365ae0446044f7b3270977': 5, 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8': 7, 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv': {'_id': 'M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv', '_ids': {'z': '0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv', 'x': '.T_f0bb8da3062cc75365ae0446044f7b3270977', 'y': 'mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8'}}}
+{'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
 &gt;&gt;&gt; d3.show(colored=False)
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&quot;,
-        &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&quot;
+        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 </code></pre></div>
@@ -711,32 +690,22 @@ True
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;_id&#34;: &#34;Xt_6cc13095bc5b4c671270fbe8ec313568a8b35&#34;,
+        &#34;_id&#34;: &#34;Gm_5a27861eacedc78bf5dc236c663f77f39933b&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;XB_1cba4912b6826191bcc15ebde8f1b960282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; d[&#34;y&#34;]
     3
-    &gt;&gt;&gt; idict(x=123123, y=88).show(colored=False)
-    {
-        &#34;x&#34;: 123123,
-        &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
-        &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&#34;,
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&#34;
-        }
-    }
     &gt;&gt;&gt; idict(y=88, x=123123).show(colored=False)
     {
         &#34;y&#34;: 88,
         &#34;x&#34;: 123123,
-        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_id&#34;: &#34;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&#34;,
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&#34;
+            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;,
+            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;
         }
     }
     &gt;&gt;&gt; d = idict(x=123123, y=88)
@@ -750,28 +719,28 @@ True
         &#34;z&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;96PdbhpKgueRWa.LSQWcSSbr.ZMZsuLzkF84sOwe&#34;,
+        &#34;_id&#34;: &#34;jWguT1MkE.y2lbZAetjGw2tmoFRZsuLzkF84sOwe&#34;,
         &#34;_ids&#34;: {
-            &#34;w&#34;: &#34;1--sDMlN-GuH4FUXhvPWNkyHmTOfTbFo4RK7M5M5&#34;,
-            &#34;z&#34;: &#34;.JXmafqx65TZ-laengA5qxtk1fUJBi6bgQpYHIM8&#34;,
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e (no key: zX_43643352a3a7a9011cf09186ee9b86a7a7b2e)&#34;,
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660 (no key: DY_d142f10d1f3f84d9381d6a70b1e7f72dbc660)&#34;
+            &#34;w&#34;: &#34;rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5&#34;,
+            &#34;z&#34;: &#34;FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8&#34;,
+            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
+            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2}) &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y})
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;dR_5b58200b12d6f162541e09c570838ef5a429e&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#39;, &#39;y&#39;: &#39;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#39;, &#39;y&#39;: &#39;EV_f4049757e5085edc56b4262974be71951792a&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; d2.show(colored=False)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;dR_5b58200b12d6f162541e09c570838ef5a429e&#34;,
+        &#34;_id&#34;: &#34;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;4W_3331a1c01e3e27831cf08b7bde9b865db7b2e&#34;,
-            &#34;y&#34;: &#34;9X_c8cb257a04eba75c381df365a1e7f7e2dc660&#34;
+            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#34;,
+            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a&#34;
         }
     }
     &gt;&gt;&gt; d == d2
@@ -781,9 +750,9 @@ True
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;_id&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;,
+        &#34;_id&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;lU_2bc203cfa982e84748e044ad5f3a86dcf97ff&#34;
+            &#34;x&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;
         }
     }
     &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
@@ -794,11 +763,11 @@ True
         &#34;z&#34;: &#34;→(x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -808,11 +777,11 @@ True
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -820,17 +789,17 @@ True
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -841,11 +810,11 @@ True
         &#34;z&#34;: &#34;→(^ x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -853,17 +822,17 @@ True
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c
-    {&#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;: 12, &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;: 5, &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;: 7, &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;.T_f0bb8da3062cc75365ae0446044f7b3270977&#39;, &#39;y&#39;: &#39;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#39;}}}
+    {&#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;: {&#39;_id&#39;: &#39;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)
     {
         &#34;z&#34;: 12,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;M0K6ckhuIW3hnTYCYQ24DmG-H9Fm.mdn2sxVEnRv&#34;,
+        &#34;_id&#34;: &#34;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;0vOQQX6u2JWqe8DlgbAoZZcKbkIm.mdn2sxVEnRv&#34;,
-            &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977 (no key: uV_f849a33e2d854ad065ae1a41144f7b8c50977)&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8 (no key: QY_49dee83e556d2448f877a44fd26f5f2fac8c8)&#34;
+            &#34;z&#34;: &#34;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&#34;,
+            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -911,7 +880,7 @@ True
             _id = self.hosh.id
             try:
                 _ids = {k: v.id for k, v in self.hoshes.items()}
-            except:
+            except:  # pragma: no cover
                 print(self.hoshes)
                 raise Exception()
 
@@ -953,10 +922,10 @@ True
         {
             &#34;y&#34;: &#34;→(x)&#34;,
             &#34;x&#34;: 3,
-            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_id&#34;: &#34;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&#34;,
             &#34;_ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+                &#34;y&#34;: &#34;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
             }
         }
         &gt;&gt;&gt; a.evaluate()
@@ -964,10 +933,10 @@ True
         {
             &#34;y&#34;: 5,
             &#34;x&#34;: 3,
-            &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+            &#34;_id&#34;: &#34;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&#34;,
             &#34;_ids&#34;: {
-                &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-                &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+                &#34;y&#34;: &#34;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&#34;,
+                &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
             }
         }
         &#34;&#34;&#34;
@@ -979,10 +948,10 @@ True
         &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
         &gt;&gt;&gt; d = idict(x=3, y=5)
         &gt;&gt;&gt; d.id
-        &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
+        &#39;Gm_969c1762a9edc78bf5dc236c663f77f39933b&#39;
         &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
         &gt;&gt;&gt; e.asdict
-        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;_id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+        {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Gm_969c1762a9edc78bf5dc236c663f77f39933b&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#39;, &#39;y&#39;: &#39;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&#39;}}, &#39;_id&#39;: &#39;dc_ecfbc17842ca0e082a02528315f3aee08ff89&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;Ak_4864e8a41a20ba9d64284c45f82a491dd8065&#39;, &#39;y&#39;: &#39;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8&#39;, &#39;d&#39;: &#39;Tk_c466af3b9f5f550ef5dc0d51663f77a9a933b&#39;}}
         &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
         True
         &#34;&#34;&#34;
@@ -1004,10 +973,10 @@ True
         {
             &#34;x&#34;: 134124,
             &#34;y&#34;: 56,
-            &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+            &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&#34;,
-                &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&#34;
+                &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,
+                &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;
             }
         }
         &#34;&#34;&#34;
@@ -1028,7 +997,7 @@ True
         &gt;&gt;&gt; from idict.core.appearance import decolorize
         &gt;&gt;&gt; out = idict(x=134124, y= 56).all
         &gt;&gt;&gt; decolorize(out)
-        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&#34;\n    }\n}&#39;
+        &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,\n        &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;\n    }\n}&#39;
         &#34;&#34;&#34;
         return self.__repr__(all=True)
 
@@ -1165,7 +1134,7 @@ True
 &gt;&gt;&gt; from idict.core.appearance import decolorize
 &gt;&gt;&gt; out = idict(x=134124, y= 56).all
 &gt;&gt;&gt; decolorize(out)
-'{\n    &quot;x&quot;: 134124,\n    &quot;y&quot;: 56,\n    &quot;_id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&quot;,\n        &quot;y&quot;: &quot;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&quot;\n    }\n}'
+'{\n    &quot;x&quot;: 134124,\n    &quot;y&quot;: 56,\n    &quot;_id&quot;: &quot;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&quot;,\n        &quot;y&quot;: &quot;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&quot;\n    }\n}'
 </code></pre></div>
 <details class="source">
 <summary>
@@ -1180,7 +1149,7 @@ def all(self):
     &gt;&gt;&gt; from idict.core.appearance import decolorize
     &gt;&gt;&gt; out = idict(x=134124, y= 56).all
     &gt;&gt;&gt; decolorize(out)
-    &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&#34;,\n        &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,\n        &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;\n    }\n}&#39;
     &#34;&#34;&#34;
     return self.__repr__(all=True)</code></pre>
 </details>
@@ -1190,10 +1159,10 @@ def all(self):
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
 &gt;&gt;&gt; d = idict(x=3, y=5)
 &gt;&gt;&gt; d.id
-'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35'
+'Gm_969c1762a9edc78bf5dc236c663f77f39933b'
 &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
 &gt;&gt;&gt; e.asdict
-{'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5, '_id': 'Xt_a63010fa2b5b4c671270fbe8ec313568a8b35', '_ids': {'x': 'WB_e55a47230d67db81bcc1aecde8f1b950282cd', 'y': '0U_e2a86ff72e226d5365aea336044f7b4270977'}}, '_id': 'AN_650bae25143e28c5489bfbc806f5fb55c6fdc', '_ids': {'x': 'lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8', 'y': '6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde', 'd': '8s_1ccd1655bae1d9e91270e5eddc31351eb8b35'}}
+{'x': 7, 'y': 8, 'd': {'x': 3, 'y': 5, '_id': 'Gm_969c1762a9edc78bf5dc236c663f77f39933b', '_ids': {'x': 'n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab', 'y': 'ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f'}}, '_id': 'dc_ecfbc17842ca0e082a02528315f3aee08ff89', '_ids': {'x': 'Ak_4864e8a41a20ba9d64284c45f82a491dd8065', 'y': 'Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8', 'd': 'Tk_c466af3b9f5f550ef5dc0d51663f77a9a933b'}}
 &gt;&gt;&gt; d.hosh ** key2id(&quot;d&quot;, d.identity.digits) == e.hoshes[&quot;d&quot;]
 True
 </code></pre></div>
@@ -1207,10 +1176,10 @@ def asdict(self):
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=3, y=5)
     &gt;&gt;&gt; d.id
-    &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;
+    &#39;Gm_969c1762a9edc78bf5dc236c663f77f39933b&#39;
     &gt;&gt;&gt; e = idict(x=7, y=8, d=d)
     &gt;&gt;&gt; e.asdict
-    {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Xt_a63010fa2b5b4c671270fbe8ec313568a8b35&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;WB_e55a47230d67db81bcc1aecde8f1b950282cd&#39;, &#39;y&#39;: &#39;0U_e2a86ff72e226d5365aea336044f7b4270977&#39;}}, &#39;_id&#39;: &#39;AN_650bae25143e28c5489bfbc806f5fb55c6fdc&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;lX_9e55978592eeb1caf8778e34d26f5fd4cc8c8&#39;, &#39;y&#39;: &#39;6q_07bbf68ac6eb0f9e2da3bda1665567bc21bde&#39;, &#39;d&#39;: &#39;8s_1ccd1655bae1d9e91270e5eddc31351eb8b35&#39;}}
+    {&#39;x&#39;: 7, &#39;y&#39;: 8, &#39;d&#39;: {&#39;x&#39;: 3, &#39;y&#39;: 5, &#39;_id&#39;: &#39;Gm_969c1762a9edc78bf5dc236c663f77f39933b&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#39;, &#39;y&#39;: &#39;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&#39;}}, &#39;_id&#39;: &#39;dc_ecfbc17842ca0e082a02528315f3aee08ff89&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;Ak_4864e8a41a20ba9d64284c45f82a491dd8065&#39;, &#39;y&#39;: &#39;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8&#39;, &#39;d&#39;: &#39;Tk_c466af3b9f5f550ef5dc0d51663f77a9a933b&#39;}}
     &gt;&gt;&gt; d.hosh ** key2id(&#34;d&#34;, d.identity.digits) == e.hoshes[&#34;d&#34;]
     True
     &#34;&#34;&#34;
@@ -1248,10 +1217,10 @@ def asdict(self):
 {
     &quot;y&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
+    &quot;_id&quot;: &quot;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
-        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&quot;
+        &quot;y&quot;: &quot;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&quot;,
+        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 &gt;&gt;&gt; a.evaluate()
@@ -1259,10 +1228,10 @@ def asdict(self):
 {
     &quot;y&quot;: 5,
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&quot;,
+    &quot;_id&quot;: &quot;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&quot;,
-        &quot;x&quot;: &quot;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&quot;
+        &quot;y&quot;: &quot;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&quot;,
+        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 </code></pre></div>
@@ -1280,10 +1249,10 @@ def asdict(self):
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+        &#34;_id&#34;: &#34;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+            &#34;y&#34;: &#34;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&#34;,
+            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; a.evaluate()
@@ -1291,10 +1260,10 @@ def asdict(self):
     {
         &#34;y&#34;: 5,
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;tFkvrmyHlXSnstVFIFktJjD7K91yW4AU0sYuSnwe&#34;,
+        &#34;_id&#34;: &#34;NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;BZz1P5xA5r0gfAqOtHySEb.m0HTxW4AU0sYuSnwe&#34;,
-            &#34;x&#34;: &#34;WB_e55a47230d67db81bcc1aecde8f1b950282cd (no key: pD_0be33b125de54e0facc1c4d8f8f1b9aa082cd)&#34;
+            &#34;y&#34;: &#34;r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe&#34;,
+            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -1310,10 +1279,10 @@ def asdict(self):
 {
     &quot;x&quot;: 134124,
     &quot;y&quot;: 56,
-    &quot;_id&quot;: &quot;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&quot;,
+    &quot;_id&quot;: &quot;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&quot;,
-        &quot;y&quot;: &quot;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&quot;
+        &quot;x&quot;: &quot;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&quot;,
+        &quot;y&quot;: &quot;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&quot;
     }
 }
 </code></pre></div>
@@ -1328,10 +1297,10 @@ def asdict(self):
     {
         &#34;x&#34;: 134124,
         &#34;y&#34;: 56,
-        &#34;_id&#34;: &#34;dq_d85091ef315b9ce0d5eb1a5aabb6e6434a97f&#34;,
+        &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;gZ_37ee5e71c9cd4c9bde421cdb917e5c56f7ebe (no key: L-_d2cd970f205cbe19de4232e6a17e5ca0e7ebe)&#34;,
-            &#34;y&#34;: &#34;Zs_c473399e77e6c2d2f69914891a488a3732bb0 (no key: ru_25575c305f4aaf40f6998a942a488a7122bb0)&#34;
+            &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,
+            &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;
         }
     }
     &#34;&#34;&#34;

@@ -52,9 +52,9 @@ class SQLA(Cache):  # pragma:  cover
     SQLA→<class 'idict.persistence.raw.sqladict.SQLAdict'>
     """
 
-    def __init__(self, url="sqlite+pysqlite:///:memory:",
-                 autopack=True, debug=False,
-                 nondeterministic_fallback_on_pack=True):
+    def __init__(
+        self, url="sqlite+pysqlite:///:memory:", autopack=True, debug=False, nondeterministic_fallback_on_pack=True
+    ):
         super().__init__(lambda: sqladict(url, debug))
         self.autopack = autopack
         self.nondeterministic_fallback_on_pack = nondeterministic_fallback_on_pack
@@ -84,5 +84,6 @@ class SQLA(Cache):  # pragma:  cover
 
     def copy(self):
         raise NotImplementedError
+
 
 # TODO: passar comentários da lousa pras docs das classes

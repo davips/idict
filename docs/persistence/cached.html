@@ -84,7 +84,7 @@ def cached(d, cache):
                     data[k] = cached(data[k], cache)
                 else:
                     cache[v] = data[k]
-            if (result := data[outputf]) is None:
+            if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
                 raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
@@ -99,7 +99,7 @@ def cached(d, cache):
     output_fields = []
     for field, v in list(data.items()):
         if isinstance(v, LazyVal):
-            if field.startswith(&#34;_&#34;):
+            if field.startswith(&#34;_&#34;):  # pragma: no cover
                 raise Exception(&#34;Cannot have a lazy value in a metafield.&#34;, field)
             output_fields.append(field)
             lazies = True
@@ -134,24 +134,24 @@ def build(id, ids, cache, identity):
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
-      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;: 9,
+      &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+          &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
         }
       },
-      &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;: {
-        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+      &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;: {
+        &#34;_id&#34;: &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;,
         &#34;_ids&#34;: {
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-          &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+          &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;
         }
       }
     }
@@ -161,42 +161,42 @@ def build(id, ids, cache, identity):
         &#34;d&#34;: {
             &#34;x&#34;: 5,
             &#34;z&#34;: 9,
-            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+                &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
             }
         },
-        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+        &#34;_id&#34;: &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-            &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+            &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     &gt;&gt;&gt; a = idict(x=5)
     &gt;&gt;&gt; b = idict(y=7)
     &gt;&gt;&gt; b[&#34;d&#34;] = a
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;: {
-        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;: {
+        &#34;_id&#34;: &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
-        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: {
+        &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
         }
       },
-      &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;: {
-        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+      &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;: {
+        &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-          &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+          &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
         }
       }
     }
@@ -205,19 +205,19 @@ def build(id, ids, cache, identity):
         &#34;y&#34;: 7,
         &#34;d&#34;: {
             &#34;x&#34;: 5,
-            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
             }
         },
-        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+        &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-            &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &gt;&gt;&gt; a = idict(x=5,z=9)
     &gt;&gt;&gt; b = idict(y=7)
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
@@ -225,24 +225,24 @@ def build(id, ids, cache, identity):
     &gt;&gt;&gt; _ = b.d
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
-      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;: 9,
+      &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+          &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
         }
       },
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
@@ -251,21 +251,21 @@ def build(id, ids, cache, identity):
         &#34;d&#34;: {
             &#34;x&#34;: 5,
             &#34;z&#34;: 9,
-            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+                &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     &gt;&gt;&gt; a = idict(x=5)
     &gt;&gt;&gt; b = idict(y=7)
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
@@ -273,22 +273,22 @@ def build(id, ids, cache, identity):
     &gt;&gt;&gt; _ = b.d
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
-        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: {
+        &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
         }
       },
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
@@ -296,20 +296,20 @@ def build(id, ids, cache, identity):
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
-            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &#34;&#34;&#34;
     dic = {}
     for k, fid in ids.items():
@@ -320,7 +320,7 @@ def build(id, ids, cache, identity):
                 dic[k] = build(value[&#34;_id&#34;], value[&#34;_ids&#34;], cache, identity)
             else:
                 dic[k] = cache[fid]
-        else:
+        else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
     from idict import idict
 
@@ -377,24 +377,24 @@ def handle_singleton_id(d):
 &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
 &gt;&gt;&gt; print(json.dumps(cache, indent=2))
 {
-  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
-  &quot;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&quot;: {
-    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;
+  &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;: 7,
+  &quot;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&quot;: {
+    &quot;_id&quot;: &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;
   },
-  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
-  &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;: 9,
-  &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;: {
-    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+  &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: 5,
+  &quot;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&quot;: 9,
+  &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;: {
+    &quot;_id&quot;: &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;,
     &quot;_ids&quot;: {
-      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-      &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+      &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
+      &quot;z&quot;: &quot;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&quot;
     }
   },
-  &quot;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&quot;: {
-    &quot;_id&quot;: &quot;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&quot;,
+  &quot;ug_32623f744b4b879f8b0b91bca8ace13993b81&quot;: {
+    &quot;_id&quot;: &quot;ug_32623f744b4b879f8b0b91bca8ace13993b81&quot;,
     &quot;_ids&quot;: {
-      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
-      &quot;d&quot;: &quot;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&quot;
+      &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
+      &quot;d&quot;: &quot;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&quot;
     }
   }
 }
@@ -404,42 +404,42 @@ def handle_singleton_id(d):
     &quot;d&quot;: {
         &quot;x&quot;: 5,
         &quot;z&quot;: 9,
-        &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+        &quot;_id&quot;: &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;,
         &quot;_ids&quot;: {
-            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-            &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+            &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
+            &quot;z&quot;: &quot;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&quot;
         }
     },
-    &quot;_id&quot;: &quot;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&quot;,
+    &quot;_id&quot;: &quot;ug_32623f744b4b879f8b0b91bca8ace13993b81&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
-        &quot;d&quot;: &quot;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&quot;
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
+        &quot;d&quot;: &quot;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
-.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
 &gt;&gt;&gt; a = idict(x=5)
 &gt;&gt;&gt; b = idict(y=7)
 &gt;&gt;&gt; b[&quot;d&quot;] = a
 &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
 &gt;&gt;&gt; print(json.dumps(cache, indent=2))
 {
-  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
-  &quot;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&quot;: {
-    &quot;_id&quot;: &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+  &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;: 7,
+  &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f&quot;: {
+    &quot;_id&quot;: &quot;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;
   },
-  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
-  &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: {
-    &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+  &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: 5,
+  &quot;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: {
+    &quot;_id&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
     &quot;_ids&quot;: {
-      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+      &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;
     }
   },
-  &quot;zN_a9690b3ab169bf136e16c554c6aeda926d140&quot;: {
-    &quot;_id&quot;: &quot;zN_a9690b3ab169bf136e16c554c6aeda926d140&quot;,
+  &quot;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&quot;: {
+    &quot;_id&quot;: &quot;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&quot;,
     &quot;_ids&quot;: {
-      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
-      &quot;d&quot;: &quot;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&quot;
+      &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
+      &quot;d&quot;: &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f&quot;
     }
   }
 }
@@ -448,19 +448,19 @@ def handle_singleton_id(d):
     &quot;y&quot;: 7,
     &quot;d&quot;: {
         &quot;x&quot;: 5,
-        &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;_id&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
         &quot;_ids&quot;: {
-            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+            &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;
         }
     },
-    &quot;_id&quot;: &quot;zN_a9690b3ab169bf136e16c554c6aeda926d140&quot;,
+    &quot;_id&quot;: &quot;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;,
-        &quot;d&quot;: &quot;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&quot;
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
+        &quot;d&quot;: &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
-cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+ug_65906b93071a1e38384abcb6a88fbde25cd8f
 &gt;&gt;&gt; a = idict(x=5,z=9)
 &gt;&gt;&gt; b = idict(y=7)
 &gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
@@ -468,24 +468,24 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
 &gt;&gt;&gt; _ = b.d
 &gt;&gt;&gt; print(json.dumps(cache, indent=2))
 {
-  &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;: {
-    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;
+  &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;
   },
-  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
-  &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;: 9,
-  &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;: {
-    &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+  &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: 5,
+  &quot;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&quot;: 9,
+  &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;: {
+    &quot;_id&quot;: &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;,
     &quot;_ids&quot;: {
-      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-      &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+      &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
+      &quot;z&quot;: &quot;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&quot;
     }
   },
-  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
-  &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;: {
-    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+  &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;: 7,
+  &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
     &quot;_ids&quot;: {
-      &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
-      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+      &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
+      &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
     }
   }
 }
@@ -494,21 +494,21 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
     &quot;d&quot;: {
         &quot;x&quot;: 5,
         &quot;z&quot;: 9,
-        &quot;_id&quot;: &quot;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&quot;,
+        &quot;_id&quot;: &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;,
         &quot;_ids&quot;: {
-            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
-            &quot;z&quot;: &quot;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&quot;
+            &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
+            &quot;z&quot;: &quot;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&quot;
         }
     },
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
     &quot;_ids&quot;: {
-        &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+        &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
-.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
 &gt;&gt;&gt; a = idict(x=5)
 &gt;&gt;&gt; b = idict(y=7)
 &gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
@@ -516,22 +516,22 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
 &gt;&gt;&gt; _ = b.d
 &gt;&gt;&gt; print(json.dumps(cache, indent=2))
 {
-  &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;: {
-    &quot;_id&quot;: &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+  &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;
   },
-  &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: 5,
-  &quot;_T_f0bb8da3062cc75365ae0446044f7b3270977&quot;: {
-    &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+  &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: 5,
+  &quot;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: {
+    &quot;_id&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
     &quot;_ids&quot;: {
-      &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+      &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;
     }
   },
-  &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;: 7,
-  &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;: {
-    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+  &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;: 7,
+  &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;: {
+    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
     &quot;_ids&quot;: {
-      &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
-      &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+      &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
+      &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
     }
   }
 }
@@ -539,20 +539,20 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
 {
     &quot;d&quot;: {
         &quot;x&quot;: 5,
-        &quot;_id&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;,
+        &quot;_id&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;,
         &quot;_ids&quot;: {
-            &quot;x&quot;: &quot;.T_f0bb8da3062cc75365ae0446044f7b3270977&quot;
+            &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;
         }
     },
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&quot;,
+    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
     &quot;_ids&quot;: {
-        &quot;d&quot;: &quot;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&quot;,
-        &quot;y&quot;: &quot;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&quot;
+        &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
-cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+ug_65906b93071a1e38384abcb6a88fbde25cd8f
 </code></pre></div>
 <details class="source">
 <summary>
@@ -568,24 +568,24 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
-      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;: 9,
+      &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+          &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
         }
       },
-      &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;: {
-        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+      &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;: {
+        &#34;_id&#34;: &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;,
         &#34;_ids&#34;: {
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-          &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+          &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;
         }
       }
     }
@@ -595,42 +595,42 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
         &#34;d&#34;: {
             &#34;x&#34;: 5,
             &#34;z&#34;: 9,
-            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+                &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
             }
         },
-        &#34;_id&#34;: &#34;lN_0d11974cec31a23bad40d9d0f2d9aa21fbb8e&#34;,
+        &#34;_id&#34;: &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-            &#34;d&#34;: &#34;.R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+            &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     &gt;&gt;&gt; a = idict(x=5)
     &gt;&gt;&gt; b = idict(y=7)
     &gt;&gt;&gt; b[&#34;d&#34;] = a
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;: {
-        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;: {
+        &#34;_id&#34;: &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
-        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: {
+        &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
         }
       },
-      &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;: {
-        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+      &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;: {
+        &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-          &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+          &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
         }
       }
     }
@@ -639,19 +639,19 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
         &#34;y&#34;: 7,
         &#34;d&#34;: {
             &#34;x&#34;: 5,
-            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
             }
         },
-        &#34;_id&#34;: &#34;zN_a9690b3ab169bf136e16c554c6aeda926d140&#34;,
+        &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;,
-            &#34;d&#34;: &#34;cS_64d1490a78c8ead565ae9d2bf34f7bf780977&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &gt;&gt;&gt; a = idict(x=5,z=9)
     &gt;&gt;&gt; b = idict(y=7)
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
@@ -659,24 +659,24 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
     &gt;&gt;&gt; _ = b.d
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;
+      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;: 9,
-      &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;: {
-        &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;: 9,
+      &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;: {
+        &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-          &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+          &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
         }
       },
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
@@ -685,21 +685,21 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
         &#34;d&#34;: {
             &#34;x&#34;: 5,
             &#34;z&#34;: 9,
-            &#34;_id&#34;: &#34;OT_014642d46104ba6ba4d818c2307a4bc00f2c5&#34;,
+            &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
-                &#34;z&#34;: &#34;O._b03f5b516b2bcf854f2a7a973c2bcfc87e94e&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
+                &#34;z&#34;: &#34;pH_c0fec534e9799b37ee981fbb17f2ea635ec9c&#34;
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    .R_d06bc51ca3c5cdeda4d8b1b7207a4b861f2c5
+    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     &gt;&gt;&gt; a = idict(x=5)
     &gt;&gt;&gt; b = idict(y=7)
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
@@ -707,22 +707,22 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
     &gt;&gt;&gt; _ = b.d
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))
     {
-      &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
       },
-      &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: 5,
-      &#34;_T_f0bb8da3062cc75365ae0446044f7b3270977&#34;: {
-        &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+      &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
+      &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: {
+        &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+          &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
         }
       },
-      &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;: 7,
-      &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+      &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
+      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-          &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
@@ -730,20 +730,20 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
-            &#34;_id&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;,
+            &#34;_id&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;.T_f0bb8da3062cc75365ae0446044f7b3270977&#34;
+                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;.30v9ZAEnfqirBpI8NJs6bGMehvZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;mzFpmWFEdodzivN7soevskt-BrwZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;mX_dc5a686049ceb1caf8778e34d26f5fd4cc8c8&#34;
+            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
-    cS_64d1490a78c8ead565ae9d2bf34f7bf780977
+    ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &#34;&#34;&#34;
     dic = {}
     for k, fid in ids.items():
@@ -754,7 +754,7 @@ cS_64d1490a78c8ead565ae9d2bf34f7bf780977
                 dic[k] = build(value[&#34;_id&#34;], value[&#34;_ids&#34;], cache, identity)
             else:
                 dic[k] = cache[fid]
-        else:
+        else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
     from idict import idict
 
@@ -801,7 +801,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
                     data[k] = cached(data[k], cache)
                 else:
                     cache[v] = data[k]
-            if (result := data[outputf]) is None:
+            if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
                 raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
@@ -816,7 +816,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
     output_fields = []
     for field, v in list(data.items()):
         if isinstance(v, LazyVal):
-            if field.startswith(&#34;_&#34;):
+            if field.startswith(&#34;_&#34;):  # pragma: no cover
                 raise Exception(&#34;Cannot have a lazy value in a metafield.&#34;, field)
             output_fields.append(field)
             lazies = True
