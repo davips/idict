@@ -144,7 +144,7 @@ def blobs_hashes_hoshes(data, identity, ids, version):
                 hashes[k] = v.hosh
             else:
                 try:
-                    blobs[k] = pack(v, nondeterministic_fallback=False)
+                    blobs[k] = pack(v)
                     vhosh = identity.h * blobs[k]
                 except NondeterminismException:
                     vhosh = fhosh(v, version)

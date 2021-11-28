@@ -28,15 +28,16 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
+from ldict.frozenlazydict import FrozenLazyDict
+
 from idict.config import GLOBAL
 from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached
-from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
-from ldict.customjson import CustomJSONEncoder
-from ldict.frozenlazydict import FrozenLazyDict
 
 VT = TypeVar("VT")
 
@@ -243,7 +244,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(
                     data, identity, _ids or {}, self.identity.version
                 ).values()
-            self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
+            self.hosh = reduce(operator.mul, [identity] + [v for k, v in self.hoshes.items() if not k.startswith("_")])
 
         if _id is None:
             _id = self.hosh.id
@@ -279,7 +280,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         try:
             return getattr(self.frozen, item)
         except (KeyError, AttributeError) as e:
-            return getattr(self.frozen, "_" + item)
+            try:
+                return getattr(self.frozen, "_" + item)
+            except AttributeError as e:
+                raise Exception(f"'idict' '{self.id}' has no field or attribute {item}")
 
     def evaluate(self):
         """
@@ -421,7 +425,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-        self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+            self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict
