@@ -93,7 +93,7 @@ def idict2txt(d, all):
     -------
 
     &#34;&#34;&#34;
-    dic = ldict2dict(d, all)
+    dic = idict2dict(d, all)
     txt = json.dumps(dic, indent=4, ensure_ascii=False, cls=CustomJSONEncoder)
     for k, v in dic.items():
         if k == &#34;_id&#34;:
@@ -105,7 +105,7 @@ def idict2txt(d, all):
     return txt
 
 
-def ldict2dict(d, all):
+def idict2dict(d, all):
     # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
     for k, v in d.data.items():
@@ -165,6 +165,34 @@ def ldict2dict(d, all):
     return ansi_escape.sub(&#34;&#34;, txt)</code></pre>
 </details>
 </dd>
+<dt id="idict.core.appearance.idict2dict"><code class="name flex">
+<span>def <span class="ident">idict2dict</span></span>(<span>d, all)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def idict2dict(d, all):
+    # from ldict.core.base import AbstractLazyDict
+    dic = d.data.copy()
+    for k, v in d.data.items():
+        # if isinstance(v, LazyVal):
+        #     dic[k] = str(v)
+        # elif isinstance(v, AbstractLazyDict):
+        #     dic[k] = ldict2dict(v, all)
+        if not all:
+            if len(d.ids) &lt; 3:
+                dic[&#34;_ids&#34;] = &#34; &#34;.join(d.ids.values())
+            else:
+                ids = list(d.ids.values())
+                dic[&#34;_ids&#34;] = f&#34;{ids[0]}... +{len(d) - 4} ...{ids[-1]}&#34;
+        elif k == &#34;_ids&#34;:
+            dic[&#34;_ids&#34;] = d.ids.copy()
+    return dic</code></pre>
+</details>
+</dd>
 <dt id="idict.core.appearance.idict2txt"><code class="name flex">
 <span>def <span class="ident">idict2txt</span></span>(<span>d, all)</span>
 </code></dt>
@@ -209,7 +237,7 @@ def ldict2dict(d, all):
     -------
 
     &#34;&#34;&#34;
-    dic = ldict2dict(d, all)
+    dic = idict2dict(d, all)
     txt = json.dumps(dic, indent=4, ensure_ascii=False, cls=CustomJSONEncoder)
     for k, v in dic.items():
         if k == &#34;_id&#34;:
@@ -219,34 +247,6 @@ def ldict2dict(d, all):
             nokey = f&#34; (content: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
             txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt</code></pre>
-</details>
-</dd>
-<dt id="idict.core.appearance.ldict2dict"><code class="name flex">
-<span>def <span class="ident">ldict2dict</span></span>(<span>d, all)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def ldict2dict(d, all):
-    # from ldict.core.base import AbstractLazyDict
-    dic = d.data.copy()
-    for k, v in d.data.items():
-        # if isinstance(v, LazyVal):
-        #     dic[k] = str(v)
-        # elif isinstance(v, AbstractLazyDict):
-        #     dic[k] = ldict2dict(v, all)
-        if not all:
-            if len(d.ids) &lt; 3:
-                dic[&#34;_ids&#34;] = &#34; &#34;.join(d.ids.values())
-            else:
-                ids = list(d.ids.values())
-                dic[&#34;_ids&#34;] = f&#34;{ids[0]}... +{len(d) - 4} ...{ids[-1]}&#34;
-        elif k == &#34;_ids&#34;:
-            dic[&#34;_ids&#34;] = d.ids.copy()
-    return dic</code></pre>
 </details>
 </dd>
 </dl>
@@ -268,8 +268,8 @@ def ldict2dict(d, all):
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="idict.core.appearance.decolorize" href="#idict.core.appearance.decolorize">decolorize</a></code></li>
+<li><code><a title="idict.core.appearance.idict2dict" href="#idict.core.appearance.idict2dict">idict2dict</a></code></li>
 <li><code><a title="idict.core.appearance.idict2txt" href="#idict.core.appearance.idict2txt">idict2txt</a></code></li>
-<li><code><a title="idict.core.appearance.ldict2dict" href="#idict.core.appearance.ldict2dict">ldict2dict</a></code></li>
 </ul>
 </li>
 </ul>

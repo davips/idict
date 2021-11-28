@@ -279,7 +279,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         if item in self.frozen:
             return self.frozen[item]
-        _item = "_"+item
+        _item = "_" + item
         if _item in self.frozen:
             return self.frozen[_item]
         raise AttributeError

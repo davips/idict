@@ -262,7 +262,18 @@ class iLet(AbstractLet):
             from idict.parameter.ifunctionspace import iFunctionSpace
 
             return iFunctionSpace(self, cop, other)
-        return NotImplemented  # pragma: no cover</code></pre>
+        return NotImplemented  # pragma: no cover
+
+    def __getattr__(self, item):  # pragma: no cover
+        from idict.core.idict_ import Idict
+
+        if hasattr(Idict, item):
+            raise Exception(
+                &#34;An expression will only become an &#39;idict&#39; after being fed with data.\n&#34;
+                &#34;E.g.: &#39;e = let(f, par1=5)&#39; and &#39;e = Ø &gt;&gt; f&#39; are non-applied expressions.&#34;
+                &#34;They need some input values to become an idict, e.g.: &#39;{y=3} &gt;&gt; e&#39;\n&#34;
+                f&#34;Parameters provided for {self.f}: {self.config}&#34;
+            )</code></pre>
 </details>
 </section>
 <section>
@@ -608,7 +619,18 @@ class iLet(AbstractLet):
             from idict.parameter.ifunctionspace import iFunctionSpace
 
             return iFunctionSpace(self, cop, other)
-        return NotImplemented  # pragma: no cover</code></pre>
+        return NotImplemented  # pragma: no cover
+
+    def __getattr__(self, item):  # pragma: no cover
+        from idict.core.idict_ import Idict
+
+        if hasattr(Idict, item):
+            raise Exception(
+                &#34;An expression will only become an &#39;idict&#39; after being fed with data.\n&#34;
+                &#34;E.g.: &#39;e = let(f, par1=5)&#39; and &#39;e = Ø &gt;&gt; f&#39; are non-applied expressions.&#34;
+                &#34;They need some input values to become an idict, e.g.: &#39;{y=3} &gt;&gt; e&#39;\n&#34;
+                f&#34;Parameters provided for {self.f}: {self.config}&#34;
+            )</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">

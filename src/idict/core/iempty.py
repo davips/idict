@@ -22,7 +22,7 @@
 from typing import Callable, Dict, Union
 
 from ldict.core.base import AbstractLazyDict
-from ldict.exception import DependenceException
+from ldict.exception import DependenceException, UndefinedSeed
 
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 from idict.core.idict_ import Idict
@@ -50,7 +50,7 @@ class iEmpty(FrozenIdentifiedDict):
         if callable(other):
             try:
                 return Idict() >> other
-            except DependenceException:
+            except (DependenceException, UndefinedSeed):
                 return iLet(other)
         return NotImplemented  # pragma: no cover
 

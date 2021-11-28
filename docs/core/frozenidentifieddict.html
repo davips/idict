@@ -56,15 +56,16 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
+from ldict.frozenlazydict import FrozenLazyDict
+
 from idict.config import GLOBAL
 from idict.core.appearance import decolorize, idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached
-from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
-from ldict.customjson import CustomJSONEncoder
-from ldict.frozenlazydict import FrozenLazyDict
 
 VT = TypeVar(&#34;VT&#34;)
 
@@ -271,7 +272,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(
                     data, identity, _ids or {}, self.identity.version
                 ).values()
-            self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
+            self.hosh = reduce(operator.mul, [identity] + [v for k, v in self.hoshes.items() if not k.startswith(&#34;_&#34;)])
 
         if _id is None:
             _id = self.hosh.id
@@ -304,10 +305,12 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &gt;&gt;&gt; (d &gt;&gt; f).history
         {0: {&#39;name&#39;: &#39;function f&#39;}}
         &#34;&#34;&#34;
-        try:
-            return getattr(self.frozen, item)
-        except (KeyError, AttributeError) as e:
-            return getattr(self.frozen, &#34;_&#34; + item)
+        if item in self.frozen:
+            return self.frozen[item]
+        _item = &#34;_&#34; + item
+        if _item in self.frozen:
+            return self.frozen[_item]
+        raise AttributeError
 
     def evaluate(self):
         &#34;&#34;&#34;
@@ -878,7 +881,7 @@ True
                 self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(
                     data, identity, _ids or {}, self.identity.version
                 ).values()
-            self.hosh = reduce(operator.mul, [identity] + list(self.hoshes.values()))
+            self.hosh = reduce(operator.mul, [identity] + [v for k, v in self.hoshes.items() if not k.startswith(&#34;_&#34;)])
 
         if _id is None:
             _id = self.hosh.id
@@ -911,10 +914,12 @@ True
         &gt;&gt;&gt; (d &gt;&gt; f).history
         {0: {&#39;name&#39;: &#39;function f&#39;}}
         &#34;&#34;&#34;
-        try:
-            return getattr(self.frozen, item)
-        except (KeyError, AttributeError) as e:
-            return getattr(self.frozen, &#34;_&#34; + item)
+        if item in self.frozen:
+            return self.frozen[item]
+        _item = &#34;_&#34; + item
+        if _item in self.frozen:
+            return self.frozen[_item]
+        raise AttributeError
 
     def evaluate(self):
         &#34;&#34;&#34;
