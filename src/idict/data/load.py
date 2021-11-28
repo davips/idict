@@ -23,11 +23,13 @@
 def file2df(name):
     if name.endswith(".arff"):
         from arff2pandas import a2p
+
         with open(name) as f:
             df = a2p.load(f)
         return df
     elif name.endswith(".csv"):
         from pandas import read_csv
+
         return read_csv(name)
     else:  # pragma: no cover
         raise Exception(f"Unknown extension {name.split('.')[-1]}.")

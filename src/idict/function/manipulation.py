@@ -32,10 +32,10 @@ def copy(source=None, target=None, **kwargs):
     {
         "y": 1,
         "x": 1,
-        "_id": "BXHxpDOhMNvGi7ZWULdH1YMUo8CLkPyFrsSywkFm",
+        "_id": "Ypm8IqkpZe9-mbk3FJbooFMl27oLkPyFrsSywkFm",
         "_ids": {
-            "y": "DqhRDi86ucDlAK-84iCYjgPhV0nLkPyFrsSywkFm",
-            "x": "tY_a0e4015c066c1a73e43c6e7c4777abdeadb9f"
+            "y": "mwd82UM7BOAhtAYygqg.kq1VvpCLkPyFrsSywkFm",
+            "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)"
         }
     }
     """

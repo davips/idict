@@ -532,25 +532,33 @@ class Idict(AbstractMutableLazyDict):
             raise Exception(f"Unknown {output_format=}.")
 
     @staticmethod
-    def fromtoy(output=["X","y"], output_format="Xy"):
+    def fromtoy(output=["X", "y"], output_format="Xy"):
         from testfixtures import TempDirectory
+
         with TempDirectory() as tmp:
-            tmp.write("toy.csv", b"attr1,attr2,class\n5.1,6.4,0\n1.1,2.5,1\n6.1,3.6,0\n1.1,3.5,1\n3.1,2.5,0\n4.7,4.9,1\n9.1,3.5,0\n8.3,2.9,1\n9.1,7.2,0\n2.5,4.5,1\n7.1,6.6,0\n0.1,4.3,1\n2.1,0.1,0\n0.1,4.0,1\n5.1,4.5,0\n31.1,4.7,1\n1.1,3.2,0\n2.2,8.5,1\n3.1,2.5,0\n1.1,8.5,1")
+            tmp.write(
+                "toy.csv",
+                b"attr1,attr2,class\n5.1,6.4,0\n1.1,2.5,1\n6.1,3.6,0\n1.1,3.5,1\n3.1,2.5,0\n4.7,4.9,1\n9.1,3.5,0\n8.3,2.9,1\n9.1,7.2,0\n2.5,4.5,1\n7.1,6.6,0\n0.1,4.3,1\n2.1,0.1,0\n0.1,4.0,1\n5.1,4.5,0\n31.1,4.7,1\n1.1,3.2,0\n2.2,8.5,1\n3.1,2.5,0\n1.1,8.5,1",
+            )
             d = Idict.fromfile(tmp.path + "/toy.csv", output, output_format)
         return d
 
     @staticmethod
     def fromminiarff(output=["df"], output_format="df"):
         from testfixtures import TempDirectory
+
         with TempDirectory() as tmp:
-            tmp.write("mini.arff",
-                      b"@RELATION mini\n@ATTRIBUTE attr1	REAL\n@ATTRIBUTE attr2 	REAL\n@ATTRIBUTE class 	{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1")
+            tmp.write(
+                "mini.arff",
+                b"@RELATION mini\n@ATTRIBUTE attr1	REAL\n@ATTRIBUTE attr2 	REAL\n@ATTRIBUTE class 	{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
+            )
             d = Idict.fromfile(tmp.path + "/mini.arff", output, output_format)
         return d
 
     @staticmethod
     def fromminicsv(output=["df"], output_format="df"):
         from testfixtures import TempDirectory
+
         with TempDirectory() as tmp:
             tmp.write("mini.csv", b"attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1")
             d = Idict.fromfile(tmp.path + "/mini.csv", output, output_format)

@@ -21,6 +21,7 @@
 #  time spent here.
 #
 
+
 def split(input=["X", "y"], seed=0, test_pct=33, **kwargs):
     """
     >>> from idict import idict, let
@@ -43,7 +44,7 @@ def split(input=["X", "y"], seed=0, test_pct=33, **kwargs):
                     "seed": 0,
                     "test_pct": 33
                 },
-                "code": "def f(input=['X', 'y'], seed=0, test_pct=33, **kwargs):\\nif input != ['X', 'y']:\\n    raise Exception(f\\"Not implemented for input different than ['X', 'y']: {input}\\")\\nfrom sklearn.model_selection import train_test_split\\nargs = [kwargs[input[i]] for i in range(len(input))]\\nXtr, Xts, ytr, yts = train_test_split(*args, test_size=test_pct / 100, shuffle=True, \\n stratify=args[1], random_state=seed)\\nreturn {'Xtr':Xtr,  'ytr':ytr,  'Xts':Xts,  'yts':yts,  '_history':...}"
+                "code": "def f(input=['X', 'y'], seed=0, test_pct=33, **kwargs):\\nif input != ['X', 'y']:\\n    raise Exception(f\\"Not implemented for input different than ['X', 'y']: {input}\\")\\nfrom sklearn.model_selection import train_test_split\\nargs = [kwargs[input[i]] for i in range(len(input))]\\nXtr, Xts, ytr, yts = train_test_split(*args, test_size=test_pct / 100, shuffle=True, stratify=args[1], random_state=seed)\\nreturn {'Xtr':Xtr, \\n 'ytr':ytr,  'Xts':Xts,  'yts':yts,  '_history':...}"
             }
         },
         "X": "«{'attr1': {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, 'attr2': {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»",
@@ -66,15 +67,19 @@ def split(input=["X", "y"], seed=0, test_pct=33, **kwargs):
         # TODO create a way in ldict to accept a dynamic dict as return value
         raise Exception(f"Not implemented for input different than ['X', 'y']: {input}")
     from sklearn.model_selection import train_test_split
+
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
     args = [kwargs[input[i]] for i in range(len(input))]
-    Xtr, Xts, ytr, yts = train_test_split(*args, test_size=test_pct / 100,
-                                          shuffle=True, stratify=args[1], random_state=seed)
+    Xtr, Xts, ytr, yts = train_test_split(
+        *args, test_size=test_pct / 100, shuffle=True, stratify=args[1], random_state=seed
+    )
     return {"Xtr": Xtr, "ytr": ytr, "Xts": Xts, "yts": yts, "_history": ...}
 
 
-split.metadata = {"id": "split------------------------------idict",
-                  "name": "split",
-                  "description": "Split data in two sets.",
-                  "parameters": ...,
-                  "code": ...}
+split.metadata = {
+    "id": "split------------------------------idict",
+    "name": "split",
+    "description": "Split data in two sets.",
+    "parameters": ...,
+    "code": ...,
+}

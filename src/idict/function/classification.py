@@ -38,19 +38,23 @@ def fit(algorithm=None, config={}, Xin="X", yin="y", output="model", **kwargs):
     return {output: obj, "_history": ...}
 
 
-fit.metadata = {"id": "fit--------------------------------idict",
-                "name": "fit",
-                "description": "Induce a model.",
-                "parameters": ...,
-                "code": ...}
+fit.metadata = {
+    "id": "fit--------------------------------idict",
+    "name": "fit",
+    "description": "Induce a model.",
+    "parameters": ...,
+    "code": ...,
+}
 
 
 def predict(input="model", Xin="X", yout="z", **kwargs):
     return {yout: kwargs[input].predict(kwargs[Xin]), "_history": ...}
 
 
-predict.metadata = {"id": "predict----------------------------idict",
-                    "name": "predict",
-                    "description": "Predict values according to a model.",
-                    "parameters": ...,
-                    "code": ...}
+predict.metadata = {
+    "id": "predict----------------------------idict",
+    "name": "predict",
+    "description": "Predict values according to a model.",
+    "parameters": ...,
+    "code": ...,
+}

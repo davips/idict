@@ -39,6 +39,11 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
             "df2np------------------------------idict": {
                 "name": "df2np",
                 "description": "DataFrame (pandas) to X,y (numpy) converter.",
+                "parameters": {
+                    "input": "df",
+                    "Xout": "X",
+                    "yout": "y"
+                },
                 "code": "def f(input='df', Xout='X', yout='y', **kwargs):\\nfrom sklearn.preprocessing import LabelEncoder\\nle = LabelEncoder()\\ndf = kwargs[input]\\nX_ = df.drop((df.columns[[-1]]), axis=1)\\ny_ = le.fit_transform(df[df.columns[(-1)]])\\nreturn {Xout: X_, yout: y_, '_history': ...}"
             }
         },
@@ -55,6 +60,7 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
     array([0, 1])
     """
     from sklearn.preprocessing import LabelEncoder
+
     le = LabelEncoder()
     df = kwargs[input]
     X_ = df.drop(df.columns[[-1]], axis=1)
@@ -62,11 +68,13 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
     return {Xout: X_, yout: y_, "_history": ...}
 
 
-df2np.metadata = {"id": "df2np------------------------------idict",
-                  "name": "df2np",
-                  "description": "DataFrame (pandas) to X,y (numpy) converter.",
-                  "parameters": ...,
-                  "code": ...}
+df2np.metadata = {
+    "id": "df2np------------------------------idict",
+    "name": "df2np",
+    "description": "DataFrame (pandas) to X,y (numpy) converter.",
+    "parameters": ...,
+    "code": ...,
+}
 
 
 def df2arff(input="df", output="arff", **kwargs):
@@ -81,16 +89,18 @@ def df2arff(input="df", output="arff", **kwargs):
             "df2arff----------------------------idict": {
                 "name": "df2arff",
                 "description": "DataFrame (pandas) to ARFF converter.",
-                "code": "def f(input='df', output='arff', **kwargs):\\nfrom arff2pandas import a2p\\nreturn {output: a2p.dumps(kwargs[input]), '_history': ..., '_code': ...}"
+                "parameters": {
+                    "input": "df",
+                    "output": "a"
+                },
+                "code": "def f(input='df', output='arff', **kwargs):\\nfrom arff2pandas import a2p\\nreturn {output: a2p.dumps(kwargs[input]), '_history': ...}"
             }
         },
-        "_code": "def f(input='df', output='arff', **kwargs):\\nfrom arff2pandas import a2p\\nreturn {output: a2p.dumps(kwargs[input]), '_history': ..., '_code': ...}",
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
         "_id": "BLGdPqgCNTRVSrMJr9MPHlA0Htj.n33nA7WL5Nrz",
         "_ids": {
             "a": "TgmGu1EoAX8Xb7DvPF20gtPjXN-Hp33nA3WL5NrA",
-            "_history": "Hb8H-qDvHcFNeb1iC0EVTml9cI3Ip33nA3WL5NrB",
-            "_code": "A74nle5g7KwXvW-NFwac.tkjjhNpu3ZErsBfWeAp",
+            "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
             "df": "ja_3dbc3e0089a672ae7896199398b692362dc99 (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
@@ -98,14 +108,17 @@ def df2arff(input="df", output="arff", **kwargs):
     '@RELATION data\\n\\n@ATTRIBUTE attr1 REAL\\n@ATTRIBUTE attr2 REAL\\n@ATTRIBUTE class {0, 1}\\n\\n@DATA\\n5.1,3.5,0\\n3.1,4.5,1\\n'
     """
     from arff2pandas import a2p
+
     return {output: a2p.dumps(kwargs[input]), "_history": ...}
 
 
-df2arff.metadata = {"id": "df2arff----------------------------idict",
-                    "name": "df2arff",
-                    "description": "DataFrame (pandas) to ARFF converter.",
-                    "parameters": ...,
-                    "code": ...}
+df2arff.metadata = {
+    "id": "df2arff----------------------------idict",
+    "name": "df2arff",
+    "description": "DataFrame (pandas) to ARFF converter.",
+    "parameters": ...,
+    "code": ...,
+}
 
 
 def openml(Xout="X", yout="y", name="iris", version=1):
@@ -118,7 +131,7 @@ def openml(Xout="X", yout="y", name="iris", version=1):
         "_history": {
             "openml-----------------------------idict": {
                 "name": "openml",
-                "description": "Fetch DataFrame (pandas) from OpenML.",
+                "description": "Fetch DataFrame+Series (pandas) from OpenML.",
                 "parameters": {
                     "Xout": "X",
                     "yout": "y",
@@ -152,14 +165,17 @@ def openml(Xout="X", yout="y", name="iris", version=1):
     Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
     """
     from sklearn.datasets import fetch_openml
+
     X, y = fetch_openml(name=name, version=version, as_frame=True, return_X_y=True)
     return {Xout: X, yout: y, "_history": ...}
 
 
-openml.metadata = {"id": "openml-----------------------------idict",
-                   "name": "openml",
-                   "description": "Fetch DataFrame+Series (pandas) from OpenML.",
-                   "parameters": ...,
-                   "code": ...}
+openml.metadata = {
+    "id": "openml-----------------------------idict",
+    "name": "openml",
+    "description": "Fetch DataFrame+Series (pandas) from OpenML.",
+    "parameters": ...,
+    "code": ...,
+}
 
 # todo-tentar criar xy de DF usando x=DF e y=series, em vez de numpy. testar com RF      df[df.columns[-1]]

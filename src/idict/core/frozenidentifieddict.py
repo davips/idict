@@ -277,13 +277,12 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> (d >> f).history
         {0: {'name': 'function f'}}
         """
-        try:
-            return getattr(self.frozen, item)
-        except (KeyError, AttributeError) as e:
-            try:
-                return getattr(self.frozen, "_" + item)
-            except AttributeError as e:
-                raise Exception(f"'idict' '{self.id}' has no field or attribute {item}")
+        if item in self.frozen:
+            return self.frozen[item]
+        _item = "_"+item
+        if _item in self.frozen:
+            return self.frozen[_item]
+        raise AttributeError
 
     def evaluate(self):
         """
@@ -425,7 +424,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-            self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+        self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict
