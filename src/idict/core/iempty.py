@@ -22,10 +22,11 @@
 from typing import Callable, Dict, Union
 
 from ldict.core.base import AbstractLazyDict
+from ldict.exception import DependenceException
 
-from idict.parameter.ilet import iLet
-from idict.core.idict_ import Idict
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+from idict.core.idict_ import Idict
+from idict.parameter.ilet import iLet
 
 
 class iEmpty(FrozenIdentifiedDict):
@@ -47,7 +48,10 @@ class iEmpty(FrozenIdentifiedDict):
         if isinstance(other, dict):
             return Idict(other)
         if callable(other):
-            return iLet(other)
+            try:
+                return Idict() >> other
+            except DependenceException:
+                return iLet(other)
         return NotImplemented  # pragma: no cover
 
     __mul__ = __rshift__

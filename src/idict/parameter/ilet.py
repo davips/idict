@@ -235,3 +235,11 @@ class iLet(AbstractLet):
 
             return iFunctionSpace(self, cop, other)
         return NotImplemented  # pragma: no cover
+
+    def __getattr__(self, item):  # pragma: no cover
+        from idict.core.idict_ import Idict
+        if hasattr(Idict, item):
+            raise Exception("An expression will only become an 'idict' after being fed with data.\n"
+                            "E.g.: 'e = let(f, par1=5)' and 'e = Ø >> f' are non-applied expressions."
+                            "They need some input values to become an idict, e.g.: '{y=3} >> e'\n"
+                            f"Parameters provided for {self.f}: {self.config}")
