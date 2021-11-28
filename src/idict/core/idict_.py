@@ -475,13 +475,9 @@ class Idict(AbstractMutableLazyDict):
         return build(d["_id"], d["_ids"], cache, identity)
 
     @staticmethod
-    def fromfile(name, input=["df"], output_format="df"):
+    def fromfile(name, output=["df"], output_format="df"):
         """Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5
-        >>> from testfixtures import TempDirectory
-        >>> with TempDirectory() as tmp:  # doctest:+ELLIPSIS
-        ...     tmp.write("mini.arff", b"@RELATION mini\\n@ATTRIBUTE attr1	REAL\\n@ATTRIBUTE attr2 	REAL\\n@ATTRIBUTE class 	{0,1}\\n@DATA\\n5.1,3.5,0\\n3.1,4.5,1")
-        ...     d = Idict.fromfile(tmp.path + "/mini.arff")
-        '/tmp/.../mini.arff'
+        >>> d = Idict.fromminiarff()
         >>> d.show(colored=False)
         {
             "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
@@ -494,10 +490,7 @@ class Idict(AbstractMutableLazyDict):
            attr1@REAL  attr2@REAL class@{0,1}
         0         5.1         3.5           0
         1         3.1         4.5           1
-        >>> with TempDirectory() as tmp:  # doctest:+ELLIPSIS
-        ...     tmp.write("mini.csv", b"attr1,attr2,class\\n5.1,3.5,0\\n3.1,4.5,1")
-        ...     d = Idict.fromfile(tmp.path + "/mini.csv")
-        '/tmp/.../mini.csv'
+        >>> d = Idict.fromminicsv()
         >>> d.show(colored=False)
         {
             "df": "«{'attr1': {0: 5.1, 1: 3.1}, 'attr2': {0: 3.5, 1: 4.5}, 'class': {0: 0, 1: 1}}»",
@@ -510,10 +503,7 @@ class Idict(AbstractMutableLazyDict):
            attr1  attr2  class
         0    5.1    3.5      0
         1    3.1    4.5      1
-        >>> with TempDirectory() as tmp:  # doctest:+ELLIPSIS
-        ...     tmp.write("mini.csv", b"attr1,attr2,class\\n5.1,3.5,0\\n3.1,4.5,1")
-        ...     d = Idict.fromfile(tmp.path + "/mini.csv", input=["X","y"], output_format="Xy")
-        '/tmp/.../mini.csv'
+        >>> d = Idict.fromminicsv(output=["X","y"], output_format="Xy")
         >>> d.show(colored=False)
         {
             "X": "«{'attr1': {0: 5.1, 1: 3.1}, 'attr2': {0: 3.5, 1: 4.5}}»",
@@ -527,19 +517,44 @@ class Idict(AbstractMutableLazyDict):
         """
         df = file2df(name)
         if output_format == "df":
-            if len(input) != 1:
-                raise Exception(f"Wrong number of fields {len(input)}. Expected: 1.", input)
-            return Idict({input[0]: df})
+            if len(output) != 1:
+                raise Exception(f"Wrong number of fields {len(output)}. Expected: 1.", output)
+            return Idict({output[0]: df})
         elif output_format == "Xy":
-            if input == ["df"]:
-                input = ["X", "y"]
-            if len(input) != 2:
-                raise Exception(f"Wrong number of fields {len(input)}. Expected: 2.", input)
+            if output == ["df"]:
+                output = ["X", "y"]
+            if len(output) != 2:
+                raise Exception(f"Wrong number of fields {len(output)}. Expected: 2.", output)
             dic = df2np(df=df)
             del dic["_history"]
-            return Idict({input[0]: dic["X"], input[1]: dic["y"]})
+            return Idict({output[0]: dic["X"], output[1]: dic["y"]})
         else:  # pragma: no cover
             raise Exception(f"Unknown {output_format=}.")
+
+    @staticmethod
+    def fromtoy(output=["X","y"], output_format="Xy"):
+        from testfixtures import TempDirectory
+        with TempDirectory() as tmp:
+            tmp.write("toy.csv", b"attr1,attr2,class\n5.1,6.4,0\n1.1,2.5,1\n6.1,3.6,0\n1.1,3.5,1\n3.1,2.5,0\n4.7,4.9,1\n9.1,3.5,0\n8.3,2.9,1\n9.1,7.2,0\n2.5,4.5,1\n7.1,6.6,0\n0.1,4.3,1\n2.1,0.1,0\n0.1,4.0,1\n5.1,4.5,0\n31.1,4.7,1\n1.1,3.2,0\n2.2,8.5,1\n3.1,2.5,0\n1.1,8.5,1")
+            d = Idict.fromfile(tmp.path + "/toy.csv", output, output_format)
+        return d
+
+    @staticmethod
+    def fromminiarff(output=["df"], output_format="df"):
+        from testfixtures import TempDirectory
+        with TempDirectory() as tmp:
+            tmp.write("mini.arff",
+                      b"@RELATION mini\n@ATTRIBUTE attr1	REAL\n@ATTRIBUTE attr2 	REAL\n@ATTRIBUTE class 	{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1")
+            d = Idict.fromfile(tmp.path + "/mini.arff", output, output_format)
+        return d
+
+    @staticmethod
+    def fromminicsv(output=["df"], output_format="df"):
+        from testfixtures import TempDirectory
+        with TempDirectory() as tmp:
+            tmp.write("mini.csv", b"attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1")
+            d = Idict.fromfile(tmp.path + "/mini.csv", output, output_format)
+        return d
 
     @staticmethod
     def fromopenml(name, version=1, Xout="X", yout="y"):

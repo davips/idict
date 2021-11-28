@@ -29,11 +29,7 @@ Functions to be used directly within an idict workflow
 def df2np(input="df", Xout="X", yout="y", **kwargs):
     """
     >>> from idict import let, idict
-    >>> from testfixtures import TempDirectory
-    >>> with TempDirectory() as tmp:  # doctest:+ELLIPSIS
-    ...     tmp.write("mini.arff", b"@RELATION mini\\n@ATTRIBUTE attr1	REAL\\n@ATTRIBUTE attr2 	REAL\\n@ATTRIBUTE class 	{0,1}\\n@DATA\\n5.1,3.5,0\\n3.1,4.5,1")
-    ...     d = idict.fromfile(tmp.path + "/mini.arff")
-    '/tmp/.../mini.arff'
+    >>> d = idict.fromminiarff()
     >>> d >>= df2np
     >>> d.show(colored=False)
     {
@@ -76,11 +72,7 @@ df2np.metadata = {"id": "df2np------------------------------idict",
 def df2arff(input="df", output="arff", **kwargs):
     """
     >>> from idict import let, idict
-    >>> from testfixtures import TempDirectory
-    >>> with TempDirectory() as tmp:  # doctest:+ELLIPSIS
-    ...     tmp.write("mini.arff", b"@RELATION mini\\n@ATTRIBUTE attr1	REAL\\n@ATTRIBUTE attr2 	REAL\\n@ATTRIBUTE class 	{0,1}\\n@DATA\\n5.1,3.5,0\\n3.1,4.5,1")
-    ...     d = idict.fromfile(tmp.path + "/mini.arff")
-    '/tmp/.../mini.arff'
+    >>> d = idict.fromminiarff()
     >>> d >>= let(df2arff, output="a")
     >>> d.show(colored=False)
     {

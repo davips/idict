@@ -65,7 +65,7 @@ def idict2txt(d, all):
     -------
 
     """
-    dic = ldict2dict(d, all)
+    dic = idict2dict(d, all)
     txt = json.dumps(dic, indent=4, ensure_ascii=False, cls=CustomJSONEncoder)
     for k, v in dic.items():
         if k == "_id":
@@ -77,7 +77,7 @@ def idict2txt(d, all):
     return txt
 
 
-def ldict2dict(d, all):
+def idict2dict(d, all):
     # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
     for k, v in d.data.items():
