@@ -358,7 +358,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def __repr__(self, all=False):
         return idict2txt(self, all)
 
-    __str__ = __repr__
+    def __str__(self, all=False):
+        return decolorize(idict2txt(self, all))
 
     @property
     def all(self):
@@ -370,6 +371,15 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> out = idict(x=134124, y= 56).all
         >>> decolorize(out)
         '{\n    "x": 134124,\n    "y": 56,\n    "_id": "tV_c3c37026dc9a795bb61f18be755b7a8a094f2",\n    "_ids": {\n        "x": "Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)",\n        "y": "UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)"\n    }\n}'
+        >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+        >>> d = FrozenIdentifiedDict(x=5, y=7)
+        >>> print(d)
+        {
+            "x": 5,
+            "y": 7,
+            "_id": "TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4",
+            "_ids": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+        }
         """
         return self.__repr__(all=True)
 
