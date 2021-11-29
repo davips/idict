@@ -1,3 +1,6 @@
+v1.211129.2
+Add arff2df
+
 v1.211129.1
 Simplify split for uncompyle6
 Remove colors from __str__

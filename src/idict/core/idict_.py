@@ -28,15 +28,15 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40
-from ldict.core.appearance import decolorize
-from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
-from ldict.exception import WrongKeyType
 
 from idict.data.load import file2df
 from idict.function.data import df2np, openml
 from idict.parameter.ifunctionspace import iFunctionSpace
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import build, get_following_pointers
+from ldict.core.appearance import decolorize
+from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
+from ldict.exception import WrongKeyType
 
 VT = TypeVar("VT")
 
@@ -550,29 +550,31 @@ class Idict(AbstractMutableLazyDict):
                 "toy.csv",
                 b"attr1,attr2,class\n5.1,6.4,0\n1.1,2.5,1\n6.1,3.6,0\n1.1,3.5,1\n3.1,2.5,0\n4.7,4.9,1\n9.1,3.5,0\n8.3,2.9,1\n9.1,7.2,0\n2.5,4.5,1\n7.1,6.6,0\n0.1,4.3,1\n2.1,0.1,0\n0.1,4.0,1\n5.1,4.5,0\n31.1,4.7,1\n1.1,3.2,0\n2.2,8.5,1\n3.1,2.5,0\n1.1,8.5,1",
             )
-            d = Idict.fromfile(tmp.path + "/toy.csv", output, output_format)
-        return d
+            return Idict.fromfile(tmp.path + "/toy.csv", output, output_format)
 
     @staticmethod
     def fromminiarff(output=["df"], output_format="df"):
         from testfixtures import TempDirectory
 
+        arff = "@RELATION mini\n@ATTRIBUTE attr1	REAL\n@ATTRIBUTE attr2 	REAL\n@ATTRIBUTE class 	{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1"
+        if output_format == "arff":
+            return Idict({output[0]: arff})
         with TempDirectory() as tmp:
             tmp.write(
                 "mini.arff",
-                b"@RELATION mini\n@ATTRIBUTE attr1	REAL\n@ATTRIBUTE attr2 	REAL\n@ATTRIBUTE class 	{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
+                arff.encode(),
             )
-            d = Idict.fromfile(tmp.path + "/mini.arff", output, output_format)
-        return d
+            return Idict.fromfile(tmp.path + "/mini.arff", output, output_format)
 
     @staticmethod
     def fromminicsv(output=["df"], output_format="df"):
         from testfixtures import TempDirectory
-
+        csv = "attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1"
+        if output_format == "csv":
+            return Idict({output[0]: csv})
         with TempDirectory() as tmp:
-            tmp.write("mini.csv", b"attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1")
-            d = Idict.fromfile(tmp.path + "/mini.csv", output, output_format)
-        return d
+            tmp.write("mini.csv", csv.encode())
+            return Idict.fromfile(tmp.path + "/mini.csv", output, output_format)
 
     @staticmethod
     def fromopenml(name, version=1, Xout="X", yout="y"):

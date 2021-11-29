@@ -24,6 +24,9 @@
 """
 Functions to be used directly within an idict workflow
 """
+from io import BytesIO, StringIO
+
+from arff2pandas import a2p
 
 
 def df2np(input="df", Xout="X", yout="y", **kwargs):
@@ -178,4 +181,54 @@ openml.metadata = {
     "code": ...,
 }
 
+
 # todo-tentar criar xy de DF usando x=DF e y=series, em vez de numpy. testar com RF      df[df.columns[-1]]
+
+def arff2df(input="arff", output="df", **kwargs):
+    r"""
+    >>> from idict import let, idict
+    >>> d = idict.fromminiarff(output=["arff"], output_format="arff")
+    >>> d.arff
+    '@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1'
+    >>> d >>= arff2df
+    >>> d.show(colored=False)
+    {
+        "df": "→(input output arff)",
+        "_history": {
+            "arff2df----------------arff2pandas-1.0.1": {
+                "name": "arff2df",
+                "description": "ARFF to DataFrame (pandas) converter.",
+                "parameters": {
+                    "input": "arff",
+                    "output": "df"
+                },
+                "code": "def f(input='arff', output='df', **kwargs):\nwith StringIO() as (f):\n    f.write(kwargs[input])\n    df = a2p.loads(f.getvalue())\nreturn {output: df, '_history': ...}"
+            }
+        },
+        "arff": "@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
+        "_id": "n4EMpHwlrvpM-fFo4LC5914xb892pandas-1.0.1",
+        "_ids": {
+            "df": "ro3YIlxbNkgwanHshPzTghlh3T.Kqandao-1.0.2",
+            "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
+            "arff": "OW_29bd5266cf0a6400c5747b4c332b4a54d1955 (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)"
+        }
+    }
+    >>> d.df
+       attr1@REAL  attr2@REAL class@{0,1}
+    0         5.1         3.5           0
+    1         3.1         4.5           1
+    """
+    with StringIO() as f:
+        f.write(kwargs[input])
+        df = a2p.loads(f.getvalue())
+
+    return {output: df, "_history": ...}
+
+
+arff2df.metadata = {
+    "id": "arff2df----------------arff2pandas-1.0.1",
+    "name": "arff2df",
+    "description": "ARFF to DataFrame (pandas) converter.",
+    "parameters": ...,
+    "code": ...,
+}
