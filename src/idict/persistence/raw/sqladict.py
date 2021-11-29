@@ -26,6 +26,8 @@ from sqlalchemy import Column, String, BLOB, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
+from idict.core.appearance import decolorize
+
 VT = TypeVar("VT")
 Base = declarative_base()
 
@@ -112,10 +114,11 @@ class SQLAdict(Dict[str, VT]):
             return self[key]
         return self.__getattribute__(key)
 
-    def __str__(self):
-        return str(self.asdict)
+    def __repr__(self):
+        return repr(self.asdict)
 
-    __repr__ = __str__
+    def __str__(self):
+        return decolorize(repr(self))
 
     @property
     def asdict(self):
