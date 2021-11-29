@@ -21,8 +21,8 @@
 #  time spent here.
 #
 
-
-def split(input=["X", "y"], output=["Xtr", "ytr", "Xts", "yts"], seed=0, test_pct=33, **kwargs):
+def split(input=["X", "y"], output=["Xtr", "ytr", "Xts", "yts"],
+          config={"test_size": 33, "shuffle": True, "stratify": "y", "random_state": 0}, **kwargs):
     """
     >>> from idict import idict, let
     >>> d = idict.fromtoy() >> split
@@ -70,10 +70,12 @@ def split(input=["X", "y"], output=["Xtr", "ytr", "Xts", "yts"], seed=0, test_pc
     from sklearn.model_selection import train_test_split
 
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
-    args = [kwargs[input[i]] for i in range(len(input))]
-    Xtr, Xts, ytr, yts = train_test_split(
-        *args, test_size=test_pct / 100, shuffle=True, stratify=args[1], random_state=seed
-    )
+    args = {input[i]: kwargs[input[i]] for i in range(len(input))}
+    if "stratify" in config and isinstance(config["stratify"], str):
+        if config["stratify"] not in input:  # pragma: no cover
+            raise Exception(f"Missing field {config['stratify']} for stratification.")
+        config["stratify"] = args[config["stratify"]]
+    Xtr, Xts, ytr, yts = train_test_split(*args.values(), **config)
     return {"Xtr": Xtr, "ytr": ytr, "Xts": Xts, "yts": yts, "_history": ...}
 
 
