@@ -69,7 +69,7 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
 
 
 df2np.metadata = {
-    "id": "df2np------------------------------idict",
+    "id": "df2np---------pandas-1.3.4--sklearn-1.0.1",
     "name": "df2np",
     "description": "DataFrame (pandas) to X,y (numpy) converter.",
     "parameters": ...,
@@ -113,7 +113,7 @@ def df2arff(input="df", output="arff", **kwargs):
 
 
 df2arff.metadata = {
-    "id": "df2arff----------------------------idict",
+    "id": "df2arff----------------arff2pandas-1.0.1",
     "name": "df2arff",
     "description": "DataFrame (pandas) to ARFF converter.",
     "parameters": ...,
@@ -171,7 +171,7 @@ def openml(Xout="X", yout="y", name="iris", version=1):
 
 
 openml.metadata = {
-    "id": "openml-----------------------------idict",
+    "id": "openml---------------------sklearn-1.0.1",
     "name": "openml",
     "description": "Fetch DataFrame+Series (pandas) from OpenML.",
     "parameters": ...,

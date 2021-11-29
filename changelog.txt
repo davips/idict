@@ -1,3 +1,7 @@
+v1.211129.1
+Fix version of used libraries: arff2pandas and scikit-learn
+Add extra parameter version to allow user to mark version
+
 v1.211127.3
 Fix getattr
 Add first functions for ML

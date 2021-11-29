@@ -517,6 +517,8 @@ class Idict(AbstractMutableLazyDict):
         """
         df = file2df(name)
         if output_format == "df":
+            if output == ["X", "y"]:
+                output = ["df"]
             if len(output) != 1:
                 raise Exception(f"Wrong number of fields {len(output)}. Expected: 1.", output)
             return Idict({output[0]: df})

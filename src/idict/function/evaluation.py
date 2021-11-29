@@ -22,7 +22,7 @@
 #
 
 
-def split(input=["X", "y"], seed=0, test_pct=33, **kwargs):
+def split(input=["X", "y"], output=["Xtr", "ytr", "Xts", "yts"], seed=0, test_pct=33, **kwargs):
     """
     >>> from idict import idict, let
     >>> d = idict.fromtoy() >> split
@@ -63,9 +63,10 @@ def split(input=["X", "y"], seed=0, test_pct=33, **kwargs):
     >>> d.yts
     array([1, 0, 1, 0, 0, 0, 1])
     """
-    if input != ["X", "y"]:
+    if input != ["X", "y"] or output != ["Xtr", "ytr", "Xts", "yts"]:
         # TODO create a way in ldict to accept a dynamic dict as return value
-        raise Exception(f"Not implemented for input different than ['X', 'y']: {input}")
+        raise Exception(f"Not implemented for input/output different from default values: "
+                        f"{input} / {output}")
     from sklearn.model_selection import train_test_split
 
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
@@ -77,7 +78,7 @@ def split(input=["X", "y"], seed=0, test_pct=33, **kwargs):
 
 
 split.metadata = {
-    "id": "split------------------------------idict",
+    "id": "split----------------------sklearn-1.0.1",
     "name": "split",
     "description": "Split data in two sets.",
     "parameters": ...,

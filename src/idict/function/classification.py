@@ -22,7 +22,7 @@
 #
 
 
-def fit(algorithm=None, config={}, Xin="X", yin="y", output="model", **kwargs):
+def fit(algorithm=None, config={}, Xin="X", yin="y", output="model", version=0, **kwargs):
     """
     >>> from sklearn.ensemble import RandomForestClassifier as RF
     >>> from idict import idict, let
@@ -47,7 +47,7 @@ fit.metadata = {
 }
 
 
-def predict(input="model", Xin="X", yout="z", **kwargs):
+def predict(input="model", Xin="X", yout="z", version=0, **kwargs):
     return {yout: kwargs[input].predict(kwargs[Xin]), "_history": ...}
 
 
