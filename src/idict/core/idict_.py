@@ -569,6 +569,7 @@ class Idict(AbstractMutableLazyDict):
     @staticmethod
     def fromminicsv(output=["df"], output_format="df"):
         from testfixtures import TempDirectory
+
         csv = "attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1"
         if output_format == "csv":
             return Idict({output[0]: csv})

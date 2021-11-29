@@ -53,6 +53,9 @@
 &#34;&#34;&#34;
 Functions to be used directly within an idict workflow
 &#34;&#34;&#34;
+from io import BytesIO, StringIO
+
+from arff2pandas import a2p
 
 
 def df2np(input=&#34;df&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, **kwargs):
@@ -207,7 +210,58 @@ openml.metadata = {
     &#34;code&#34;: ...,
 }
 
-# todo-tentar criar xy de DF usando x=DF e y=series, em vez de numpy. testar com RF      df[df.columns[-1]]</code></pre>
+
+# todo-tentar criar xy de DF usando x=DF e y=series, em vez de numpy. testar com RF      df[df.columns[-1]]
+
+
+def arff2df(input=&#34;arff&#34;, output=&#34;df&#34;, **kwargs):
+    r&#34;&#34;&#34;
+    &gt;&gt;&gt; from idict import let, idict
+    &gt;&gt;&gt; d = idict.fromminiarff(output=[&#34;arff&#34;], output_format=&#34;arff&#34;)
+    &gt;&gt;&gt; d.arff
+    &#39;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#39;
+    &gt;&gt;&gt; d &gt;&gt;= arff2df
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;df&#34;: &#34;→(input output arff)&#34;,
+        &#34;_history&#34;: {
+            &#34;arff2df----------------arff2pandas-1.0.1&#34;: {
+                &#34;name&#34;: &#34;arff2df&#34;,
+                &#34;description&#34;: &#34;ARFF to DataFrame (pandas) converter.&#34;,
+                &#34;parameters&#34;: {
+                    &#34;input&#34;: &#34;arff&#34;,
+                    &#34;output&#34;: &#34;df&#34;
+                },
+                &#34;code&#34;: &#34;def f(input=&#39;arff&#39;, output=&#39;df&#39;, **kwargs):\nwith StringIO() as (f):\n    f.write(kwargs[input])\n    df = a2p.loads(f.getvalue())\nreturn {output: df, &#39;_history&#39;: ...}&#34;
+            }
+        },
+        &#34;arff&#34;: &#34;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#34;,
+        &#34;_id&#34;: &#34;n4EMpHwlrvpM-fFo4LC5914xb892pandas-1.0.1&#34;,
+        &#34;_ids&#34;: {
+            &#34;df&#34;: &#34;ro3YIlxbNkgwanHshPzTghlh3T.Kqandao-1.0.2&#34;,
+            &#34;_history&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
+            &#34;arff&#34;: &#34;OW_29bd5266cf0a6400c5747b4c332b4a54d1955 (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&#34;
+        }
+    }
+    &gt;&gt;&gt; d.df
+       attr1@REAL  attr2@REAL class@{0,1}
+    0         5.1         3.5           0
+    1         3.1         4.5           1
+    &#34;&#34;&#34;
+    with StringIO() as f:
+        f.write(kwargs[input])
+        df = a2p.loads(f.getvalue())
+
+    return {output: df, &#34;_history&#34;: ...}
+
+
+arff2df.metadata = {
+    &#34;id&#34;: &#34;arff2df----------------arff2pandas-1.0.1&#34;,
+    &#34;name&#34;: &#34;arff2df&#34;,
+    &#34;description&#34;: &#34;ARFF to DataFrame (pandas) converter.&#34;,
+    &#34;parameters&#34;: ...,
+    &#34;code&#34;: ...,
+}</code></pre>
 </details>
 </section>
 <section>
@@ -217,6 +271,87 @@ openml.metadata = {
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="idict.function.data.arff2df"><code class="name flex">
+<span>def <span class="ident">arff2df</span></span>(<span>input='arff', output='df', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import let, idict
+&gt;&gt;&gt; d = idict.fromminiarff(output=[&quot;arff&quot;], output_format=&quot;arff&quot;)
+&gt;&gt;&gt; d.arff
+'@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1'
+&gt;&gt;&gt; d &gt;&gt;= arff2df
+&gt;&gt;&gt; d.show(colored=False)
+{
+    &quot;df&quot;: &quot;→(input output arff)&quot;,
+    &quot;_history&quot;: {
+        &quot;arff2df----------------arff2pandas-1.0.1&quot;: {
+            &quot;name&quot;: &quot;arff2df&quot;,
+            &quot;description&quot;: &quot;ARFF to DataFrame (pandas) converter.&quot;,
+            &quot;parameters&quot;: {
+                &quot;input&quot;: &quot;arff&quot;,
+                &quot;output&quot;: &quot;df&quot;
+            },
+            &quot;code&quot;: &quot;def f(input='arff', output='df', **kwargs):\nwith StringIO() as (f):\n    f.write(kwargs[input])\n    df = a2p.loads(f.getvalue())\nreturn {output: df, '_history': ...}&quot;
+        }
+    },
+    &quot;arff&quot;: &quot;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&quot;,
+    &quot;_id&quot;: &quot;n4EMpHwlrvpM-fFo4LC5914xb892pandas-1.0.1&quot;,
+    &quot;_ids&quot;: {
+        &quot;df&quot;: &quot;ro3YIlxbNkgwanHshPzTghlh3T.Kqandao-1.0.2&quot;,
+        &quot;_history&quot;: &quot;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&quot;,
+        &quot;arff&quot;: &quot;OW_29bd5266cf0a6400c5747b4c332b4a54d1955 (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&quot;
+    }
+}
+&gt;&gt;&gt; d.df
+   attr1@REAL  attr2@REAL class@{0,1}
+0         5.1         3.5           0
+1         3.1         4.5           1
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def arff2df(input=&#34;arff&#34;, output=&#34;df&#34;, **kwargs):
+    r&#34;&#34;&#34;
+    &gt;&gt;&gt; from idict import let, idict
+    &gt;&gt;&gt; d = idict.fromminiarff(output=[&#34;arff&#34;], output_format=&#34;arff&#34;)
+    &gt;&gt;&gt; d.arff
+    &#39;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#39;
+    &gt;&gt;&gt; d &gt;&gt;= arff2df
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;df&#34;: &#34;→(input output arff)&#34;,
+        &#34;_history&#34;: {
+            &#34;arff2df----------------arff2pandas-1.0.1&#34;: {
+                &#34;name&#34;: &#34;arff2df&#34;,
+                &#34;description&#34;: &#34;ARFF to DataFrame (pandas) converter.&#34;,
+                &#34;parameters&#34;: {
+                    &#34;input&#34;: &#34;arff&#34;,
+                    &#34;output&#34;: &#34;df&#34;
+                },
+                &#34;code&#34;: &#34;def f(input=&#39;arff&#39;, output=&#39;df&#39;, **kwargs):\nwith StringIO() as (f):\n    f.write(kwargs[input])\n    df = a2p.loads(f.getvalue())\nreturn {output: df, &#39;_history&#39;: ...}&#34;
+            }
+        },
+        &#34;arff&#34;: &#34;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#34;,
+        &#34;_id&#34;: &#34;n4EMpHwlrvpM-fFo4LC5914xb892pandas-1.0.1&#34;,
+        &#34;_ids&#34;: {
+            &#34;df&#34;: &#34;ro3YIlxbNkgwanHshPzTghlh3T.Kqandao-1.0.2&#34;,
+            &#34;_history&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
+            &#34;arff&#34;: &#34;OW_29bd5266cf0a6400c5747b4c332b4a54d1955 (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&#34;
+        }
+    }
+    &gt;&gt;&gt; d.df
+       attr1@REAL  attr2@REAL class@{0,1}
+    0         5.1         3.5           0
+    1         3.1         4.5           1
+    &#34;&#34;&#34;
+    with StringIO() as f:
+        f.write(kwargs[input])
+        df = a2p.loads(f.getvalue())
+
+    return {output: df, &#34;_history&#34;: ...}</code></pre>
+</details>
+</dd>
 <dt id="idict.function.data.df2arff"><code class="name flex">
 <span>def <span class="ident">df2arff</span></span>(<span>input='df', output='arff', **kwargs)</span>
 </code></dt>
@@ -485,6 +620,7 @@ Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="idict.function.data.arff2df" href="#idict.function.data.arff2df">arff2df</a></code></li>
 <li><code><a title="idict.function.data.df2arff" href="#idict.function.data.df2arff">df2arff</a></code></li>
 <li><code><a title="idict.function.data.df2np" href="#idict.function.data.df2np">df2np</a></code></li>
 <li><code><a title="idict.function.data.openml" href="#idict.function.data.openml">openml</a></code></li>

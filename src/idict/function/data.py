@@ -184,6 +184,7 @@ openml.metadata = {
 
 # todo-tentar criar xy de DF usando x=DF e y=series, em vez de numpy. testar com RF      df[df.columns[-1]]
 
+
 def arff2df(input="arff", output="df", **kwargs):
     r"""
     >>> from idict import let, idict
