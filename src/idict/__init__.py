@@ -21,8 +21,8 @@
 #  time spent here.
 from .config import setup
 from .core.idict_ import Idict as idict
-from idict.core.iempty import iEmpty
-from idict.parameter.ilet import iLet
+from .core.iempty import iEmpty
+from .parameter.ilet import iLet
 
 empty = iEmpty()
 """The empty object is used to induce an empty idict"""

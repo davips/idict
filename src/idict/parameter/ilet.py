@@ -108,7 +108,7 @@ class iLet(AbstractLet):
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
-    >>> from idict.core.appearance import decolorize
+    >>> from ldict.core.appearance import decolorize
     >>> print(decolorize(str(let(f, a=5) >> idict({"x": 5, "y": 7}))))
     «λ{'a': 5} × {
         "x": 5,

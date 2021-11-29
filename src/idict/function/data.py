@@ -36,7 +36,7 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
         "X": "→(input Xout yout df)",
         "y": "→(input Xout yout df)",
         "_history": {
-            "df2np------------------------------idict": {
+            "df2np--------pandas-1.3.4--sklearn-1.0.1": {
                 "name": "df2np",
                 "description": "DataFrame (pandas) to X,y (numpy) converter.",
                 "parameters": {
@@ -48,11 +48,11 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
             }
         },
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
-        "_id": "Jh5AddhuiCvG0S4SS5q5pBwj6.X--------idict",
+        "_id": "E44sczWfUMWFuItAavOd9v.4Q1.sklearn-1.0.1",
         "_ids": {
-            "X": "Eosv2Sb-z.VpQ.LxFe4cn5JAp99.-------idicu",
-            "y": "3kfhEl3KnqcHWvbem8jcJVq7eU6.-------idicv",
-            "_history": "EGisfEX.Lf7pC67DeHVr1S2NPKQ6V7111xwIOJPv",
+            "X": "d4mcz9Xanx8fRsribw-L8-UdKxF9mlearj-1.0.2",
+            "y": "fSwn3UKP-APakeSBnJMc6f5n6.6tklearn-1.0.3",
+            "_history": "A3RPrmvmGNuH9IfL02DgQY2007VEzNNRA8xZ0.0X",
             "df": "ja_3dbc3e0089a672ae7896199398b692362dc99 (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
@@ -69,7 +69,7 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
 
 
 df2np.metadata = {
-    "id": "df2np---------pandas-1.3.4--sklearn-1.0.1",
+    "id": "df2np--------pandas-1.3.4--sklearn-1.0.1",
     "name": "df2np",
     "description": "DataFrame (pandas) to X,y (numpy) converter.",
     "parameters": ...,
@@ -86,7 +86,7 @@ def df2arff(input="df", output="arff", **kwargs):
     {
         "a": "→(input output df)",
         "_history": {
-            "df2arff----------------------------idict": {
+            "df2arff----------------arff2pandas-1.0.1": {
                 "name": "df2arff",
                 "description": "DataFrame (pandas) to ARFF converter.",
                 "parameters": {
@@ -97,9 +97,9 @@ def df2arff(input="df", output="arff", **kwargs):
             }
         },
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
-        "_id": "BLGdPqgCNTRVSrMJr9MPHlA0Htj.n33nA7WL5Nrz",
+        "_id": "xdyZaF3yh4jf0fQK8IxSo0m5XKfLPerBLwVuTve8",
         "_ids": {
-            "a": "TgmGu1EoAX8Xb7DvPF20gtPjXN-Hp33nA3WL5NrA",
+            "a": "ThqwG-KOhpzcRprusvXcZwjDrLgLPerBLwVuTve9",
             "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
             "df": "ja_3dbc3e0089a672ae7896199398b692362dc99 (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
@@ -129,7 +129,7 @@ def openml(Xout="X", yout="y", name="iris", version=1):
         "X": "→(Xout yout name version)",
         "y": "→(Xout yout name version)",
         "_history": {
-            "openml-----------------------------idict": {
+            "openml---------------------sklearn-1.0.1": {
                 "name": "openml",
                 "description": "Fetch DataFrame+Series (pandas) from OpenML.",
                 "parameters": {
@@ -141,11 +141,11 @@ def openml(Xout="X", yout="y", name="iris", version=1):
                 "code": "def f(Xout='X', yout='y', name='iris', version=1):\\nfrom sklearn.datasets import fetch_openml\\nX, y = fetch_openml(name=name, version=version, as_frame=True, return_X_y=True)\\nreturn {Xout: X, yout: y, '_history': ...}"
             }
         },
-        "_id": "openml-----------------------------idict",
+        "_id": "openml---------------------sklearn-1.0.1",
         "_ids": {
-            "X": "DVowhLqXDJbpodZcWR.fXJoTbK---------idicu",
-            "y": "vU9WL1cAGDrGu5LBDLegRs6q0tc.-------idicv",
-            "_history": "8U7WJhI9t2Up2xzfZ3-nVinu1aL6V7111xwIOJPv"
+            "X": "ze11cyj1Gi2mcWmsh1rrjkjdzgI9mlearj-1.0.2",
+            "y": "nw5qXzxIkHrUajn6VTL7M7KIWLZsklearn-1.0.3",
+            "_history": "W46Q.9OBxnS9oeFTzDYkRbWSoDQEzNNRA8xZ0.0X"
         }
     }
     >>> (Ø >> openml).X.head()

@@ -28,12 +28,14 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
+
+from ldict.core.appearance import decolorize
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.customjson import CustomJSONEncoder
 from ldict.frozenlazydict import FrozenLazyDict
 
 from idict.config import GLOBAL
-from idict.core.appearance import decolorize, idict2txt
+from idict.core.appearance import idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
@@ -367,7 +369,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         Usage:
 
         >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
-        >>> from idict.core.appearance import decolorize
+        >>> from ldict.core.appearance import decolorize
         >>> out = idict(x=134124, y= 56).all
         >>> decolorize(out)
         '{\n    "x": 134124,\n    "y": 56,\n    "_id": "tV_c3c37026dc9a795bb61f18be755b7a8a094f2",\n    "_ids": {\n        "x": "Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)",\n        "y": "UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)"\n    }\n}'

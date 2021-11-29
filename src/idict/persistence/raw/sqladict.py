@@ -26,7 +26,7 @@ from sqlalchemy import Column, String, BLOB, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
-from idict.core.appearance import decolorize
+from ldict.core.appearance import decolorize
 
 VT = TypeVar("VT")
 Base = declarative_base()

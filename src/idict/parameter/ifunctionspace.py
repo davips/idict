@@ -47,7 +47,7 @@ class iFunctionSpace:
         }
     }
     >>> fs >>= idict(y=7)
-    >>> from idict.core.appearance import decolorize
+    >>> from ldict.core.appearance import decolorize
     >>> print(decolorize(str(fs)))
     «{'x': 5} × {
         "y": 7,

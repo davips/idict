@@ -23,7 +23,7 @@ from unittest import TestCase
 
 import pytest
 from idict import empty, idict
-from idict.core.appearance import decolorize
+from ldict.core.appearance import decolorize
 from idict.data.compression import unpack, pack
 from ldict.exception import DependenceException, NoInputException, WrongKeyType, ReadOnlyLdict
 
