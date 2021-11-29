@@ -49,28 +49,9 @@
 #  time spent here.
 
 import json
-import re
-
-from ldict.customjson import CustomJSONEncoder
 
 from idict.core.identification import key2id
-
-
-def decolorize(txt):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; decolorize(&#34;\x1b[38;5;116m\x1b[1m\x1b[48;5;0mB\x1b[0m\x1b[38;5;85m\x1b[1m\x1b[48;5;0ma\x1b[0m\x1b[38;5;157m\x1b[1m\x1b[48;5;0m_\x1b[0m\x1b[38;5;122m\x1b[1m\x1b[48;5;0m3\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0md\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0mc\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;84m\x1b[1m\x1b[48;5;0ma\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0ma\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0m4\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m5\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;85m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;157m\x1b[1m\x1b[48;5;0m4\x1b[0m\x1b[38;5;122m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m2\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;84m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m9\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m5\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m7\x1b[0m\x1b[38;5;85m\x1b[1m\x1b[48;5;0m4\x1b[0m\x1b[38;5;157m\x1b[1m\x1b[48;5;0m2\x1b[0m\x1b[38;5;122m\x1b[1m\x1b[48;5;0me\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0me\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0mc\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0m2\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0mb\x1b[0m&#34;)
-    &#39;Ba_31d001c1aa4056b46b2016160bb95742eec2b&#39;
-
-    Parameters
-    ----------
-    txt
-
-    Returns
-    -------
-
-    &#34;&#34;&#34;
-    ansi_escape = re.compile(r&#34;\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])&#34;)
-    return ansi_escape.sub(&#34;&#34;, txt)
+from ldict.customjson import CustomJSONEncoder
 
 
 def idict2txt(d, all):
@@ -78,6 +59,7 @@ def idict2txt(d, all):
     Textual representation of a ldict object
 
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from ldict.core.appearance import decolorize
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
@@ -131,40 +113,6 @@ def idict2dict(d, all):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="idict.core.appearance.decolorize"><code class="name flex">
-<span>def <span class="ident">decolorize</span></span>(<span>txt)</span>
-</code></dt>
-<dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; decolorize(&quot;[38;5;116m[1m[48;5;0mB[0m[38;5;85m[1m[48;5;0ma[0m[38;5;157m[1m[48;5;0m_[0m[38;5;122m[1m[48;5;0m3[0m[38;5;86m[1m[48;5;0m1[0m[38;5;156m[1m[48;5;0md[0m[38;5;114m[1m[48;5;0m0[0m[38;5;80m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m1[0m[38;5;156m[1m[48;5;0mc[0m[38;5;116m[1m[48;5;0m1[0m[38;5;84m[1m[48;5;0ma[0m[38;5;114m[1m[48;5;0ma[0m[38;5;80m[1m[48;5;0m4[0m[38;5;86m[1m[48;5;0m0[0m[38;5;156m[1m[48;5;0m5[0m[38;5;116m[1m[48;5;0m6[0m[38;5;85m[1m[48;5;0mb[0m[38;5;157m[1m[48;5;0m4[0m[38;5;122m[1m[48;5;0m6[0m[38;5;86m[1m[48;5;0mb[0m[38;5;156m[1m[48;5;0m2[0m[38;5;114m[1m[48;5;0m0[0m[38;5;80m[1m[48;5;0m1[0m[38;5;86m[1m[48;5;0m6[0m[38;5;156m[1m[48;5;0m1[0m[38;5;116m[1m[48;5;0m6[0m[38;5;84m[1m[48;5;0m0[0m[38;5;114m[1m[48;5;0mb[0m[38;5;80m[1m[48;5;0mb[0m[38;5;86m[1m[48;5;0m9[0m[38;5;156m[1m[48;5;0m5[0m[38;5;116m[1m[48;5;0m7[0m[38;5;85m[1m[48;5;0m4[0m[38;5;157m[1m[48;5;0m2[0m[38;5;122m[1m[48;5;0me[0m[38;5;86m[1m[48;5;0me[0m[38;5;156m[1m[48;5;0mc[0m[38;5;114m[1m[48;5;0m2[0m[38;5;80m[1m[48;5;0mb[0m&quot;)
-'Ba_31d001c1aa4056b46b2016160bb95742eec2b'
-</code></pre>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>txt</code></strong></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def decolorize(txt):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; decolorize(&#34;\x1b[38;5;116m\x1b[1m\x1b[48;5;0mB\x1b[0m\x1b[38;5;85m\x1b[1m\x1b[48;5;0ma\x1b[0m\x1b[38;5;157m\x1b[1m\x1b[48;5;0m_\x1b[0m\x1b[38;5;122m\x1b[1m\x1b[48;5;0m3\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0md\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0mc\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;84m\x1b[1m\x1b[48;5;0ma\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0ma\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0m4\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m5\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;85m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;157m\x1b[1m\x1b[48;5;0m4\x1b[0m\x1b[38;5;122m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m2\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m1\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m6\x1b[0m\x1b[38;5;84m\x1b[1m\x1b[48;5;0m0\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0mb\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0m9\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0m5\x1b[0m\x1b[38;5;116m\x1b[1m\x1b[48;5;0m7\x1b[0m\x1b[38;5;85m\x1b[1m\x1b[48;5;0m4\x1b[0m\x1b[38;5;157m\x1b[1m\x1b[48;5;0m2\x1b[0m\x1b[38;5;122m\x1b[1m\x1b[48;5;0me\x1b[0m\x1b[38;5;86m\x1b[1m\x1b[48;5;0me\x1b[0m\x1b[38;5;156m\x1b[1m\x1b[48;5;0mc\x1b[0m\x1b[38;5;114m\x1b[1m\x1b[48;5;0m2\x1b[0m\x1b[38;5;80m\x1b[1m\x1b[48;5;0mb\x1b[0m&#34;)
-    &#39;Ba_31d001c1aa4056b46b2016160bb95742eec2b&#39;
-
-    Parameters
-    ----------
-    txt
-
-    Returns
-    -------
-
-    &#34;&#34;&#34;
-    ansi_escape = re.compile(r&#34;\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])&#34;)
-    return ansi_escape.sub(&#34;&#34;, txt)</code></pre>
-</details>
-</dd>
 <dt id="idict.core.appearance.idict2dict"><code class="name flex">
 <span>def <span class="ident">idict2dict</span></span>(<span>d, all)</span>
 </code></dt>
@@ -199,6 +147,7 @@ def idict2dict(d, all):
 <dd>
 <div class="desc"><p>Textual representation of a ldict object</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; from ldict.core.appearance import decolorize
 &gt;&gt;&gt; d = idict(x=1,y=2)
 &gt;&gt;&gt; decolorize(idict2txt(d, False))
 '{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&quot;\n}'
@@ -222,6 +171,7 @@ def idict2dict(d, all):
     Textual representation of a ldict object
 
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from ldict.core.appearance import decolorize
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
@@ -267,7 +217,6 @@ def idict2dict(d, all):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="idict.core.appearance.decolorize" href="#idict.core.appearance.decolorize">decolorize</a></code></li>
 <li><code><a title="idict.core.appearance.idict2dict" href="#idict.core.appearance.idict2dict">idict2dict</a></code></li>
 <li><code><a title="idict.core.appearance.idict2txt" href="#idict.core.appearance.idict2txt">idict2txt</a></code></li>
 </ul>

@@ -56,6 +56,7 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40
+from ldict.core.appearance import decolorize
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
 
@@ -358,6 +359,13 @@ class Idict(AbstractMutableLazyDict):
             &#34;f&#34;: &#34;NhULktUPKQW0kiK9Gen3yzxunKQ4yXDl70-yAzi4&#34;
         }
     }
+    &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from idict.core.appearance import idict2txt
+    &gt;&gt;&gt; d = idict(x=1,y=2)
+    &gt;&gt;&gt; decolorize(idict2txt(d, False))
+    &#39;{\\n    &#34;x&#34;: 1,\\n    &#34;y&#34;: 2,\\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\\n}&#39;
+    &gt;&gt;&gt; decolorize(idict2txt(d, True))
+    &#39;{\\n    &#34;x&#34;: 1,\\n    &#34;y&#34;: 2,\\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\\n    &#34;_ids&#34;: {\\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\\n    }\\n}&#39;
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
@@ -545,6 +553,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;&#34;&#34;
         df = file2df(name)
         if output_format == &#34;df&#34;:
+            if output == [&#34;X&#34;, &#34;y&#34;]:
+                output = [&#34;df&#34;]
             if len(output) != 1:
                 raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
             return Idict({output[0]: df})
@@ -912,6 +922,13 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &quot;f&quot;: &quot;NhULktUPKQW0kiK9Gen3yzxunKQ4yXDl70-yAzi4&quot;
     }
 }
+&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
+&gt;&gt;&gt; from idict.core.appearance import idict2txt
+&gt;&gt;&gt; d = idict(x=1,y=2)
+&gt;&gt;&gt; decolorize(idict2txt(d, False))
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&quot;\n}'
+&gt;&gt;&gt; decolorize(idict2txt(d, True))
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,\n        &quot;y&quot;: &quot;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;\n    }\n}'
 </code></pre></div>
 <details class="source">
 <summary>
@@ -1207,6 +1224,13 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
             &#34;f&#34;: &#34;NhULktUPKQW0kiK9Gen3yzxunKQ4yXDl70-yAzi4&#34;
         }
     }
+    &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
+    &gt;&gt;&gt; from idict.core.appearance import idict2txt
+    &gt;&gt;&gt; d = idict(x=1,y=2)
+    &gt;&gt;&gt; decolorize(idict2txt(d, False))
+    &#39;{\\n    &#34;x&#34;: 1,\\n    &#34;y&#34;: 2,\\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\\n}&#39;
+    &gt;&gt;&gt; decolorize(idict2txt(d, True))
+    &#39;{\\n    &#34;x&#34;: 1,\\n    &#34;y&#34;: 2,\\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\\n    &#34;_ids&#34;: {\\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\\n    }\\n}&#39;
     &#34;&#34;&#34;
 
     # noinspection PyMissingConstructor
@@ -1394,6 +1418,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;&#34;&#34;
         df = file2df(name)
         if output_format == &#34;df&#34;:
+            if output == [&#34;X&#34;, &#34;y&#34;]:
+                output = [&#34;df&#34;]
             if len(output) != 1:
                 raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
             return Idict({output[0]: df})
@@ -1573,6 +1599,8 @@ def fromfile(name, output=[&#34;df&#34;], output_format=&#34;df&#34;):
     &#34;&#34;&#34;
     df = file2df(name)
     if output_format == &#34;df&#34;:
+        if output == [&#34;X&#34;, &#34;y&#34;]:
+            output = [&#34;df&#34;]
         if len(output) != 1:
             raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
         return Idict({output[0]: df})

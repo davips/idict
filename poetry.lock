@@ -311,7 +311,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [[package]]
 name = "ldict"
-version = "3.211129.1"
+version = "3.211129.2"
 description = "Lazy dict"
 category = "main"
 optional = false
@@ -880,7 +880,7 @@ full = ["pandas", "arff2pandas", "SQLAlchemy"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"  #">=3.8,<3.10"
-content-hash = "31da199c3309623dd58c308a6fe902d246e56009ca28df76e7bb17aa89275e94"
+content-hash = "82cafdb87d4a9cda42285244e0157bd04b7d267acef7c5851cee3243411a9682"
 
 [metadata.files]
 ansi2html = [
@@ -1116,8 +1116,8 @@ lazy-object-proxy = [
     {file = "lazy_object_proxy-1.6.0-cp39-cp39-win_amd64.whl", hash = "sha256:f5144c75445ae3ca2057faac03fda5a902eff196702b0a24daf1d6ce0650514b"},
 ]
 ldict = [
-    {file = "ldict-3.211129.1-py3-none-any.whl", hash = "sha256:8f54d34457da2bc02bfc9e57f92c07ad80dd9b6e31d92ab011f263377c574c9c"},
-    {file = "ldict-3.211129.1.tar.gz", hash = "sha256:42208f8261936364a60de759927fcda811ae20b296d0c3b4b6db32958a18a900"},
+    {file = "ldict-3.211129.2-py3-none-any.whl", hash = "sha256:890c2c6d2f6973c4875f0ce8c3d2c4850832e7ee74b41968eb4cec7cb136797f"},
+    {file = "ldict-3.211129.2.tar.gz", hash = "sha256:e74695766fe1c0ee64e27fe90d6105ab35ff9022336f76a0f9dd69f7d77948d6"},
 ]
 liac-arff = [
     {file = "liac-arff-2.5.0.tar.gz", hash = "sha256:3220d0af6487c5aa71b47579be7ad1d94f3849ff1e224af3bf05ad49a0b5c4da"},

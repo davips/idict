@@ -56,12 +56,14 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
+
+from ldict.core.appearance import decolorize
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.customjson import CustomJSONEncoder
 from ldict.frozenlazydict import FrozenLazyDict
 
 from idict.config import GLOBAL
-from idict.core.appearance import decolorize, idict2txt
+from idict.core.appearance import idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
@@ -386,7 +388,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def __repr__(self, all=False):
         return idict2txt(self, all)
 
-    __str__ = __repr__
+    def __str__(self, all=False):
+        return decolorize(idict2txt(self, all))
 
     @property
     def all(self):
@@ -394,10 +397,19 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         Usage:
 
         &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
-        &gt;&gt;&gt; from idict.core.appearance import decolorize
+        &gt;&gt;&gt; from ldict.core.appearance import decolorize
         &gt;&gt;&gt; out = idict(x=134124, y= 56).all
         &gt;&gt;&gt; decolorize(out)
         &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,\n        &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;\n    }\n}&#39;
+        &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+        &gt;&gt;&gt; d = FrozenIdentifiedDict(x=5, y=7)
+        &gt;&gt;&gt; print(d)
+        {
+            &#34;x&#34;: 5,
+            &#34;y&#34;: 7,
+            &#34;_id&#34;: &#34;TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4&#34;,
+            &#34;_ids&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        }
         &#34;&#34;&#34;
         return self.__repr__(all=True)
 
@@ -995,7 +1007,8 @@ True
     def __repr__(self, all=False):
         return idict2txt(self, all)
 
-    __str__ = __repr__
+    def __str__(self, all=False):
+        return decolorize(idict2txt(self, all))
 
     @property
     def all(self):
@@ -1003,10 +1016,19 @@ True
         Usage:
 
         &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
-        &gt;&gt;&gt; from idict.core.appearance import decolorize
+        &gt;&gt;&gt; from ldict.core.appearance import decolorize
         &gt;&gt;&gt; out = idict(x=134124, y= 56).all
         &gt;&gt;&gt; decolorize(out)
         &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,\n        &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;\n    }\n}&#39;
+        &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+        &gt;&gt;&gt; d = FrozenIdentifiedDict(x=5, y=7)
+        &gt;&gt;&gt; print(d)
+        {
+            &#34;x&#34;: 5,
+            &#34;y&#34;: 7,
+            &#34;_id&#34;: &#34;TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4&#34;,
+            &#34;_ids&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        }
         &#34;&#34;&#34;
         return self.__repr__(all=True)
 
@@ -1140,10 +1162,19 @@ True
 <dd>
 <div class="desc"><p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
-&gt;&gt;&gt; from idict.core.appearance import decolorize
+&gt;&gt;&gt; from ldict.core.appearance import decolorize
 &gt;&gt;&gt; out = idict(x=134124, y= 56).all
 &gt;&gt;&gt; decolorize(out)
 '{\n    &quot;x&quot;: 134124,\n    &quot;y&quot;: 56,\n    &quot;_id&quot;: &quot;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&quot;,\n        &quot;y&quot;: &quot;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&quot;\n    }\n}'
+&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+&gt;&gt;&gt; d = FrozenIdentifiedDict(x=5, y=7)
+&gt;&gt;&gt; print(d)
+{
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;_id&quot;: &quot;TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4&quot;,
+    &quot;_ids&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
+}
 </code></pre></div>
 <details class="source">
 <summary>
@@ -1155,10 +1186,19 @@ def all(self):
     Usage:
 
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
-    &gt;&gt;&gt; from idict.core.appearance import decolorize
+    &gt;&gt;&gt; from ldict.core.appearance import decolorize
     &gt;&gt;&gt; out = idict(x=134124, y= 56).all
     &gt;&gt;&gt; decolorize(out)
     &#39;{\n    &#34;x&#34;: 134124,\n    &#34;y&#34;: 56,\n    &#34;_id&#34;: &#34;tV_c3c37026dc9a795bb61f18be755b7a8a094f2&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;Ad_045ef613e3a78b8b54468cccd1fe32d9f4bae (content: 3f_cbb9283e13010e09544692d7e1fe3224e4bae)&#34;,\n        &#34;y&#34;: &#34;UH_5e477903f808edcf52d8abe1a36c38b014944 (content: mJ_7beba502c36bca4d52d8120da36c38faf3944)&#34;\n    }\n}&#39;
+    &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+    &gt;&gt;&gt; d = FrozenIdentifiedDict(x=5, y=7)
+    &gt;&gt;&gt; print(d)
+    {
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;_id&#34;: &#34;TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4&#34;,
+        &#34;_ids&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+    }
     &#34;&#34;&#34;
     return self.__repr__(all=True)</code></pre>
 </details>

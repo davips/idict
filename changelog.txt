@@ -1,4 +1,5 @@
 v1.211129.1
+Simplify split for uncompyle6
 Remove colors from __str__
 Fix version of used libraries: arff2pandas and scikit-learn
 Add extra parameter version to allow user to mark version
