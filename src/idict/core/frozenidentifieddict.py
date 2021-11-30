@@ -29,17 +29,17 @@ from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
 
-from ldict.core.appearance import decolorize
-from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
-from ldict.customjson import CustomJSONEncoder
-from ldict.frozenlazydict import FrozenLazyDict
-
 from idict.config import GLOBAL
 from idict.core.appearance import idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
+from idict.persistence.cache import Cache
 from idict.persistence.cached import cached
+from ldict.core.appearance import decolorize
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
+from ldict.frozenlazydict import FrozenLazyDict
 
 VT = TypeVar("VT")
 
@@ -427,10 +427,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         raise TypeError(f"Cannot compare {type(self)} and {type(other)}")  # pragma: no cover
 
     def __rrshift__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
+        if isinstance(left, (list, set)) or callable(left):
+            return iFunctionSpace(left, aop, self)
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             return FrozenIdentifiedDict(left) >> self
-        if isinstance(left, list) or callable(left):
-            return iFunctionSpace(left, aop, self)
         if isinstance(left, Random):
             return self.clone(rnd=left)
         return NotImplemented
@@ -440,7 +440,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict
-
+        if isinstance(other, (list, set)):
+            d = self
+            for cache in other:
+                d = cached(d, cache)
+            if isinstance(other, set):
+                d.evaluate()
+            return d
         if isinstance(other, (Idict, FrozenIdentifiedDict)):
             clone = self.clone(rnd=other.rnd) if other.rnd else self.clone()
             for k, v in other.data.items():
@@ -464,11 +470,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             return application(self, other, other.f, other.bytes)
         if callable(other):
             return application(self, other, other, self.identity)
-        if isinstance(other, list):
-            d = self
-            for cache in other:
-                d = cached(d, cache)
-            return d
         if isinstance(other, iFunctionSpace):
             return reduce3(lambda a, op, b: op(a, b), (self, aop) + other.functions)
         return NotImplemented
