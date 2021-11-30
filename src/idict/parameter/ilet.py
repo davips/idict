@@ -117,7 +117,7 @@ class iLet(AbstractLet):
         "_ids": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
     }»
     >>> let(f, a=5) >> ["mycache"]
-    «λ{'a': 5} × ^»
+    «λ{'a': 5} × ↑»
     >>> from idict.parameter.ifunctionspace import iFunctionSpace
     >>> let(f, a=5) >> iFunctionSpace()
     «λ{'a': 5}»
@@ -182,7 +182,7 @@ class iLet(AbstractLet):
             }
         }
         >>> [{}] >> iLet(lambda x=None:{"x": x**2}, x=5)
-        «^ × λ{'x': 5}»
+        «↑ × λ{'x': 5}»
         >>> from idict import Ø, idict
         >>> d = idict() >> (Ø >> iLet(lambda x=None:{"x": x**2}, x=5))
         >>> d.show(colored=False)
@@ -213,7 +213,7 @@ class iLet(AbstractLet):
     def __rshift__(self, other: Union[dict, list, Random, Callable, "iLet", AbstractLazyDict]):
         """
         >>> iLet(lambda x:{"x": x**2}, x=5) >> [1]
-        «λ{'x': 5} × ^»
+        «λ{'x': 5} × ↑»
         """
 
         if isinstance(other, (dict, list, Random, Callable, iLet)):

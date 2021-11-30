@@ -86,7 +86,7 @@ def cached(d, cache) -> AbstractLazyDict:
             output_fields.append(field)
             lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
-            deps = {"^": None}
+            deps = {"↑": None}
             deps.update(v.deps)
             lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, None)
             data[field] = lazy
@@ -137,7 +137,7 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    >>> build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
     {
         "y": 7,
         "d": {
@@ -182,7 +182,18 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    >>> d = build(b.id, b.ids, cache, b.hosh.ø)
+    >>> d.show(colored=False)
+    {
+        "y": "→(↑)",
+        "d": "→(↑)",
+        "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
+        "_ids": {
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
+            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f"
+        }
+    }
+    >>> d.evaluated.show(colored=False)
     {
         "y": 7,
         "d": {
@@ -228,7 +239,7 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    >>> build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
     {
         "d": {
             "x": 5,
@@ -274,7 +285,18 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    >>> build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    >>> d = build(b.id, b.ids, cache, b.hosh.ø)
+    >>> d.show(colored=False)
+    {
+        "d": "→(↑)",
+        "y": "→(↑)",
+        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
+        "_ids": {
+            "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+        }
+    }
+    >>> d.evaluated.show(colored=False)
     {
         "d": {
             "x": 5,
@@ -298,10 +320,13 @@ def build(id, ids, cache, identity):
         # REMINDER: An item id will never start with '_'. That only happens with singleton-idict id translated to cache.
         if fid in cache:
             value = get_following_pointers(fid, cache)
+            # WARN: The closures bellow assume items will not be removed from 'cache' in the meantime.
             if isinstance(value, dict) and list(value.keys()) == ["_id", "_ids"]:
-                dic[k] = build(value["_id"], value["_ids"], cache, identity)
+                closure = lambda value_: lambda **kwargs: build(value_["_id"], value_["_ids"], cache, identity)
+                dic[k] = LazyVal(k, closure(value), {"↑": None}, None)
             else:
-                dic[k] = cache[fid]
+                closure = lambda fid_: lambda **kwargs: cache[fid_]
+                dic[k] = LazyVal(k, closure(fid), {"↑": None}, None)
         else:  # pragma: no cover
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
     from idict import idict

@@ -143,7 +143,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> d3 = d2 >> [c]
     >>> d3.show(colored=False)
     {
-        "z": "→(^ x y)",
+        "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
         "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
@@ -176,7 +176,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> d3 = d >> f ^ Ø
     >>> d3.show(colored=False)
     {
-        "z": "→(^ x y)",
+        "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
         "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
@@ -210,6 +210,9 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
+        # if isinstance(_dictionary, str) and isinstance(_id, str) and len(_id)==identity.digits:
+        #     # Build idict from id+cache
+
         self.rnd = rnd
         self.identity = identity
         data = _dictionary or {}

@@ -172,7 +172,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d3 = d2 >> [c]
     >>> d3.show(colored=False)
     {
-        "z": "→(^ x y)",
+        "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
         "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
@@ -206,7 +206,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d3 = d >> f ^ Ø
     >>> d3.show(colored=False)
     {
-        "z": "→(^ x y)",
+        "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
         "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
@@ -269,7 +269,7 @@ class Idict(AbstractMutableLazyDict):
     >>> b >>= [cache]
     >>> b.show(colored=False)
     {
-        "d": "→(^ y)",
+        "d": "→(↑ y)",
         "y": 5,
         "_id": "zPIOd8YS56A4GjVdQMtk5op1MMAZJVxChr1XgFng",
         "_ids": {
@@ -349,9 +349,7 @@ class Idict(AbstractMutableLazyDict):
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-        # if isinstance(_dictionary, str) and isinstance(_id)
         self.identity = identity
-
         self.frozen: FrozenIdentifiedDict = FrozenIdentifiedDict(
             _dictionary, _id, _ids, rnd, identity, _cloned, **kwargs
         )
@@ -458,7 +456,7 @@ class Idict(AbstractMutableLazyDict):
         >>> d = idict(x=5) >> (lambda x: {"y": x**2}) >> [cache]
         >>> d.show(colored=False)
         {
-            "y": "→(^ x)",
+            "y": "→(↑ x)",
             "x": 5,
             "_id": "himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4",
             "_ids": {
@@ -472,6 +470,16 @@ class Idict(AbstractMutableLazyDict):
         {'.WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4': 25, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4': {'_id': 'himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4', '_ids': {'y': '.WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f'}}}
         >>> d2 = idict.fromid(d.id, cache)
         >>> d2.show(colored=False)
+        {
+            "y": "→(↑)",
+            "x": "→(↑)",
+            "_id": "himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4",
+            "_ids": {
+                "y": ".WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4",
+                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+            }
+        }
+        >>> d2.eager.show(colored=False)
         {
             "y": 25,
             "x": 5,

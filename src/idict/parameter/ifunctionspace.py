@@ -104,7 +104,7 @@ class iFunctionSpace:
             if str(f).startswith("<built-in "):  # Skip >> and ^.
                 continue
             if isinstance(f, list):
-                s = "^"
+                s = "↑"
             elif isinstance(f, Random):
                 s = "~"
             elif str(f).startswith("<function "):
