@@ -22,13 +22,13 @@
 from typing import TypeVar
 
 from idict.data.compression import unpack, pack
-from idict.persistence.cache import Cache
+from idict.persistence.compressedcache import CompressedCache
 from idict.persistence.raw.sqladict import sqladict, check, Content
 
 VT = TypeVar("VT")
 
 
-class SQLA(Cache):  # pragma:  cover
+class SQLA(CompressedCache):  # pragma:  cover
     """Save to/retrieve from SQLAlchemy.
 
     Based on built-in module shelve. Open and close at every transaction.
@@ -53,11 +53,15 @@ class SQLA(Cache):  # pragma:  cover
     """
 
     def __init__(
-        self, url="sqlite+pysqlite:///:memory:", autopack=True, debug=False, nondeterministic_fallback_on_pack=True
+            self, url="sqlite+pysqlite:///:memory:", autopack=True, debug=False, nondeterministic_fallback_on_pack=True
     ):
         super().__init__(lambda: sqladict(url, debug))
         self.autopack = autopack
         self.nondeterministic_fallback_on_pack = nondeterministic_fallback_on_pack
+
+    def setblob(self, key, blob):
+        check(key)
+        super().__setitem__(key, blob)
 
     def __setitem__(self, key: str, value):
         check(key)
@@ -84,6 +88,5 @@ class SQLA(Cache):  # pragma:  cover
 
     def copy(self):
         raise NotImplementedError
-
 
 # TODO: passar comentários da lousa pras docs das classes

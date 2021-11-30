@@ -21,12 +21,21 @@
 #  time spent here.
 import json
 
+from idict.core.identification import key2id
+from idict.persistence.cache import Cache
+from ldict.core.base import AbstractLazyDict
 from ldict.lazyval import LazyVal
 
-from idict.core.identification import key2id
+
+def storevalue(id, value, cache):
+    cache[id] = value
 
 
-def cached(d, cache):
+def storeblob(id, blob, cache):
+    cache.setblob(id, blob)
+
+
+def cached(d, cache) -> AbstractLazyDict:
     """
     Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
@@ -36,6 +45,7 @@ def cached(d, cache):
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
+    store = storeblob if isinstance(cache, Cache) else storevalue
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -52,16 +62,16 @@ def cached(d, cache):
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[v] = {"_id": handle_singleton_id(data[k])}
+                    store(v, {"_id": handle_singleton_id(data[k])}, cache)
                     data[k] = cached(data[k], cache)
                 else:
-                    cache[v] = data[k]
+                    store(v, data[k], cache)
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f"No ids")
                 raise Exception(f"Key {k} not in output fields: {output_fields}. ids: {fids.items()}")
             # if did not in cache:
-            cache[front_id] = {"_id": id, "_ids": fids}
+            store(front_id, {"_id": id, "_ids": fids}, cache)
             return result
 
         return func
@@ -86,12 +96,12 @@ def cached(d, cache):
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[fid] = {"_id": handle_singleton_id(data[k])}
+                    store(fid, {"_id": handle_singleton_id(data[k])}, cache)
                     data[k] = cached(data[k], cache)
                 else:
-                    cache[fid] = data[k]
+                    store(fid, data[k], cache)
         if front_id not in cache:
-            cache[front_id] = {"_id": d.id, "_ids": d.ids}
+            store(front_id, {"_id": d.id, "_ids": d.ids}, cache)
 
     return d.clone(data)
 
@@ -309,22 +319,3 @@ def get_following_pointers(fid, cache):
 
 def handle_singleton_id(d):
     return "_" + d.id[1:] if len(d.ids) == 1 else d.id
-
-
-# def get(objtype, id, cache, identity):
-#     result = None
-#     if objtype == "idict":  # not an item!
-#         if (id2 := "_" + id[1:]) in cache:
-#             result = cache[id2]
-#         elif id in cache:
-#             result = cache[id]
-#     elif objtype == "item" and id in cache:  # can be an idict!
-#         result = cache[id]
-#
-#     # Follow pointers.
-#     while isinstance(result, dict) and list(result.keys()) == ["_id"]:
-#         result = get(objtype, result["_id"], cache)
-#
-#     if isinstance(result, dict) and list(result.keys()) == ["_id", "_ids"]:
-#         return build(result["_id"], result["_ids"], cache, identity)
-#     return result
