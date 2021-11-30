@@ -59,13 +59,9 @@ class SQLA(CompressedCache):  # pragma:  cover
         self.autopack = autopack
         self.nondeterministic_fallback_on_pack = nondeterministic_fallback_on_pack
 
-    def setblob(self, key, blob):
+    def __setitem__(self, key: str, value, packit=True):
         check(key)
-        super().__setitem__(key, blob)
-
-    def __setitem__(self, key: str, value):
-        check(key)
-        if self.autopack:
+        if self.autopack and packit:
             super().__setitem__(key, pack(value, nondeterministic_fallback=self.nondeterministic_fallback_on_pack))
         else:
             super().__setitem__(key, value)

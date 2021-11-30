@@ -26,15 +26,9 @@ from idict.persistence.cache import Cache
 
 class CompressedCache(Cache):  # pragma: no cover
     def setblob(self, key, blob):
-        raise NotImplementedError
-
-    @abstractmethod
-    def __setitem__(self, key, value):
-        raise NotImplementedError
-
-    @abstractmethod
-    def __getitem__(self, key):
-        raise NotImplementedError
+        # noinspection PyArgumentList
+        # REMINDER: Cannot declare __setitem__ as abstract in this class since SQLA access it from its parent.
+        self.__setitem__(key, blob, packit=False)
 
     @abstractmethod
     def copy(self):
