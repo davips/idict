@@ -21,6 +21,8 @@
 #  time spent here.
 import json
 
+from idict.persistence.compressedcache import CompressedCache
+
 from idict.core.identification import key2id
 from idict.persistence.cache import Cache
 from ldict.core.base import AbstractLazyDict
@@ -45,7 +47,7 @@ def cached(d, cache) -> AbstractLazyDict:
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-    store = storeblob if isinstance(cache, Cache) else storevalue
+    store = storeblob if isinstance(cache, CompressedCache) else storevalue
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -57,8 +59,6 @@ def cached(d, cache) -> AbstractLazyDict:
             # Process and save (all fields, to avoid a parcial ldict being stored).
             k = None
             for k, v in fids.items():
-                # TODO (minor): all lazies are evaluated, but show() still shows deps as lazy.
-                #    Fortunately the dep is evaluated only once.
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):

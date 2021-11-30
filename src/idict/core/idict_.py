@@ -509,3 +509,5 @@ class Idict(AbstractMutableLazyDict):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
         return FrozenIdentifiedDict.fromopenml(name, version, Xout, yout).asmutable
+
+# TODO: colorize show() for (content: mh_8cf6d914f6d4010dfc1add303ed51f7151d44) and "_history": "split----------------------sklearn-1.0.1 fit--------------------------------idict predict----------------------------idict"
