@@ -55,7 +55,7 @@ class Disk(Cache):  # pragma:  cover
     """
 
     def __init__(self, file):
-        super().__init__(lambda: shelve.open(file, "c"))
+        self.decorator = lambda: shelve.open(file, "c")
 
     def __iter__(self):
         with self.decorator() as db:
@@ -65,3 +65,28 @@ class Disk(Cache):  # pragma:  cover
     def __len__(self):
         with self.decorator() as db:
             return len(db)
+
+    def __contains__(self, item):
+        with self.decorator() as db:
+            return item in db
+
+    def __setitem__(self, key, value):
+        with self.decorator() as db:
+            db[key] = value
+
+    def __getitem__(self, key):
+        with self.decorator() as db:
+            return db[key]
+
+    def __delitem__(self, key):
+        with self.decorator() as db:
+            del db[key]
+
+    def __repr__(self):
+        with self.decorator() as db:
+            return self.__class__.__name__ + "→" + str(type(db))
+
+    def copy(self):
+        with self.decorator() as db:
+            dic = dict(db)
+            return dic

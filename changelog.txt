@@ -1,4 +1,5 @@
 v1.211130
+    Refactor/Rewrite of CompressedCache
     Fix store blob to check for CompressedCache instead of Cache
     Add support for noop with "_" and hidden history by default
     Add from* and improve custom identity

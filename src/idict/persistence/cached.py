@@ -21,20 +21,25 @@
 #  time spent here.
 import json
 
-from idict.persistence.compressedcache import CompressedCache
-
 from idict.core.identification import key2id
-from idict.persistence.cache import Cache
+from idict.persistence.compressedcache import CompressedCache
 from ldict.core.base import AbstractLazyDict
 from ldict.lazyval import LazyVal
 
 
-def storevalue(id, value, cache):
-    cache[id] = value
+def storevalue_func(cache):
+    def f(k, id, value):
+        cache[id] = value
+
+    return f
 
 
-def storeblob(id, blob, cache):
-    cache.setblob(id, blob)
+def storeblob_func(cache, blobs):
+    def f(k, id, value):
+        cache.setblob(id, blobs[k] if k in blobs else value)
+
+
+    return f
 
 
 def cached(d, cache) -> AbstractLazyDict:
@@ -47,7 +52,7 @@ def cached(d, cache) -> AbstractLazyDict:
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-    store = storeblob if isinstance(cache, CompressedCache) else storevalue
+    store = storeblob_func(cache, d.blobs) if isinstance(cache, CompressedCache) else storevalue_func(cache)
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -62,16 +67,16 @@ def cached(d, cache) -> AbstractLazyDict:
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    store(v, {"_id": handle_singleton_id(data[k])}, cache)
+                    cache[v] = {"_id": handle_singleton_id(data[k])}
                     data[k] = cached(data[k], cache)
                 else:
-                    store(v, data[k], cache)
+                    store(k, v, data[k])
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f"No ids")
                 raise Exception(f"Key {k} not in output fields: {output_fields}. ids: {fids.items()}")
             # if did not in cache:
-            store(front_id, {"_id": id, "_ids": fids}, cache)
+            cache[front_id] = {"_id": id, "_ids": fids}
             return result
 
         return func
@@ -96,12 +101,12 @@ def cached(d, cache) -> AbstractLazyDict:
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    store(fid, {"_id": handle_singleton_id(data[k])}, cache)
+                    cache[fid] = {"_id": handle_singleton_id(data[k])}
                     data[k] = cached(data[k], cache)
                 else:
-                    store(fid, data[k], cache)
+                    store(k, fid, data[k])
         if front_id not in cache:
-            store(front_id, {"_id": d.id, "_ids": d.ids}, cache)
+            cache[front_id] = {"_id": d.id, "_ids": d.ids}
 
     return d.clone(data)
 

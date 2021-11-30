@@ -31,6 +31,7 @@ from garoupa import ø40
 
 from idict.parameter.ifunctionspace import iFunctionSpace
 from idict.parameter.ilet import iLet
+from idict.persistence.cache import Cache
 from ldict.core.appearance import decolorize
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
@@ -364,7 +365,7 @@ class Idict(AbstractMutableLazyDict):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
         self.identity = identity
-        if isinstance(_dictionary, str) and isinstance(_id, dict):
+        if isinstance(_dictionary, str) and isinstance(_id, (dict, Cache)):
             # Build idict from id+cache.
             if _ids or rnd or _cloned or kwargs:
                 raise Exception("Cannot pass more arguments when first argument is id and second argument is cache.")

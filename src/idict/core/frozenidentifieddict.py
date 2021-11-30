@@ -28,13 +28,12 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-from idict.data.load import file2df
-
-from idict.function.data import openml, df2np
 
 from idict.config import GLOBAL
 from idict.core.appearance import idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
+from idict.data.load import file2df
+from idict.function.data import openml, df2np
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached, get_following_pointers, build
@@ -438,7 +437,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-        self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+            self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict
@@ -540,8 +539,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         if (newid := "_" + id[1:]) in cache:
             id = newid
-        d = get_following_pointers(id, cache)
-        return build(d["_id"], d["_ids"], cache, identity)
+        val = get_following_pointers(id, cache)
+        if val is None or not isinstance(val, dict) and "_id" not in val and "_ids" not in val:
+            return None
+        return build(val["_id"], val["_ids"], cache, identity)
 
     @staticmethod
     def fromfile(name, output=["df"], output_format="df", identity=ø40):
@@ -619,6 +620,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
         arff = "@RELATION mini\n@ATTRIBUTE attr1	REAL\n@ATTRIBUTE attr2 	REAL\n@ATTRIBUTE class 	{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1"
         if output_format == "arff":
+            if output == ["df"]:
+                output = ["arff"]
+            if len(output) != 1:
+                raise Exception(f"Wrong number of fields {len(output)}. Expected: 1.", output)
             return FrozenIdentifiedDict({output[0]: arff}, identity=identity)
         with TempDirectory() as tmp:
             tmp.write(
@@ -633,6 +638,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
         csv = "attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1"
         if output_format == "csv":
+            if output == ["df"]:
+                output = ["csv"]
+            if len(output) != 1:
+                raise Exception(f"Wrong number of fields {len(output)}. Expected: 1.", output)
             return FrozenIdentifiedDict({output[0]: csv}, identity=identity)
         with TempDirectory() as tmp:
             tmp.write("mini.csv", csv.encode())
