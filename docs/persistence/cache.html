@@ -55,37 +55,27 @@ VT = TypeVar(&#34;VT&#34;)
 
 
 class Cache(ABC):  # pragma: no cover
-    def __init__(self, decorator):
-        self.decorator = decorator
-
     def __contains__(self, item):
-        with self.decorator() as db:
-            return item in db
+        raise NotImplementedError
 
     def __setitem__(self, key, value):
-        with self.decorator() as db:
-            db[key] = value
+        raise NotImplementedError
 
     def __getitem__(self, key):
-        with self.decorator() as db:
-            return db[key]
+        raise NotImplementedError
 
     def __delitem__(self, key):
-        with self.decorator() as db:
-            del db[key]
+        raise NotImplementedError
+
+    def __repr__(self):
+        raise NotImplementedError
+
+    def copy(self):
+        raise NotImplementedError
 
     @abstractmethod
     def __iter__(self):
         raise NotImplementedError
-
-    def __repr__(self):
-        with self.decorator() as db:
-            return self.__class__.__name__ + &#34;→&#34; + str(type(db))
-
-    def copy(self):
-        with self.decorator() as db:
-            dic = dict(db)
-            return dic
 
     def keys(self):
         return iter(self)
@@ -106,7 +96,6 @@ class Cache(ABC):  # pragma: no cover
 <dl>
 <dt id="idict.persistence.cache.Cache"><code class="flex name class">
 <span>class <span class="ident">Cache</span></span>
-<span>(</span><span>decorator)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Helper class that provides a standard way to create an ABC using
@@ -116,37 +105,27 @@ inheritance.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Cache(ABC):  # pragma: no cover
-    def __init__(self, decorator):
-        self.decorator = decorator
-
     def __contains__(self, item):
-        with self.decorator() as db:
-            return item in db
+        raise NotImplementedError
 
     def __setitem__(self, key, value):
-        with self.decorator() as db:
-            db[key] = value
+        raise NotImplementedError
 
     def __getitem__(self, key):
-        with self.decorator() as db:
-            return db[key]
+        raise NotImplementedError
 
     def __delitem__(self, key):
-        with self.decorator() as db:
-            del db[key]
+        raise NotImplementedError
+
+    def __repr__(self):
+        raise NotImplementedError
+
+    def copy(self):
+        raise NotImplementedError
 
     @abstractmethod
     def __iter__(self):
         raise NotImplementedError
-
-    def __repr__(self):
-        with self.decorator() as db:
-            return self.__class__.__name__ + &#34;→&#34; + str(type(db))
-
-    def copy(self):
-        with self.decorator() as db:
-            dic = dict(db)
-            return dic
 
     def keys(self):
         return iter(self)
@@ -176,9 +155,7 @@ inheritance.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def copy(self):
-    with self.decorator() as db:
-        dic = dict(db)
-        return dic</code></pre>
+    raise NotImplementedError</code></pre>
 </details>
 </dd>
 <dt id="idict.persistence.cache.Cache.items"><code class="name flex">

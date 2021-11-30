@@ -127,18 +127,23 @@ class SQLA(CompressedCache):
     def copy(self):
         raise NotImplementedError
 
-    def __init__(self, session="sqlite+pysqlite:///:memory:", autopack=True, nondeterministic_fallback_on_pack=True,
-                 debug=False):
+    def __init__(
+        self, session="sqlite+pysqlite:///:memory:", autopack=True, nondeterministic_fallback_on_pack=True, debug=False
+    ):
         if isinstance(session, str):
+
             @contextmanager
             def sessionctx():
                 engine = create_engine(url=session, echo=debug)
                 Base.metadata.create_all(engine)
                 yield Session(engine)
+
         else:
+
             @contextmanager
             def sessionctx():
                 yield session
+
         self.sessionctx = sessionctx
         self.autopack = autopack
         self.nondeterministic_fallback_on_pack = nondeterministic_fallback_on_pack

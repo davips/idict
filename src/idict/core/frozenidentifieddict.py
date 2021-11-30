@@ -437,7 +437,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-            self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+        self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict

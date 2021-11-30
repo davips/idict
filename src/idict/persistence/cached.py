@@ -38,7 +38,6 @@ def storeblob_func(cache, blobs):
     def f(k, id, value):
         cache.setblob(id, blobs[k] if k in blobs else value)
 
-
     return f
 
 

@@ -56,13 +56,12 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-from idict.data.load import file2df
-
-from idict.function.data import openml, df2np
 
 from idict.config import GLOBAL
 from idict.core.appearance import idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
+from idict.data.load import file2df
+from idict.function.data import openml, df2np
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached, get_following_pointers, build
@@ -568,8 +567,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &#34;&#34;&#34;
         if (newid := &#34;_&#34; + id[1:]) in cache:
             id = newid
-        d = get_following_pointers(id, cache)
-        return build(d[&#34;_id&#34;], d[&#34;_ids&#34;], cache, identity)
+        val = get_following_pointers(id, cache)
+        if val is None or not isinstance(val, dict) and &#34;_id&#34; not in val and &#34;_ids&#34; not in val:
+            return None
+        return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)
 
     @staticmethod
     def fromfile(name, output=[&#34;df&#34;], output_format=&#34;df&#34;, identity=ø40):
@@ -647,6 +648,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
         arff = &#34;@RELATION mini\n@ATTRIBUTE attr1        REAL\n@ATTRIBUTE attr2  REAL\n@ATTRIBUTE class  {0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#34;
         if output_format == &#34;arff&#34;:
+            if output == [&#34;df&#34;]:
+                output = [&#34;arff&#34;]
+            if len(output) != 1:
+                raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
             return FrozenIdentifiedDict({output[0]: arff}, identity=identity)
         with TempDirectory() as tmp:
             tmp.write(
@@ -661,6 +666,10 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
         csv = &#34;attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1&#34;
         if output_format == &#34;csv&#34;:
+            if output == [&#34;df&#34;]:
+                output = [&#34;csv&#34;]
+            if len(output) != 1:
+                raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
             return FrozenIdentifiedDict({output[0]: csv}, identity=identity)
         with TempDirectory() as tmp:
             tmp.write(&#34;mini.csv&#34;, csv.encode())
@@ -1364,8 +1373,10 @@ True
         &#34;&#34;&#34;
         if (newid := &#34;_&#34; + id[1:]) in cache:
             id = newid
-        d = get_following_pointers(id, cache)
-        return build(d[&#34;_id&#34;], d[&#34;_ids&#34;], cache, identity)
+        val = get_following_pointers(id, cache)
+        if val is None or not isinstance(val, dict) and &#34;_id&#34; not in val and &#34;_ids&#34; not in val:
+            return None
+        return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)
 
     @staticmethod
     def fromfile(name, output=[&#34;df&#34;], output_format=&#34;df&#34;, identity=ø40):
@@ -1443,6 +1454,10 @@ True
 
         arff = &#34;@RELATION mini\n@ATTRIBUTE attr1        REAL\n@ATTRIBUTE attr2  REAL\n@ATTRIBUTE class  {0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#34;
         if output_format == &#34;arff&#34;:
+            if output == [&#34;df&#34;]:
+                output = [&#34;arff&#34;]
+            if len(output) != 1:
+                raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
             return FrozenIdentifiedDict({output[0]: arff}, identity=identity)
         with TempDirectory() as tmp:
             tmp.write(
@@ -1457,6 +1472,10 @@ True
 
         csv = &#34;attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1&#34;
         if output_format == &#34;csv&#34;:
+            if output == [&#34;df&#34;]:
+                output = [&#34;csv&#34;]
+            if len(output) != 1:
+                raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
             return FrozenIdentifiedDict({output[0]: csv}, identity=identity)
         with TempDirectory() as tmp:
             tmp.write(&#34;mini.csv&#34;, csv.encode())
@@ -1716,8 +1735,10 @@ def fromid(id, cache, identity=ø40):
     &#34;&#34;&#34;
     if (newid := &#34;_&#34; + id[1:]) in cache:
         id = newid
-    d = get_following_pointers(id, cache)
-    return build(d[&#34;_id&#34;], d[&#34;_ids&#34;], cache, identity)</code></pre>
+    val = get_following_pointers(id, cache)
+    if val is None or not isinstance(val, dict) and &#34;_id&#34; not in val and &#34;_ids&#34; not in val:
+        return None
+    return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)</code></pre>
 </details>
 </dd>
 <dt id="idict.core.frozenidentifieddict.FrozenIdentifiedDict.fromminiarff"><code class="name flex">
@@ -1735,6 +1756,10 @@ def fromminiarff(output=[&#34;df&#34;], output_format=&#34;df&#34;, identity=ø4
 
     arff = &#34;@RELATION mini\n@ATTRIBUTE attr1        REAL\n@ATTRIBUTE attr2  REAL\n@ATTRIBUTE class  {0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#34;
     if output_format == &#34;arff&#34;:
+        if output == [&#34;df&#34;]:
+            output = [&#34;arff&#34;]
+        if len(output) != 1:
+            raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
         return FrozenIdentifiedDict({output[0]: arff}, identity=identity)
     with TempDirectory() as tmp:
         tmp.write(
@@ -1759,6 +1784,10 @@ def fromminicsv(output=[&#34;df&#34;], output_format=&#34;df&#34;, identity=ø40
 
     csv = &#34;attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1&#34;
     if output_format == &#34;csv&#34;:
+        if output == [&#34;df&#34;]:
+            output = [&#34;csv&#34;]
+        if len(output) != 1:
+            raise Exception(f&#34;Wrong number of fields {len(output)}. Expected: 1.&#34;, output)
         return FrozenIdentifiedDict({output[0]: csv}, identity=identity)
     with TempDirectory() as tmp:
         tmp.write(&#34;mini.csv&#34;, csv.encode())
