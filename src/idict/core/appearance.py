@@ -62,6 +62,8 @@ def idict2txt(d, all):
 def idict2dict(d, all):
     # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
+    if not all and "_history" in dic:
+        del dic["_history"]
     for k, v in d.data.items():
         # if isinstance(v, LazyVal):
         #     dic[k] = str(v)

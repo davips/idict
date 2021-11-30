@@ -342,7 +342,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def __hash__(self):
         return hash(self.hosh)
 
-    def show(self, colored=True, width=None):
+    def show(self, colored=True, width=None, history=False):
         r"""
         >>> idict = FrozenIdentifiedDict
         >>> idict(x=134124, y= 56).show(colored=False)
@@ -357,7 +357,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         }
         """
         CustomJSONEncoder.width = width
-        return print(self.all if colored else decolorize(self.all))
+        return print(self.__repr__(all=history) if colored else decolorize(self.__repr__(all=history)))
 
     def __repr__(self, all=False):
         return idict2txt(self, all)

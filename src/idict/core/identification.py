@@ -25,11 +25,11 @@ import dis
 import pickle
 from inspect import signature
 
-from garoupa import Hosh, UT40_4
-from ldict.exception import NoInputException
+from garoupa import Hosh, UT40_4, Identity
 from orjson import dumps
 
 from idict.data.compression import pack, NondeterminismException
+from ldict.exception import NoInputException
 
 
 def fhosh(f, version):
@@ -61,6 +61,9 @@ def fhosh(f, version):
     fargs = list(pars.keys())
     if not fargs:
         raise NoInputException(f"Missing function input parameters.")
+    if "_" in fargs:
+        f.hosh = Identity(version=version)
+        return f.hosh
     clean = [fargs]
     only_kwargs = {v.name: str(pickle.dumps(v.default, protocol=5)) for v in pars.values() if v.default is not v.empty}
     if only_kwargs:

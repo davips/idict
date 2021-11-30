@@ -88,7 +88,7 @@ def cached(d, cache) -> AbstractLazyDict:
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
             deps = {"↑": None}
             deps.update(v.deps)
-            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, None)
+            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, data, None)
             data[field] = lazy
 
     # Eager saving when there are no lazies.
