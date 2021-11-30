@@ -329,9 +329,8 @@ def build(id, ids, cache, identity):
                 dic[k] = LazyVal(k, closure(fid), {"↑": None}, None)
         else:  # pragma: no cover
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
-    from idict import idict
-
-    return idict(dic, _id=id, _ids=ids, identity=identity)
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+    return FrozenIdentifiedDict(dic, _id=id, _ids=ids, identity=identity)
 
 
 def get_following_pointers(fid, cache):

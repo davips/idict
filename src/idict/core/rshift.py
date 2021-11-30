@@ -218,7 +218,7 @@ def ihandle_dict(self, dictlike):
                 internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
                 del clone.data["_id"]
                 del clone.data["_ids"]
-                clone = FrozenIdentifiedDict(clone.data, rnd=clone.rnd, _cloned=internals, **{k: v})
+                clone = FrozenIdentifiedDict(clone.data, rnd=clone.rnd, identity=self.identity, _cloned=internals, **{k: v})
     return clone
 
 

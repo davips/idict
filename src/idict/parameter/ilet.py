@@ -26,6 +26,8 @@ from operator import xor as cop
 from random import Random
 from typing import Union, Callable
 
+from garoupa import ø40
+
 from ldict.core.base import AbstractLazyDict
 from ldict.customjson import CustomJSONEncoder
 from ldict.parameter.abslet import AbstractLet
@@ -157,11 +159,13 @@ class iLet(AbstractLet):
     32
     """
 
-    def __init__(self, f, **kwargs):
+    def __init__(self, f, identity=ø40, **kwargs):
         from idict.core.idict_ import Idict
 
         super().__init__(f, Idict, config=None)
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
+        #     TODO: iLet needs to detect the identity from idict if it is induced by one
+        self.identity = identity
 
     @cached_property
     def bytes(self):
@@ -203,7 +207,7 @@ class iLet(AbstractLet):
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
 
-            return Idict(left) >> self
+            return Idict(left, identity=self.identity) >> self
         if isinstance(left, (list, Random, Callable)):
             from idict.parameter.ifunctionspace import iFunctionSpace
 

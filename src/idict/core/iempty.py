@@ -35,7 +35,7 @@ class iEmpty(FrozenIdentifiedDict):
 
     def __rrshift__(self, left: Union[Dict, Callable, iLet]):
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
-            return Idict(left)
+            return Idict(left, identity=self.identity)
         if callable(left):
             return iLet(left)
         if isinstance(left, iLet):
@@ -46,10 +46,10 @@ class iEmpty(FrozenIdentifiedDict):
         if isinstance(other, AbstractLazyDict):
             return other
         if isinstance(other, dict):
-            return Idict(other)
+            return Idict(other, identity=self.identity)
         if callable(other):
             try:
-                return Idict() >> other
+                return Idict(identity=self.identity) >> other
             except (DependenceException, UndefinedSeed):
                 return iLet(other)
         return NotImplemented  # pragma: no cover
