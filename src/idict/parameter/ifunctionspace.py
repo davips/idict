@@ -73,6 +73,7 @@ class iFunctionSpace:
             return reduce3(lambda a, op, b: op(a, b), (left, aop) + self.functions)
         if isinstance(left, dict):
             from idict.core.idict_ import Idict
+
             # TODO iFunctionSpace lacks 'self.identity' to be able to provide here, e.g., number of digits to Idict(..)
 
             return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions)

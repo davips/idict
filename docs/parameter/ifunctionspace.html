@@ -102,6 +102,8 @@ class iFunctionSpace:
         if isinstance(left, dict):
             from idict.core.idict_ import Idict
 
+            # TODO iFunctionSpace lacks &#39;self.identity&#39; to be able to provide here, e.g., number of digits to Idict(..)
+
             return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions)
         if isinstance(left, (list, Random, Callable, iLet)):
             return iFunctionSpace(left, aop, *self.functions)
@@ -132,7 +134,7 @@ class iFunctionSpace:
             if str(f).startswith(&#34;&lt;built-in &#34;):  # Skip &gt;&gt; and ^.
                 continue
             if isinstance(f, list):
-                s = &#34;^&#34;
+                s = &#34;↑&#34;
             elif isinstance(f, Random):
                 s = &#34;~&#34;
             elif str(f).startswith(&#34;&lt;function &#34;):
@@ -281,6 +283,8 @@ def reduce3(f, lst):
         if isinstance(left, dict):
             from idict.core.idict_ import Idict
 
+            # TODO iFunctionSpace lacks &#39;self.identity&#39; to be able to provide here, e.g., number of digits to Idict(..)
+
             return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions)
         if isinstance(left, (list, Random, Callable, iLet)):
             return iFunctionSpace(left, aop, *self.functions)
@@ -311,7 +315,7 @@ def reduce3(f, lst):
             if str(f).startswith(&#34;&lt;built-in &#34;):  # Skip &gt;&gt; and ^.
                 continue
             if isinstance(f, list):
-                s = &#34;^&#34;
+                s = &#34;↑&#34;
             elif isinstance(f, Random):
                 s = &#34;~&#34;
             elif str(f).startswith(&#34;&lt;function &#34;):

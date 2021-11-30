@@ -63,7 +63,7 @@ class iEmpty(FrozenIdentifiedDict):
 
     def __rrshift__(self, left: Union[Dict, Callable, iLet]):
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
-            return Idict(left)
+            return Idict(left, identity=self.identity)
         if callable(left):
             return iLet(left)
         if isinstance(left, iLet):
@@ -74,10 +74,10 @@ class iEmpty(FrozenIdentifiedDict):
         if isinstance(other, AbstractLazyDict):
             return other
         if isinstance(other, dict):
-            return Idict(other)
+            return Idict(other, identity=self.identity)
         if callable(other):
             try:
-                return Idict() &gt;&gt; other
+                return Idict(identity=self.identity) &gt;&gt; other
             except (DependenceException, UndefinedSeed):
                 return iLet(other)
         return NotImplemented  # pragma: no cover
@@ -195,7 +195,7 @@ True
 &gt;&gt;&gt; d3 = d2 &gt;&gt; [c]
 &gt;&gt;&gt; d3.show(colored=False)
 {
-    &quot;z&quot;: &quot;→(^ x y)&quot;,
+    &quot;z&quot;: &quot;→(↑ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
     &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
@@ -228,7 +228,7 @@ True
 &gt;&gt;&gt; d3 = d &gt;&gt; f ^ Ø
 &gt;&gt;&gt; d3.show(colored=False)
 {
-    &quot;z&quot;: &quot;→(^ x y)&quot;,
+    &quot;z&quot;: &quot;→(↑ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
     &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
@@ -267,7 +267,7 @@ True
 
     def __rrshift__(self, left: Union[Dict, Callable, iLet]):
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
-            return Idict(left)
+            return Idict(left, identity=self.identity)
         if callable(left):
             return iLet(left)
         if isinstance(left, iLet):
@@ -278,10 +278,10 @@ True
         if isinstance(other, AbstractLazyDict):
             return other
         if isinstance(other, dict):
-            return Idict(other)
+            return Idict(other, identity=self.identity)
         if callable(other):
             try:
-                return Idict() &gt;&gt; other
+                return Idict(identity=self.identity) &gt;&gt; other
             except (DependenceException, UndefinedSeed):
                 return iLet(other)
         return NotImplemented  # pragma: no cover
@@ -316,6 +316,9 @@ True
 <li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.all" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.all">all</a></code></li>
 <li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.asdict" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.asdict">asdict</a></code></li>
 <li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.evaluate" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.evaluate">evaluate</a></code></li>
+<li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.fromfile" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.fromfile">fromfile</a></code></li>
+<li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.fromid" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.fromid">fromid</a></code></li>
+<li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.fromopenml" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.fromopenml">fromopenml</a></code></li>
 <li><code><a title="idict.core.frozenidentifieddict.FrozenIdentifiedDict.show" href="frozenidentifieddict.html#idict.core.frozenidentifieddict.FrozenIdentifiedDict.show">show</a></code></li>
 </ul>
 </li>

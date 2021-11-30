@@ -54,6 +54,8 @@ from operator import xor as cop
 from random import Random
 from typing import Union, Callable
 
+from garoupa import ø40
+
 from ldict.core.base import AbstractLazyDict
 from ldict.customjson import CustomJSONEncoder
 from ldict.parameter.abslet import AbstractLet
@@ -145,7 +147,7 @@ class iLet(AbstractLet):
         &#34;_ids&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
     }»
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; [&#34;mycache&#34;]
-    «λ{&#39;a&#39;: 5} × ^»
+    «λ{&#39;a&#39;: 5} × ↑»
     &gt;&gt;&gt; from idict.parameter.ifunctionspace import iFunctionSpace
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; iFunctionSpace()
     «λ{&#39;a&#39;: 5}»
@@ -185,11 +187,13 @@ class iLet(AbstractLet):
     32
     &#34;&#34;&#34;
 
-    def __init__(self, f, **kwargs):
+    def __init__(self, f, identity=ø40, **kwargs):
         from idict.core.idict_ import Idict
 
         super().__init__(f, Idict, config=None)
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
+        #     TODO: iLet needs to detect the identity from idict if it is induced by one
+        self.identity = identity
 
     @cached_property
     def bytes(self):
@@ -210,7 +214,7 @@ class iLet(AbstractLet):
             }
         }
         &gt;&gt;&gt; [{}] &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)
-        «^ × λ{&#39;x&#39;: 5}»
+        «↑ × λ{&#39;x&#39;: 5}»
         &gt;&gt;&gt; from idict import Ø, idict
         &gt;&gt;&gt; d = idict() &gt;&gt; (Ø &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5))
         &gt;&gt;&gt; d.show(colored=False)
@@ -231,7 +235,7 @@ class iLet(AbstractLet):
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
 
-            return Idict(left) &gt;&gt; self
+            return Idict(left, identity=self.identity) &gt;&gt; self
         if isinstance(left, (list, Random, Callable)):
             from idict.parameter.ifunctionspace import iFunctionSpace
 
@@ -241,7 +245,7 @@ class iLet(AbstractLet):
     def __rshift__(self, other: Union[dict, list, Random, Callable, &#34;iLet&#34;, AbstractLazyDict]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5) &gt;&gt; [1]
-        «λ{&#39;x&#39;: 5} × ^»
+        «λ{&#39;x&#39;: 5} × ↑»
         &#34;&#34;&#34;
 
         if isinstance(other, (dict, list, Random, Callable, iLet)):
@@ -287,7 +291,7 @@ class iLet(AbstractLet):
 <dl>
 <dt id="idict.parameter.ilet.iLet"><code class="flex name class">
 <span>class <span class="ident">iLet</span></span>
-<span>(</span><span>f, **kwargs)</span>
+<span>(</span><span>f, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Set values or sampling intervals for parameterized functions</p>
@@ -373,7 +377,7 @@ class iLet(AbstractLet):
     &quot;_ids&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
 }»
 &gt;&gt;&gt; let(f, a=5) &gt;&gt; [&quot;mycache&quot;]
-«λ{'a': 5} × ^»
+«λ{'a': 5} × ↑»
 &gt;&gt;&gt; from idict.parameter.ifunctionspace import iFunctionSpace
 &gt;&gt;&gt; let(f, a=5) &gt;&gt; iFunctionSpace()
 «λ{'a': 5}»
@@ -502,7 +506,7 @@ class iLet(AbstractLet):
         &#34;_ids&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
     }»
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; [&#34;mycache&#34;]
-    «λ{&#39;a&#39;: 5} × ^»
+    «λ{&#39;a&#39;: 5} × ↑»
     &gt;&gt;&gt; from idict.parameter.ifunctionspace import iFunctionSpace
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; iFunctionSpace()
     «λ{&#39;a&#39;: 5}»
@@ -542,11 +546,13 @@ class iLet(AbstractLet):
     32
     &#34;&#34;&#34;
 
-    def __init__(self, f, **kwargs):
+    def __init__(self, f, identity=ø40, **kwargs):
         from idict.core.idict_ import Idict
 
         super().__init__(f, Idict, config=None)
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
+        #     TODO: iLet needs to detect the identity from idict if it is induced by one
+        self.identity = identity
 
     @cached_property
     def bytes(self):
@@ -567,7 +573,7 @@ class iLet(AbstractLet):
             }
         }
         &gt;&gt;&gt; [{}] &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)
-        «^ × λ{&#39;x&#39;: 5}»
+        «↑ × λ{&#39;x&#39;: 5}»
         &gt;&gt;&gt; from idict import Ø, idict
         &gt;&gt;&gt; d = idict() &gt;&gt; (Ø &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5))
         &gt;&gt;&gt; d.show(colored=False)
@@ -588,7 +594,7 @@ class iLet(AbstractLet):
         if isinstance(left, dict) and not isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
 
-            return Idict(left) &gt;&gt; self
+            return Idict(left, identity=self.identity) &gt;&gt; self
         if isinstance(left, (list, Random, Callable)):
             from idict.parameter.ifunctionspace import iFunctionSpace
 
@@ -598,7 +604,7 @@ class iLet(AbstractLet):
     def __rshift__(self, other: Union[dict, list, Random, Callable, &#34;iLet&#34;, AbstractLazyDict]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; iLet(lambda x:{&#34;x&#34;: x**2}, x=5) &gt;&gt; [1]
-        «λ{&#39;x&#39;: 5} × ^»
+        «λ{&#39;x&#39;: 5} × ↑»
         &#34;&#34;&#34;
 
         if isinstance(other, (dict, list, Random, Callable, iLet)):

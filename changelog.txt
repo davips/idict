@@ -1,25 +1,29 @@
-v1.211129.2
-Add arff2df
+v1.211130.0
+    Add from* and improve custom identity
+    Make fromid() lazy
+    Add eager notation for cache: [[cache]]
+    Add setblob() shortcut to cached when supported by provided cache
 
-v1.211129.1
-Simplify split for uncompyle6
-Remove colors from __str__
-Fix version of used libraries: arff2pandas and scikit-learn
-Add extra parameter version to allow user to mark version
+v1.211129
+    Add arff2df
 
-v1.211127.3
-Fix getattr
-Add first functions for ML
+v1.211129
+    Simplify split for uncompyle6
+    Remove colors from __str__
+    Fix version of used libraries: arff2pandas and scikit-learn
+    Add extra parameter version to allow user to mark version
 
-v1.211127.2
-Add support to function as value
+v1.211127
+    Fix getattr
+    Add first functions for ML
+    Add support to function as value
 
-v1.211126.3
-Add support to nested idict in cache
-Update garoupa for correct etype inducer on ldict.ø
+v1.211126
+    Add support to nested idict in cache
+    Update garoupa for correct etype inducer on ldict.ø
 
 v2 [Withheld due to undeterministic dill behavior while calculating function hash]
-Revert to bytecode and get back to v1
-Add nokey to show()
-Keep ids of insertion idict
-Add fromfile
+    Revert to bytecode and get back to v1
+    Add nokey to show()
+    Keep ids of insertion idict
+    Add fromfile

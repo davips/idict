@@ -49,12 +49,21 @@
 #  time spent here.
 import json
 
+from idict.core.identification import key2id
+from idict.persistence.cache import Cache
+from ldict.core.base import AbstractLazyDict
 from ldict.lazyval import LazyVal
 
-from idict.core.identification import key2id
+
+def storevalue(id, value, cache):
+    cache[id] = value
 
 
-def cached(d, cache):
+def storeblob(id, blob, cache):
+    cache.setblob(id, blob)
+
+
+def cached(d, cache) -&gt; AbstractLazyDict:
     &#34;&#34;&#34;
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
@@ -64,6 +73,7 @@ def cached(d, cache):
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
+    store = storeblob if isinstance(cache, Cache) else storevalue
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -80,16 +90,16 @@ def cached(d, cache):
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[v] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    store(v, {&#34;_id&#34;: handle_singleton_id(data[k])}, cache)
                     data[k] = cached(data[k], cache)
                 else:
-                    cache[v] = data[k]
+                    store(v, data[k], cache)
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
                 raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
             # if did not in cache:
-            cache[front_id] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
+            store(front_id, {&#34;_id&#34;: id, &#34;_ids&#34;: fids}, cache)
             return result
 
         return func
@@ -104,7 +114,7 @@ def cached(d, cache):
             output_fields.append(field)
             lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
-            deps = {&#34;^&#34;: None}
+            deps = {&#34;↑&#34;: None}
             deps.update(v.deps)
             lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, None)
             data[field] = lazy
@@ -114,12 +124,12 @@ def cached(d, cache):
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[fid] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    store(fid, {&#34;_id&#34;: handle_singleton_id(data[k])}, cache)
                     data[k] = cached(data[k], cache)
                 else:
-                    cache[fid] = data[k]
+                    store(fid, data[k], cache)
         if front_id not in cache:
-            cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
+            store(front_id, {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}, cache)
 
     return d.clone(data)
 
@@ -155,7 +165,7 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
     {
         &#34;y&#34;: 7,
         &#34;d&#34;: {
@@ -200,7 +210,18 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;y&#34;: &#34;→(↑)&#34;,
+        &#34;d&#34;: &#34;→(↑)&#34;,
+        &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
+        }
+    }
+    &gt;&gt;&gt; d.evaluated.show(colored=False)
     {
         &#34;y&#34;: 7,
         &#34;d&#34;: {
@@ -246,7 +267,7 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -292,7 +313,18 @@ def build(id, ids, cache, identity):
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;d&#34;: &#34;→(↑)&#34;,
+        &#34;y&#34;: &#34;→(↑)&#34;,
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        }
+    }
+    &gt;&gt;&gt; d.evaluated.show(colored=False)
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -316,15 +348,18 @@ def build(id, ids, cache, identity):
         # REMINDER: An item id will never start with &#39;_&#39;. That only happens with singleton-idict id translated to cache.
         if fid in cache:
             value = get_following_pointers(fid, cache)
+            # WARN: The closures bellow assume items will not be removed from &#39;cache&#39; in the meantime.
             if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
-                dic[k] = build(value[&#34;_id&#34;], value[&#34;_ids&#34;], cache, identity)
+                closure = lambda value_: lambda **kwargs: build(value_[&#34;_id&#34;], value_[&#34;_ids&#34;], cache, identity)
+                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, None)
             else:
-                dic[k] = cache[fid]
+                closure = lambda fid_: lambda **kwargs: cache[fid_]
+                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, None)
         else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
-    from idict import idict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-    return idict(dic, _id=id, _ids=ids, identity=identity)
+    return FrozenIdentifiedDict(dic, _id=id, _ids=ids, identity=identity)
 
 
 def get_following_pointers(fid, cache):
@@ -336,26 +371,7 @@ def get_following_pointers(fid, cache):
 
 
 def handle_singleton_id(d):
-    return &#34;_&#34; + d.id[1:] if len(d.ids) == 1 else d.id
-
-
-# def get(objtype, id, cache, identity):
-#     result = None
-#     if objtype == &#34;idict&#34;:  # not an item!
-#         if (id2 := &#34;_&#34; + id[1:]) in cache:
-#             result = cache[id2]
-#         elif id in cache:
-#             result = cache[id]
-#     elif objtype == &#34;item&#34; and id in cache:  # can be an idict!
-#         result = cache[id]
-#
-#     # Follow pointers.
-#     while isinstance(result, dict) and list(result.keys()) == [&#34;_id&#34;]:
-#         result = get(objtype, result[&#34;_id&#34;], cache)
-#
-#     if isinstance(result, dict) and list(result.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
-#         return build(result[&#34;_id&#34;], result[&#34;_ids&#34;], cache, identity)
-#     return result</code></pre>
+    return &#34;_&#34; + d.id[1:] if len(d.ids) == 1 else d.id</code></pre>
 </details>
 </section>
 <section>
@@ -398,7 +414,7 @@ def handle_singleton_id(d):
     }
   }
 }
-&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
 {
     &quot;y&quot;: 7,
     &quot;d&quot;: {
@@ -443,7 +459,18 @@ UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     }
   }
 }
-&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+&gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
+&gt;&gt;&gt; d.show(colored=False)
+{
+    &quot;y&quot;: &quot;→(↑)&quot;,
+    &quot;d&quot;: &quot;→(↑)&quot;,
+    &quot;_id&quot;: &quot;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&quot;,
+    &quot;_ids&quot;: {
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
+        &quot;d&quot;: &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f&quot;
+    }
+}
+&gt;&gt;&gt; d.evaluated.show(colored=False)
 {
     &quot;y&quot;: 7,
     &quot;d&quot;: {
@@ -489,7 +516,7 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
     }
   }
 }
-&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
 {
     &quot;d&quot;: {
         &quot;x&quot;: 5,
@@ -535,7 +562,18 @@ UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     }
   }
 }
-&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+&gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
+&gt;&gt;&gt; d.show(colored=False)
+{
+    &quot;d&quot;: &quot;→(↑)&quot;,
+    &quot;y&quot;: &quot;→(↑)&quot;,
+    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
+    &quot;_ids&quot;: {
+        &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
+    }
+}
+&gt;&gt;&gt; d.evaluated.show(colored=False)
 {
     &quot;d&quot;: {
         &quot;x&quot;: 5,
@@ -589,7 +627,7 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
     {
         &#34;y&#34;: 7,
         &#34;d&#34;: {
@@ -634,7 +672,18 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;y&#34;: &#34;→(↑)&#34;,
+        &#34;d&#34;: &#34;→(↑)&#34;,
+        &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
+        &#34;_ids&#34;: {
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
+        }
+    }
+    &gt;&gt;&gt; d.evaluated.show(colored=False)
     {
         &#34;y&#34;: 7,
         &#34;d&#34;: {
@@ -680,7 +729,7 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -726,7 +775,18 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).show(colored=False)
+    &gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;d&#34;: &#34;→(↑)&#34;,
+        &#34;y&#34;: &#34;→(↑)&#34;,
+        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_ids&#34;: {
+            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        }
+    }
+    &gt;&gt;&gt; d.evaluated.show(colored=False)
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -750,19 +810,22 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         # REMINDER: An item id will never start with &#39;_&#39;. That only happens with singleton-idict id translated to cache.
         if fid in cache:
             value = get_following_pointers(fid, cache)
+            # WARN: The closures bellow assume items will not be removed from &#39;cache&#39; in the meantime.
             if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
-                dic[k] = build(value[&#34;_id&#34;], value[&#34;_ids&#34;], cache, identity)
+                closure = lambda value_: lambda **kwargs: build(value_[&#34;_id&#34;], value_[&#34;_ids&#34;], cache, identity)
+                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, None)
             else:
-                dic[k] = cache[fid]
+                closure = lambda fid_: lambda **kwargs: cache[fid_]
+                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, None)
         else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
-    from idict import idict
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-    return idict(dic, _id=id, _ids=ids, identity=identity)</code></pre>
+    return FrozenIdentifiedDict(dic, _id=id, _ids=ids, identity=identity)</code></pre>
 </details>
 </dd>
 <dt id="idict.persistence.cached.cached"><code class="name flex">
-<span>def <span class="ident">cached</span></span>(<span>d, cache)</span>
+<span>def <span class="ident">cached</span></span>(<span>d, cache) ‑> ldict.core.base.AbstractLazyDict</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
@@ -771,7 +834,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def cached(d, cache):
+<pre><code class="python">def cached(d, cache) -&gt; AbstractLazyDict:
     &#34;&#34;&#34;
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
@@ -781,6 +844,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
+    store = storeblob if isinstance(cache, Cache) else storevalue
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -797,16 +861,16 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[v] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    store(v, {&#34;_id&#34;: handle_singleton_id(data[k])}, cache)
                     data[k] = cached(data[k], cache)
                 else:
-                    cache[v] = data[k]
+                    store(v, data[k], cache)
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
                 raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
             # if did not in cache:
-            cache[front_id] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
+            store(front_id, {&#34;_id&#34;: id, &#34;_ids&#34;: fids}, cache)
             return result
 
         return func
@@ -821,7 +885,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
             output_fields.append(field)
             lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
-            deps = {&#34;^&#34;: None}
+            deps = {&#34;↑&#34;: None}
             deps.update(v.deps)
             lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, None)
             data[field] = lazy
@@ -831,12 +895,12 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[fid] = {&#34;_id&#34;: handle_singleton_id(data[k])}
+                    store(fid, {&#34;_id&#34;: handle_singleton_id(data[k])}, cache)
                     data[k] = cached(data[k], cache)
                 else:
-                    cache[fid] = data[k]
+                    store(fid, data[k], cache)
         if front_id not in cache:
-            cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
+            store(front_id, {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}, cache)
 
     return d.clone(data)</code></pre>
 </details>
@@ -871,6 +935,32 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
     return &#34;_&#34; + d.id[1:] if len(d.ids) == 1 else d.id</code></pre>
 </details>
 </dd>
+<dt id="idict.persistence.cached.storeblob"><code class="name flex">
+<span>def <span class="ident">storeblob</span></span>(<span>id, blob, cache)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def storeblob(id, blob, cache):
+    cache.setblob(id, blob)</code></pre>
+</details>
+</dd>
+<dt id="idict.persistence.cached.storevalue"><code class="name flex">
+<span>def <span class="ident">storevalue</span></span>(<span>id, value, cache)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def storevalue(id, value, cache):
+    cache[id] = value</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -893,6 +983,8 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 <li><code><a title="idict.persistence.cached.cached" href="#idict.persistence.cached.cached">cached</a></code></li>
 <li><code><a title="idict.persistence.cached.get_following_pointers" href="#idict.persistence.cached.get_following_pointers">get_following_pointers</a></code></li>
 <li><code><a title="idict.persistence.cached.handle_singleton_id" href="#idict.persistence.cached.handle_singleton_id">handle_singleton_id</a></code></li>
+<li><code><a title="idict.persistence.cached.storeblob" href="#idict.persistence.cached.storeblob">storeblob</a></code></li>
+<li><code><a title="idict.persistence.cached.storevalue" href="#idict.persistence.cached.storevalue">storevalue</a></code></li>
 </ul>
 </li>
 </ul>

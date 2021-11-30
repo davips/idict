@@ -330,6 +330,7 @@ def build(id, ids, cache, identity):
         else:  # pragma: no cover
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
     return FrozenIdentifiedDict(dic, _id=id, _ids=ids, identity=identity)
 
 

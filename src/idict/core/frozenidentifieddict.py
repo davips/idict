@@ -438,10 +438,11 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-            self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+        self, other: Union[dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict
+
         if isinstance(other, list):
             d = self
             for cache in other:
@@ -604,6 +605,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     @staticmethod
     def fromtoy(output=["X", "y"], output_format="Xy", identity=ø40):
         from testfixtures import TempDirectory
+
         with TempDirectory() as tmp:
             tmp.write(
                 "toy.csv",
@@ -614,6 +616,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     @staticmethod
     def fromminiarff(output=["df"], output_format="df", identity=ø40):
         from testfixtures import TempDirectory
+
         arff = "@RELATION mini\n@ATTRIBUTE attr1	REAL\n@ATTRIBUTE attr2 	REAL\n@ATTRIBUTE class 	{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1"
         if output_format == "arff":
             return FrozenIdentifiedDict({output[0]: arff}, identity=identity)
@@ -627,6 +630,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     @staticmethod
     def fromminicsv(output=["df"], output_format="df", identity=ø40):
         from testfixtures import TempDirectory
+
         csv = "attr1,attr2,class\n5.1,3.5,0\n3.1,4.5,1"
         if output_format == "csv":
             return FrozenIdentifiedDict({output[0]: csv}, identity=identity)
@@ -655,6 +659,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     @property
     def asmutable(self):
         from idict.core.idict_ import Idict
+
         mut = Idict(identity=self.identity)
         mut.frozen = self
         return mut

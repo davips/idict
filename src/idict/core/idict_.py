@@ -371,6 +371,7 @@ class Idict(AbstractMutableLazyDict):
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         self.identity = identity
         if isinstance(_dictionary, str) and isinstance(_id, dict):
             # Build idict from id+cache.
@@ -485,29 +486,35 @@ class Idict(AbstractMutableLazyDict):
     @staticmethod
     def fromid(id, cache, identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         return FrozenIdentifiedDict.fromid(id, cache, identity).asmutable
 
     @staticmethod
     def fromfile(name, output=["df"], output_format="df"):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         return FrozenIdentifiedDict.fromfile(name, output, output_format).asmutable
 
     @staticmethod
     def fromtoy(output=["X", "y"], output_format="Xy"):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         return FrozenIdentifiedDict.fromtoy(output, output_format).asmutable
 
     @staticmethod
     def fromminiarff(output=["df"], output_format="df"):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         return FrozenIdentifiedDict.fromminiarff(output, output_format).asmutable
 
     @staticmethod
     def fromminicsv(output=["df"], output_format="df"):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         return FrozenIdentifiedDict.fromminicsv(output, output_format).asmutable
 
     @staticmethod
     def fromopenml(name, version=1, Xout="X", yout="y"):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         return FrozenIdentifiedDict.fromopenml(name, version, Xout, yout).asmutable
