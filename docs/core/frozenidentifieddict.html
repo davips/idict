@@ -370,7 +370,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def __hash__(self):
         return hash(self.hosh)
 
-    def show(self, colored=True, width=None):
+    def show(self, colored=True, width=None, history=False):
         r&#34;&#34;&#34;
         &gt;&gt;&gt; idict = FrozenIdentifiedDict
         &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
@@ -385,13 +385,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         }
         &#34;&#34;&#34;
         CustomJSONEncoder.width = width
-        return print(self.all if colored else decolorize(self.all))
+        return print(self.__repr__(True, history) if colored else decolorize(self.__repr__(True, history)))
 
-    def __repr__(self, all=False):
-        return idict2txt(self, all)
+    def __repr__(self, all=False, history=False):
+        return idict2txt(self, all, history)
 
     def __str__(self, all=False):
-        return decolorize(idict2txt(self, all))
+        return decolorize(idict2txt(self, all, False))
 
     @property
     def all(self):
@@ -1166,7 +1166,7 @@ True
     def __hash__(self):
         return hash(self.hosh)
 
-    def show(self, colored=True, width=None):
+    def show(self, colored=True, width=None, history=False):
         r&#34;&#34;&#34;
         &gt;&gt;&gt; idict = FrozenIdentifiedDict
         &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
@@ -1181,13 +1181,13 @@ True
         }
         &#34;&#34;&#34;
         CustomJSONEncoder.width = width
-        return print(self.all if colored else decolorize(self.all))
+        return print(self.__repr__(True, history) if colored else decolorize(self.__repr__(True, history)))
 
-    def __repr__(self, all=False):
-        return idict2txt(self, all)
+    def __repr__(self, all=False, history=False):
+        return idict2txt(self, all, history)
 
     def __str__(self, all=False):
-        return decolorize(idict2txt(self, all))
+        return decolorize(idict2txt(self, all, False))
 
     @property
     def all(self):
@@ -2005,7 +2005,7 @@ def asmutable(self):
 </details>
 </dd>
 <dt id="idict.core.frozenidentifieddict.FrozenIdentifiedDict.show"><code class="name flex">
-<span>def <span class="ident">show</span></span>(<span>self, colored=True, width=None)</span>
+<span>def <span class="ident">show</span></span>(<span>self, colored=True, width=None, history=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; idict = FrozenIdentifiedDict
@@ -2024,7 +2024,7 @@ def asmutable(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def show(self, colored=True, width=None):
+<pre><code class="python">def show(self, colored=True, width=None, history=False):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; idict = FrozenIdentifiedDict
     &gt;&gt;&gt; idict(x=134124, y= 56).show(colored=False)
@@ -2039,7 +2039,7 @@ def asmutable(self):
     }
     &#34;&#34;&#34;
     CustomJSONEncoder.width = width
-    return print(self.all if colored else decolorize(self.all))</code></pre>
+    return print(self.__repr__(True, history) if colored else decolorize(self.__repr__(True, history)))</code></pre>
 </details>
 </dd>
 </dl>

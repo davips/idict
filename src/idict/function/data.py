@@ -38,18 +38,7 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
     {
         "X": "→(input Xout yout df)",
         "y": "→(input Xout yout df)",
-        "_history": {
-            "df2np--------pandas-1.3.4--sklearn-1.0.1": {
-                "name": "df2np",
-                "description": "DataFrame (pandas) to X,y (numpy) converter.",
-                "parameters": {
-                    "input": "df",
-                    "Xout": "X",
-                    "yout": "y"
-                },
-                "code": "def f(input='df', Xout='X', yout='y', **kwargs):\\nfrom sklearn.preprocessing import LabelEncoder\\nle = LabelEncoder()\\ndf = kwargs[input]\\nX_ = df.drop((df.columns[[-1]]), axis=1)\\ny_ = le.fit_transform(df[df.columns[(-1)]])\\nreturn {Xout: X_, yout: y_, '_history': ...}"
-            }
-        },
+        "_history": "df2np--------pandas-1.3.4--sklearn-1.0.1",
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
         "_id": "E44sczWfUMWFuItAavOd9v.4Q1.sklearn-1.0.1",
         "_ids": {
@@ -88,17 +77,7 @@ def df2arff(input="df", output="arff", **kwargs):
     >>> d.show(colored=False)
     {
         "a": "→(input output df)",
-        "_history": {
-            "df2arff----------------arff2pandas-1.0.1": {
-                "name": "df2arff",
-                "description": "DataFrame (pandas) to ARFF converter.",
-                "parameters": {
-                    "input": "df",
-                    "output": "a"
-                },
-                "code": "def f(input='df', output='arff', **kwargs):\\nfrom arff2pandas import a2p\\nreturn {output: a2p.dumps(kwargs[input]), '_history': ...}"
-            }
-        },
+        "_history": "df2arff----------------arff2pandas-1.0.1",
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
         "_id": "xdyZaF3yh4jf0fQK8IxSo0m5XKfLPerBLwVuTve8",
         "_ids": {
@@ -131,19 +110,7 @@ def openml(Xout="X", yout="y", name="iris", version=1):
     {
         "X": "→(Xout yout name version)",
         "y": "→(Xout yout name version)",
-        "_history": {
-            "openml---------------------sklearn-1.0.1": {
-                "name": "openml",
-                "description": "Fetch DataFrame+Series (pandas) from OpenML.",
-                "parameters": {
-                    "Xout": "X",
-                    "yout": "y",
-                    "name": "iris",
-                    "version": 1
-                },
-                "code": "def f(Xout='X', yout='y', name='iris', version=1):\\nfrom sklearn.datasets import fetch_openml\\nX, y = fetch_openml(name=name, version=version, as_frame=True, return_X_y=True)\\nreturn {Xout: X, yout: y, '_history': ...}"
-            }
-        },
+        "_history": "openml---------------------sklearn-1.0.1",
         "_id": "openml---------------------sklearn-1.0.1",
         "_ids": {
             "X": "ze11cyj1Gi2mcWmsh1rrjkjdzgI9mlearj-1.0.2",
@@ -195,17 +162,7 @@ def arff2df(input="arff", output="df", **kwargs):
     >>> d.show(colored=False)
     {
         "df": "→(input output arff)",
-        "_history": {
-            "arff2df----------------arff2pandas-1.0.1": {
-                "name": "arff2df",
-                "description": "ARFF to DataFrame (pandas) converter.",
-                "parameters": {
-                    "input": "arff",
-                    "output": "df"
-                },
-                "code": "def f(input='arff', output='df', **kwargs):\nwith StringIO() as (f):\n    f.write(kwargs[input])\n    df = a2p.loads(f.getvalue())\nreturn {output: df, '_history': ...}"
-            }
-        },
+        "_history": "arff2df----------------arff2pandas-1.0.1",
         "arff": "@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
         "_id": "n4EMpHwlrvpM-fFo4LC5914xb892pandas-1.0.1",
         "_ids": {

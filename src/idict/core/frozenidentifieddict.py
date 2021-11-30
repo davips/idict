@@ -357,13 +357,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         }
         """
         CustomJSONEncoder.width = width
-        return print(self.__repr__(all=history) if colored else decolorize(self.__repr__(all=history)))
+        return print(self.__repr__(True, history) if colored else decolorize(self.__repr__(True, history)))
 
-    def __repr__(self, all=False):
-        return idict2txt(self, all)
+    def __repr__(self, all=False, history=False):
+        return idict2txt(self, all, history)
 
     def __str__(self, all=False):
-        return decolorize(idict2txt(self, all))
+        return decolorize(idict2txt(self, all, False))
 
     @property
     def all(self):

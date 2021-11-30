@@ -51,7 +51,7 @@
 
 
 def split(input=[&#34;X&#34;, &#34;y&#34;], config={&#34;test_size&#34;: 0.33, &#34;shuffle&#34;: True, &#34;stratify&#34;: &#34;y&#34;, &#34;random_state&#34;: 0}, **kwargs):
-    &#34;&#34;&#34;
+    r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict, let
     &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
     &gt;&gt;&gt; d.show(colored=False)
@@ -60,25 +60,7 @@ def split(input=[&#34;X&#34;, &#34;y&#34;], config={&#34;test_size&#34;: 0.33, &
         &#34;ytr&#34;: &#34;→(input config X y)&#34;,
         &#34;Xts&#34;: &#34;→(input config X y)&#34;,
         &#34;yts&#34;: &#34;→(input config X y)&#34;,
-        &#34;_history&#34;: {
-            &#34;split----------------------sklearn-1.0.1&#34;: {
-                &#34;name&#34;: &#34;split&#34;,
-                &#34;description&#34;: &#34;Split data in two sets.&#34;,
-                &#34;parameters&#34;: {
-                    &#34;input&#34;: [
-                        &#34;X&#34;,
-                        &#34;y&#34;
-                    ],
-                    &#34;config&#34;: {
-                        &#34;test_size&#34;: 0.33,
-                        &#34;shuffle&#34;: true,
-                        &#34;stratify&#34;: &#34;y&#34;,
-                        &#34;random_state&#34;: 0
-                    }
-                },
-                &#34;code&#34;: &#34;def f(input=[&#39;X&#39;, &#39;y&#39;], config={&#39;test_size&#39;: 0.33, &#39;shuffle&#39;: True, &#39;stratify&#39;: &#39;y&#39;, &#39;random_state&#39;: 0}, **kwargs):\\nif input != [&#39;X&#39;, &#39;y&#39;]:\\n    raise Exception(f\\&#34;Not implemented for input/output different from default values: {input}\\&#34;)\\nfrom sklearn.model_selection import train_test_split\\nargs = {}\\nfor i, _ in enumerate(input):\\n    args[input[i]] = kwargs[input[i]]\\nelse:\\n    if &#39;stratify&#39; in config:\\n        if isinstance(config[&#39;stratify&#39;], str):\\n            if config[&#39;stratify&#39;] not in input:\\n                raise Exception(f\\&#34;Missing field {config[&#39;stratify&#39;]} for stratification.\\&#34;)\\n            config[&#39;stratify&#39;] = args[config[&#39;stratify&#39;]]\\n    Xtr, Xts, ytr, yts = train_test_split(*(args.values)(), **config)\\n    return {&#39;Xtr&#39;:Xtr,  &#39;ytr&#39;:ytr,  &#39;Xts&#39;:Xts,  &#39;yts&#39;:yts,  &#39;_history&#39;:...}&#34;
-            }
-        },
+        &#34;_history&#34;: &#34;split----------------------sklearn-1.0.1&#34;,
         &#34;X&#34;: &#34;«{&#39;attr1&#39;: {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, &#39;attr2&#39;: {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&#34;,
         &#34;y&#34;: &#34;«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»&#34;,
         &#34;_id&#34;: &#34;6xSiHAhSJC9yzGXeabFahIqeniPsklearn-1.0.1&#34;,
@@ -141,25 +123,7 @@ split.metadata = {
     &quot;ytr&quot;: &quot;→(input config X y)&quot;,
     &quot;Xts&quot;: &quot;→(input config X y)&quot;,
     &quot;yts&quot;: &quot;→(input config X y)&quot;,
-    &quot;_history&quot;: {
-        &quot;split----------------------sklearn-1.0.1&quot;: {
-            &quot;name&quot;: &quot;split&quot;,
-            &quot;description&quot;: &quot;Split data in two sets.&quot;,
-            &quot;parameters&quot;: {
-                &quot;input&quot;: [
-                    &quot;X&quot;,
-                    &quot;y&quot;
-                ],
-                &quot;config&quot;: {
-                    &quot;test_size&quot;: 0.33,
-                    &quot;shuffle&quot;: true,
-                    &quot;stratify&quot;: &quot;y&quot;,
-                    &quot;random_state&quot;: 0
-                }
-            },
-            &quot;code&quot;: &quot;def f(input=['X', 'y'], config={'test_size': 0.33, 'shuffle': True, 'stratify': 'y', 'random_state': 0}, **kwargs):\nif input != ['X', 'y']:\n    raise Exception(f\&quot;Not implemented for input/output different from default values: {input}\&quot;)\nfrom sklearn.model_selection import train_test_split\nargs = {}\nfor i, _ in enumerate(input):\n    args[input[i]] = kwargs[input[i]]\nelse:\n    if 'stratify' in config:\n        if isinstance(config['stratify'], str):\n            if config['stratify'] not in input:\n                raise Exception(f\&quot;Missing field {config['stratify']} for stratification.\&quot;)\n            config['stratify'] = args[config['stratify']]\n    Xtr, Xts, ytr, yts = train_test_split(*(args.values)(), **config)\n    return {'Xtr':Xtr,  'ytr':ytr,  'Xts':Xts,  'yts':yts,  '_history':...}&quot;
-        }
-    },
+    &quot;_history&quot;: &quot;split----------------------sklearn-1.0.1&quot;,
     &quot;X&quot;: &quot;«{'attr1': {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, 'attr2': {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&quot;,
     &quot;y&quot;: &quot;«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»&quot;,
     &quot;_id&quot;: &quot;6xSiHAhSJC9yzGXeabFahIqeniPsklearn-1.0.1&quot;,
@@ -181,7 +145,7 @@ array([1, 0, 1, 0, 0, 0, 1])
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def split(input=[&#34;X&#34;, &#34;y&#34;], config={&#34;test_size&#34;: 0.33, &#34;shuffle&#34;: True, &#34;stratify&#34;: &#34;y&#34;, &#34;random_state&#34;: 0}, **kwargs):
-    &#34;&#34;&#34;
+    r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict, let
     &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
     &gt;&gt;&gt; d.show(colored=False)
@@ -190,25 +154,7 @@ array([1, 0, 1, 0, 0, 0, 1])
         &#34;ytr&#34;: &#34;→(input config X y)&#34;,
         &#34;Xts&#34;: &#34;→(input config X y)&#34;,
         &#34;yts&#34;: &#34;→(input config X y)&#34;,
-        &#34;_history&#34;: {
-            &#34;split----------------------sklearn-1.0.1&#34;: {
-                &#34;name&#34;: &#34;split&#34;,
-                &#34;description&#34;: &#34;Split data in two sets.&#34;,
-                &#34;parameters&#34;: {
-                    &#34;input&#34;: [
-                        &#34;X&#34;,
-                        &#34;y&#34;
-                    ],
-                    &#34;config&#34;: {
-                        &#34;test_size&#34;: 0.33,
-                        &#34;shuffle&#34;: true,
-                        &#34;stratify&#34;: &#34;y&#34;,
-                        &#34;random_state&#34;: 0
-                    }
-                },
-                &#34;code&#34;: &#34;def f(input=[&#39;X&#39;, &#39;y&#39;], config={&#39;test_size&#39;: 0.33, &#39;shuffle&#39;: True, &#39;stratify&#39;: &#39;y&#39;, &#39;random_state&#39;: 0}, **kwargs):\\nif input != [&#39;X&#39;, &#39;y&#39;]:\\n    raise Exception(f\\&#34;Not implemented for input/output different from default values: {input}\\&#34;)\\nfrom sklearn.model_selection import train_test_split\\nargs = {}\\nfor i, _ in enumerate(input):\\n    args[input[i]] = kwargs[input[i]]\\nelse:\\n    if &#39;stratify&#39; in config:\\n        if isinstance(config[&#39;stratify&#39;], str):\\n            if config[&#39;stratify&#39;] not in input:\\n                raise Exception(f\\&#34;Missing field {config[&#39;stratify&#39;]} for stratification.\\&#34;)\\n            config[&#39;stratify&#39;] = args[config[&#39;stratify&#39;]]\\n    Xtr, Xts, ytr, yts = train_test_split(*(args.values)(), **config)\\n    return {&#39;Xtr&#39;:Xtr,  &#39;ytr&#39;:ytr,  &#39;Xts&#39;:Xts,  &#39;yts&#39;:yts,  &#39;_history&#39;:...}&#34;
-            }
-        },
+        &#34;_history&#34;: &#34;split----------------------sklearn-1.0.1&#34;,
         &#34;X&#34;: &#34;«{&#39;attr1&#39;: {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, &#39;attr2&#39;: {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&#34;,
         &#34;y&#34;: &#34;«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»&#34;,
         &#34;_id&#34;: &#34;6xSiHAhSJC9yzGXeabFahIqeniPsklearn-1.0.1&#34;,

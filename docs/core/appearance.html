@@ -50,20 +50,22 @@
 
 import json
 
+from garoupa import Hosh
+
 from idict.core.identification import key2id
 from ldict.customjson import CustomJSONEncoder
 
 
-def idict2txt(d, all):
+def idict2txt(d, all, history):
     r&#34;&#34;&#34;
     Textual representation of a ldict object
 
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; from ldict.core.appearance import decolorize
     &gt;&gt;&gt; d = idict(x=1,y=2)
-    &gt;&gt;&gt; decolorize(idict2txt(d, False))
+    &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
-    &gt;&gt;&gt; decolorize(idict2txt(d, True))
+    &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
 
     Parameters
@@ -75,7 +77,7 @@ def idict2txt(d, all):
     -------
 
     &#34;&#34;&#34;
-    dic = idict2dict(d, all)
+    dic = idict2dict(d, all, history)
     txt = json.dumps(dic, indent=4, ensure_ascii=False, cls=CustomJSONEncoder)
     for k, v in dic.items():
         if k == &#34;_id&#34;:
@@ -87,22 +89,19 @@ def idict2txt(d, all):
     return txt
 
 
-def idict2dict(d, all):
+def idict2dict(d, all, history):
     # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
-    for k, v in d.data.items():
-        # if isinstance(v, LazyVal):
-        #     dic[k] = str(v)
-        # elif isinstance(v, AbstractLazyDict):
-        #     dic[k] = ldict2dict(v, all)
-        if not all:
-            if len(d.ids) &lt; 3:
-                dic[&#34;_ids&#34;] = &#34; &#34;.join(d.ids.values())
-            else:
-                ids = list(d.ids.values())
-                dic[&#34;_ids&#34;] = f&#34;{ids[0]}... +{len(d) - 4} ...{ids[-1]}&#34;
-        elif k == &#34;_ids&#34;:
-            dic[&#34;_ids&#34;] = d.ids.copy()
+    if not history and &#34;_history&#34; in dic:
+        dic[&#34;_history&#34;] = &#34; &#34;.join(Hosh.fromid(k).id for k in dic[&#34;_history&#34;])
+    if not all:
+        if len(d.ids) &lt; 3:
+            dic[&#34;_ids&#34;] = &#34; &#34;.join(d.ids.values())
+        else:
+            ids = list(d.ids.values())
+            dic[&#34;_ids&#34;] = f&#34;{ids[0]}... +{len(d) - 4} ...{ids[-1]}&#34;
+    elif &#34;_ids&#34; in dic:
+        dic[&#34;_ids&#34;] = d.ids.copy()
     return dic</code></pre>
 </details>
 </section>
@@ -114,7 +113,7 @@ def idict2dict(d, all):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.core.appearance.idict2dict"><code class="name flex">
-<span>def <span class="ident">idict2dict</span></span>(<span>d, all)</span>
+<span>def <span class="ident">idict2dict</span></span>(<span>d, all, history)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -122,36 +121,33 @@ def idict2dict(d, all):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def idict2dict(d, all):
+<pre><code class="python">def idict2dict(d, all, history):
     # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
-    for k, v in d.data.items():
-        # if isinstance(v, LazyVal):
-        #     dic[k] = str(v)
-        # elif isinstance(v, AbstractLazyDict):
-        #     dic[k] = ldict2dict(v, all)
-        if not all:
-            if len(d.ids) &lt; 3:
-                dic[&#34;_ids&#34;] = &#34; &#34;.join(d.ids.values())
-            else:
-                ids = list(d.ids.values())
-                dic[&#34;_ids&#34;] = f&#34;{ids[0]}... +{len(d) - 4} ...{ids[-1]}&#34;
-        elif k == &#34;_ids&#34;:
-            dic[&#34;_ids&#34;] = d.ids.copy()
+    if not history and &#34;_history&#34; in dic:
+        dic[&#34;_history&#34;] = &#34; &#34;.join(Hosh.fromid(k).id for k in dic[&#34;_history&#34;])
+    if not all:
+        if len(d.ids) &lt; 3:
+            dic[&#34;_ids&#34;] = &#34; &#34;.join(d.ids.values())
+        else:
+            ids = list(d.ids.values())
+            dic[&#34;_ids&#34;] = f&#34;{ids[0]}... +{len(d) - 4} ...{ids[-1]}&#34;
+    elif &#34;_ids&#34; in dic:
+        dic[&#34;_ids&#34;] = d.ids.copy()
     return dic</code></pre>
 </details>
 </dd>
 <dt id="idict.core.appearance.idict2txt"><code class="name flex">
-<span>def <span class="ident">idict2txt</span></span>(<span>d, all)</span>
+<span>def <span class="ident">idict2txt</span></span>(<span>d, all, history)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Textual representation of a ldict object</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
 &gt;&gt;&gt; from ldict.core.appearance import decolorize
 &gt;&gt;&gt; d = idict(x=1,y=2)
-&gt;&gt;&gt; decolorize(idict2txt(d, False))
+&gt;&gt;&gt; decolorize(idict2txt(d, False, False))
 '{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&quot;\n}'
-&gt;&gt;&gt; decolorize(idict2txt(d, True))
+&gt;&gt;&gt; decolorize(idict2txt(d, True, False))
 '{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,\n        &quot;y&quot;: &quot;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;\n    }\n}'
 </code></pre>
 <h2 id="parameters">Parameters</h2>
@@ -166,16 +162,16 @@ def idict2dict(d, all):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def idict2txt(d, all):
+<pre><code class="python">def idict2txt(d, all, history):
     r&#34;&#34;&#34;
     Textual representation of a ldict object
 
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; from ldict.core.appearance import decolorize
     &gt;&gt;&gt; d = idict(x=1,y=2)
-    &gt;&gt;&gt; decolorize(idict2txt(d, False))
+    &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
-    &gt;&gt;&gt; decolorize(idict2txt(d, True))
+    &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
     &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
 
     Parameters
@@ -187,7 +183,7 @@ def idict2dict(d, all):
     -------
 
     &#34;&#34;&#34;
-    dic = idict2dict(d, all)
+    dic = idict2dict(d, all, history)
     txt = json.dumps(dic, indent=4, ensure_ascii=False, cls=CustomJSONEncoder)
     for k, v in dic.items():
         if k == &#34;_id&#34;:

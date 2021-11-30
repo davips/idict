@@ -323,10 +323,10 @@ def build(id, ids, cache, identity):
             # WARN: The closures bellow assume items will not be removed from 'cache' in the meantime.
             if isinstance(value, dict) and list(value.keys()) == ["_id", "_ids"]:
                 closure = lambda value_: lambda **kwargs: build(value_["_id"], value_["_ids"], cache, identity)
-                dic[k] = LazyVal(k, closure(value), {"↑": None}, None)
+                dic[k] = LazyVal(k, closure(value), {"↑": None}, {}, None)
             else:
                 closure = lambda fid_: lambda **kwargs: cache[fid_]
-                dic[k] = LazyVal(k, closure(fid), {"↑": None}, None)
+                dic[k] = LazyVal(k, closure(fid), {"↑": None}, {}, None)
         else:  # pragma: no cover
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict

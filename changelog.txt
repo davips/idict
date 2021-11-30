@@ -1,4 +1,7 @@
-v1.211130.0
+v1.211130.2
+Add support for noop with "_" and hidden history by default
+
+v1.211130.1
     Add from* and improve custom identity
     Make fromid() lazy
     Add eager notation for cache: [[cache]]

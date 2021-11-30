@@ -116,7 +116,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
             deps = {&#34;↑&#34;: None}
             deps.update(v.deps)
-            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, None)
+            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, data, None)
             data[field] = lazy
 
     # Eager saving when there are no lazies.
@@ -351,10 +351,10 @@ def build(id, ids, cache, identity):
             # WARN: The closures bellow assume items will not be removed from &#39;cache&#39; in the meantime.
             if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
                 closure = lambda value_: lambda **kwargs: build(value_[&#34;_id&#34;], value_[&#34;_ids&#34;], cache, identity)
-                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, None)
+                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, {}, None)
             else:
                 closure = lambda fid_: lambda **kwargs: cache[fid_]
-                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, None)
+                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, {}, None)
         else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
@@ -813,10 +813,10 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
             # WARN: The closures bellow assume items will not be removed from &#39;cache&#39; in the meantime.
             if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
                 closure = lambda value_: lambda **kwargs: build(value_[&#34;_id&#34;], value_[&#34;_ids&#34;], cache, identity)
-                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, None)
+                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, {}, None)
             else:
                 closure = lambda fid_: lambda **kwargs: cache[fid_]
-                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, None)
+                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, {}, None)
         else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
@@ -887,7 +887,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
             deps = {&#34;↑&#34;: None}
             deps.update(v.deps)
-            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, None)
+            lazy = LazyVal(field, closure(field, id, d.ids, d.data, output_fields, d.id), deps, data, None)
             data[field] = lazy
 
     # Eager saving when there are no lazies.
