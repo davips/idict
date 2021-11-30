@@ -22,7 +22,6 @@
 import json
 
 from idict.core.identification import key2id
-from idict.persistence.compressedcache import CompressedCache
 from ldict.core.base import AbstractLazyDict
 from ldict.lazyval import LazyVal
 
@@ -45,13 +44,15 @@ def cached(d, cache) -> AbstractLazyDict:
     """
     Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
+
+    Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.
     """
     # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. [serve p/ poupar espaço. e tráfego se usar duplo cache local-remoto]
     #  mas hash não é antecipável! 'cached' teria de fazer o ponteiro: ho -> {"_id": ". . ."}.  aproveitar pack() para guardar todo valor assim.
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-    store = storeblob_func(cache, d.blobs) if isinstance(cache, CompressedCache) else storevalue_func(cache)
+    store = storeblob_func(cache, d.blobs) if hasattr(cache, "setblob") else storevalue_func(cache)
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -59,6 +60,11 @@ def cached(d, cache) -> AbstractLazyDict:
             # Try loading.
             if fid in cache:
                 return get_following_pointers(fid, cache)
+
+            # Lock the id for this job.
+            if hasattr(cache, "lock"):
+                if (t := cache.lock(fid)) is not None:
+                    raise LockedEntryException(f"There is already a job producing the data {fid}, since {t}.")
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
             k = None
@@ -76,6 +82,10 @@ def cached(d, cache) -> AbstractLazyDict:
                 raise Exception(f"Key {k} not in output fields: {output_fields}. ids: {fids.items()}")
             # if did not in cache:
             cache[front_id] = {"_id": id, "_ids": fids}
+
+            # Unlock id.
+            if hasattr(cache, "unlock"):
+                cache.unlock(fid)
             return result
 
         return func
@@ -348,3 +358,7 @@ def get_following_pointers(fid, cache):
 
 def handle_singleton_id(d):
     return "_" + d.id[1:] if len(d.ids) == 1 else d.id
+
+
+class LockedEntryException(Exception):
+    pass
