@@ -19,9 +19,21 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
+import time
 from abc import abstractmethod
 
 from idict.persistence.cache import Cache
+
+
+from threading import Thread
+
+
+def alive(n):
+    """Based on https://www.geeksforgeeks.org/start-and-stop-a-thread-in-python/"""
+    while n > 0:
+        print('contando', n)
+        n -= 1
+        time.sleep(5)
 
 
 class CompressedCache(Cache):  # pragma: no cover
@@ -29,6 +41,14 @@ class CompressedCache(Cache):  # pragma: no cover
         # noinspection PyArgumentList
         # REMINDER: Cannot declare __setitem__ as abstract in this class since SQLA access it from its parent.
         self.__setitem__(key, blob, packit=False)
+
+    def lock(self):
+        pass
+        # t = Thread(target=alive, args=(10,))
+        # t.start()
+
+    def unlock(self):
+        pass
 
     @abstractmethod
     def copy(self):
