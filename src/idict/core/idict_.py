@@ -29,6 +29,7 @@ from typing import TypeVar, Union, Callable
 
 from garoupa import ø40
 
+import idict.core.frozenidentifieddict as fro
 from idict.parameter.ifunctionspace import iFunctionSpace
 from idict.parameter.ilet import iLet
 from idict.persistence.cache import Cache
@@ -39,6 +40,8 @@ from ldict.exception import WrongKeyType
 VT = TypeVar("VT")
 
 
+# TODO: colorize show() for "_history": "split----------------------sklearn-1.0.1 fit--------------------------------idict predict----------------------------idict"
+# TODO(minor): implement extend, to avoid excessive calculation when batch inserting values
 class Idict(AbstractMutableLazyDict):
     """Mutable lazy identified dict for serializable (picklable) pairs str->value
 
@@ -359,6 +362,7 @@ class Idict(AbstractMutableLazyDict):
         }
     }
     """
+    frozen: fro.FrozenIdentifiedDict
 
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
@@ -418,8 +422,7 @@ class Idict(AbstractMutableLazyDict):
         self.frozen = self.frozen.clone(data, _cloned=dict(blobs=blobs, hashes=hashes, hoshes=hoshes, hosh=hosh))
 
     def clone(self, data=None, rnd=None, _cloned=None):
-        cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
-        return self.__class__(data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals)
+        return self.frozen.clone(data, rnd, _cloned).asmutable
 
     def show(self, colored=True, width=None):
         self.frozen.show(colored, width)
@@ -510,5 +513,26 @@ class Idict(AbstractMutableLazyDict):
 
         return FrozenIdentifiedDict.fromopenml(name, version, Xout, yout).asmutable
 
+    @property
+    def metafields(self):
+        """
+        >>> from idict import idict
+        >>> idict(a=1, _b=2, _c=3).metafields
+        {'_b': 2, '_c': 3}
+        """
+        return self.frozen.metafields
 
-# TODO: colorize show() for (content: mh_8cf6d914f6d4010dfc1add303ed51f7151d44) and "_history": "split----------------------sklearn-1.0.1 fit--------------------------------idict predict----------------------------idict"
+    @property
+    def trimmed(self):
+        """
+        >>> from idict import idict
+        >>> idict(a=1, _b=2, _c=3).trimmed.show(colored=False)
+        {
+            "a": 1,
+            "_id": "v6_3ac82db5497101bcea46bd139d4b36862f272",
+            "_ids": {
+                "a": "v6_3ac82db5497101bcea46bd139d4b36862f272"
+            }
+        }
+        """
+        return self.frozen.trimmed.asmutable

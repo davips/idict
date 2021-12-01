@@ -21,7 +21,7 @@
 #  time spent here.
 #
 import operator
-from functools import reduce
+from functools import reduce, cached_property
 from operator import rshift as aop
 from operator import xor as cop
 from random import Random
@@ -317,7 +317,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         self.frozen.evaluate()
 
-    @property
+    @cached_property
     def asdict(self):
         """
         >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
@@ -332,11 +332,15 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         return self.frozen.asdict
 
-    def clone(self, data=None, rnd=None, _cloned=None):
-        cloned_internals = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
-        return FrozenIdentifiedDict(
-            data or self.data, rnd=rnd or self.rnd, identity=self.identity, _cloned=cloned_internals
-        )
+    def clone(self, data=None, rnd=None, filter=None, _cloned=None):
+        data = data or self.data
+        if filter == "fields":
+            data = {k: v for k, v in data.items() if not k.startswith("_")}
+        elif filter == "metafields":
+            data = {k: v for k, v in data.items() if k.startswith("_") and k not in ["_id", "_ids"]}
+        else:
+            _cloned = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
+        return FrozenIdentifiedDict(data, rnd=rnd or self.rnd, identity=self.identity, _cloned=_cloned)
 
     def __hash__(self):
         return hash(self.hosh)
@@ -364,7 +368,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def __str__(self, all=False):
         return decolorize(idict2txt(self, all, False))
 
-    @property
+    @cached_property
     def all(self):
         r"""
         Usage:
@@ -437,7 +441,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-        self, other: Union[list, dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+            self,
+            other: Union[list, dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict
@@ -493,8 +498,16 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             return reduce3(lambda a, op, b: op(a, b), (self, cop) + other.functions)
         return NotImplemented
 
+    @cached_property
+    def metafields(self):
+        return {k: v for k, v in self.items() if k.startswith("_") and k not in ["_id", "_ids"]}
+
+    @cached_property
+    def trimmed(self):
+        return self.clone(filter="fields")
+
     @staticmethod
-    def fromid(id, cache, identity=ø40):
+    def fromid(id, cache, identity=ø40) -> 'FrozenIdentifiedDict':
         """
         >>> from idict import idict
         >>> cache = {}

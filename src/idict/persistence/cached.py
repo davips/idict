@@ -35,7 +35,10 @@ def storevalue_func(cache):
 
 def storeblob_func(cache, blobs):
     def f(k, id, value):
-        cache.setblob(id, blobs[k] if k in blobs else value)
+        if k in blobs:
+            cache.setblob(id, blobs[k])
+        else:
+            cache[id] = value
 
     return f
 
@@ -64,7 +67,7 @@ def cached(d, cache) -> AbstractLazyDict:
 
             # Lock the id for this job.
             if hasattr(cache, "lock"):
-                if (t := cache.lock(fid)) is not None:
+                if (t := cache.lockid(fid)) is not None:
                     raise LockedEntryException(f"There is already a job producing the data {fid}, since {t}.")
 
             # Process and save (all fields, to avoid a parcial ldict being stored).
@@ -86,7 +89,7 @@ def cached(d, cache) -> AbstractLazyDict:
 
             # Unlock id.
             if hasattr(cache, "unlock"):
-                cache.unlock(fid)
+                cache.unlockid(fid)
             return result
 
         return func

@@ -46,13 +46,13 @@ class CompressedCache(Cache):  # pragma: no cover
         # noinspection PyArgumentList
         return self.__getitem__(id, packing=False)
 
-    def lock(self, id, state):
-        # TODO: what it better? launch thread at cached or here(each dict-like lock-capable would have to implement)
+    def lockid(self, id):
+        # TODO: launch thread at cached
         pass
         # t = Thread(target=alive, args=(10,))
         # t.start()
 
-    def unlock(self):
+    def unlockid(self, id):
         pass
 
     @abstractmethod
