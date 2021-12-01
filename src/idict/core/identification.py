@@ -93,7 +93,7 @@ def fhosh(f, version, approach="direct"):
     """
     if hasattr(f, "hosh"):
         return f.hosh
-    if bin := f2bin(f, approach) is None:
+    if (bin := f2bin(f, approach)) is None:
         f.hosh = Identity(version=version)
     else:
         f.hosh = Hosh(bin, "ordered", version=version)
