@@ -67,7 +67,7 @@ def f2bin(f, approach):
         return dill.dumps(f)
 
 
-def fhosh(f, version, approach):
+def fhosh(f, version, approach="direct"):
     """
     Create hosh with etype="ordered" using bytecode of "f" as binary content for blake3.
 

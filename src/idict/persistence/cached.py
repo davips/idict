@@ -52,6 +52,7 @@ def cached(d, cache) -> AbstractLazyDict:
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
+    # TODO (minor): do the same for fetch(). useful in the future if needed to speedup syncing of caches avoiding *pack
     store = storeblob_func(cache, d.blobs) if hasattr(cache, "setblob") else storevalue_func(cache)
     front_id = handle_singleton_id(d)
 

@@ -37,12 +37,20 @@ def alive(n):
 
 
 class CompressedCache(Cache):  # pragma: no cover
-    def setblob(self, key, blob):
+    def setblob(self, id, blob):
         # noinspection PyArgumentList
         # REMINDER: Cannot declare __setitem__ as abstract in this class since SQLA access it from its parent.
-        self.__setitem__(key, blob, packit=False)
+        self.__setitem__(id, blob, packit=False)
 
-    def lock(self):
+    # # see cached
+    # def getwithblob(self, id):
+    #     # TODO: adaptar __Getitem do SQLA
+    #     # noinspection PyArgumentList
+    #     # REMINDER: Cannot declare __setitem__ as abstract in this class since SQLA access it from its parent.
+    #     return self.__getitem__(id, return_blob=True)
+
+    def lock(self, id, state):
+        # TODO: what it better? launch thread at cached or here(each dict-like lock-capable would have to implement)
         pass
         # t = Thread(target=alive, args=(10,))
         # t.start()

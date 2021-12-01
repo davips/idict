@@ -449,7 +449,7 @@ class Idict(AbstractMutableLazyDict):
         clone.frozen = left >> self.frozen
         return clone
 
-    def __rshift__(self, other: Union[dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
+    def __rshift__(self, other: Union[list, dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         """
         >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
         >>> d.ids
