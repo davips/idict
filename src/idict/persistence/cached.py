@@ -121,7 +121,7 @@ def cached(d, cache) -> AbstractLazyDict:
     return d.clone(data)
 
 
-def build(id, ids, cache, identity):
+def build(id, ids, cache, identity, include_blobs=False):
     """Build an idict from a given identity
 
     >>> from idict import idict
@@ -330,7 +330,11 @@ def build(id, ids, cache, identity):
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
     ug_65906b93071a1e38384abcb6a88fbde25cd8f
     """
-    dic = {}
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+    if include_blobs:
+        raise NotImplementedError
+    hosh = identity * id
+    data, hashes, hoshes = {}, {}, {}
     for k, fid in ids.items():
         # REMINDER: An item id will never start with '_'. That only happens with singleton-idict id translated to cache.
         if fid in cache:
@@ -338,15 +342,18 @@ def build(id, ids, cache, identity):
             # WARN: The closures bellow assume items will not be removed from 'cache' in the meantime.
             if isinstance(value, dict) and list(value.keys()) == ["_id", "_ids"]:
                 closure = lambda value_: lambda **kwargs: build(value_["_id"], value_["_ids"], cache, identity)
-                dic[k] = LazyVal(k, closure(value), {"↑": None}, {}, None)
+                data[k] = LazyVal(k, closure(value), {"↑": None}, {}, None)
             else:
                 closure = lambda fid_: lambda **kwargs: cache[fid_]
-                dic[k] = LazyVal(k, closure(fid), {"↑": None}, {}, None)
+                data[k] = LazyVal(k, closure(fid), {"↑": None}, {}, None)
         else:  # pragma: no cover
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
-    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+        hoshes[k] = identity * fid
+        if fid[2] == "_":
+            hashes[k] = hoshes[k] // key2id(k, identity.digits)
 
-    return FrozenIdentifiedDict(dic, _id=id, _ids=ids, identity=identity)
+    internals = dict(blobs={}, hashes=hashes, hoshes=hoshes, hosh=hosh)
+    return FrozenIdentifiedDict(data, identity=identity, _cloned=internals)
 
 
 def get_following_pointers(fid, cache):

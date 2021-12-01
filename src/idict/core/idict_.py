@@ -369,9 +369,8 @@ class Idict(AbstractMutableLazyDict):
             # Build idict from id+cache.
             if _ids or rnd or _cloned or kwargs:
                 raise Exception("Cannot pass more arguments when first argument is id and second argument is cache.")
-            # TODO: detect identity from number of digits
+            # TODO (minor): detect identity from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
-            # TODO: recover contentids from cache (see Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f in the doctest above)
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 
