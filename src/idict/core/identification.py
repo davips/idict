@@ -25,16 +25,54 @@ import dis
 import pickle
 from inspect import signature
 
+import dill
 from garoupa import Hosh, UT40_4, Identity
 from orjson import dumps
 
 from idict.data.compression import pack, NondeterminismException
 from ldict.exception import NoInputException
 
+dill_warned = False
 
-def fhosh(f, version):
+
+def f2bin(f, approach):
+    # Add signature.
+    fields_and_params = signature(f).parameters.values()
+    fields_and_params = {v.name: None if v.default is v.empty else v.default for v in fields_and_params}
+    if not fields_and_params:
+        raise NoInputException(f"Missing function input parameters.")
+    if "_" in fields_and_params:
+        return None
+
+    if approach == "clean":
+        # Remove line numbers.
+        groups = [l for l in dis.Bytecode(f).dis().split("\n\n") if l]
+        clean_lines = []
+        for group in groups:
+            lines = [segment for segment in group.split(" ") if segment][1:]
+            clean_lines.append(lines)
+        return dumps(clean_lines) + pickle.dumps(fields_and_params, protocol=5)
+    if approach == "direct":
+        c = f.__code__
+        code_bin = c.co_code + str(c.co_consts).encode()
+        # TODO: replace pickle for a deterministic dill if possible?
+        #  it could allow a broader range of default values (numpy, models)
+        return code_bin + pickle.dumps(fields_and_params, protocol=5)
+    if approach == "dill":
+        # TODO: one advantage of dill here is to be able to hash a custom callable instead of only functions.
+        global dill_warned
+        if not dill_warned:
+            dill_warned = True
+            print("WARNING: using 'dill' to hash functions is not determinist")
+        return dill.dumps(f)
+
+
+def fhosh(f, version, approach):
     """
-    Create hosh with etype="ordered" using bytecode of "f" as binary content.
+    Create hosh with etype="ordered" using bytecode of "f" as binary content for blake3.
+
+    For some insight on the algorithm choice inside GaROUPa, see, e.g.:
+    https://news.ycombinator.com/item?id=22021984
 
     Usage:
 
@@ -55,27 +93,10 @@ def fhosh(f, version):
     """
     if hasattr(f, "hosh"):
         return f.hosh
-
-    # Add signature.
-    pars = signature(f).parameters
-    fargs = list(pars.keys())
-    if not fargs:
-        raise NoInputException(f"Missing function input parameters.")
-    if "_" in fargs:
+    if bin := f2bin(f, approach) is None:
         f.hosh = Identity(version=version)
-        return f.hosh
-    clean = [fargs]
-    only_kwargs = {v.name: str(pickle.dumps(v.default, protocol=5)) for v in pars.values() if v.default is not v.empty}
-    if only_kwargs:
-        clean.append(only_kwargs)
-
-    # Clean line numbers.
-    groups = [l for l in dis.Bytecode(f).dis().split("\n\n") if l]
-    for group in groups:
-        lines = [segment for segment in group.split(" ") if segment][1:]
-        clean.append(lines)
-
-    f.hosh = Hosh(dumps(clean), "ordered", version=version)
+    else:
+        f.hosh = Hosh(bin, "ordered", version=version)
     return f.hosh
 
 
