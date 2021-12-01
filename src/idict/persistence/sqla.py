@@ -128,7 +128,8 @@ class SQLA(CompressedCache):
         raise NotImplementedError
 
     def __init__(
-        self, session="sqlite+pysqlite:///:memory:", autopack=True, nondeterministic_fallback_on_pack=True, debug=False
+            self, session="sqlite+pysqlite:///:memory:", autopack=True, nondeterministic_fallback_on_pack=True,
+            debug=False
     ):
         if isinstance(session, str):
 
@@ -157,20 +158,22 @@ class SQLA(CompressedCache):
         with self.sessionctx() as session:
             return (c.id for c in session.query(Content).all())
 
-    def __setitem__(self, key: str, value, packit=True):
+    def __setitem__(self, key: str, value, packing=True):
         check(key)
-        if self.autopack and packit:
+        if self.autopack and packing:
             value = pack(value, nondeterministic_fallback=self.nondeterministic_fallback_on_pack)
         content = Content(id=key, blob=value)
         with self.sessionctx() as session:
             session.add(content)
             session.commit()
 
-    def __getitem__(self, key):
+    def __getitem__(self, key, packing=True):
         check(key)
         with self.sessionctx() as session:
             if ret := session.query(Content).get(key):
-                ret = unpack(ret.blob)
+                ret = ret.blob
+                if packing:
+                    ret = unpack(ret)
         return ret or None
 
     def __delitem__(self, key):
