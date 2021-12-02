@@ -493,13 +493,13 @@ class Idict(AbstractMutableLazyDict):
     def fromtoy(output=["X", "y"], output_format="Xy", identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-        return FrozenIdentifiedDict.fromtoy(output, output_format,identity).asmutable
+        return FrozenIdentifiedDict.fromtoy(output, output_format, identity).asmutable
 
     @staticmethod
     def fromminiarff(output=["df"], output_format="df", identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-        return FrozenIdentifiedDict.fromminiarff(output, output_format,identity).asmutable
+        return FrozenIdentifiedDict.fromminiarff(output, output_format, identity).asmutable
 
     @staticmethod
     def fromminicsv(output=["df"], output_format="df", identity=ø40):

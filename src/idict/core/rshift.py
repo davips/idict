@@ -25,6 +25,7 @@ from functools import reduce
 from typing import Dict
 
 from garoupa import Hosh
+
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
 from idict.parameter.ilet import iLet
@@ -59,6 +60,8 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     else:
         frozen = self.frozen >> other
         outputs = frozen.returned
+    if "_history" in outputs and ... in frozen.data["_history"]:
+        frozen.data["_history"][f.hosh.id] = frozen.data["_history"].pop(...)
     uf = self.hosh * f_hosh_full
     ufu_1 = lambda: solve(self.hoshes, outputs, uf)
 
