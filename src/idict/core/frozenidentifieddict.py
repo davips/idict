@@ -335,9 +335,9 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def clone(self, data=None, rnd=None, filter=None, _cloned=None):
         data = data or self.data
         if filter == "fields":
-            data = {k: v for k, v in data.items() if not k.startswith("_")}
+            data = {k: v for k, v in data.items() if not k.startswith("_") or k in ["_id", "_ids"]}
         elif filter == "metafields":
-            data = {k: v for k, v in data.items() if k.startswith("_") and k not in ["_id", "_ids"]}
+            data = {k: v for k, v in data.items() if k.startswith("_")}
         else:
             _cloned = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return FrozenIdentifiedDict(data, rnd=rnd or self.rnd, identity=self.identity, _cloned=_cloned)
