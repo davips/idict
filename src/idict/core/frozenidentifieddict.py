@@ -558,7 +558,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return build(val["_id"], val["_ids"], cache, identity)
 
     @staticmethod
-    def fromfile(name, output=["df"], output_format="df", identity=ø40):
+    def fromfile(name, output=["df"], output_format="df", include_name=False, identity=ø40):
         """Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5
         >>> d = FrozenIdentifiedDict.fromminiarff()
         >>> d.show(colored=False)
@@ -598,13 +598,14 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             }
         }
         """
-        df = file2df(name)
+        df, name = file2df(name)
+        metafields = {"_name": name} if include_name else {}
         if output_format == "df":
             if output == ["X", "y"]:
                 output = ["df"]
             if len(output) != 1:
                 raise Exception(f"Wrong number of fields {len(output)}. Expected: 1.", output)
-            return FrozenIdentifiedDict({output[0]: df}, identity=identity)
+            return FrozenIdentifiedDict({output[0]: df}, identity=identity, **metafields)
         elif output_format == "Xy":
             if output == ["df"]:
                 output = ["X", "y"]
@@ -612,7 +613,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 raise Exception(f"Wrong number of fields {len(output)}. Expected: 2.", output)
             dic = df2np(df=df)
             del dic["_history"]
-            return FrozenIdentifiedDict({output[0]: dic["X"], output[1]: dic["y"]}, identity=identity)
+            return FrozenIdentifiedDict({output[0]: dic["X"], output[1]: dic["y"]}, identity=identity, **metafields)
         else:  # pragma: no cover
             raise Exception(f"Unknown {output_format=}.")
 
