@@ -45,6 +45,7 @@ from ldict.frozenlazydict import FrozenLazyDict
 VT = TypeVar("VT")
 
 
+# TODO(minor): pq frozen.keys retorna KeysView, que contem valores tb?
 class FrozenIdentifiedDict(AbstractLazyDict):
     """Immutable lazy universally identified dict for serializable (picklable) pairs str->value
 
@@ -332,14 +333,9 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         """
         return self.frozen.asdict
 
-    def clone(self, data=None, rnd=None, filter=None, _cloned=None):
+    def clone(self, data=None, rnd=None, _cloned=None):
         data = data or self.data
-        if filter == "fields":
-            data = {k: v for k, v in data.items() if not k.startswith("_") or k in ["_id", "_ids"]}
-        elif filter == "metafields":
-            data = {k: v for k, v in data.items() if k.startswith("_")}
-        else:
-            _cloned = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
+        _cloned = _cloned or dict(blobs=self.blobs, hashes=self.hashes, hoshes=self.hoshes, hosh=self.hosh)
         return FrozenIdentifiedDict(data, rnd=rnd or self.rnd, identity=self.identity, _cloned=_cloned)
 
     def __hash__(self):
@@ -504,7 +500,23 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     @cached_property
     def trimmed(self):
-        return self.clone(filter="fields")
+        ids = self.ids.copy()
+        data = self.data.copy()
+        blobs = self.blobs.copy()
+        hashes = self.hashes.copy()
+        hoshes = self.hoshes.copy()
+        for k in self.ids:
+            if k.startswith("_"):
+                del ids[k]
+                del data[k]
+                if k in blobs:
+                    del blobs[k]
+                if k in hashes:
+                    del hashes[k]
+                del hoshes[k]
+        data["_ids"] = ids
+        cloned_internals = dict(blobs=blobs, hashes=hashes, hoshes=hoshes, hosh=self.hosh)
+        return self.clone(data, _cloned=cloned_internals)
 
     @staticmethod
     def fromid(id, cache, identity=ø40) -> 'FrozenIdentifiedDict':
@@ -550,10 +562,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> d == d2
         True
         """
+        id0 = id
         if (newid := "_" + id[1:]) in cache:
             id = newid
         val = get_following_pointers(id, cache)
-        if val is None or not isinstance(val, dict) and "_id" not in val and "_ids" not in val:
+        isdescriptor = isinstance(val, dict) and "_id" in val and "_ids" in val
+        if val is None or not isdescriptor:
+            print(f"Not found: {id0}/{id}")
             return None
         return build(val["_id"], val["_ids"], cache, identity)
 

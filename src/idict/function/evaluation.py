@@ -21,7 +21,6 @@
 #  time spent here.
 #
 
-
 def split(input=["X", "y"], config={"test_size": 0.33, "shuffle": True, "stratify": "y", "random_state": 0}, **kwargs):
     r"""
     >>> from idict import idict, let
@@ -74,3 +73,5 @@ split.metadata = {
     "parameters": ...,
     "code": ...,
 }
+
+# TODO: enforce versions by runtime checking (sklearn etc)

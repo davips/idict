@@ -526,7 +526,7 @@ class Idict(AbstractMutableLazyDict):
     def trimmed(self):
         """
         >>> from idict import idict
-        >>> idict(a=1, _b=2, _c=3).trimmed.show(colored=False)
+        >>> idict(a=1, _b=2, _history=[1,2,3]).trimmed.show(colored=False)
         {
             "a": 1,
             "_id": "v6_3ac82db5497101bcea46bd139d4b36862f272",
