@@ -24,12 +24,18 @@ def file2df(name):
     if name.endswith(".arff"):
         from arff2pandas import a2p
 
+        relation = None
+        with open(name) as f:
+            for line in f:
+                if line[:9].upper() == "@RELATION":
+                    relation = line[9:-1]
+                    break
         with open(name) as f:
             df = a2p.load(f)
-        return df
+        return df, relation or name
     elif name.endswith(".csv"):
         from pandas import read_csv
 
-        return read_csv(name)
+        return read_csv(name), name
     else:  # pragma: no cover
         raise Exception(f"Unknown extension {name.split('.')[-1]}.")

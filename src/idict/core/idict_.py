@@ -484,34 +484,34 @@ class Idict(AbstractMutableLazyDict):
         return FrozenIdentifiedDict.fromid(id, cache, identity).asmutable
 
     @staticmethod
-    def fromfile(name, output=["df"], output_format="df"):
+    def fromfile(name, output=["df"], output_format="df", include_name=False, identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-        return FrozenIdentifiedDict.fromfile(name, output, output_format).asmutable
+        return FrozenIdentifiedDict.fromfile(name, output, output_format, include_name, identity).asmutable
 
     @staticmethod
-    def fromtoy(output=["X", "y"], output_format="Xy"):
+    def fromtoy(output=["X", "y"], output_format="Xy", identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-        return FrozenIdentifiedDict.fromtoy(output, output_format).asmutable
+        return FrozenIdentifiedDict.fromtoy(output, output_format,identity).asmutable
 
     @staticmethod
-    def fromminiarff(output=["df"], output_format="df"):
+    def fromminiarff(output=["df"], output_format="df", identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-        return FrozenIdentifiedDict.fromminiarff(output, output_format).asmutable
+        return FrozenIdentifiedDict.fromminiarff(output, output_format,identity).asmutable
 
     @staticmethod
-    def fromminicsv(output=["df"], output_format="df"):
+    def fromminicsv(output=["df"], output_format="df", identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-        return FrozenIdentifiedDict.fromminicsv(output, output_format).asmutable
+        return FrozenIdentifiedDict.fromminicsv(output, output_format, identity).asmutable
 
     @staticmethod
-    def fromopenml(name, version=1, Xout="X", yout="y"):
+    def fromopenml(name, version=1, Xout="X", yout="y", identity=ø40):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-        return FrozenIdentifiedDict.fromopenml(name, version, Xout, yout).asmutable
+        return FrozenIdentifiedDict.fromopenml(name, version, Xout, yout, identity).asmutable
 
     @property
     def metafields(self):
