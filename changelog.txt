@@ -1,3 +1,6 @@
+v1.211203
+Replace front_id by d.id when calculating oiu*uid
+
 v1.211202
     Add user_id to SQLA
     Back to "clean" mode for fhosh due to docstring interference on "direct"

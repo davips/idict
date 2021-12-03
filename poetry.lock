@@ -352,7 +352,7 @@ docs = ["sphinx"]
 
 [[package]]
 name = "huggingface-hub"
-version = "0.2.0"
+version = "0.2.1"
 description = "Client library to download and publish models on the huggingface.co hub"
 category = "main"
 optional = false
@@ -1527,8 +1527,8 @@ greenlet = [
     {file = "greenlet-1.1.2.tar.gz", hash = "sha256:e30f5ea4ae2346e62cedde8794a56858a67b878dd79f7df76a0767e356b1744a"},
 ]
 huggingface-hub = [
-    {file = "huggingface_hub-0.2.0-py3-none-any.whl", hash = "sha256:69ab10437d04a95d4c425b10db92af62048d8af86ffca12b414fc25d3341441d"},
-    {file = "huggingface_hub-0.2.0.tar.gz", hash = "sha256:ec0680b2d6358bef8ae674c04dcd9411ceb5c61b049e507eab1865383b859de6"},
+    {file = "huggingface_hub-0.2.1-py3-none-any.whl", hash = "sha256:e41f0488c8cd9c720e962f16dca23cbb60df2c2931c5f22fc035f949852794c6"},
+    {file = "huggingface_hub-0.2.1.tar.gz", hash = "sha256:b2ef718ea108f0927118b80bef90bef2dd4ddb84454f2dc33267d90de8d33886"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},

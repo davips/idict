@@ -89,7 +89,7 @@ def cached(d, cache) -> AbstractLazyDict:
             if hasattr(cache, "user_hosh"):
                 if front_id_ not in cache:
                     cache[front_id_] = {"_id": id, "_ids": {k: v for k, v in fids.items() if not k.startswith("_")}}
-                front_id_ = (front_id_ * cache.user_hosh).id
+                front_id_ = (d.id * cache.user_hosh).id
             cache[front_id_] = {"_id": id, "_ids": fids}
 
             # Unlock id.
@@ -126,7 +126,7 @@ def cached(d, cache) -> AbstractLazyDict:
         if front_id not in cache:
             if hasattr(cache, "user_hosh"):
                 cache[front_id] = {"_id": d.id, "_ids": {k: v for k, v in d.ids.items() if not k.startswith("_")}}
-                front_id = (front_id * cache.user_hosh).id
+                front_id = (d.id * cache.user_hosh).id
             cache[front_id] = {"_id": d.id, "_ids": d.ids}
 
     return d.clone(data)
