@@ -117,7 +117,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
             if hasattr(cache, &#34;user_hosh&#34;):
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
-                front_id_ = (front_id_ * cache.user_hosh).id
+                front_id_ = (d.id * cache.user_hosh).id
             cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
 
             # Unlock id.
@@ -154,7 +154,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
         if front_id not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
                 cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
-                front_id = (front_id * cache.user_hosh).id
+                front_id = (d.id * cache.user_hosh).id
             cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
     return d.clone(data)
@@ -927,7 +927,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
             if hasattr(cache, &#34;user_hosh&#34;):
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
-                front_id_ = (front_id_ * cache.user_hosh).id
+                front_id_ = (d.id * cache.user_hosh).id
             cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
 
             # Unlock id.
@@ -964,7 +964,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
         if front_id not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
                 cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
-                front_id = (front_id * cache.user_hosh).id
+                front_id = (d.id * cache.user_hosh).id
             cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
     return d.clone(data)</code></pre>
