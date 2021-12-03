@@ -22,6 +22,7 @@
 from contextlib import contextmanager
 from typing import TypeVar
 
+from garoupa import ø
 from sqlalchemy import Column, String, BLOB, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
@@ -46,11 +47,11 @@ def check(key):
 
 
 @contextmanager
-def sqla(url="sqlite+pysqlite:///:memory:", autopack=True, debug=False):
+def sqla(url="sqlite+pysqlite:///:memory:", user_id=None, autopack=True, debug=False):
     engine = create_engine(url, echo=debug)
     Base.metadata.create_all(engine)
     with Session(engine) as session:
-        yield SQLA(session, autopack)
+        yield SQLA(session, user_id, autopack)
 
 
 class SQLA(CompressedCache):
@@ -127,7 +128,8 @@ class SQLA(CompressedCache):
     def copy(self):
         raise NotImplementedError
 
-    def __init__(self, session="sqlite+pysqlite:///:memory:", autopack=True, deterministic_packing=False, debug=False):
+    def __init__(self, session="sqlite+pysqlite:///:memory:", user_id=None, autopack=True, deterministic_packing=False,
+                 debug=False):
         if isinstance(session, str):
 
             @contextmanager
@@ -143,6 +145,9 @@ class SQLA(CompressedCache):
                 yield session
 
         self.sessionctx = sessionctx
+        self.user_id = user_id
+        if user_id:
+            self.user_hosh = ø * user_id
         self.autopack = autopack
         self.deterministic_packing = deterministic_packing
 
