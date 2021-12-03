@@ -129,12 +129,12 @@ class SQLA(CompressedCache):
         raise NotImplementedError
 
     def __init__(
-        self,
-        session="sqlite+pysqlite:///:memory:",
-        user_id=None,
-        autopack=True,
-        deterministic_packing=False,
-        debug=False,
+            self,
+            session="sqlite+pysqlite:///:memory:",
+            user_id=None,
+            autopack=True,
+            deterministic_packing=False,
+            debug=False,
     ):
         if isinstance(session, str):
 
@@ -153,7 +153,7 @@ class SQLA(CompressedCache):
         self.sessionctx = sessionctx
         self.user_id = user_id
         if user_id:
-            self.user_hosh = ø * user_id
+            self.user_hosh = ø * (user_id if len(user_id) == 40 else user_id.encode())
         self.autopack = autopack
         self.deterministic_packing = deterministic_packing
 
