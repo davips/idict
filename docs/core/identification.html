@@ -53,24 +53,62 @@ import dis
 import pickle
 from inspect import signature
 
+import dill
 from garoupa import Hosh, UT40_4, Identity
 from orjson import dumps
 
 from idict.data.compression import pack, NondeterminismException
 from ldict.exception import NoInputException
 
+dill_warned = False
 
-def fhosh(f, version):
+
+def f2bin(f, approach):
+    # Add signature.
+    fields_and_params = signature(f).parameters.values()
+    fields_and_params = {v.name: None if v.default is v.empty else v.default for v in fields_and_params}
+    if not fields_and_params:
+        raise NoInputException(f&#34;Missing function input parameters.&#34;)
+    if &#34;_&#34; in fields_and_params:
+        return None
+
+    if approach == &#34;clean&#34;:
+        # Remove line numbers.
+        groups = [l for l in dis.Bytecode(f).dis().split(&#34;\n\n&#34;) if l]
+        clean_lines = []
+        for group in groups:
+            lines = [segment for segment in group.split(&#34; &#34;) if segment][1:]
+            clean_lines.append(lines)
+        return dumps(clean_lines) + pickle.dumps(fields_and_params, protocol=5)
+    if approach == &#34;direct&#34;:
+        c = f.__code__
+        code_bin = c.co_code + str(c.co_consts).encode()
+        # TODO: replace pickle for a deterministic dill if possible?
+        #  it could allow a broader range of default values (numpy, models)
+        return code_bin + pickle.dumps(fields_and_params, protocol=5)
+    if approach == &#34;dill&#34;:
+        # TODO: one advantage of dill here is to be able to hash a custom callable instead of only functions.
+        global dill_warned
+        if not dill_warned:
+            dill_warned = True
+            print(&#34;WARNING: using &#39;dill&#39; to hash functions is not determinist&#34;)
+        return dill.dumps(f)
+
+
+def fhosh(f, version, approach=&#34;clean&#34;):
     &#34;&#34;&#34;
-    Create hosh with etype=&#34;ordered&#34; using bytecode of &#34;f&#34; as binary content.
+    Create hosh with etype=&#34;ordered&#34; using bytecode of &#34;f&#34; as binary content for blake3.
+
+    For some insight on the algorithm choice inside GaROUPa, see, e.g.:
+    https://news.ycombinator.com/item?id=22021984
 
     Usage:
 
     &gt;&gt;&gt; print(fhosh(lambda x: {&#34;z&#34;: x**2}, UT40_4))
-    qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
+    p2MGclmVa-FRxu5kFQ65RNjiK42otvusPZ9LGCi4
 
     &gt;&gt;&gt; print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {&#34;z&#34;: x**2}, UT40_4))
-    46J.ooEM0K7JJjj3xzMzM4hish1FCLJCubuKBmw8
+    3NPAab2SC5lsIz5ekeIQMeQU9EKRW1dYvpUsywyr
 
     Parameters
     ----------
@@ -83,27 +121,10 @@ def fhosh(f, version):
     &#34;&#34;&#34;
     if hasattr(f, &#34;hosh&#34;):
         return f.hosh
-
-    # Add signature.
-    pars = signature(f).parameters
-    fargs = list(pars.keys())
-    if not fargs:
-        raise NoInputException(f&#34;Missing function input parameters.&#34;)
-    if &#34;_&#34; in fargs:
+    if (bin := f2bin(f, approach)) is None:
         f.hosh = Identity(version=version)
-        return f.hosh
-    clean = [fargs]
-    only_kwargs = {v.name: str(pickle.dumps(v.default, protocol=5)) for v in pars.values() if v.default is not v.empty}
-    if only_kwargs:
-        clean.append(only_kwargs)
-
-    # Clean line numbers.
-    groups = [l for l in dis.Bytecode(f).dis().split(&#34;\n\n&#34;) if l]
-    for group in groups:
-        lines = [segment for segment in group.split(&#34; &#34;) if segment][1:]
-        clean.append(lines)
-
-    f.hosh = Hosh(dumps(clean), &#34;ordered&#34;, version=version)
+    else:
+        f.hosh = Hosh(bin, &#34;ordered&#34;, version=version)
     return f.hosh
 
 
@@ -262,17 +283,60 @@ def blobs_hashes_hoshes(data, identity, ids, version):
     return dict(blobs=blobs, hashes=hashes, hoshes=hoshes)</code></pre>
 </details>
 </dd>
-<dt id="idict.core.identification.fhosh"><code class="name flex">
-<span>def <span class="ident">fhosh</span></span>(<span>f, version)</span>
+<dt id="idict.core.identification.f2bin"><code class="name flex">
+<span>def <span class="ident">f2bin</span></span>(<span>f, approach)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create hosh with etype="ordered" using bytecode of "f" as binary content.</p>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def f2bin(f, approach):
+    # Add signature.
+    fields_and_params = signature(f).parameters.values()
+    fields_and_params = {v.name: None if v.default is v.empty else v.default for v in fields_and_params}
+    if not fields_and_params:
+        raise NoInputException(f&#34;Missing function input parameters.&#34;)
+    if &#34;_&#34; in fields_and_params:
+        return None
+
+    if approach == &#34;clean&#34;:
+        # Remove line numbers.
+        groups = [l for l in dis.Bytecode(f).dis().split(&#34;\n\n&#34;) if l]
+        clean_lines = []
+        for group in groups:
+            lines = [segment for segment in group.split(&#34; &#34;) if segment][1:]
+            clean_lines.append(lines)
+        return dumps(clean_lines) + pickle.dumps(fields_and_params, protocol=5)
+    if approach == &#34;direct&#34;:
+        c = f.__code__
+        code_bin = c.co_code + str(c.co_consts).encode()
+        # TODO: replace pickle for a deterministic dill if possible?
+        #  it could allow a broader range of default values (numpy, models)
+        return code_bin + pickle.dumps(fields_and_params, protocol=5)
+    if approach == &#34;dill&#34;:
+        # TODO: one advantage of dill here is to be able to hash a custom callable instead of only functions.
+        global dill_warned
+        if not dill_warned:
+            dill_warned = True
+            print(&#34;WARNING: using &#39;dill&#39; to hash functions is not determinist&#34;)
+        return dill.dumps(f)</code></pre>
+</details>
+</dd>
+<dt id="idict.core.identification.fhosh"><code class="name flex">
+<span>def <span class="ident">fhosh</span></span>(<span>f, version, approach='clean')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create hosh with etype="ordered" using bytecode of "f" as binary content for blake3.</p>
+<p>For some insight on the algorithm choice inside GaROUPa, see, e.g.:
+<a href="https://news.ycombinator.com/item?id=22021984">https://news.ycombinator.com/item?id=22021984</a></p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; print(fhosh(lambda x: {&quot;z&quot;: x**2}, UT40_4))
-qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
+p2MGclmVa-FRxu5kFQ65RNjiK42otvusPZ9LGCi4
 </code></pre>
 <pre><code class="language-python-repl">&gt;&gt;&gt; print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {&quot;z&quot;: x**2}, UT40_4))
-46J.ooEM0K7JJjj3xzMzM4hish1FCLJCubuKBmw8
+3NPAab2SC5lsIz5ekeIQMeQU9EKRW1dYvpUsywyr
 </code></pre>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -286,17 +350,20 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def fhosh(f, version):
+<pre><code class="python">def fhosh(f, version, approach=&#34;clean&#34;):
     &#34;&#34;&#34;
-    Create hosh with etype=&#34;ordered&#34; using bytecode of &#34;f&#34; as binary content.
+    Create hosh with etype=&#34;ordered&#34; using bytecode of &#34;f&#34; as binary content for blake3.
+
+    For some insight on the algorithm choice inside GaROUPa, see, e.g.:
+    https://news.ycombinator.com/item?id=22021984
 
     Usage:
 
     &gt;&gt;&gt; print(fhosh(lambda x: {&#34;z&#34;: x**2}, UT40_4))
-    qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
+    p2MGclmVa-FRxu5kFQ65RNjiK42otvusPZ9LGCi4
 
     &gt;&gt;&gt; print(fhosh(lambda x, name=[1, 2, Ellipsis, ..., 10]: {&#34;z&#34;: x**2}, UT40_4))
-    46J.ooEM0K7JJjj3xzMzM4hish1FCLJCubuKBmw8
+    3NPAab2SC5lsIz5ekeIQMeQU9EKRW1dYvpUsywyr
 
     Parameters
     ----------
@@ -309,27 +376,10 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
     &#34;&#34;&#34;
     if hasattr(f, &#34;hosh&#34;):
         return f.hosh
-
-    # Add signature.
-    pars = signature(f).parameters
-    fargs = list(pars.keys())
-    if not fargs:
-        raise NoInputException(f&#34;Missing function input parameters.&#34;)
-    if &#34;_&#34; in fargs:
+    if (bin := f2bin(f, approach)) is None:
         f.hosh = Identity(version=version)
-        return f.hosh
-    clean = [fargs]
-    only_kwargs = {v.name: str(pickle.dumps(v.default, protocol=5)) for v in pars.values() if v.default is not v.empty}
-    if only_kwargs:
-        clean.append(only_kwargs)
-
-    # Clean line numbers.
-    groups = [l for l in dis.Bytecode(f).dis().split(&#34;\n\n&#34;) if l]
-    for group in groups:
-        lines = [segment for segment in group.split(&#34; &#34;) if segment][1:]
-        clean.append(lines)
-
-    f.hosh = Hosh(dumps(clean), &#34;ordered&#34;, version=version)
+    else:
+        f.hosh = Hosh(bin, &#34;ordered&#34;, version=version)
     return f.hosh</code></pre>
 </details>
 </dd>
@@ -428,6 +478,7 @@ qowiXxlIUnfRg1ZyjR0trCb6-IUJBi6bgQpYHIM8
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="idict.core.identification.blobs_hashes_hoshes" href="#idict.core.identification.blobs_hashes_hoshes">blobs_hashes_hoshes</a></code></li>
+<li><code><a title="idict.core.identification.f2bin" href="#idict.core.identification.f2bin">f2bin</a></code></li>
 <li><code><a title="idict.core.identification.fhosh" href="#idict.core.identification.fhosh">fhosh</a></code></li>
 <li><code><a title="idict.core.identification.key2id" href="#idict.core.identification.key2id">key2id</a></code></li>
 <li><code><a title="idict.core.identification.removal_id" href="#idict.core.identification.removal_id">removal_id</a></code></li>

@@ -47,16 +47,41 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
+import time
 from abc import abstractmethod
 
 from idict.persistence.cache import Cache
 
 
+from threading import Thread
+
+
+def alive(n):
+    &#34;&#34;&#34;Based on https://www.geeksforgeeks.org/start-and-stop-a-thread-in-python/&#34;&#34;&#34;
+    while n &gt; 0:
+        print(&#34;contando&#34;, n)
+        n -= 1
+        time.sleep(5)
+
+
 class CompressedCache(Cache):  # pragma: no cover
-    def setblob(self, key, blob):
-        # noinspection PyArgumentList
+    def setblob(self, id, blob):
         # REMINDER: Cannot declare __setitem__ as abstract in this class since SQLA access it from its parent.
-        self.__setitem__(key, blob, packit=False)
+        # noinspection PyArgumentList
+        self.__setitem__(id, blob, packing=False)
+
+    def getblob(self, id):
+        # noinspection PyArgumentList
+        return self.__getitem__(id, packing=False)
+
+    def lockid(self, id):
+        # TODO: launch thread at cached
+        pass
+        # t = Thread(target=alive, args=(10,))
+        # t.start()
+
+    def unlockid(self, id):
+        pass
 
     @abstractmethod
     def copy(self):
@@ -68,6 +93,26 @@ class CompressedCache(Cache):  # pragma: no cover
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="idict.persistence.compressedcache.alive"><code class="name flex">
+<span>def <span class="ident">alive</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Based on <a href="https://www.geeksforgeeks.org/start-and-stop-a-thread-in-python/">https://www.geeksforgeeks.org/start-and-stop-a-thread-in-python/</a></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def alive(n):
+    &#34;&#34;&#34;Based on https://www.geeksforgeeks.org/start-and-stop-a-thread-in-python/&#34;&#34;&#34;
+    while n &gt; 0:
+        print(&#34;contando&#34;, n)
+        n -= 1
+        time.sleep(5)</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
@@ -83,10 +128,23 @@ inheritance.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CompressedCache(Cache):  # pragma: no cover
-    def setblob(self, key, blob):
-        # noinspection PyArgumentList
+    def setblob(self, id, blob):
         # REMINDER: Cannot declare __setitem__ as abstract in this class since SQLA access it from its parent.
-        self.__setitem__(key, blob, packit=False)
+        # noinspection PyArgumentList
+        self.__setitem__(id, blob, packing=False)
+
+    def getblob(self, id):
+        # noinspection PyArgumentList
+        return self.__getitem__(id, packing=False)
+
+    def lockid(self, id):
+        # TODO: launch thread at cached
+        pass
+        # t = Thread(target=alive, args=(10,))
+        # t.start()
+
+    def unlockid(self, id):
+        pass
 
     @abstractmethod
     def copy(self):
@@ -117,8 +175,8 @@ def copy(self):
     raise NotImplementedError</code></pre>
 </details>
 </dd>
-<dt id="idict.persistence.compressedcache.CompressedCache.setblob"><code class="name flex">
-<span>def <span class="ident">setblob</span></span>(<span>self, key, blob)</span>
+<dt id="idict.persistence.compressedcache.CompressedCache.getblob"><code class="name flex">
+<span>def <span class="ident">getblob</span></span>(<span>self, id)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -126,10 +184,53 @@ def copy(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setblob(self, key, blob):
+<pre><code class="python">def getblob(self, id):
     # noinspection PyArgumentList
+    return self.__getitem__(id, packing=False)</code></pre>
+</details>
+</dd>
+<dt id="idict.persistence.compressedcache.CompressedCache.lockid"><code class="name flex">
+<span>def <span class="ident">lockid</span></span>(<span>self, id)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lockid(self, id):
+    # TODO: launch thread at cached
+    pass
+    # t = Thread(target=alive, args=(10,))
+    # t.start()</code></pre>
+</details>
+</dd>
+<dt id="idict.persistence.compressedcache.CompressedCache.setblob"><code class="name flex">
+<span>def <span class="ident">setblob</span></span>(<span>self, id, blob)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setblob(self, id, blob):
     # REMINDER: Cannot declare __setitem__ as abstract in this class since SQLA access it from its parent.
-    self.__setitem__(key, blob, packit=False)</code></pre>
+    # noinspection PyArgumentList
+    self.__setitem__(id, blob, packing=False)</code></pre>
+</details>
+</dd>
+<dt id="idict.persistence.compressedcache.CompressedCache.unlockid"><code class="name flex">
+<span>def <span class="ident">unlockid</span></span>(<span>self, id)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unlockid(self, id):
+    pass</code></pre>
 </details>
 </dd>
 </dl>
@@ -148,13 +249,21 @@ def copy(self):
 <li><code><a title="idict.persistence" href="index.html">idict.persistence</a></code></li>
 </ul>
 </li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="idict.persistence.compressedcache.alive" href="#idict.persistence.compressedcache.alive">alive</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
 <h4><code><a title="idict.persistence.compressedcache.CompressedCache" href="#idict.persistence.compressedcache.CompressedCache">CompressedCache</a></code></h4>
 <ul class="">
 <li><code><a title="idict.persistence.compressedcache.CompressedCache.copy" href="#idict.persistence.compressedcache.CompressedCache.copy">copy</a></code></li>
+<li><code><a title="idict.persistence.compressedcache.CompressedCache.getblob" href="#idict.persistence.compressedcache.CompressedCache.getblob">getblob</a></code></li>
+<li><code><a title="idict.persistence.compressedcache.CompressedCache.lockid" href="#idict.persistence.compressedcache.CompressedCache.lockid">lockid</a></code></li>
 <li><code><a title="idict.persistence.compressedcache.CompressedCache.setblob" href="#idict.persistence.compressedcache.CompressedCache.setblob">setblob</a></code></li>
+<li><code><a title="idict.persistence.compressedcache.CompressedCache.unlockid" href="#idict.persistence.compressedcache.CompressedCache.unlockid">unlockid</a></code></li>
 </ul>
 </li>
 </ul>

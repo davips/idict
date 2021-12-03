@@ -134,16 +134,16 @@ class iEmpty(FrozenIdentifiedDict):
 &gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&quot;z&quot;] * d2.ids[&quot;x&quot;] * d2.ids[&quot;y&quot;]
 True
 &gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&quot;w&quot;: x/y})
-&gt;&gt;&gt; e.show(colored=False)
+&gt;&gt;&gt; e.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;w&quot;: &quot;→(x y)&quot;,
     &quot;z&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;_id&quot;: &quot;jWguT1MkE.y2lbZAetjGw2tmoFRZsuLzkF84sOwe&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;w&quot;: &quot;rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5&quot;,
-        &quot;z&quot;: &quot;FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8&quot;,
+        &quot;w&quot;: &quot;...&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
         &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
     }
@@ -179,28 +179,28 @@ True
 &gt;&gt;&gt; f = lambda x,y: {&quot;z&quot;:x+y}
 &gt;&gt;&gt; d = idict(x=5, y=7)
 &gt;&gt;&gt; d2 = d &gt;&gt; f
-&gt;&gt;&gt; d2.show(colored=False)
+&gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c = {}
 &gt;&gt;&gt; d3 = d2 &gt;&gt; [c]
-&gt;&gt;&gt; d3.show(colored=False)
+&gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(↑ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
@@ -209,16 +209,16 @@ True
 {}
 &gt;&gt;&gt; d3.z
 12
-&gt;&gt;&gt; c
-{'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
-&gt;&gt;&gt; d3.show(colored=False)
+&gt;&gt;&gt; c  # doctest:+ELLIPSIS
+{'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+&gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
@@ -226,14 +226,14 @@ True
 &gt;&gt;&gt; c = {}
 &gt;&gt;&gt; setup(cache=c)
 &gt;&gt;&gt; d3 = d &gt;&gt; f ^ Ø
-&gt;&gt;&gt; d3.show(colored=False)
+&gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(↑ x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
@@ -242,16 +242,16 @@ True
 {}
 &gt;&gt;&gt; d3.z
 12
-&gt;&gt;&gt; c
-{'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
-&gt;&gt;&gt; d3.show(colored=False)
+&gt;&gt;&gt; c  # doctest:+ELLIPSIS
+{'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+&gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 12,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }

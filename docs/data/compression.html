@@ -55,7 +55,7 @@ import lz4.frame as lz4
 from idict.config import GLOBAL
 
 
-def pack(obj, nondeterministic_fallback=False):
+def pack(obj, ensure_determinism=True):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import setup
     &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
@@ -92,7 +92,7 @@ def pack(obj, nondeterministic_fallback=False):
             dump = pickle.dumps(obj, protocol=5)
             prefix = b&#34;pckl_&#34;
         except:
-            if not nondeterministic_fallback:  # pragma: no cover
+            if ensure_determinism:  # pragma: no cover
                 raise NondeterminismException(&#34;Cannot serialize deterministically.&#34;)
             dump = dill.dumps(obj, protocol=5)
             prefix = b&#34;dill_&#34;
@@ -141,7 +141,7 @@ class NondeterminismException(Exception):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.data.compression.pack"><code class="name flex">
-<span>def <span class="ident">pack</span></span>(<span>obj, nondeterministic_fallback=False)</span>
+<span>def <span class="ident">pack</span></span>(<span>obj, ensure_determinism=True)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import setup
@@ -168,7 +168,7 @@ b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x8
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def pack(obj, nondeterministic_fallback=False):
+<pre><code class="python">def pack(obj, ensure_determinism=True):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import setup
     &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
@@ -205,7 +205,7 @@ b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x8
             dump = pickle.dumps(obj, protocol=5)
             prefix = b&#34;pckl_&#34;
         except:
-            if not nondeterministic_fallback:  # pragma: no cover
+            if ensure_determinism:  # pragma: no cover
                 raise NondeterminismException(&#34;Cannot serialize deterministically.&#34;)
             dump = dill.dumps(obj, protocol=5)
             prefix = b&#34;dill_&#34;

@@ -52,13 +52,19 @@ def file2df(name):
     if name.endswith(&#34;.arff&#34;):
         from arff2pandas import a2p
 
+        relation = None
+        with open(name) as f:
+            for line in f:
+                if line[:9].upper() == &#34;@RELATION&#34;:
+                    relation = line[9:-1]
+                    break
         with open(name) as f:
             df = a2p.load(f)
-        return df
+        return df, relation or name
     elif name.endswith(&#34;.csv&#34;):
         from pandas import read_csv
 
-        return read_csv(name)
+        return read_csv(name), name
     else:  # pragma: no cover
         raise Exception(f&#34;Unknown extension {name.split(&#39;.&#39;)[-1]}.&#34;)</code></pre>
 </details>
@@ -83,13 +89,19 @@ def file2df(name):
     if name.endswith(&#34;.arff&#34;):
         from arff2pandas import a2p
 
+        relation = None
+        with open(name) as f:
+            for line in f:
+                if line[:9].upper() == &#34;@RELATION&#34;:
+                    relation = line[9:-1]
+                    break
         with open(name) as f:
             df = a2p.load(f)
-        return df
+        return df, relation or name
     elif name.endswith(&#34;.csv&#34;):
         from pandas import read_csv
 
-        return read_csv(name)
+        return read_csv(name), name
     else:  # pragma: no cover
         raise Exception(f&#34;Unknown extension {name.split(&#39;.&#39;)[-1]}.&#34;)</code></pre>
 </details>

@@ -167,13 +167,17 @@ class TestLdict(TestCase):
         self.assertNotEqual(old, d)
         self.assertEqual(
             d,
-            {'_id': 'mk4s98q27bY4EJsgn-BEJyM.wOuYp2E8pA4Gubx6',
-             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
-                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b',
-                      'z': 'r2NUGYeVL5ztMXEY1L1VqAXfPYzYp2E8pA4Gubx6'},
-             'x': 1,
-             'y': 2,
-             'z': 7},
+            {
+                "_id": "mk4s98q27bY4EJsgn-BEJyM.wOuYp2E8pA4Gubx6",
+                "_ids": {
+                    "x": "S6_787ce43265467bacea460e239d4b36762f272",
+                    "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b",
+                    "z": "r2NUGYeVL5ztMXEY1L1VqAXfPYzYp2E8pA4Gubx6",
+                },
+                "x": 1,
+                "y": 2,
+                "z": 7,
+            },
         )
 
         # Reapply same function.
@@ -187,13 +191,17 @@ class TestLdict(TestCase):
         self.assertNotEqual(old, d)
         self.assertEqual(
             d,
-            {'_id': '953IlfJ437JG94zYVYHXVnPOuzHyf7UpbFd-ryzj',
-             '_ids': {'x': 'S6_787ce43265467bacea460e239d4b36762f272',
-                      'y': 'wA_8d94995016666dd618d91cdccfe8a5fcb5c4b',
-                      'z': 'kPE-4CyOi-JcD2vEAJ7cEp-2NJMyf7UpbFd-ryzj'},
-             'x': 1,
-             'y': 2,
-             'z': 31},
+            {
+                "_id": "953IlfJ437JG94zYVYHXVnPOuzHyf7UpbFd-ryzj",
+                "_ids": {
+                    "x": "S6_787ce43265467bacea460e239d4b36762f272",
+                    "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b",
+                    "z": "kPE-4CyOi-JcD2vEAJ7cEp-2NJMyf7UpbFd-ryzj",
+                },
+                "x": 1,
+                "y": 2,
+                "z": 31,
+            },
         )
 
         def f(x):

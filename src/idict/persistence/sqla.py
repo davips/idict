@@ -127,10 +127,7 @@ class SQLA(CompressedCache):
     def copy(self):
         raise NotImplementedError
 
-    def __init__(
-            self, session="sqlite+pysqlite:///:memory:", autopack=True, deterministic_packing=False,
-            debug=False
-    ):
+    def __init__(self, session="sqlite+pysqlite:///:memory:", autopack=True, deterministic_packing=False, debug=False):
         if isinstance(session, str):
 
             @contextmanager

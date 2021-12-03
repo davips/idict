@@ -50,7 +50,6 @@
 import json
 
 from idict.core.identification import key2id
-from idict.persistence.compressedcache import CompressedCache
 from ldict.core.base import AbstractLazyDict
 from ldict.lazyval import LazyVal
 
@@ -64,7 +63,10 @@ def storevalue_func(cache):
 
 def storeblob_func(cache, blobs):
     def f(k, id, value):
-        cache.setblob(id, blobs[k] if k in blobs else value)
+        if k in blobs:
+            cache.setblob(id, blobs[k])
+        else:
+            cache[id] = value
 
     return f
 
@@ -73,13 +75,16 @@ def cached(d, cache) -&gt; AbstractLazyDict:
     &#34;&#34;&#34;
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
+
+    Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.
     &#34;&#34;&#34;
     # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. [serve p/ poupar espaço. e tráfego se usar duplo cache local-remoto]
     #  mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;. . .&#34;}.  aproveitar pack() para guardar todo valor assim.
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-    store = storeblob_func(cache, d.blobs) if isinstance(cache, CompressedCache) else storevalue_func(cache)
+    # TODO (minor): do the same for fetch(). useful in the future if needed to speedup syncing of caches avoiding *pack
+    store = storeblob_func(cache, d.blobs) if hasattr(cache, &#34;setblob&#34;) else storevalue_func(cache)
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -88,7 +93,12 @@ def cached(d, cache) -&gt; AbstractLazyDict:
             if fid in cache:
                 return get_following_pointers(fid, cache)
 
-            # Process and save (all fields, to avoid a parcial ldict being stored).
+            # Lock the id for this job.
+            if hasattr(cache, &#34;lock&#34;):
+                if (t := cache.lockid(fid)) is not None:
+                    raise LockedEntryException(f&#34;There is already a job producing the data {fid}, since {t}.&#34;)
+
+            # Process and save (all fields, to avoid a parcial idict being stored).
             k = None
             for k, v in fids.items():
                 if isinstance(data[k], LazyVal):
@@ -102,8 +112,17 @@ def cached(d, cache) -&gt; AbstractLazyDict:
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
                 raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
-            # if did not in cache:
-            cache[front_id] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
+
+            front_id_ = front_id
+            if hasattr(cache, &#34;user_hosh&#34;):
+                if front_id_ not in cache:
+                    cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
+                front_id_ = (front_id_ * cache.user_hosh).id
+            cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
+
+            # Unlock id.
+            if hasattr(cache, &#34;unlock&#34;):
+                cache.unlockid(fid)
             return result
 
         return func
@@ -138,7 +157,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
     return d.clone(data)
 
 
-def build(id, ids, cache, identity):
+def build(id, ids, cache, identity, include_blobs=False):
     &#34;&#34;&#34;Build an idict from a given identity
 
     &gt;&gt;&gt; from idict import idict
@@ -183,8 +202,8 @@ def build(id, ids, cache, identity):
         },
         &#34;_id&#34;: &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-            &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c (content: HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
@@ -221,8 +240,8 @@ def build(id, ids, cache, identity):
         &#34;d&#34;: &#34;→(↑)&#34;,
         &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)&#34;
         }
     }
     &gt;&gt;&gt; d.evaluated.show(colored=False)
@@ -237,8 +256,8 @@ def build(id, ids, cache, identity):
         },
         &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
@@ -248,9 +267,9 @@ def build(id, ids, cache, identity):
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; _ = b.d
-    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+      &#34;...&#34;: {
         &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;
       },
       &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
@@ -263,15 +282,15 @@ def build(id, ids, cache, identity):
         }
       },
       &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
-      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+      &#34;...&#34;: {
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;d&#34;: &#34;...&#34;,
           &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -283,10 +302,10 @@ def build(id, ids, cache, identity):
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+            &#34;d&#34;: &#34;...&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
@@ -296,9 +315,9 @@ def build(id, ids, cache, identity):
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; _ = b.d
-    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+      &#34;...&#34;: {
         &#34;_id&#34;: &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
       },
       &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
@@ -309,26 +328,26 @@ def build(id, ids, cache, identity):
         }
       },
       &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
-      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+      &#34;...&#34;: {
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;d&#34;: &#34;...&#34;,
           &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
     &gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;d&#34;: &#34;→(↑)&#34;,
         &#34;y&#34;: &#34;→(↑)&#34;,
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+            &#34;d&#34;: &#34;...&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
-    &gt;&gt;&gt; d.evaluated.show(colored=False)
+    &gt;&gt;&gt; d.evaluated.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -338,16 +357,21 @@ def build(id, ids, cache, identity):
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+            &#34;d&#34;: &#34;...&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
     ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &#34;&#34;&#34;
-    dic = {}
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
+    if include_blobs:
+        raise NotImplementedError
+    hosh = identity * id
+    data, hashes, hoshes = {}, {}, {}
     for k, fid in ids.items():
         # REMINDER: An item id will never start with &#39;_&#39;. That only happens with singleton-idict id translated to cache.
         if fid in cache:
@@ -355,15 +379,18 @@ def build(id, ids, cache, identity):
             # WARN: The closures bellow assume items will not be removed from &#39;cache&#39; in the meantime.
             if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
                 closure = lambda value_: lambda **kwargs: build(value_[&#34;_id&#34;], value_[&#34;_ids&#34;], cache, identity)
-                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, {}, None)
+                data[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, {}, None)
             else:
                 closure = lambda fid_: lambda **kwargs: cache[fid_]
-                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, {}, None)
+                data[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, {}, None)
         else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
-    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+        hoshes[k] = identity * fid
+        if fid[2] == &#34;_&#34;:
+            hashes[k] = hoshes[k] // key2id(k, identity.digits)
 
-    return FrozenIdentifiedDict(dic, _id=id, _ids=ids, identity=identity)
+    internals = dict(blobs={}, hashes=hashes, hoshes=hoshes, hosh=hosh)
+    return FrozenIdentifiedDict(data, identity=identity, _cloned=internals)
 
 
 def get_following_pointers(fid, cache):
@@ -375,7 +402,11 @@ def get_following_pointers(fid, cache):
 
 
 def handle_singleton_id(d):
-    return &#34;_&#34; + d.id[1:] if len(d.ids) == 1 else d.id</code></pre>
+    return &#34;_&#34; + d.id[1:] if len(d.ids) == 1 else d.id
+
+
+class LockedEntryException(Exception):
+    pass</code></pre>
 </details>
 </section>
 <section>
@@ -386,7 +417,7 @@ def handle_singleton_id(d):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.persistence.cached.build"><code class="name flex">
-<span>def <span class="ident">build</span></span>(<span>id, ids, cache, identity)</span>
+<span>def <span class="ident">build</span></span>(<span>id, ids, cache, identity, include_blobs=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Build an idict from a given identity</p>
@@ -432,8 +463,8 @@ def handle_singleton_id(d):
     },
     &quot;_id&quot;: &quot;ug_32623f744b4b879f8b0b91bca8ace13993b81&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
-        &quot;d&quot;: &quot;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&quot;
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
+        &quot;d&quot;: &quot;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c (content: HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c)&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
@@ -470,8 +501,8 @@ UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     &quot;d&quot;: &quot;→(↑)&quot;,
     &quot;_id&quot;: &quot;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
-        &quot;d&quot;: &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f&quot;
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
+        &quot;d&quot;: &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)&quot;
     }
 }
 &gt;&gt;&gt; d.evaluated.show(colored=False)
@@ -486,8 +517,8 @@ UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     },
     &quot;_id&quot;: &quot;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
-        &quot;d&quot;: &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f&quot;
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
+        &quot;d&quot;: &quot;ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
@@ -497,9 +528,9 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
 &gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
 &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
 &gt;&gt;&gt; _ = b.d
-&gt;&gt;&gt; print(json.dumps(cache, indent=2))
+&gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
 {
-  &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;: {
+  &quot;...&quot;: {
     &quot;_id&quot;: &quot;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&quot;
   },
   &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: 5,
@@ -512,15 +543,15 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
     }
   },
   &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;: 7,
-  &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;: {
-    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
+  &quot;...&quot;: {
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-      &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
+      &quot;d&quot;: &quot;...&quot;,
       &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
     }
   }
 }
-&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
+&gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;d&quot;: {
         &quot;x&quot;: 5,
@@ -532,10 +563,10 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         }
     },
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
+        &quot;d&quot;: &quot;...&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
@@ -545,9 +576,9 @@ UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
 &gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
 &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
 &gt;&gt;&gt; _ = b.d
-&gt;&gt;&gt; print(json.dumps(cache, indent=2))
+&gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
 {
-  &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;: {
+  &quot;...&quot;: {
     &quot;_id&quot;: &quot;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;
   },
   &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&quot;: 5,
@@ -558,26 +589,26 @@ UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
     }
   },
   &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;: 7,
-  &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;: {
-    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
+  &quot;...&quot;: {
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-      &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
+      &quot;d&quot;: &quot;...&quot;,
       &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
     }
   }
 }
 &gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
-&gt;&gt;&gt; d.show(colored=False)
+&gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;d&quot;: &quot;→(↑)&quot;,
     &quot;y&quot;: &quot;→(↑)&quot;,
-    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
+        &quot;d&quot;: &quot;...&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
-&gt;&gt;&gt; d.evaluated.show(colored=False)
+&gt;&gt;&gt; d.evaluated.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;d&quot;: {
         &quot;x&quot;: 5,
@@ -587,10 +618,10 @@ UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
         }
     },
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;d&quot;: &quot;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
+        &quot;d&quot;: &quot;...&quot;,
+        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; (a.hosh ** key2id(&quot;d&quot;, 40)).show(colored=False)
@@ -600,7 +631,7 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def build(id, ids, cache, identity):
+<pre><code class="python">def build(id, ids, cache, identity, include_blobs=False):
     &#34;&#34;&#34;Build an idict from a given identity
 
     &gt;&gt;&gt; from idict import idict
@@ -645,8 +676,8 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         },
         &#34;_id&#34;: &#34;ug_32623f744b4b879f8b0b91bca8ace13993b81&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-            &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;d&#34;: &#34;UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c (content: HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
@@ -683,8 +714,8 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         &#34;d&#34;: &#34;→(↑)&#34;,
         &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)&#34;
         }
     }
     &gt;&gt;&gt; d.evaluated.show(colored=False)
@@ -699,8 +730,8 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         },
         &#34;_id&#34;: &#34;4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f&#34;
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;d&#34;: &#34;ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
@@ -710,9 +741,9 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; _ = b.d
-    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+      &#34;...&#34;: {
         &#34;_id&#34;: &#34;HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c&#34;
       },
       &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
@@ -725,15 +756,15 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         }
       },
       &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
-      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+      &#34;...&#34;: {
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;d&#34;: &#34;...&#34;,
           &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
-    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
+    &gt;&gt;&gt; build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -745,10 +776,10 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+            &#34;d&#34;: &#34;...&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
@@ -758,9 +789,9 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
     &gt;&gt;&gt; b &gt;&gt;= [cache := {}]
     &gt;&gt;&gt; _ = b.d
-    &gt;&gt;&gt; print(json.dumps(cache, indent=2))
+    &gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;: {
+      &#34;...&#34;: {
         &#34;_id&#34;: &#34;_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;
       },
       &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#34;: 5,
@@ -771,26 +802,26 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
         }
       },
       &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;: 7,
-      &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;: {
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+      &#34;...&#34;: {
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-          &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
+          &#34;d&#34;: &#34;...&#34;,
           &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
         }
       }
     }
     &gt;&gt;&gt; d = build(b.id, b.ids, cache, b.hosh.ø)
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;d&#34;: &#34;→(↑)&#34;,
         &#34;y&#34;: &#34;→(↑)&#34;,
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+            &#34;d&#34;: &#34;...&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
-    &gt;&gt;&gt; d.evaluated.show(colored=False)
+    &gt;&gt;&gt; d.evaluated.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;d&#34;: {
             &#34;x&#34;: 5,
@@ -800,16 +831,21 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
             }
         },
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;d&#34;: &#34;3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+            &#34;d&#34;: &#34;...&#34;,
+            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; (a.hosh ** key2id(&#34;d&#34;, 40)).show(colored=False)
     ug_65906b93071a1e38384abcb6a88fbde25cd8f
     &#34;&#34;&#34;
-    dic = {}
+    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
+    if include_blobs:
+        raise NotImplementedError
+    hosh = identity * id
+    data, hashes, hoshes = {}, {}, {}
     for k, fid in ids.items():
         # REMINDER: An item id will never start with &#39;_&#39;. That only happens with singleton-idict id translated to cache.
         if fid in cache:
@@ -817,15 +853,18 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
             # WARN: The closures bellow assume items will not be removed from &#39;cache&#39; in the meantime.
             if isinstance(value, dict) and list(value.keys()) == [&#34;_id&#34;, &#34;_ids&#34;]:
                 closure = lambda value_: lambda **kwargs: build(value_[&#34;_id&#34;], value_[&#34;_ids&#34;], cache, identity)
-                dic[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, {}, None)
+                data[k] = LazyVal(k, closure(value), {&#34;↑&#34;: None}, {}, None)
             else:
                 closure = lambda fid_: lambda **kwargs: cache[fid_]
-                dic[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, {}, None)
+                data[k] = LazyVal(k, closure(fid), {&#34;↑&#34;: None}, {}, None)
         else:  # pragma: no cover
             raise Exception(f&#34;Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}&#34;)
-    from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+        hoshes[k] = identity * fid
+        if fid[2] == &#34;_&#34;:
+            hashes[k] = hoshes[k] // key2id(k, identity.digits)
 
-    return FrozenIdentifiedDict(dic, _id=id, _ids=ids, identity=identity)</code></pre>
+    internals = dict(blobs={}, hashes=hashes, hoshes=hoshes, hosh=hosh)
+    return FrozenIdentifiedDict(data, identity=identity, _cloned=internals)</code></pre>
 </details>
 </dd>
 <dt id="idict.persistence.cached.cached"><code class="name flex">
@@ -833,7 +872,8 @@ ug_65906b93071a1e38384abcb6a88fbde25cd8f
 </code></dt>
 <dd>
 <div class="desc"><p>Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
-When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.</p></div>
+When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.</p>
+<p>Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -842,13 +882,16 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
     &#34;&#34;&#34;
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
     When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
+
+    Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.
     &#34;&#34;&#34;
     # TODO: gravar hashes como aliases no cache pros hoshes. tb recuperar. [serve p/ poupar espaço. e tráfego se usar duplo cache local-remoto]
     #  mas hash não é antecipável! &#39;cached&#39; teria de fazer o ponteiro: ho -&gt; {&#34;_id&#34;: &#34;. . .&#34;}.  aproveitar pack() para guardar todo valor assim.
     from idict.core.idict_ import Idict
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
-    store = storeblob_func(cache, d.blobs) if isinstance(cache, CompressedCache) else storevalue_func(cache)
+    # TODO (minor): do the same for fetch(). useful in the future if needed to speedup syncing of caches avoiding *pack
+    store = storeblob_func(cache, d.blobs) if hasattr(cache, &#34;setblob&#34;) else storevalue_func(cache)
     front_id = handle_singleton_id(d)
 
     def closure(outputf, fid, fids, data, output_fields, id):
@@ -857,7 +900,12 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
             if fid in cache:
                 return get_following_pointers(fid, cache)
 
-            # Process and save (all fields, to avoid a parcial ldict being stored).
+            # Lock the id for this job.
+            if hasattr(cache, &#34;lock&#34;):
+                if (t := cache.lockid(fid)) is not None:
+                    raise LockedEntryException(f&#34;There is already a job producing the data {fid}, since {t}.&#34;)
+
+            # Process and save (all fields, to avoid a parcial idict being stored).
             k = None
             for k, v in fids.items():
                 if isinstance(data[k], LazyVal):
@@ -871,8 +919,17 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
                 raise Exception(f&#34;Key {k} not in output fields: {output_fields}. ids: {fids.items()}&#34;)
-            # if did not in cache:
-            cache[front_id] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
+
+            front_id_ = front_id
+            if hasattr(cache, &#34;user_hosh&#34;):
+                if front_id_ not in cache:
+                    cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
+                front_id_ = (front_id_ * cache.user_hosh).id
+            cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: fids}
+
+            # Unlock id.
+            if hasattr(cache, &#34;unlock&#34;):
+                cache.unlockid(fid)
             return result
 
         return func
@@ -948,7 +1005,10 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 </summary>
 <pre><code class="python">def storeblob_func(cache, blobs):
     def f(k, id, value):
-        cache.setblob(id, blobs[k] if k in blobs else value)
+        if k in blobs:
+            cache.setblob(id, blobs[k])
+        else:
+            cache[id] = value
 
     return f</code></pre>
 </details>
@@ -972,6 +1032,28 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 </dl>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="idict.persistence.cached.LockedEntryException"><code class="flex name class">
+<span>class <span class="ident">LockedEntryException</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Common base class for all non-exit exceptions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LockedEntryException(Exception):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -993,6 +1075,13 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 <li><code><a title="idict.persistence.cached.handle_singleton_id" href="#idict.persistence.cached.handle_singleton_id">handle_singleton_id</a></code></li>
 <li><code><a title="idict.persistence.cached.storeblob_func" href="#idict.persistence.cached.storeblob_func">storeblob_func</a></code></li>
 <li><code><a title="idict.persistence.cached.storevalue_func" href="#idict.persistence.cached.storevalue_func">storevalue_func</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="idict.persistence.cached.LockedEntryException" href="#idict.persistence.cached.LockedEntryException">LockedEntryException</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

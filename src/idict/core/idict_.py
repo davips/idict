@@ -362,6 +362,7 @@ class Idict(AbstractMutableLazyDict):
         }
     }
     """
+
     frozen: fro.FrozenIdentifiedDict
 
     # noinspection PyMissingConstructor
@@ -582,4 +583,3 @@ class Idict(AbstractMutableLazyDict):
     #     True
     #     """
     #     return self.frozen.wrapped(version, version_id).asmutable
-

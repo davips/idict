@@ -84,7 +84,10 @@ def idict2txt(d, all, history):
             txt = txt.replace(dic[k], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
-            nokey = f&#34; (content: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
+            nokey = &#34;&#34;
+            if k in d.hashes:
+                hash = v // key2id(k, v.digits)
+                nokey = f&#34; (content: {hash.idc})&#34;
             txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt
 
@@ -190,7 +193,10 @@ def idict2dict(d, all, history):
             txt = txt.replace(dic[k], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
-            nokey = f&#34; (content: {v // key2id(k, v.digits)})&#34; if k in d.hashes else &#34;&#34;
+            nokey = &#34;&#34;
+            if k in d.hashes:
+                hash = v // key2id(k, v.digits)
+                nokey = f&#34; (content: {hash.idc})&#34;
             txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt</code></pre>
 </details>

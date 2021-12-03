@@ -72,68 +72,68 @@ class iLet(AbstractLet):
     λ{&#39;a&#39;: 0}
     &gt;&gt;&gt; d = idict(x=5,y=7)
     &gt;&gt;&gt; d2 = d &gt;&gt; f_a
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; d2.evaluate()
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 7,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; from random import Random
     &gt;&gt;&gt; d2 = d &gt;&gt; Random(0) &gt;&gt; let(f, a=[8,9])
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; d2.evaluate()
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 52,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; {&#34;x&#34;: 5, &#34;y&#34;: 7}
     «λ{&#39;a&#39;: 5} × {&#39;x&#39;: 5, &#39;y&#39;: 7}»
-    &gt;&gt;&gt; (idict({&#34;x&#34;: 5, &#34;y&#34;: 7}) &gt;&gt; let(f, a=5)).show(colored=False)
+    &gt;&gt;&gt; (idict({&#34;x&#34;: 5, &#34;y&#34;: 7}) &gt;&gt; let(f, a=5)).show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;PeaN8nAdYZWPpGB6unSYsRONBbPCMKqODpuKHpoM&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;skJZ-.de47J3SFmG3HIwTKdSMtFCMKqODpuKHpoM&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
@@ -156,14 +156,14 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; (lambda x: {&#34;z&#34;: x*8}) &gt;&gt; let(f, a=5)
     «λ × λ{&#39;a&#39;: 5}»
     &gt;&gt;&gt; d = {&#34;x&#34;:3, &#34;y&#34;: 8} &gt;&gt; let(f, a=5)
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;_id&#34;: &#34;XIlmFY.9CnG-cahneqWtFfHk2MNCMKqODpuKHpoM&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;c7xJAzdbnwH1-t7Vm9w.rXgIJZTCMKqODpuKHpoM&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;,
             &#34;y&#34;: &#34;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
@@ -171,14 +171,14 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; print(d.z)
     23
     &gt;&gt;&gt; d &gt;&gt;= Random(0) &gt;&gt; let(f, a=[1,2,3]) &gt;&gt; let(f, a=[9,8,7])
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;_id&#34;: &#34;5R.rmGg2IXzfd7NE0cmFzqxUJf8s9cp4PHp-q0TO&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;vgtk9oIi0CwaqrDa9XXam67gptes9cp4PHp-q0TO&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;,
             &#34;y&#34;: &#34;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
@@ -205,24 +205,24 @@ class iLet(AbstractLet):
     def __rrshift__(self, left: Union[dict, list, Random, Callable, &#34;iLet&#34;]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; from idict.parameter.ilet import iLet
-        &gt;&gt;&gt; ({&#34;x&#34;:5} &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)).show(colored=False)
+        &gt;&gt;&gt; ({&#34;x&#34;:5} &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)).show(colored=False)  # doctest:+ELLIPSIS
         {
             &#34;x&#34;: &#34;→(x)&#34;,
-            &#34;_id&#34;: &#34;vwO4YONlRgV.xo-hoayAKTqnyoOR-tw5D.nfk2Sv&#34;,
+            &#34;_id&#34;: &#34;...&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;vwO4YONlRgV.xo-hoayAKTqnyoOR-tw5D.nfk2Sv&#34;
+                &#34;x&#34;: &#34;...&#34;
             }
         }
         &gt;&gt;&gt; [{}] &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)
         «↑ × λ{&#39;x&#39;: 5}»
         &gt;&gt;&gt; from idict import Ø, idict
         &gt;&gt;&gt; d = idict() &gt;&gt; (Ø &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5))
-        &gt;&gt;&gt; d.show(colored=False)
+        &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
         {
             &#34;x&#34;: &#34;→(x)&#34;,
-            &#34;_id&#34;: &#34;in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv&#34;,
+            &#34;_id&#34;: &#34;...&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv&#34;
+                &#34;x&#34;: &#34;...&#34;
             }
         }
         &#34;&#34;&#34;
@@ -302,68 +302,68 @@ class iLet(AbstractLet):
 λ{'a': 0}
 &gt;&gt;&gt; d = idict(x=5,y=7)
 &gt;&gt;&gt; d2 = d &gt;&gt; f_a
-&gt;&gt;&gt; d2.show(colored=False)
+&gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; d2.evaluate()
-&gt;&gt;&gt; d2.show(colored=False)
+&gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 7,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; from random import Random
 &gt;&gt;&gt; d2 = d &gt;&gt; Random(0) &gt;&gt; let(f, a=[8,9])
-&gt;&gt;&gt; d2.show(colored=False)
+&gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; d2.evaluate()
-&gt;&gt;&gt; d2.show(colored=False)
+&gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 52,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; let(f, a=5) &gt;&gt; {&quot;x&quot;: 5, &quot;y&quot;: 7}
 «λ{'a': 5} × {'x': 5, 'y': 7}»
-&gt;&gt;&gt; (idict({&quot;x&quot;: 5, &quot;y&quot;: 7}) &gt;&gt; let(f, a=5)).show(colored=False)
+&gt;&gt;&gt; (idict({&quot;x&quot;: 5, &quot;y&quot;: 7}) &gt;&gt; let(f, a=5)).show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 5,
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;PeaN8nAdYZWPpGB6unSYsRONBbPCMKqODpuKHpoM&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;skJZ-.de47J3SFmG3HIwTKdSMtFCMKqODpuKHpoM&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
         &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
@@ -386,14 +386,14 @@ class iLet(AbstractLet):
 &gt;&gt;&gt; (lambda x: {&quot;z&quot;: x*8}) &gt;&gt; let(f, a=5)
 «λ × λ{'a': 5}»
 &gt;&gt;&gt; d = {&quot;x&quot;:3, &quot;y&quot;: 8} &gt;&gt; let(f, a=5)
-&gt;&gt;&gt; d.show(colored=False)
+&gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 3,
     &quot;y&quot;: 8,
-    &quot;_id&quot;: &quot;XIlmFY.9CnG-cahneqWtFfHk2MNCMKqODpuKHpoM&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;c7xJAzdbnwH1-t7Vm9w.rXgIJZTCMKqODpuKHpoM&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;,
         &quot;y&quot;: &quot;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
     }
@@ -401,14 +401,14 @@ class iLet(AbstractLet):
 &gt;&gt;&gt; print(d.z)
 23
 &gt;&gt;&gt; d &gt;&gt;= Random(0) &gt;&gt; let(f, a=[1,2,3]) &gt;&gt; let(f, a=[9,8,7])
-&gt;&gt;&gt; d.show(colored=False)
+&gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: &quot;→(a x y)&quot;,
     &quot;x&quot;: 3,
     &quot;y&quot;: 8,
-    &quot;_id&quot;: &quot;5R.rmGg2IXzfd7NE0cmFzqxUJf8s9cp4PHp-q0TO&quot;,
+    &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
-        &quot;z&quot;: &quot;vgtk9oIi0CwaqrDa9XXam67gptes9cp4PHp-q0TO&quot;,
+        &quot;z&quot;: &quot;...&quot;,
         &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;,
         &quot;y&quot;: &quot;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
     }
@@ -431,68 +431,68 @@ class iLet(AbstractLet):
     λ{&#39;a&#39;: 0}
     &gt;&gt;&gt; d = idict(x=5,y=7)
     &gt;&gt;&gt; d2 = d &gt;&gt; f_a
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; d2.evaluate()
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 7,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; from random import Random
     &gt;&gt;&gt; d2 = d &gt;&gt; Random(0) &gt;&gt; let(f, a=[8,9])
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; d2.evaluate()
-    &gt;&gt;&gt; d2.show(colored=False)
+    &gt;&gt;&gt; d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 52,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; let(f, a=5) &gt;&gt; {&#34;x&#34;: 5, &#34;y&#34;: 7}
     «λ{&#39;a&#39;: 5} × {&#39;x&#39;: 5, &#39;y&#39;: 7}»
-    &gt;&gt;&gt; (idict({&#34;x&#34;: 5, &#34;y&#34;: 7}) &gt;&gt; let(f, a=5)).show(colored=False)
+    &gt;&gt;&gt; (idict({&#34;x&#34;: 5, &#34;y&#34;: 7}) &gt;&gt; let(f, a=5)).show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 5,
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;PeaN8nAdYZWPpGB6unSYsRONBbPCMKqODpuKHpoM&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;skJZ-.de47J3SFmG3HIwTKdSMtFCMKqODpuKHpoM&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
             &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
@@ -515,14 +515,14 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; (lambda x: {&#34;z&#34;: x*8}) &gt;&gt; let(f, a=5)
     «λ × λ{&#39;a&#39;: 5}»
     &gt;&gt;&gt; d = {&#34;x&#34;:3, &#34;y&#34;: 8} &gt;&gt; let(f, a=5)
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;_id&#34;: &#34;XIlmFY.9CnG-cahneqWtFfHk2MNCMKqODpuKHpoM&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;c7xJAzdbnwH1-t7Vm9w.rXgIJZTCMKqODpuKHpoM&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;,
             &#34;y&#34;: &#34;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
@@ -530,14 +530,14 @@ class iLet(AbstractLet):
     &gt;&gt;&gt; print(d.z)
     23
     &gt;&gt;&gt; d &gt;&gt;= Random(0) &gt;&gt; let(f, a=[1,2,3]) &gt;&gt; let(f, a=[9,8,7])
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: &#34;→(a x y)&#34;,
         &#34;x&#34;: 3,
         &#34;y&#34;: 8,
-        &#34;_id&#34;: &#34;5R.rmGg2IXzfd7NE0cmFzqxUJf8s9cp4PHp-q0TO&#34;,
+        &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
-            &#34;z&#34;: &#34;vgtk9oIi0CwaqrDa9XXam67gptes9cp4PHp-q0TO&#34;,
+            &#34;z&#34;: &#34;...&#34;,
             &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;,
             &#34;y&#34;: &#34;Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
@@ -564,24 +564,24 @@ class iLet(AbstractLet):
     def __rrshift__(self, left: Union[dict, list, Random, Callable, &#34;iLet&#34;]):
         &#34;&#34;&#34;
         &gt;&gt;&gt; from idict.parameter.ilet import iLet
-        &gt;&gt;&gt; ({&#34;x&#34;:5} &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)).show(colored=False)
+        &gt;&gt;&gt; ({&#34;x&#34;:5} &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)).show(colored=False)  # doctest:+ELLIPSIS
         {
             &#34;x&#34;: &#34;→(x)&#34;,
-            &#34;_id&#34;: &#34;vwO4YONlRgV.xo-hoayAKTqnyoOR-tw5D.nfk2Sv&#34;,
+            &#34;_id&#34;: &#34;...&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;vwO4YONlRgV.xo-hoayAKTqnyoOR-tw5D.nfk2Sv&#34;
+                &#34;x&#34;: &#34;...&#34;
             }
         }
         &gt;&gt;&gt; [{}] &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5)
         «↑ × λ{&#39;x&#39;: 5}»
         &gt;&gt;&gt; from idict import Ø, idict
         &gt;&gt;&gt; d = idict() &gt;&gt; (Ø &gt;&gt; iLet(lambda x=None:{&#34;x&#34;: x**2}, x=5))
-        &gt;&gt;&gt; d.show(colored=False)
+        &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
         {
             &#34;x&#34;: &#34;→(x)&#34;,
-            &#34;_id&#34;: &#34;in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv&#34;,
+            &#34;_id&#34;: &#34;...&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv&#34;
+                &#34;x&#34;: &#34;...&#34;
             }
         }
         &#34;&#34;&#34;

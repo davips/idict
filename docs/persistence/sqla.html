@@ -155,9 +155,7 @@ class SQLA(CompressedCache):
     def copy(self):
         raise NotImplementedError
 
-    def __init__(
-        self, session=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, nondeterministic_fallback_on_pack=True, debug=False
-    ):
+    def __init__(self, session=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, deterministic_packing=False, debug=False):
         if isinstance(session, str):
 
             @contextmanager
@@ -174,7 +172,7 @@ class SQLA(CompressedCache):
 
         self.sessionctx = sessionctx
         self.autopack = autopack
-        self.nondeterministic_fallback_on_pack = nondeterministic_fallback_on_pack
+        self.deterministic_packing = deterministic_packing
 
     def __contains__(self, key):
         check(key)
@@ -185,20 +183,22 @@ class SQLA(CompressedCache):
         with self.sessionctx() as session:
             return (c.id for c in session.query(Content).all())
 
-    def __setitem__(self, key: str, value, packit=True):
+    def __setitem__(self, key: str, value, packing=True):
         check(key)
-        if self.autopack and packit:
-            value = pack(value, nondeterministic_fallback=self.nondeterministic_fallback_on_pack)
+        if self.autopack and packing:
+            value = pack(value, ensure_determinism=self.deterministic_packing)
         content = Content(id=key, blob=value)
         with self.sessionctx() as session:
             session.add(content)
             session.commit()
 
-    def __getitem__(self, key):
+    def __getitem__(self, key, packing=True):
         check(key)
         with self.sessionctx() as session:
             if ret := session.query(Content).get(key):
-                ret = unpack(ret.blob)
+                ret = ret.blob
+                if packing:
+                    ret = unpack(ret)
         return ret or None
 
     def __delitem__(self, key):
@@ -362,7 +362,7 @@ for example, any mapped columns or relationships.</p></div>
 </dd>
 <dt id="idict.persistence.sqla.SQLA"><code class="flex name class">
 <span>class <span class="ident">SQLA</span></span>
-<span>(</span><span>session='sqlite+pysqlite:///:memory:', autopack=True, nondeterministic_fallback_on_pack=True, debug=False)</span>
+<span>(</span><span>session='sqlite+pysqlite:///:memory:', autopack=True, deterministic_packing=False, debug=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Dict-like persistence based on SQLAlchemy</p>
@@ -508,9 +508,7 @@ b None
     def copy(self):
         raise NotImplementedError
 
-    def __init__(
-        self, session=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, nondeterministic_fallback_on_pack=True, debug=False
-    ):
+    def __init__(self, session=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, deterministic_packing=False, debug=False):
         if isinstance(session, str):
 
             @contextmanager
@@ -527,7 +525,7 @@ b None
 
         self.sessionctx = sessionctx
         self.autopack = autopack
-        self.nondeterministic_fallback_on_pack = nondeterministic_fallback_on_pack
+        self.deterministic_packing = deterministic_packing
 
     def __contains__(self, key):
         check(key)
@@ -538,20 +536,22 @@ b None
         with self.sessionctx() as session:
             return (c.id for c in session.query(Content).all())
 
-    def __setitem__(self, key: str, value, packit=True):
+    def __setitem__(self, key: str, value, packing=True):
         check(key)
-        if self.autopack and packit:
-            value = pack(value, nondeterministic_fallback=self.nondeterministic_fallback_on_pack)
+        if self.autopack and packing:
+            value = pack(value, ensure_determinism=self.deterministic_packing)
         content = Content(id=key, blob=value)
         with self.sessionctx() as session:
             session.add(content)
             session.commit()
 
-    def __getitem__(self, key):
+    def __getitem__(self, key, packing=True):
         check(key)
         with self.sessionctx() as session:
             if ret := session.query(Content).get(key):
-                ret = unpack(ret.blob)
+                ret = ret.blob
+                if packing:
+                    ret = unpack(ret)
         return ret or None
 
     def __delitem__(self, key):

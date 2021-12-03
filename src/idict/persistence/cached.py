@@ -339,6 +339,7 @@ def build(id, ids, cache, identity, include_blobs=False):
     ug_65906b93071a1e38384abcb6a88fbde25cd8f
     """
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
     if include_blobs:
         raise NotImplementedError
     hosh = identity * id

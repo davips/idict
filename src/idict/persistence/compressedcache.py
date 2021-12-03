@@ -31,7 +31,7 @@ from threading import Thread
 def alive(n):
     """Based on https://www.geeksforgeeks.org/start-and-stop-a-thread-in-python/"""
     while n > 0:
-        print('contando', n)
+        print("contando", n)
         n -= 1
         time.sleep(5)
 
