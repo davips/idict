@@ -152,6 +152,9 @@ def cached(d, cache) -&gt; AbstractLazyDict:
                 else:
                     store(k, fid, data[k])
         if front_id not in cache:
+            if hasattr(cache, &#34;user_hosh&#34;):
+                cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
+                front_id = (front_id * cache.user_hosh).id
             cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
     return d.clone(data)
@@ -959,6 +962,9 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
                 else:
                     store(k, fid, data[k])
         if front_id not in cache:
+            if hasattr(cache, &#34;user_hosh&#34;):
+                cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
+                front_id = (front_id * cache.user_hosh).id
             cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
     return d.clone(data)</code></pre>

@@ -95,7 +95,7 @@ def idict2txt(d, all, history):
 def idict2dict(d, all, history):
     # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
-    if not history and &#34;_history&#34; in dic:
+    if not history and &#34;_history&#34; in dic and isinstance(dic[&#34;_history&#34;], dict):
         dic[&#34;_history&#34;] = &#34; &#34;.join(Hosh.fromid(k).id for k in dic[&#34;_history&#34;])
     if not all:
         if len(d.ids) &lt; 3:
@@ -127,7 +127,7 @@ def idict2dict(d, all, history):
 <pre><code class="python">def idict2dict(d, all, history):
     # from ldict.core.base import AbstractLazyDict
     dic = d.data.copy()
-    if not history and &#34;_history&#34; in dic:
+    if not history and &#34;_history&#34; in dic and isinstance(dic[&#34;_history&#34;], dict):
         dic[&#34;_history&#34;] = &#34; &#34;.join(Hosh.fromid(k).id for k in dic[&#34;_history&#34;])
     if not all:
         if len(d.ids) &lt; 3:
