@@ -536,3 +536,50 @@ class Idict(AbstractMutableLazyDict):
         }
         """
         return self.frozen.trimmed.asmutable
+
+    # def wrapped(self, version, version_id):
+    #     """
+    #     Wrap a trimmed version of an idict object by a metafield container
+    #
+    #     The container is identified by `object.id * extra_field__id`.
+    #
+    #     >>> from idict import idict
+    #     >>> d = idict(x=3, _metafield_1=5, _history={"id-of-some-previous-step----------------": 5})
+    #     >>> d.show(colored=False)
+    #     {
+    #         "x": 3,
+    #         "_metafield_1": 5,
+    #         "_history": "id-of-some-previous-step----------------",
+    #         "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #         "_ids": {
+    #             "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #             "_metafield_1": "KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+    #             "_history": "T4_254b4402e8d23be907236a140ff90245285a8 (content: VO_b2b5c7d8ff9718670723c03f0ff9028f085a8)"
+    #         }
+    #     }
+    #     >>> e = d.wrapped("user 1", "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
+    #     >>> e.show(colored=False)
+    #     {
+    #         "fields": {
+    #             "x": 3,
+    #             "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #             "_ids": {
+    #                 "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+    #             }
+    #         },
+    #         "version": "user 1",
+    #         "_metafield_1": 5,
+    #         "_history": "id-of-some-previous-step----------------",
+    #         "_id": "g.0pzcYOgFTneQ8ojVDcReKkaqDuuuuuuuuuuuuu",
+    #         "_ids": {
+    #             "fields": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #             "version": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+    #             "_metafield_1": "KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f",
+    #             "_history": "T4_254b4402e8d23be907236a140ff90245285a8"
+    #         }
+    #     }
+    #     >>> d.hosh == e.fields.hosh
+    #     True
+    #     """
+    #     return self.frozen.wrapped(version, version_id).asmutable
+

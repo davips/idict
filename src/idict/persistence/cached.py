@@ -70,7 +70,7 @@ def cached(d, cache) -> AbstractLazyDict:
                 if (t := cache.lockid(fid)) is not None:
                     raise LockedEntryException(f"There is already a job producing the data {fid}, since {t}.")
 
-            # Process and save (all fields, to avoid a parcial ldict being stored).
+            # Process and save (all fields, to avoid a parcial idict being stored).
             k = None
             for k, v in fids.items():
                 if isinstance(data[k], LazyVal):
@@ -84,8 +84,13 @@ def cached(d, cache) -> AbstractLazyDict:
                 if k is None:
                     raise Exception(f"No ids")
                 raise Exception(f"Key {k} not in output fields: {output_fields}. ids: {fids.items()}")
-            # if did not in cache:
-            cache[front_id] = {"_id": id, "_ids": fids}
+
+            front_id_ = front_id
+            if hasattr(cache, "user_hosh"):
+                if front_id_ not in cache:
+                    cache[front_id_] = {"_id": id, "_ids": {k: v for k, v in fids.items() if not k.startswith("_")}}
+                front_id_ = (front_id_ * cache.user_hosh).id
+            cache[front_id_] = {"_id": id, "_ids": fids}
 
             # Unlock id.
             if hasattr(cache, "unlock"):

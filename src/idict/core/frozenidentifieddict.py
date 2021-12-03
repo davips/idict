@@ -244,11 +244,15 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 self.blobs = {}
                 self.hashes = {}
                 self.hoshes = {k: identity * v for k, v in _ids.items()}
+                hosh = identity * _id
             else:
                 self.blobs, self.hashes, self.hoshes = blobs_hashes_hoshes(
                     data, identity, _ids or {}, self.identity.version
                 ).values()
+                hosh = None
             self.hosh = reduce(operator.mul, [identity] + [v for k, v in self.hoshes.items() if not k.startswith("_")])
+            if hosh and hosh != self.hosh:
+                raise Exception(f"Inconsistent provided id {_id} and calculated id {self.hosh.id}")
 
         if _id is None:
             _id = self.hosh.id
@@ -463,7 +467,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                     if k in other.blobs:
                         clone.blobs[k] = other.blobs[k]
                     if k in other.hashes:
-                        clone.blobs[k] = other.hashes[k]
+                        clone.hashes[k] = other.hashes[k]
                     clone.hoshes[k] = other.hoshes[k]
             hosh = reduce(operator.mul, [self.identity] + [v for k, v in clone.hoshes.items() if not k.startswith("_")])
             internals = dict(blobs=clone.blobs, hashes=clone.hashes, hoshes=clone.hoshes, hosh=hosh)
@@ -518,6 +522,16 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         cloned_internals = dict(blobs=blobs, hashes=hashes, hoshes=hoshes, hosh=self.hosh)
         return self.clone(data, _cloned=cloned_internals)
 
+    # def wrapped(self, version, version_id):
+    #     """Wrap a trimmed version of an idict object by a metafield container"""
+    #     hosh = self.hosh * version_id
+    #     ids = dict(fields=self.id, version=version_id)
+    #     if not self.metafields:
+    #         raise Exception(f"There are no metafields for {self.id}")
+    #     for mfkey in self.metafields.keys():
+    #         ids[mfkey] = self.ids[mfkey]
+    #     return FrozenIdentifiedDict(fields=self.trimmed, version=version, _id=hosh.id, _ids=ids, **self.metafields)
+
     @staticmethod
     def fromid(id, cache, identity=ø40) -> 'FrozenIdentifiedDict':
         """
@@ -563,6 +577,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         True
         """
         id0 = id
+        if hasattr(cache, "user_hosh"):
+            id = (id * cache.user_hosh).id
         if (newid := "_" + id[1:]) in cache:
             id = newid
         val = get_following_pointers(id, cache)
