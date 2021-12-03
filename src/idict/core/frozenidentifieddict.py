@@ -85,16 +85,16 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> d2.hosh == d2.identity * d2.ids["z"] * d2.ids["x"] * d2.ids["y"]
     True
     >>> e = d2 >> (lambda x,y: {"w": x/y})
-    >>> e.show(colored=False)
+    >>> e.show(colored=False)  # doctest:+ELLIPSIS
     {
         "w": "→(x y)",
         "z": "→(x)",
         "x": 123123,
         "y": 88,
-        "_id": "jWguT1MkE.y2lbZAetjGw2tmoFRZsuLzkF84sOwe",
+        "_id": "...",
         "_ids": {
-            "w": "rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5",
-            "z": "FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8",
+            "w": "...",
+            "z": "...",
             "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
             "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
@@ -130,28 +130,28 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> f = lambda x,y: {"z":x+y}
     >>> d = idict(x=5, y=7)
     >>> d2 = d >> f
-    >>> d2.show(colored=False)
+    >>> d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(x y)",
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c = {}
     >>> d3 = d2 >> [c]
-    >>> d3.show(colored=False)
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -160,16 +160,16 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     {}
     >>> d3.z
     12
-    >>> c
-    {'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
-    >>> d3.show(colored=False)
+    >>> c  # doctest:+ELLIPSIS
+    {'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 12,
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -177,14 +177,14 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     >>> c = {}
     >>> setup(cache=c)
     >>> d3 = d >> f ^ Ø
-    >>> d3.show(colored=False)
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -193,16 +193,16 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     {}
     >>> d3.z
     12
-    >>> c
-    {'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
-    >>> d3.show(colored=False)
+    >>> c  # doctest:+ELLIPSIS
+    {'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 12,
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -298,24 +298,24 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> f = lambda x: {"y": x+2}
         >>> d = idict(x=3)
         >>> a = d >> f
-        >>> a.show(colored=False)
+        >>> a.show(colored=False)  # doctest:+ELLIPSIS
         {
             "y": "→(x)",
             "x": 3,
-            "_id": "NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe",
+            "_id": "...",
             "_ids": {
-                "y": "r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe",
+                "y": "...",
                 "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
             }
         }
         >>> a.evaluate()
-        >>> a.show(colored=False)
+        >>> a.show(colored=False)  # doctest:+ELLIPSIS
         {
             "y": 5,
             "x": 3,
-            "_id": "NfDlK1.4MFGwvI9SXFRBUlgdD0.xW4AU0sYuSnwe",
+            "_id": "...",
             "_ids": {
-                "y": "r6qgPdf1kPTU.K8bw-R-e0PzHWZxW4AU0sYuSnwe",
+                "y": "...",
                 "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
             }
         }
@@ -538,39 +538,39 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> from idict import idict
         >>> cache = {}
         >>> d = idict(x=5) >> (lambda x: {"y": x**2}) >> [cache]
-        >>> d.show(colored=False)
+        >>> d.show(colored=False)  # doctest:+ELLIPSIS
         {
             "y": "→(↑ x)",
             "x": 5,
-            "_id": "himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4",
+            "_id": "...",
             "_ids": {
-                "y": ".WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4",
+                "y": "...",
                 "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
             }
         }
         >>> d.y
         25
-        >>> cache
-        {'.WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4': 25, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4': {'_id': 'himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4', '_ids': {'y': '.WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f'}}}
+        >>> cache  # doctest:+ELLIPSIS
+        {'...': 25, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, '...': {'_id': '...', '_ids': {'y': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f'}}}
         >>> d2 = idict.fromid(d.id, cache)
-        >>> d2.show(colored=False)
+        >>> d2.show(colored=False)  # doctest:+ELLIPSIS
         {
             "y": "→(↑)",
             "x": "→(↑)",
-            "_id": "himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4",
+            "_id": "...",
             "_ids": {
-                "y": ".WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4",
-                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+                "y": "...",
+                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
             }
         }
-        >>> d2.evaluated.show(colored=False)
+        >>> d2.evaluated.show(colored=False)  # doctest:+ELLIPSIS
         {
             "y": 25,
             "x": 5,
-            "_id": "himLChDa.3GCFEBwkoJXPo3dD18LRgUAfdP7HEp4",
+            "_id": "...",
             "_ids": {
-                "y": ".WVCvSxA2auspgV5aSJ444DF7tjLRgUAfdP7HEp4",
-                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+                "y": "...",
+                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
             }
         }
         >>> d == d2
@@ -584,7 +584,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         val = get_following_pointers(id, cache)
         isdescriptor = isinstance(val, dict) and "_id" in val and "_ids" in val
         if val is None or not isdescriptor:
-            print(f"Not found: {id0}/{id}")
+            # print(f"Not found: {id0}/{id}")
             return None
         return build(val["_id"], val["_ids"], cache, identity)
 

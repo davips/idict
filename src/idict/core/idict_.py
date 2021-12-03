@@ -68,21 +68,21 @@ class Idict(AbstractMutableLazyDict):
     3
     >>> d = idict(x=123123, y=88)
     >>> d2 = d >> (lambda x: {"z": x**2})
-    >>> d2.ids
-    {'z': 'FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8', 'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}
+    >>> d2.ids  # doctest:+ELLIPSIS
+    {'z': '...', 'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}
     >>> d2.hosh == d2.identity * d2.ids["z"] * d2.ids["x"] * d2.ids["y"]
     True
     >>> e = d2 >> (lambda x,y: {"w": x/y})
-    >>> e.show(colored=False)
+    >>> e.show(colored=False)  # doctest:+ELLIPSIS
     {
         "w": "→(x y)",
         "z": "→(x)",
         "x": 123123,
         "y": 88,
-        "_id": "jWguT1MkE.y2lbZAetjGw2tmoFRZsuLzkF84sOwe",
+        "_id": "...",
         "_ids": {
-            "w": "rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5",
-            "z": "FI8-Sco6sGMjxpkIQ8-uTHfhAKZJBi6bgQpYHIM8",
+            "w": "...",
+            "z": "...",
             "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
             "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
@@ -127,14 +127,14 @@ class Idict(AbstractMutableLazyDict):
     >>> e.ids.keys()
     dict_keys(['w', 'z', 'x', 'y'])
     >>> del e["z"]
-    >>> e.show(colored=False)
+    >>> e.show(colored=False)  # doctest:+ELLIPSIS
     {
         "w": "→(x y)",
         "x": 123123,
         "y": 88,
-        "_id": "BAcWIBldD8aIp06GjLRUt.BeHm.fTbFo4RK7M5M5",
+        "_id": "...",
         "_ids": {
-            "w": "rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5",
+            "w": "...",
             "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
             "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
@@ -142,14 +142,14 @@ class Idict(AbstractMutableLazyDict):
     >>> e.hosh == e.identity * e.ids["w"] * e.ids["x"] * e.ids["y"]
     True
     >>> e["x"] = 77
-    >>> e.show(colored=False)
+    >>> e.show(colored=False)  # doctest:+ELLIPSIS
     {
         "w": "→(x y)",
         "x": 77,
         "y": 88,
-        "_id": "f9O-wbkUFPQTHrtyM71xqkWa9IUfTbFo4RK7M5M5",
+        "_id": "...",
         "_ids": {
-            "w": "rl51vcB3tJbMS6y7RQHwJ1c51F.fTbFo4RK7M5M5",
+            "w": "...",
             "x": "zG_8a2e85e3b861ec7279f5f1c357969eb907ded (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)",
             "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
@@ -157,28 +157,28 @@ class Idict(AbstractMutableLazyDict):
     >>> f = lambda x,y: {"z":x+y}
     >>> d = idict(x=5, y=7)
     >>> d2 = d >> f
-    >>> d2.show(colored=False)
+    >>> d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(x y)",
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c = {}
     >>> d3 = d2 >> [c]
-    >>> d3.show(colored=False)
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -187,16 +187,16 @@ class Idict(AbstractMutableLazyDict):
     {}
     >>> d3.z
     12
-    >>> c
-    {'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
-    >>> d3.show(colored=False)
+    >>> c  # doctest:+ELLIPSIS
+    {'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 12,
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -205,14 +205,14 @@ class Idict(AbstractMutableLazyDict):
     >>> from idict import setup
     >>> setup(cache=c)
     >>> d3 = d >> f ^ Ø
-    >>> d3.show(colored=False)
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(↑ x y)",
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -221,16 +221,16 @@ class Idict(AbstractMutableLazyDict):
     {}
     >>> d3.z
     12
-    >>> c
-    {'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv': {'_id': 'GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv', '_ids': {'z': 'pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
-    >>> d3.show(colored=False)
+    >>> c  # doctest:+ELLIPSIS
+    {'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+    >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 12,
         "x": 5,
         "y": 7,
-        "_id": "GNYCBw8fGAYow5Ml4xadiKc3TxKm.mdn2sxVEnRv",
+        "_id": "...",
         "_ids": {
-            "z": "pgVTwHntCH.mN6xVFQ0NIDD72QAm.mdn2sxVEnRv",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -259,13 +259,13 @@ class Idict(AbstractMutableLazyDict):
     >>> b["d"] = lambda y: a
     >>> cache = {}
     >>> b >>= [cache]
-    >>> b.show(colored=False)
+    >>> b.show(colored=False)  # doctest:+ELLIPSIS
     {
         "d": "→(↑ y)",
         "y": 5,
-        "_id": "zPIOd8YS56A4GjVdQMtk5op1MMAZJVxChr1XgFng",
+        "_id": "...",
         "_ids": {
-            "d": "7VPk71Y8BJeY-V67FeutM8Zt0cwZJVxChr1XgFng",
+            "d": "...",
             "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
@@ -278,9 +278,9 @@ class Idict(AbstractMutableLazyDict):
         }
     }
     >>> import json
-    >>> print(json.dumps(cache, indent=2))
+    >>> print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      "7VPk71Y8BJeY-V67FeutM8Zt0cwZJVxChr1XgFng": {
+      "...": {
         "_id": "_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
       },
       "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab": 3,
@@ -291,10 +291,10 @@ class Idict(AbstractMutableLazyDict):
         }
       },
       "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f": 5,
-      "zPIOd8YS56A4GjVdQMtk5op1MMAZJVxChr1XgFng": {
-        "_id": "zPIOd8YS56A4GjVdQMtk5op1MMAZJVxChr1XgFng",
+      "...": {
+        "_id": "...",
         "_ids": {
-          "d": "7VPk71Y8BJeY-V67FeutM8Zt0cwZJVxChr1XgFng",
+          "d": "...",
           "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f"
         }
       }
@@ -316,7 +316,7 @@ class Idict(AbstractMutableLazyDict):
             "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
         }
     }
-    >>> idict.fromid("7VPk71Y8BJeY-V67FeutM8Zt0cwZJVxChr1XgFng", cache).evaluated.show(colored=False)
+    >>> idict.fromid(d.id, cache).evaluated.show(colored=False)
     {
         "x": 3,
         "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
@@ -328,9 +328,9 @@ class Idict(AbstractMutableLazyDict):
     >>> e.show(colored=False)  # doctest:+ELLIPSIS
     {
         "f": "<function <lambda> at 0x...>",
-        "_id": "NhULktUPKQW0kiK9Gen3yzxunKQ4yXDl70-yAzi4",
+        "_id": "jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm",
         "_ids": {
-            "f": "NhULktUPKQW0kiK9Gen3yzxunKQ4yXDl70-yAzi4"
+            "f": "jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm"
         }
     }
     >>> from idict.core.appearance import idict2txt
@@ -341,24 +341,24 @@ class Idict(AbstractMutableLazyDict):
     '{\\n    "x": 1,\\n    "y": 2,\\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\\n    "_ids": {\\n        "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",\\n        "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"\\n    }\\n}'
     >>> cache = {}
     >>> a = idict(x=5) >> (lambda x:{"y": x**x}) >> [[cache]]  # Cache within double brackets has strict/eager behavior.
-    >>> a.show(colored=False)
+    >>> a.show(colored=False)  # doctest:+ELLIPSIS
     {
         "y": 3125,
         "x": 5,
-        "_id": "lvTHnQx4XL88QRWeHs0dB.2OFjLn602g3pm4-PA2",
+        "_id": "...",
         "_ids": {
-            "y": "j1Zi2yWyMvPBV3U7wW0mhMCeaLGn602g3pm4-PA2",
+            "y": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
-    >>> idict("lvTHnQx4XL88QRWeHs0dB.2OFjLn602g3pm4-PA2", cache).show(colored=False)
+    >>> idict(a.id, cache).show(colored=False)  # doctest:+ELLIPSIS
     {
         "y": "→(↑)",
         "x": "→(↑)",
-        "_id": "lvTHnQx4XL88QRWeHs0dB.2OFjLn602g3pm4-PA2",
+        "_id": "...",
         "_ids": {
-            "y": "j1Zi2yWyMvPBV3U7wW0mhMCeaLGn602g3pm4-PA2",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+            "y": "...",
+            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
     """
@@ -436,7 +436,7 @@ class Idict(AbstractMutableLazyDict):
             "_id": "OS_ea00e0e366f9fd9c4024ee9e7878633af1ada",
             "_ids": {
                 "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-                "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b"
+                "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"
             }
         }
         >>> from ldict import ldict
@@ -454,8 +454,8 @@ class Idict(AbstractMutableLazyDict):
     def __rshift__(self, other: Union[list, dict, AbstractLazyDict, Callable, iLet, iFunctionSpace, Random]):
         """
         >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
-        >>> d.ids
-        {'y': 'OujWZCkpmqiUcA1K9LZZDO2jzijWqcXxhrGWdepm', 'x': 'vA_88beb4e68c50d7d618d97ceccfe8a5ecb5c4b'}
+        >>> d.ids  # doctest:+ELLIPSIS
+        {'y': '...', 'x': 'vA_88beb4e68c50d7d618d97ceccfe8a5ecb5c4b'}
         """
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen >> other

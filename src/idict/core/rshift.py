@@ -139,29 +139,29 @@ def ihandle_dict(self, dictlike):
         }
     }
     >>> di2 = ihandle_dict(di, {"w":lambda x,z: x**z})
-    >>> di2.show(colored=False)
+    >>> di2.show(colored=False)  # doctest:+ELLIPSIS
     {
         "w": "→(x z)",
         "x": 5,
         "y": null,
         "z": 8,
-        "_id": "OdqXMcEK-0I1OFrjoL-TpeT4-2zs3d9r2rr8kHNE",
+        "_id": "...",
         "_ids": {
-            "w": "kpmkRxrgldVN9wJLVH8ofrbQWMts3d9r2rr8kHN5",
+            "w": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
             "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
-    >>> ihandle_dict(di2, {"x": 55555}).show(colored=False)
+    >>> ihandle_dict(di2, {"x": 55555}).show(colored=False)  # doctest:+ELLIPSIS
     {
         "w": "→(x z)",
         "x": 55555,
         "y": null,
         "z": 8,
-        "_id": "DQPsvv1oMlWaUDwPP1Sp7yOboYps3d9r2rr8kHNE",
+        "_id": "...",
         "_ids": {
-            "w": "kpmkRxrgldVN9wJLVH8ofrbQWMts3d9r2rr8kHN5",
+            "w": "...",
             "x": "yU_9d40a5fbe9781c6e90f0eb45bd45cd962a94b (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)",
             "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
             "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
@@ -176,23 +176,23 @@ def ihandle_dict(self, dictlike):
         }
     }
     >>> d >>= lambda x: {"x": x**2}
-    >>> d.show(colored=False)
+    >>> d.show(colored=False)  # doctest:+ELLIPSIS
     {
         "x": "→(x)",
-        "_id": "S.MNJJmbDWmOJ43tyUbWsrfAsCWs.g4HNqVBp-Sh",
+        "_id": "...",
         "_ids": {
-            "x": "S.MNJJmbDWmOJ43tyUbWsrfAsCWs.g4HNqVBp-Sh"
+            "x": "..."
         }
     }
     >>> e = idict(y=7) >> d
-    >>> e.show(colored=False)
+    >>> e.show(colored=False)  # doctest:+ELLIPSIS
     {
         "y": 7,
         "x": "→(x)",
-        "_id": "FFTjF58Z264CW3VJZOM-sKQNAy5t.g4HNqVBp-Sh",
+        "_id": "...",
         "_ids": {
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
-            "x": "S.MNJJmbDWmOJ43tyUbWsrfAsCWs.g4HNqVBp-Sh"
+            "x": "..."
         }
     }
     """
@@ -256,9 +256,9 @@ def solve(hoshes, output, uf: Hosh):
     >>> a.show(colored=False)
     {
         "x": "→(x)",
-        "_id": "A78wiBU2iCnSlVZLwafVURwwvcLYDDRQkGiQ6qJ8",
+        "_id": "yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr",
         "_ids": {
-            "x": "A78wiBU2iCnSlVZLwafVURwwvcLYDDRQkGiQ6qJ8"
+            "x": "yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr"
         }
     }
     >>> a = idict(x=3, y=5) >> (lambda x: {"x": x+2})
@@ -282,9 +282,9 @@ def solve(hoshes, output, uf: Hosh):
         "y": "→(w x y)",
         "w": 2,
         "z": 1,
-        "_id": "z-xyxdEPgkQLLVlkUTfstq99X3IzkEFdqK4B1zjh",
+        "_id": "aXitjV7Yex2rXIwwVM2ptHlEto7KdJ-3GBbIubB7",
         "_ids": {
-            "x": "hT7PAVVndMXDt04ypVbZgozMFOsgmEFdqG4B1zji",
+            "x": "V70NPr0hfwLd.LZQGuQ.nushi96rfJ-3GxbIubB8",
             "y": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
             "w": "uA_df37fcf59e3bd7d618d96ceccfe8a5ecb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)",
             "z": "U6_9e5ffd6b1d6101bcea46bd139d4b36862f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)"

@@ -174,8 +174,8 @@ def build(id, ids, cache, identity, include_blobs=False):
         },
         "_id": "ug_32623f744b4b879f8b0b91bca8ace13993b81",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
-            "d": "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c"
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "d": "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c (content: HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c)"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
@@ -212,8 +212,8 @@ def build(id, ids, cache, identity, include_blobs=False):
         "d": "→(↑)",
         "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
-            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f"
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)"
         }
     }
     >>> d.evaluated.show(colored=False)
@@ -228,8 +228,8 @@ def build(id, ids, cache, identity, include_blobs=False):
         },
         "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
-            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f"
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
@@ -239,9 +239,9 @@ def build(id, ids, cache, identity, include_blobs=False):
     >>> b["d"] = lambda y: a
     >>> b >>= [cache := {}]
     >>> _ = b.d
-    >>> print(json.dumps(cache, indent=2))
+    >>> print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng": {
+      "...": {
         "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c"
       },
       "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
@@ -254,15 +254,15 @@ def build(id, ids, cache, identity, include_blobs=False):
         }
       },
       "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
-      "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng": {
-        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
+      "...": {
+        "_id": "...",
         "_ids": {
-          "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
+          "d": "...",
           "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
         }
       }
     }
-    >>> build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)
+    >>> build(b.id, b.ids, cache, b.hosh.ø).evaluated.show(colored=False)  # doctest:+ELLIPSIS
     {
         "d": {
             "x": 5,
@@ -274,10 +274,10 @@ def build(id, ids, cache, identity, include_blobs=False):
             }
         },
         "y": 7,
-        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
+        "_id": "...",
         "_ids": {
-            "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+            "d": "...",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)
@@ -287,9 +287,9 @@ def build(id, ids, cache, identity, include_blobs=False):
     >>> b["d"] = lambda y: a
     >>> b >>= [cache := {}]
     >>> _ = b.d
-    >>> print(json.dumps(cache, indent=2))
+    >>> print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng": {
+      "...": {
         "_id": "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
       },
       "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
@@ -300,26 +300,26 @@ def build(id, ids, cache, identity, include_blobs=False):
         }
       },
       "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
-      "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng": {
-        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
+      "...": {
+        "_id": "...",
         "_ids": {
-          "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
+          "d": "...",
           "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
         }
       }
     }
     >>> d = build(b.id, b.ids, cache, b.hosh.ø)
-    >>> d.show(colored=False)
+    >>> d.show(colored=False)  # doctest:+ELLIPSIS
     {
         "d": "→(↑)",
         "y": "→(↑)",
-        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
+        "_id": "...",
         "_ids": {
-            "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+            "d": "...",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
-    >>> d.evaluated.show(colored=False)
+    >>> d.evaluated.show(colored=False)  # doctest:+ELLIPSIS
     {
         "d": {
             "x": 5,
@@ -329,10 +329,10 @@ def build(id, ids, cache, identity, include_blobs=False):
             }
         },
         "y": 7,
-        "_id": "y79Q0oV.uFUWaj0hM4enBgvlTHEZJVxChr1XgFng",
+        "_id": "...",
         "_ids": {
-            "d": "3pPmLR.updFJHo4YwW3OipmZxyzZJVxChr1XgFng",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+            "d": "...",
+            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> (a.hosh ** key2id("d", 40)).show(colored=False)

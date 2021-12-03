@@ -44,68 +44,68 @@ class iLet(AbstractLet):
     λ{'a': 0}
     >>> d = idict(x=5,y=7)
     >>> d2 = d >> f_a
-    >>> d2.show(colored=False)
+    >>> d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "_id": "jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO",
+        "_id": "...",
         "_ids": {
-            "z": "KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> d2.evaluate()
-    >>> d2.show(colored=False)
+    >>> d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 7,
         "x": 5,
         "y": 7,
-        "_id": "jrbP9TOUI2Fu.Cj56WZtFZ-uR-aIf7PP0vTUHwdO",
+        "_id": "...",
         "_ids": {
-            "z": "KjFKlsh7jqDr22rlIdQ1ENpz0hhIf7PP0vTUHwdO",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> from random import Random
     >>> d2 = d >> Random(0) >> let(f, a=[8,9])
-    >>> d2.show(colored=False)
+    >>> d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "_id": "BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr",
+        "_id": "...",
         "_ids": {
-            "z": "Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> d2.evaluate()
-    >>> d2.show(colored=False)
+    >>> d2.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 52,
         "x": 5,
         "y": 7,
-        "_id": "BNML4tU7pW1RdptZLNisRSXAlRnMrJxAMFjv1ppr",
+        "_id": "...",
         "_ids": {
-            "z": "Z5X.KORnk-EfmNAdm590QGmFw7uMrJxAMFjv1ppr",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> let(f, a=5) >> {"x": 5, "y": 7}
     «λ{'a': 5} × {'x': 5, 'y': 7}»
-    >>> (idict({"x": 5, "y": 7}) >> let(f, a=5)).show(colored=False)
+    >>> (idict({"x": 5, "y": 7}) >> let(f, a=5)).show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(a x y)",
         "x": 5,
         "y": 7,
-        "_id": "PeaN8nAdYZWPpGB6unSYsRONBbPCMKqODpuKHpoM",
+        "_id": "...",
         "_ids": {
-            "z": "skJZ-.de47J3SFmG3HIwTKdSMtFCMKqODpuKHpoM",
+            "z": "...",
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
@@ -128,14 +128,14 @@ class iLet(AbstractLet):
     >>> (lambda x: {"z": x*8}) >> let(f, a=5)
     «λ × λ{'a': 5}»
     >>> d = {"x":3, "y": 8} >> let(f, a=5)
-    >>> d.show(colored=False)
+    >>> d.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(a x y)",
         "x": 3,
         "y": 8,
-        "_id": "XIlmFY.9CnG-cahneqWtFfHk2MNCMKqODpuKHpoM",
+        "_id": "...",
         "_ids": {
-            "z": "c7xJAzdbnwH1-t7Vm9w.rXgIJZTCMKqODpuKHpoM",
+            "z": "...",
             "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
             "y": "Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
@@ -143,14 +143,14 @@ class iLet(AbstractLet):
     >>> print(d.z)
     23
     >>> d >>= Random(0) >> let(f, a=[1,2,3]) >> let(f, a=[9,8,7])
-    >>> d.show(colored=False)
+    >>> d.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": "→(a x y)",
         "x": 3,
         "y": 8,
-        "_id": "5R.rmGg2IXzfd7NE0cmFzqxUJf8s9cp4PHp-q0TO",
+        "_id": "...",
         "_ids": {
-            "z": "vgtk9oIi0CwaqrDa9XXam67gptes9cp4PHp-q0TO",
+            "z": "...",
             "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
             "y": "Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
@@ -177,24 +177,24 @@ class iLet(AbstractLet):
     def __rrshift__(self, left: Union[dict, list, Random, Callable, "iLet"]):
         """
         >>> from idict.parameter.ilet import iLet
-        >>> ({"x":5} >> iLet(lambda x=None:{"x": x**2}, x=5)).show(colored=False)
+        >>> ({"x":5} >> iLet(lambda x=None:{"x": x**2}, x=5)).show(colored=False)  # doctest:+ELLIPSIS
         {
             "x": "→(x)",
-            "_id": "vwO4YONlRgV.xo-hoayAKTqnyoOR-tw5D.nfk2Sv",
+            "_id": "...",
             "_ids": {
-                "x": "vwO4YONlRgV.xo-hoayAKTqnyoOR-tw5D.nfk2Sv"
+                "x": "..."
             }
         }
         >>> [{}] >> iLet(lambda x=None:{"x": x**2}, x=5)
         «↑ × λ{'x': 5}»
         >>> from idict import Ø, idict
         >>> d = idict() >> (Ø >> iLet(lambda x=None:{"x": x**2}, x=5))
-        >>> d.show(colored=False)
+        >>> d.show(colored=False)  # doctest:+ELLIPSIS
         {
             "x": "→(x)",
-            "_id": "in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv",
+            "_id": "...",
             "_ids": {
-                "x": "in2IaGHscEXIobU6WbD2JOBlpHPR-tw5D.nfk2Sv"
+                "x": "..."
             }
         }
         """
