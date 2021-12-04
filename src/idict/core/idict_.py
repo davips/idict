@@ -384,6 +384,7 @@ class Idict(AbstractMutableLazyDict):
     def id(self):
         return self.hosh.id
 
+    # TODO: remove unimportant hosh shortcuts
     @property
     def idh(self):
         return self.hosh.html
