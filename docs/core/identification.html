@@ -54,9 +54,9 @@ import pickle
 from inspect import signature
 
 import dill
-from garoupa import Hosh, UT40_4, Identity
 from orjson import dumps
 
+from garoupa import Hosh, UT40_4, Identity
 from idict.data.compression import pack, NondeterminismException
 from ldict.exception import NoInputException
 
@@ -128,6 +128,7 @@ def fhosh(f, version, approach=&#34;clean&#34;):
     return f.hosh
 
 
+# TODO: we could just use ø.hybrid * key.encode() instead of relying on this weak hash
 def key2id(key, digits):
     &#34;&#34;&#34;
     &gt;&gt;&gt; key2id(&#34;y&#34;, 40)

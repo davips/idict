@@ -99,6 +99,7 @@ def fhosh(f, version, approach="clean"):
         f.hosh = Hosh(bin, "ordered", version=version)
     return f.hosh
 
+
 # TODO: we could just use ø.hybrid * key.encode() instead of relying on this weak hash
 def key2id(key, digits):
     """
