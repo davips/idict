@@ -27,9 +27,8 @@ from operator import xor as cop
 from random import Random
 from typing import TypeVar, Union, Callable
 
-from garoupa import ø40
-
 import idict.core.frozenidentifieddict as fro
+from garoupa import ø40
 from idict.parameter.ifunctionspace import iFunctionSpace
 from idict.parameter.ilet import iLet
 from idict.persistence.cache import Cache
@@ -43,7 +42,7 @@ VT = TypeVar("VT")
 # TODO: colorize show() for "_history": "split----------------------sklearn-1.0.1 fit--------------------------------idict predict----------------------------idict"
 # TODO(minor): implement extend, to avoid excessive calculation when batch inserting values
 class Idict(AbstractMutableLazyDict):
-    """Mutable lazy identified dict for serializable (picklable) pairs str->value
+    r"""Mutable lazy identified dict for serializable (picklable) pairs str->value
 
     Usage:
 
@@ -336,9 +335,9 @@ class Idict(AbstractMutableLazyDict):
     >>> from idict.core.appearance import idict2txt
     >>> d = idict(x=1,y=2)
     >>> decolorize(idict2txt(d, False, False))
-    '{\\n    "x": 1,\\n    "y": 2,\\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\\n    "_ids": "S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b"\\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\n    "_ids": "S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b"\n}'
     >>> decolorize(idict2txt(d, True, False))
-    '{\\n    "x": 1,\\n    "y": 2,\\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\\n    "_ids": {\\n        "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",\\n        "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"\\n    }\\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\n    "_ids": {\n        "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",\n        "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"\n    }\n}'
     >>> cache = {}
     >>> a = idict(x=5) >> (lambda x:{"y": x**x}) >> [[cache]]  # Cache within double brackets has strict/eager behavior.
     >>> a.show(colored=False)  # doctest:+ELLIPSIS
@@ -361,6 +360,8 @@ class Idict(AbstractMutableLazyDict):
             "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
+    >>> a.idh
+    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n<title></title>\n<style type="text/css">\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground > .bold,.bold > .body_foreground, body.body_foreground > pre > .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-103 { color: #8787af; }\n.ansi38-105 { color: #8787ff; }\n.ansi38-140 { color: #af87d7; }\n.ansi38-177 { color: #d787ff; }\n.ansi38-111 { color: #87afff; }\n.ansi38-147 { color: #afafff; }\n.ansi38-181 { color: #d7afaf; }\n.ansi38-182 { color: #d7afd7; }\n.ansi38-183 { color: #d7afff; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-152 { color: #afd7d7; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n</style>\n</head>\n<body class="body_foreground body_background" style="font-size: normal;" >\n<pre class="ansi2html-content">\n<span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">Z</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">.</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">V</span><span class="ansi38-183"></span><span class="ansi1 ansi38-183"></span><span class="ansi1 ansi38-183 ansi48-0">y</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">S</span><span class="ansi38-181"></span><span class="ansi1 ansi38-181"></span><span class="ansi1 ansi38-181 ansi48-0">j</span><span class="ansi38-140"></span><span class="ansi1 ansi38-140"></span><span class="ansi1 ansi38-140 ansi48-0">.</span><span class="ansi38-103"></span><span class="ansi1 ansi38-103"></span><span class="ansi1 ansi38-103 ansi48-0">A</span><span class="ansi38-105"></span><span class="ansi1 ansi38-105"></span><span class="ansi1 ansi38-105 ansi48-0">w</span><span class="ansi38-117"></span><span class="ansi1 ansi38-117"></span><span class="ansi1 ansi38-117 ansi48-0">R</span><span class="ansi38-182"></span><span class="ansi1 ansi38-182"></span><span class="ansi1 ansi38-182 ansi48-0">A</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">8</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">8</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">u</span><span class="ansi38-177"></span><span class="ansi1 ansi38-177"></span><span class="ansi1 ansi38-177 ansi48-0">c</span><span class="ansi38-111"></span><span class="ansi1 ansi38-111"></span><span class="ansi1 ansi38-111 ansi48-0">v</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">R</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">M</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">B</span><span class="ansi38-183"></span><span class="ansi1 ansi38-183"></span><span class="ansi1 ansi38-183 ansi48-0">8</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">B</span><span class="ansi38-181"></span><span class="ansi1 ansi38-181"></span><span class="ansi1 ansi38-181 ansi48-0">v</span><span class="ansi38-140"></span><span class="ansi1 ansi38-140"></span><span class="ansi1 ansi38-140 ansi48-0">D</span><span class="ansi38-103"></span><span class="ansi1 ansi38-103"></span><span class="ansi1 ansi38-103 ansi48-0">z</span><span class="ansi38-105"></span><span class="ansi1 ansi38-105"></span><span class="ansi1 ansi38-105 ansi48-0">8</span><span class="ansi38-117"></span><span class="ansi1 ansi38-117"></span><span class="ansi1 ansi38-117 ansi48-0">9</span><span class="ansi38-182"></span><span class="ansi1 ansi38-182"></span><span class="ansi1 ansi38-182 ansi48-0">2</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">v</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">j</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">1</span><span class="ansi38-177"></span><span class="ansi1 ansi38-177"></span><span class="ansi1 ansi38-177 ansi48-0">6</span><span class="ansi38-111"></span><span class="ansi1 ansi38-111"></span><span class="ansi1 ansi38-111 ansi48-0">i</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">t</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">l</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">1</span><span class="ansi38-183"></span><span class="ansi1 ansi38-183"></span><span class="ansi1 ansi38-183 ansi48-0">y</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">Q</span><span class="ansi38-181"></span><span class="ansi1 ansi38-181"></span><span class="ansi1 ansi38-181 ansi48-0">B</span><span class="ansi38-140"></span><span class="ansi1 ansi38-140"></span><span class="ansi1 ansi38-140 ansi48-0">L</span><span class="ansi38-103"></span><span class="ansi1 ansi38-103"></span><span class="ansi1 ansi38-103 ansi48-0">4</span>\n</pre>\n</body>\n\n</html>\n'
     """
 
     frozen: fro.FrozenIdentifiedDict
@@ -382,6 +383,10 @@ class Idict(AbstractMutableLazyDict):
     @property
     def id(self):
         return self.hosh.id
+
+    @property
+    def idh(self):
+        return self.hosh.html
 
     @property
     def ids(self):

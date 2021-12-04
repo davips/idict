@@ -28,7 +28,6 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-
 from idict.config import GLOBAL
 from idict.core.appearance import idict2txt
 from idict.core.identification import key2id, blobs_hashes_hoshes
@@ -267,6 +266,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         self.data = self.frozen.data
         self.id = _id
         self.ids = _ids
+        self.idh = self.hosh.html
 
     def __getitem__(self, item):
         return self.frozen[item]
