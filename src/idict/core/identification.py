@@ -25,7 +25,6 @@ import dis
 import pickle
 from inspect import signature
 
-import dill
 from orjson import dumps
 
 from garoupa import Hosh, UT40_4, Identity
@@ -64,6 +63,7 @@ def f2bin(f, approach):
         if not dill_warned:
             dill_warned = True
             print("WARNING: using 'dill' to hash functions is not determinist")
+        import dill
         return dill.dumps(f)
 
 

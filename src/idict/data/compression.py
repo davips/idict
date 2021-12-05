@@ -21,7 +21,6 @@
 #  time spent here.
 import pickle
 
-import dill
 import lz4.frame as lz4
 
 from idict.config import GLOBAL
@@ -66,6 +65,7 @@ def pack(obj, ensure_determinism=True):
         except:
             if ensure_determinism:  # pragma: no cover
                 raise NondeterminismException("Cannot serialize deterministically.")
+            import dill
             dump = dill.dumps(obj, protocol=5)
             prefix = b"dill_"
 
@@ -98,6 +98,7 @@ def unpack(blob):
     if prefix == b"pckl_":
         return pickle.loads(lz4.decompress(blob))
     elif prefix == b"dill_":
+        import dill
         return dill.loads(lz4.decompress(blob))
 
 
