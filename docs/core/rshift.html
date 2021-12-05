@@ -50,13 +50,13 @@
 
 import operator
 from functools import reduce
-from typing import Dict
+from typing import Dict, Union
 
-from garoupa import Hosh
-
+from garoupa import Hosh, rho_elem, removal_elem
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
+from idict.core.identification import fhosh, blobs_hashes_hoshes
 from idict.parameter.ilet import iLet
+from ldict.core.base import AbstractLazyDict
 
 
 def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
@@ -71,10 +71,10 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;9CQTZ.-ZMrtDr6MTnOPpxL5.2gsfffffffffffff&#34;,
+        &#34;_id&#34;: &#34;JAsdh.I6zV6p5eiqJkTGxM4g5Dnfffffffffffff&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;-UXfi8wcv0uck6LcY6QOTpEl7arfffffffffffff&#34;,
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;y&#34;: &#34;23KQ2fUFGjKDTiIseYxUGS9tXqtfffffffffffff&#34;,
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; d2.hosh / f.metadata[&#34;id&#34;] == d.id
@@ -112,7 +112,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         for i, k in enumerate(outputs):
             newdata[k] = frozen.data[k]
             if i &lt; noutputs - 1:
-                field_hosh = ufu_1 * rho(c, self.identity.digits)
+                field_hosh = ufu_1 * rho_elem(c)
                 c += 1
                 acc *= field_hosh
             else:
@@ -131,39 +131,33 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     return self.clone(newdata, _cloned=cloned_internals)
 
 
-def delete(self, k):
-    f_hosh = self.identity * removal_id(self.identity.delete, k)  # d&#39; = d * &#34;--------------------...................y&#34;
-    uf = self.hosh * f_hosh
-    newdata = self.data.copy()
-    newdata[k] = None
-    newhoshes, newblobs, newhashes, = (
-        self.hoshes.copy(),
-        self.blobs.copy(),
-        self.hashes.copy(),
-    )
-    newhoshes[k] = placeholder(k, f_hosh, self.identity, self.hoshes)
-    if k in newblobs:
-        del newblobs[k]
-    if k in newhashes:
-        del newhashes[k]
-    return self.clone(newdata, _cloned=dict(blobs=newblobs, hashes=newhashes, hoshes=newhoshes, hosh=uf))
-
-
-def ihandle_dict(self, dictlike):
+def ihandle_dict(self, dictlike: Union[AbstractLazyDict, dict]):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;z&#34;: 8,
+        &#34;_id&#34;: &#34;LB_8c3817cc329ce53b9a02233dbe666a9c05819&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+        }
+    }
     &gt;&gt;&gt; di = ihandle_dict(d, {&#34;y&#34;:None})
     &gt;&gt;&gt; di.show(colored=False)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;_id&#34;: &#34;d45pzBr6XLzQMA5yn1ft1TCeE9Y............y&#34;,
+        &#34;_id&#34;: &#34;2teR7BgSlcNN0XkG9NShsLJqLZLUp-A7p2gW8E3i&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;e2AeAgvblRse-zBdTCB74l9IgRV............y&#34;,
-            &#34;z&#34;: &#34;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
     }
     &gt;&gt;&gt; di2 = ihandle_dict(di, {&#34;w&#34;:lambda x,z: x**z})
@@ -173,12 +167,12 @@ def ihandle_dict(self, dictlike):
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;_id&#34;: &#34;...&#34;,
+        &#34;_id&#34;: &#34;Q0jOriyrlj63FL3CHO27WUS2rd350InR5ysi4Vfi&#34;,
         &#34;_ids&#34;: {
-            &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;e2AeAgvblRse-zBdTCB74l9IgRV............y&#34;,
-            &#34;z&#34;: &#34;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+            &#34;w&#34;: &#34;ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0&#34;,
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
     }
     &gt;&gt;&gt; ihandle_dict(di2, {&#34;x&#34;: 55555}).show(colored=False)  # doctest:+ELLIPSIS
@@ -187,20 +181,20 @@ def ihandle_dict(self, dictlike):
         &#34;x&#34;: 55555,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;_id&#34;: &#34;...&#34;,
+        &#34;_id&#34;: &#34;fqC1B4bcNgfT9zTqPDTIBKkOfb350InR5ysi4Vfi&#34;,
         &#34;_ids&#34;: {
-            &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;yU_9d40a5fbe9781c6e90f0eb45bd45cd962a94b (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)&#34;,
-            &#34;y&#34;: &#34;e2AeAgvblRse-zBdTCB74l9IgRV............y&#34;,
-            &#34;z&#34;: &#34;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+            &#34;w&#34;: &#34;ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0&#34;,
+            &#34;x&#34;: &#34;Xs_cef5ebf024434be670eb110ae10b9067b7f69 (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)&#34;,
+            &#34;y&#34;: &#34;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
     }
     &gt;&gt;&gt; (d := ihandle_dict(idict(), {&#34;x&#34;: 1555})).show(colored=False)
     {
         &#34;x&#34;: 1555,
-        &#34;_id&#34;: &#34;RU_2b5abc50f25ebdae4523f9cc684d0d70823ba&#34;,
+        &#34;_id&#34;: &#34;et_a95995634419ec27251e2f71acf2ef31109d8&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;RU_2b5abc50f25ebdae4523f9cc684d0d70823ba&#34;
+            &#34;x&#34;: &#34;et_a95995634419ec27251e2f71acf2ef31109d8&#34;
         }
     }
     &gt;&gt;&gt; d &gt;&gt;= lambda x: {&#34;x&#34;: x**2}
@@ -217,15 +211,14 @@ def ihandle_dict(self, dictlike):
     {
         &#34;y&#34;: 7,
         &#34;x&#34;: &#34;→(x)&#34;,
-        &#34;_id&#34;: &#34;...&#34;,
+        &#34;_id&#34;: &#34;kSXVu8FBqNHPSdEaa1dXgyOXI5yWX7zUjhvy-1n0&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
-            &#34;x&#34;: &#34;...&#34;
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;x&#34;: &#34;SSBT4S9CxTb9pCd1US4DCDlXIEwWX7zUjhvy-1n0 (content: cgNWCdJP7XKZASgpBlTRcNAJMPoMv3y0LQcFOoIK)&#34;
         }
     }
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-    from ldict.core.base import AbstractLazyDict
 
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self.clone()
     for k, v in dictlike.items():
@@ -275,18 +268,18 @@ def solve(hoshes, output, uf: Hosh):
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; a &gt;&gt;= (lambda x: {&#34;x&#34;: x+2})
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: &#34;→(x)&#34;,
-        &#34;_id&#34;: &#34;yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr&#34;,
+        &#34;_id&#34;: &#34;y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr&#34;
+            &#34;x&#34;: &#34;y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr&#34;
         }
     }
     &gt;&gt;&gt; a = idict(x=3, y=5) &gt;&gt; (lambda x: {&#34;x&#34;: x+2})
@@ -310,12 +303,12 @@ def solve(hoshes, output, uf: Hosh):
         &#34;y&#34;: &#34;→(w x y)&#34;,
         &#34;w&#34;: 2,
         &#34;z&#34;: 1,
-        &#34;_id&#34;: &#34;aXitjV7Yex2rXIwwVM2ptHlEto7KdJ-3GBbIubB7&#34;,
+        &#34;_id&#34;: &#34;JN-puhssoMO2iTwz8coREZG5ts9KdJ-3GBbIubB7&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;V70NPr0hfwLd.LZQGuQ.nushi96rfJ-3GxbIubB8&#34;,
-            &#34;y&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
-            &#34;w&#34;: &#34;uA_df37fcf59e3bd7d618d96ceccfe8a5ecb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;,
-            &#34;z&#34;: &#34;U6_9e5ffd6b1d6101bcea46bd139d4b36862f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;
+            &#34;x&#34;: &#34;0216.kBAcz301hb6vAa56OI8ijFgaJH7prk5D0Aq&#34;,
+            &#34;y&#34;: &#34;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&#34;,
+            &#34;w&#34;: &#34;Tr_9c39277012db0264069f5c777cdf5ae3c57bc (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;,
+            &#34;z&#34;: &#34;fA_f76604de6c618f2740bd6cf44b16673648837 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -326,8 +319,22 @@ def solve(hoshes, output, uf: Hosh):
     return uf * ~previous
 
 
-def rho(c, digits):
-    return digits // 2 * &#34;-&#34; + str(c).rjust(digits // 2, &#34;.&#34;)</code></pre>
+def delete(self, k):
+    f_hosh = removal_elem(k)
+    uf = self.hosh * f_hosh
+    newdata = self.data.copy()
+    newdata[k] = None
+    newhoshes, newblobs, newhashes, = (
+        self.hoshes.copy(),
+        self.blobs.copy(),
+        self.hashes.copy(),
+    )
+    newhoshes[k] = placeholder(k, f_hosh, self.identity, self.hoshes)
+    if k in newblobs:
+        del newblobs[k]
+    if k in newhashes:
+        del newhashes[k]
+    return self.clone(newdata, _cloned=dict(blobs=newblobs, hashes=newhashes, hoshes=newhoshes, hosh=uf))</code></pre>
 </details>
 </section>
 <section>
@@ -351,10 +358,10 @@ def rho(c, digits):
 {
     &quot;y&quot;: &quot;→(x)&quot;,
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;9CQTZ.-ZMrtDr6MTnOPpxL5.2gsfffffffffffff&quot;,
+    &quot;_id&quot;: &quot;JAsdh.I6zV6p5eiqJkTGxM4g5Dnfffffffffffff&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;-UXfi8wcv0uck6LcY6QOTpEl7arfffffffffffff&quot;,
-        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
+        &quot;y&quot;: &quot;23KQ2fUFGjKDTiIseYxUGS9tXqtfffffffffffff&quot;,
+        &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 &gt;&gt;&gt; d2.hosh / f.metadata[&quot;id&quot;] == d.id
@@ -376,10 +383,10 @@ True
     {
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;9CQTZ.-ZMrtDr6MTnOPpxL5.2gsfffffffffffff&#34;,
+        &#34;_id&#34;: &#34;JAsdh.I6zV6p5eiqJkTGxM4g5Dnfffffffffffff&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;-UXfi8wcv0uck6LcY6QOTpEl7arfffffffffffff&#34;,
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;y&#34;: &#34;23KQ2fUFGjKDTiIseYxUGS9tXqtfffffffffffff&#34;,
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; d2.hosh / f.metadata[&#34;id&#34;] == d.id
@@ -417,7 +424,7 @@ True
         for i, k in enumerate(outputs):
             newdata[k] = frozen.data[k]
             if i &lt; noutputs - 1:
-                field_hosh = ufu_1 * rho(c, self.identity.digits)
+                field_hosh = ufu_1 * rho_elem(c)
                 c += 1
                 acc *= field_hosh
             else:
@@ -446,7 +453,7 @@ True
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def delete(self, k):
-    f_hosh = self.identity * removal_id(self.identity.delete, k)  # d&#39; = d * &#34;--------------------...................y&#34;
+    f_hosh = removal_elem(k)
     uf = self.hosh * f_hosh
     newdata = self.data.copy()
     newdata[k] = None
@@ -464,22 +471,34 @@ True
 </details>
 </dd>
 <dt id="idict.core.rshift.ihandle_dict"><code class="name flex">
-<span>def <span class="ident">ihandle_dict</span></span>(<span>self, dictlike)</span>
+<span>def <span class="ident">ihandle_dict</span></span>(<span>self, dictlike: Union[ldict.core.base.AbstractLazyDict, dict])</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
 &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
+&gt;&gt;&gt; d.show(colored=False)
+{
+    &quot;x&quot;: 5,
+    &quot;y&quot;: 7,
+    &quot;z&quot;: 8,
+    &quot;_id&quot;: &quot;LB_8c3817cc329ce53b9a02233dbe666a9c05819&quot;,
+    &quot;_ids&quot;: {
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
+        &quot;z&quot;: &quot;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
+    }
+}
 &gt;&gt;&gt; di = ihandle_dict(d, {&quot;y&quot;:None})
 &gt;&gt;&gt; di.show(colored=False)
 {
     &quot;x&quot;: 5,
     &quot;y&quot;: null,
     &quot;z&quot;: 8,
-    &quot;_id&quot;: &quot;d45pzBr6XLzQMA5yn1ft1TCeE9Y............y&quot;,
+    &quot;_id&quot;: &quot;2teR7BgSlcNN0XkG9NShsLJqLZLUp-A7p2gW8E3i&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;e2AeAgvblRse-zBdTCB74l9IgRV............y&quot;,
-        &quot;z&quot;: &quot;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&quot;,
+        &quot;z&quot;: &quot;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
     }
 }
 &gt;&gt;&gt; di2 = ihandle_dict(di, {&quot;w&quot;:lambda x,z: x**z})
@@ -489,12 +508,12 @@ True
     &quot;x&quot;: 5,
     &quot;y&quot;: null,
     &quot;z&quot;: 8,
-    &quot;_id&quot;: &quot;...&quot;,
+    &quot;_id&quot;: &quot;Q0jOriyrlj63FL3CHO27WUS2rd350InR5ysi4Vfi&quot;,
     &quot;_ids&quot;: {
-        &quot;w&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;e2AeAgvblRse-zBdTCB74l9IgRV............y&quot;,
-        &quot;z&quot;: &quot;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
+        &quot;w&quot;: &quot;ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0&quot;,
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&quot;,
+        &quot;z&quot;: &quot;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
     }
 }
 &gt;&gt;&gt; ihandle_dict(di2, {&quot;x&quot;: 55555}).show(colored=False)  # doctest:+ELLIPSIS
@@ -503,20 +522,20 @@ True
     &quot;x&quot;: 55555,
     &quot;y&quot;: null,
     &quot;z&quot;: 8,
-    &quot;_id&quot;: &quot;...&quot;,
+    &quot;_id&quot;: &quot;fqC1B4bcNgfT9zTqPDTIBKkOfb350InR5ysi4Vfi&quot;,
     &quot;_ids&quot;: {
-        &quot;w&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;yU_9d40a5fbe9781c6e90f0eb45bd45cd962a94b (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)&quot;,
-        &quot;y&quot;: &quot;e2AeAgvblRse-zBdTCB74l9IgRV............y&quot;,
-        &quot;z&quot;: &quot;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
+        &quot;w&quot;: &quot;ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0&quot;,
+        &quot;x&quot;: &quot;Xs_cef5ebf024434be670eb110ae10b9067b7f69 (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)&quot;,
+        &quot;y&quot;: &quot;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&quot;,
+        &quot;z&quot;: &quot;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&quot;
     }
 }
 &gt;&gt;&gt; (d := ihandle_dict(idict(), {&quot;x&quot;: 1555})).show(colored=False)
 {
     &quot;x&quot;: 1555,
-    &quot;_id&quot;: &quot;RU_2b5abc50f25ebdae4523f9cc684d0d70823ba&quot;,
+    &quot;_id&quot;: &quot;et_a95995634419ec27251e2f71acf2ef31109d8&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;RU_2b5abc50f25ebdae4523f9cc684d0d70823ba&quot;
+        &quot;x&quot;: &quot;et_a95995634419ec27251e2f71acf2ef31109d8&quot;
     }
 }
 &gt;&gt;&gt; d &gt;&gt;= lambda x: {&quot;x&quot;: x**2}
@@ -533,10 +552,10 @@ True
 {
     &quot;y&quot;: 7,
     &quot;x&quot;: &quot;→(x)&quot;,
-    &quot;_id&quot;: &quot;...&quot;,
+    &quot;_id&quot;: &quot;kSXVu8FBqNHPSdEaa1dXgyOXI5yWX7zUjhvy-1n0&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
-        &quot;x&quot;: &quot;...&quot;
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
+        &quot;x&quot;: &quot;SSBT4S9CxTb9pCd1US4DCDlXIEwWX7zUjhvy-1n0 (content: cgNWCdJP7XKZASgpBlTRcNAJMPoMv3y0LQcFOoIK)&quot;
     }
 }
 </code></pre></div>
@@ -544,21 +563,33 @@ True
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def ihandle_dict(self, dictlike):
+<pre><code class="python">def ihandle_dict(self, dictlike: Union[AbstractLazyDict, dict]):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     &gt;&gt;&gt; d = idict(x=5, y=7, z=8)
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;x&#34;: 5,
+        &#34;y&#34;: 7,
+        &#34;z&#34;: 8,
+        &#34;_id&#34;: &#34;LB_8c3817cc329ce53b9a02233dbe666a9c05819&#34;,
+        &#34;_ids&#34;: {
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+        }
+    }
     &gt;&gt;&gt; di = ihandle_dict(d, {&#34;y&#34;:None})
     &gt;&gt;&gt; di.show(colored=False)
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;_id&#34;: &#34;d45pzBr6XLzQMA5yn1ft1TCeE9Y............y&#34;,
+        &#34;_id&#34;: &#34;2teR7BgSlcNN0XkG9NShsLJqLZLUp-A7p2gW8E3i&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;e2AeAgvblRse-zBdTCB74l9IgRV............y&#34;,
-            &#34;z&#34;: &#34;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
     }
     &gt;&gt;&gt; di2 = ihandle_dict(di, {&#34;w&#34;:lambda x,z: x**z})
@@ -568,12 +599,12 @@ True
         &#34;x&#34;: 5,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;_id&#34;: &#34;...&#34;,
+        &#34;_id&#34;: &#34;Q0jOriyrlj63FL3CHO27WUS2rd350InR5ysi4Vfi&#34;,
         &#34;_ids&#34;: {
-            &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;e2AeAgvblRse-zBdTCB74l9IgRV............y&#34;,
-            &#34;z&#34;: &#34;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+            &#34;w&#34;: &#34;ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0&#34;,
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
     }
     &gt;&gt;&gt; ihandle_dict(di2, {&#34;x&#34;: 55555}).show(colored=False)  # doctest:+ELLIPSIS
@@ -582,20 +613,20 @@ True
         &#34;x&#34;: 55555,
         &#34;y&#34;: null,
         &#34;z&#34;: 8,
-        &#34;_id&#34;: &#34;...&#34;,
+        &#34;_id&#34;: &#34;fqC1B4bcNgfT9zTqPDTIBKkOfb350InR5ysi4Vfi&#34;,
         &#34;_ids&#34;: {
-            &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;yU_9d40a5fbe9781c6e90f0eb45bd45cd962a94b (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)&#34;,
-            &#34;y&#34;: &#34;e2AeAgvblRse-zBdTCB74l9IgRV............y&#34;,
-            &#34;z&#34;: &#34;Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
+            &#34;w&#34;: &#34;ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0&#34;,
+            &#34;x&#34;: &#34;Xs_cef5ebf024434be670eb110ae10b9067b7f69 (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)&#34;,
+            &#34;y&#34;: &#34;1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i&#34;,
+            &#34;z&#34;: &#34;90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)&#34;
         }
     }
     &gt;&gt;&gt; (d := ihandle_dict(idict(), {&#34;x&#34;: 1555})).show(colored=False)
     {
         &#34;x&#34;: 1555,
-        &#34;_id&#34;: &#34;RU_2b5abc50f25ebdae4523f9cc684d0d70823ba&#34;,
+        &#34;_id&#34;: &#34;et_a95995634419ec27251e2f71acf2ef31109d8&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;RU_2b5abc50f25ebdae4523f9cc684d0d70823ba&#34;
+            &#34;x&#34;: &#34;et_a95995634419ec27251e2f71acf2ef31109d8&#34;
         }
     }
     &gt;&gt;&gt; d &gt;&gt;= lambda x: {&#34;x&#34;: x**2}
@@ -612,15 +643,14 @@ True
     {
         &#34;y&#34;: 7,
         &#34;x&#34;: &#34;→(x)&#34;,
-        &#34;_id&#34;: &#34;...&#34;,
+        &#34;_id&#34;: &#34;kSXVu8FBqNHPSdEaa1dXgyOXI5yWX7zUjhvy-1n0&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
-            &#34;x&#34;: &#34;...&#34;
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;x&#34;: &#34;SSBT4S9CxTb9pCd1US4DCDlXIEwWX7zUjhvy-1n0 (content: cgNWCdJP7XKZASgpBlTRcNAJMPoMv3y0LQcFOoIK)&#34;
         }
     }
     &#34;&#34;&#34;
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-    from ldict.core.base import AbstractLazyDict
 
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self.clone()
     for k, v in dictlike.items():
@@ -672,19 +702,6 @@ True
     return field_hosh</code></pre>
 </details>
 </dd>
-<dt id="idict.core.rshift.rho"><code class="name flex">
-<span>def <span class="ident">rho</span></span>(<span>c, digits)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def rho(c, digits):
-    return digits // 2 * &#34;-&#34; + str(c).rjust(digits // 2, &#34;.&#34;)</code></pre>
-</details>
-</dd>
 <dt id="idict.core.rshift.solve"><code class="name flex">
 <span>def <span class="ident">solve</span></span>(<span>hoshes, output, uf: garoupa.hosh.Hosh)</span>
 </code></dt>
@@ -694,18 +711,18 @@ True
 &gt;&gt;&gt; a.show(colored=False)
 {
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;,
+    &quot;_id&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;
+        &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;
     }
 }
 &gt;&gt;&gt; a &gt;&gt;= (lambda x: {&quot;x&quot;: x+2})
 &gt;&gt;&gt; a.show(colored=False)
 {
     &quot;x&quot;: &quot;→(x)&quot;,
-    &quot;_id&quot;: &quot;yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr&quot;,
+    &quot;_id&quot;: &quot;y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr&quot;
+        &quot;x&quot;: &quot;y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr&quot;
     }
 }
 &gt;&gt;&gt; a = idict(x=3, y=5) &gt;&gt; (lambda x: {&quot;x&quot;: x+2})
@@ -729,12 +746,12 @@ True
     &quot;y&quot;: &quot;→(w x y)&quot;,
     &quot;w&quot;: 2,
     &quot;z&quot;: 1,
-    &quot;_id&quot;: &quot;aXitjV7Yex2rXIwwVM2ptHlEto7KdJ-3GBbIubB7&quot;,
+    &quot;_id&quot;: &quot;JN-puhssoMO2iTwz8coREZG5ts9KdJ-3GBbIubB7&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;V70NPr0hfwLd.LZQGuQ.nushi96rfJ-3GxbIubB8&quot;,
-        &quot;y&quot;: &quot;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&quot;,
-        &quot;w&quot;: &quot;uA_df37fcf59e3bd7d618d96ceccfe8a5ecb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;,
-        &quot;z&quot;: &quot;U6_9e5ffd6b1d6101bcea46bd139d4b36862f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;
+        &quot;x&quot;: &quot;0216.kBAcz301hb6vAa56OI8ijFgaJH7prk5D0Aq&quot;,
+        &quot;y&quot;: &quot;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&quot;,
+        &quot;w&quot;: &quot;Tr_9c39277012db0264069f5c777cdf5ae3c57bc (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;,
+        &quot;z&quot;: &quot;fA_f76604de6c618f2740bd6cf44b16673648837 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;
     }
 }
 </code></pre></div>
@@ -749,18 +766,18 @@ True
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; a &gt;&gt;= (lambda x: {&#34;x&#34;: x+2})
     &gt;&gt;&gt; a.show(colored=False)
     {
         &#34;x&#34;: &#34;→(x)&#34;,
-        &#34;_id&#34;: &#34;yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr&#34;,
+        &#34;_id&#34;: &#34;y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr&#34;
+            &#34;x&#34;: &#34;y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr&#34;
         }
     }
     &gt;&gt;&gt; a = idict(x=3, y=5) &gt;&gt; (lambda x: {&#34;x&#34;: x+2})
@@ -784,12 +801,12 @@ True
         &#34;y&#34;: &#34;→(w x y)&#34;,
         &#34;w&#34;: 2,
         &#34;z&#34;: 1,
-        &#34;_id&#34;: &#34;aXitjV7Yex2rXIwwVM2ptHlEto7KdJ-3GBbIubB7&#34;,
+        &#34;_id&#34;: &#34;JN-puhssoMO2iTwz8coREZG5ts9KdJ-3GBbIubB7&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;V70NPr0hfwLd.LZQGuQ.nushi96rfJ-3GxbIubB8&#34;,
-            &#34;y&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
-            &#34;w&#34;: &#34;uA_df37fcf59e3bd7d618d96ceccfe8a5ecb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;,
-            &#34;z&#34;: &#34;U6_9e5ffd6b1d6101bcea46bd139d4b36862f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;
+            &#34;x&#34;: &#34;0216.kBAcz301hb6vAa56OI8ijFgaJH7prk5D0Aq&#34;,
+            &#34;y&#34;: &#34;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&#34;,
+            &#34;w&#34;: &#34;Tr_9c39277012db0264069f5c777cdf5ae3c57bc (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;,
+            &#34;z&#34;: &#34;fA_f76604de6c618f2740bd6cf44b16673648837 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -817,12 +834,11 @@ True
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="idict.core.rshift.application" href="#idict.core.rshift.application">application</a></code></li>
 <li><code><a title="idict.core.rshift.delete" href="#idict.core.rshift.delete">delete</a></code></li>
 <li><code><a title="idict.core.rshift.ihandle_dict" href="#idict.core.rshift.ihandle_dict">ihandle_dict</a></code></li>
 <li><code><a title="idict.core.rshift.placeholder" href="#idict.core.rshift.placeholder">placeholder</a></code></li>
-<li><code><a title="idict.core.rshift.rho" href="#idict.core.rshift.rho">rho</a></code></li>
 <li><code><a title="idict.core.rshift.solve" href="#idict.core.rshift.solve">solve</a></code></li>
 </ul>
 </li>

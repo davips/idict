@@ -52,9 +52,8 @@ from operator import xor as cop
 from random import Random
 from typing import Union, Callable
 
-from ldict.core.base import AbstractLazyDict
-
 from idict.parameter.ilet import iLet
+from ldict.core.base import AbstractLazyDict
 
 
 class iFunctionSpace:
@@ -68,10 +67,10 @@ class iFunctionSpace:
     {
         &#34;y&#34;: 7,
         &#34;x&#34;: 5,
-        &#34;_id&#34;: &#34;TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4&#34;,
+        &#34;_id&#34;: &#34;BB_fad4374ca911f344859dab8e4b016ba2fe65b&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
@@ -79,15 +78,15 @@ class iFunctionSpace:
     &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-        &#34;_ids&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        &#34;_id&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;,
+        &#34;_ids&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;
     }»
     &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&#34;z&#34;: x*y}
     &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-        &#34;_ids&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        &#34;_id&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;,
+        &#34;_ids&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;
     } × λ»
     &#34;&#34;&#34;
 
@@ -212,10 +211,10 @@ def reduce3(f, lst):
 {
     &quot;y&quot;: 7,
     &quot;x&quot;: 5,
-    &quot;_id&quot;: &quot;TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4&quot;,
+    &quot;_id&quot;: &quot;BB_fad4374ca911f344859dab8e4b016ba2fe65b&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;,
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
     }
 }
 &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
@@ -223,15 +222,15 @@ def reduce3(f, lst):
 &gt;&gt;&gt; print(decolorize(str(fs)))
 «{'x': 5} × {
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
-    &quot;_ids&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
+    &quot;_id&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad&quot;,
+    &quot;_ids&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad&quot;
 }»
 &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&quot;z&quot;: x*y}
 &gt;&gt;&gt; print(decolorize(str(fs)))
 «{'x': 5} × {
     &quot;y&quot;: 7,
-    &quot;_id&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;,
-    &quot;_ids&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&quot;
+    &quot;_id&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad&quot;,
+    &quot;_ids&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad&quot;
 } × λ»
 </code></pre></div>
 <details class="source">
@@ -249,10 +248,10 @@ def reduce3(f, lst):
     {
         &#34;y&#34;: 7,
         &#34;x&#34;: 5,
-        &#34;_id&#34;: &#34;TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4&#34;,
+        &#34;_id&#34;: &#34;BB_fad4374ca911f344859dab8e4b016ba2fe65b&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;,
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; fs &gt;&gt;= idict(y=7)
@@ -260,15 +259,15 @@ def reduce3(f, lst):
     &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-        &#34;_ids&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        &#34;_id&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;,
+        &#34;_ids&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;
     }»
     &gt;&gt;&gt; fs &gt;&gt;= lambda x,y: {&#34;z&#34;: x*y}
     &gt;&gt;&gt; print(decolorize(str(fs)))
     «{&#39;x&#39;: 5} × {
         &#34;y&#34;: 7,
-        &#34;_id&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;,
-        &#34;_ids&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#34;
+        &#34;_id&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;,
+        &#34;_ids&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#34;
     } × λ»
     &#34;&#34;&#34;
 

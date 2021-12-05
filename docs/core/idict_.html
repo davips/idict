@@ -85,10 +85,10 @@ class Idict(AbstractMutableLazyDict):
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;_id&#34;: &#34;Gm_5a27861eacedc78bf5dc236c663f77f39933b&#34;,
+        &#34;_id&#34;: &#34;pl_8763f6625970707cdef7dfd31096db4c63c91&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Ku_f738128d6e27a03ec6c2e76d23514b4e998e3 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; d[&#34;y&#34;]
@@ -96,7 +96,7 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d = idict(x=123123, y=88)
     &gt;&gt;&gt; d2 = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; d2.ids  # doctest:+ELLIPSIS
-    {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#39;, &#39;y&#39;: &#39;EV_f4049757e5085edc56b4262974be71951792a&#39;}
+    {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;CF_13e3494690e330a722667f4ab9e067c64022e&#39;, &#39;y&#39;: &#39;-j_34f477bff0a6dac76fe447d0e95003e273c62&#39;}
     &gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&#34;z&#34;] * d2.ids[&#34;x&#34;] * d2.ids[&#34;y&#34;]
     True
     &gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&#34;w&#34;: x/y})
@@ -110,24 +110,24 @@ class Idict(AbstractMutableLazyDict):
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;...&#34;,
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
+            &#34;x&#34;: &#34;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2}) &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y})
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#39;, &#39;y&#39;: &#39;EV_f4049757e5085edc56b4262974be71951792a&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;BZ_2ef6b00691651b6f815ba62b93416aa9b3e80&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;CF_13e3494690e330a722667f4ab9e067c64022e&#39;, &#39;y&#39;: &#39;-j_34f477bff0a6dac76fe447d0e95003e273c62&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; d2.show(colored=False)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#34;,
+        &#34;_id&#34;: &#34;BZ_2ef6b00691651b6f815ba62b93416aa9b3e80&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a&#34;
+            &#34;x&#34;: &#34;CF_13e3494690e330a722667f4ab9e067c64022e&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62&#34;
         }
     }
     &gt;&gt;&gt; d == d2
@@ -137,18 +137,18 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;_id&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;,
+        &#34;_id&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;
+            &#34;x&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;
         }
     }
     &gt;&gt;&gt; d = idict() &gt;&gt; {&#34;x&#34;: &#34;more content&#34;}
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;_id&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;,
+        &#34;_id&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;
+            &#34;x&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;
         }
     }
     &gt;&gt;&gt; e.ids.keys()
@@ -162,8 +162,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
+            &#34;x&#34;: &#34;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; e.hosh == e.identity * e.ids[&#34;w&#34;] * e.ids[&#34;x&#34;] * e.ids[&#34;y&#34;]
@@ -177,8 +177,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;zG_8a2e85e3b861ec7279f5f1c357969eb907ded (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
+            &#34;x&#34;: &#34;Ye_5b015377273c0cfa49e037788b4c618a9431c (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
@@ -192,8 +192,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -206,8 +206,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -215,7 +215,7 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-    {&#39;...&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;...&#39;: {&#39;_id&#39;: &#39;...&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
+    {&#39;XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e&#39;: 12, &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;: 5, &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;: 7, &#39;SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e&#39;: {&#39;_id&#39;: &#39;SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e&#39;, &#39;x&#39;: &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;, &#39;y&#39;: &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 12,
@@ -224,8 +224,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -240,8 +240,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -249,7 +249,7 @@ class Idict(AbstractMutableLazyDict):
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-    {&#39;...&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;...&#39;: {&#39;_id&#39;: &#39;...&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
+    {&#39;...&#39;: 12, &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;: 5, &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;: 7, &#39;...&#39;: {&#39;_id&#39;: &#39;...&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;, &#39;y&#39;: &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 12,
@@ -258,8 +258,8 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x ** 2, &#34;_history&#34;: ...}
@@ -272,15 +272,15 @@ class Idict(AbstractMutableLazyDict):
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;_history&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87 05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;,
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge&#34;,
+        &#34;_id&#34;: &#34;FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;SKKfkobjfpGEFAccrq89n50FxtdKtmsieaekmogf&#34;,
-            &#34;_history&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;y&#34;: &#34;YBZxsNb-Y8H9kotRW2ohDi4E31.Smm9mZ7nJudfx&#34;,
+            &#34;_history&#34;: &#34;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&#34;,
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; (idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;).show(colored=False)
-    FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
+    FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge
     &gt;&gt;&gt; a = idict(x=3)
     &gt;&gt;&gt; b = idict(y=5)
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
@@ -293,79 +293,79 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;d&#34;: &#34;...&#34;,
-            &#34;y&#34;: &#34;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;y&#34;: &#34;EI_20378979f4669f2e318ae9742e214fd4880d7 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; b.d.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; import json
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
       &#34;...&#34;: {
-        &#34;_id&#34;: &#34;_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+        &#34;_id&#34;: &#34;_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
       },
-      &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;: 3,
-      &#34;_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;: {
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+      &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;: 3,
+      &#34;_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;: {
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+          &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
       },
-      &#34;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&#34;: 5,
+      &#34;EI_20378979f4669f2e318ae9742e214fd4880d7&#34;: 5,
       &#34;...&#34;: {
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
           &#34;d&#34;: &#34;...&#34;,
-          &#34;y&#34;: &#34;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&#34;
+          &#34;y&#34;: &#34;EI_20378979f4669f2e318ae9742e214fd4880d7&#34;
         }
       }
     }
-    &gt;&gt;&gt; d = idict.fromid(&#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;, cache)
+    &gt;&gt;&gt; d = idict.fromid(&#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;, cache)
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;→(↑)&#34;,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; d.evaluated.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; idict.fromid(d.id, cache).evaluated.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; e = idict(f=lambda x: 5)
     &gt;&gt;&gt; e.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;f&#34;: &#34;&lt;function &lt;lambda&gt; at 0x...&gt;&#34;,
-        &#34;_id&#34;: &#34;jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm&#34;,
+        &#34;_id&#34;: &#34;pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy&#34;,
         &#34;_ids&#34;: {
-            &#34;f&#34;: &#34;jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm&#34;
+            &#34;f&#34;: &#34;pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy&#34;
         }
     }
     &gt;&gt;&gt; from idict.core.appearance import idict2txt
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 S-_074b5a806933d64f111a93af359a278402f83&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
     &gt;&gt;&gt; cache = {}
     &gt;&gt;&gt; a = idict(x=5) &gt;&gt; (lambda x:{&#34;y&#34;: x**x}) &gt;&gt; [[cache]]  # Cache within double brackets has strict/eager behavior.
     &gt;&gt;&gt; a.show(colored=False)  # doctest:+ELLIPSIS
@@ -375,7 +375,7 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;y&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; idict(a.id, cache).show(colored=False)  # doctest:+ELLIPSIS
@@ -385,11 +385,11 @@ class Idict(AbstractMutableLazyDict):
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;y&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; a.idh
-    &#39;&lt;!DOCTYPE HTML PUBLIC &#34;-//W3C//DTD HTML 4.01 Transitional//EN&#34; &#34;http://www.w3.org/TR/html4/loose.dtd&#34;&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34;&gt;\n&lt;title&gt;&lt;/title&gt;\n&lt;style type=&#34;text/css&#34;&gt;\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground &gt; .bold,.bold &gt; .body_foreground, body.body_foreground &gt; pre &gt; .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-103 { color: #8787af; }\n.ansi38-105 { color: #8787ff; }\n.ansi38-140 { color: #af87d7; }\n.ansi38-177 { color: #d787ff; }\n.ansi38-111 { color: #87afff; }\n.ansi38-147 { color: #afafff; }\n.ansi38-181 { color: #d7afaf; }\n.ansi38-182 { color: #d7afd7; }\n.ansi38-183 { color: #d7afff; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-152 { color: #afd7d7; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body class=&#34;body_foreground body_background&#34; style=&#34;font-size: normal;&#34; &gt;\n&lt;pre class=&#34;ansi2html-content&#34;&gt;\n&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;V&lt;/span&gt;&lt;span class=&#34;ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183 ansi48-0&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181 ansi48-0&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103 ansi48-0&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105 ansi48-0&#34;&gt;w&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182 ansi48-0&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177 ansi48-0&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111 ansi48-0&#34;&gt;v&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;M&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181 ansi48-0&#34;&gt;v&lt;/span&gt;&lt;span class=&#34;ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140 ansi48-0&#34;&gt;D&lt;/span&gt;&lt;span class=&#34;ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103 ansi48-0&#34;&gt;z&lt;/span&gt;&lt;span class=&#34;ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182 ansi48-0&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;v&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177 ansi48-0&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111 ansi48-0&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183 ansi48-0&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140 ansi48-0&#34;&gt;L&lt;/span&gt;&lt;span class=&#34;ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103 ansi48-0&#34;&gt;4&lt;/span&gt;\n&lt;/pre&gt;\n&lt;/body&gt;\n\n&lt;/html&gt;\n&#39;
+    &#39;&lt;!DOCTYPE HTML PUBLIC &#34;-//W3C//DTD HTML 4.01 Transitional//EN&#34; &#34;http://www.w3.org/TR/html4/loose.dtd&#34;&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34;&gt;\n&lt;title&gt;&lt;/title&gt;\n&lt;style type=&#34;text/css&#34;&gt;\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground &gt; .bold,.bold &gt; .body_foreground, body.body_foreground &gt; pre &gt; .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n.ansi38-122 { color: #87ffd7; }\n.ansi38-123 { color: #87ffff; }\n.ansi38-159 { color: #afffff; }\n.ansi38-194 { color: #d7ffd7; }\n.ansi38-195 { color: #d7ffff; }\n.ansi38-251 { color: #c6c6c6; }\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body class=&#34;body_foreground body_background&#34; style=&#34;font-size: normal;&#34; &gt;\n&lt;pre class=&#34;ansi2html-content&#34;&gt;\n&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;O&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;J&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;D&lt;/span&gt;&lt;span class=&#34;ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;w&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;J&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;K&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;G&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;Y&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251 ansi48-0&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;L&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;4&lt;/span&gt;\n&lt;/pre&gt;\n&lt;/body&gt;\n\n&lt;/html&gt;\n&#39;
     &#34;&#34;&#34;
 
     frozen: fro.FrozenIdentifiedDict
@@ -401,10 +401,12 @@ class Idict(AbstractMutableLazyDict):
         self.identity = identity
         if isinstance(_dictionary, str) and isinstance(_id, (dict, Cache)):
             # Build idict from id+cache.
-            if _ids or rnd or _cloned or kwargs:
+            if _ids or rnd or _cloned or kwargs:  # pragma: no cover
                 raise Exception(&#34;Cannot pass more arguments when first argument is id and second argument is cache.&#34;)
             # TODO (minor): detect identity from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
+            if self.frozen is None:  # pragma: no cover
+                raise Exception(f&#34;Could not find {_dictionary}&#34;)
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 
@@ -468,10 +470,10 @@ class Idict(AbstractMutableLazyDict):
         {
             &#34;x&#34;: 5,
             &#34;y&#34;: 2,
-            &#34;_id&#34;: &#34;OS_ea00e0e366f9fd9c4024ee9e7878633af1ada&#34;,
+            &#34;_id&#34;: &#34;xR_15583f654491968d294f9b1622dfb782db241&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-                &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;
+                &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+                &#34;y&#34;: &#34;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;
             }
         }
         &gt;&gt;&gt; from ldict import ldict
@@ -490,7 +492,7 @@ class Idict(AbstractMutableLazyDict):
         &#34;&#34;&#34;
         &gt;&gt;&gt; d = Idict(x=2) &gt;&gt; (lambda x: {&#34;y&#34;: 2 * x})
         &gt;&gt;&gt; d.ids  # doctest:+ELLIPSIS
-        {&#39;y&#39;: &#39;...&#39;, &#39;x&#39;: &#39;vA_88beb4e68c50d7d618d97ceccfe8a5ecb5c4b&#39;}
+        {&#39;y&#39;: &#39;...&#39;, &#39;x&#39;: &#39;U8_a7205a343c568c5fe7c4619104ae78bd43279&#39;}
         &#34;&#34;&#34;
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen &gt;&gt; other
@@ -564,9 +566,9 @@ class Idict(AbstractMutableLazyDict):
         &gt;&gt;&gt; idict(a=1, _b=2, _history=[1,2,3]).trimmed.show(colored=False)
         {
             &#34;a&#34;: 1,
-            &#34;_id&#34;: &#34;v6_3ac82db5497101bcea46bd139d4b36862f272&#34;,
+            &#34;_id&#34;: &#34;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&#34;,
             &#34;_ids&#34;: {
-                &#34;a&#34;: &#34;v6_3ac82db5497101bcea46bd139d4b36862f272&#34;
+                &#34;a&#34;: &#34;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&#34;
             }
         }
         &#34;&#34;&#34;
@@ -585,9 +587,9 @@ class Idict(AbstractMutableLazyDict):
     #         &#34;x&#34;: 3,
     #         &#34;_metafield_1&#34;: 5,
     #         &#34;_history&#34;: &#34;id-of-some-previous-step----------------&#34;,
-    #         &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #         &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #         &#34;_ids&#34;: {
-    #             &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #             &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #             &#34;_metafield_1&#34;: &#34;KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
     #             &#34;_history&#34;: &#34;T4_254b4402e8d23be907236a140ff90245285a8 (content: VO_b2b5c7d8ff9718670723c03f0ff9028f085a8)&#34;
     #         }
@@ -597,9 +599,9 @@ class Idict(AbstractMutableLazyDict):
     #     {
     #         &#34;fields&#34;: {
     #             &#34;x&#34;: 3,
-    #             &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #             &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #             &#34;_ids&#34;: {
-    #                 &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+    #                 &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
     #             }
     #         },
     #         &#34;version&#34;: &#34;user 1&#34;,
@@ -607,7 +609,7 @@ class Idict(AbstractMutableLazyDict):
     #         &#34;_history&#34;: &#34;id-of-some-previous-step----------------&#34;,
     #         &#34;_id&#34;: &#34;g.0pzcYOgFTneQ8ojVDcReKkaqDuuuuuuuuuuuuu&#34;,
     #         &#34;_ids&#34;: {
-    #             &#34;fields&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #             &#34;fields&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #             &#34;version&#34;: &#34;uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu&#34;,
     #             &#34;_metafield_1&#34;: &#34;KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f&#34;,
     #             &#34;_history&#34;: &#34;T4_254b4402e8d23be907236a140ff90245285a8&#34;
@@ -646,10 +648,10 @@ class Idict(AbstractMutableLazyDict):
 {
     &quot;x&quot;: 5,
     &quot;y&quot;: 3,
-    &quot;_id&quot;: &quot;Gm_5a27861eacedc78bf5dc236c663f77f39933b&quot;,
+    &quot;_id&quot;: &quot;pl_8763f6625970707cdef7dfd31096db4c63c91&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;Ku_f738128d6e27a03ec6c2e76d23514b4e998e3 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 &gt;&gt;&gt; d[&quot;y&quot;]
@@ -657,7 +659,7 @@ class Idict(AbstractMutableLazyDict):
 &gt;&gt;&gt; d = idict(x=123123, y=88)
 &gt;&gt;&gt; d2 = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
 &gt;&gt;&gt; d2.ids  # doctest:+ELLIPSIS
-{'z': '...', 'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}
+{'z': '...', 'x': 'CF_13e3494690e330a722667f4ab9e067c64022e', 'y': '-j_34f477bff0a6dac76fe447d0e95003e273c62'}
 &gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&quot;z&quot;] * d2.ids[&quot;x&quot;] * d2.ids[&quot;y&quot;]
 True
 &gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&quot;w&quot;: x/y})
@@ -671,24 +673,24 @@ True
     &quot;_ids&quot;: {
         &quot;w&quot;: &quot;...&quot;,
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
-        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
+        &quot;x&quot;: &quot;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
+        &quot;y&quot;: &quot;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
     }
 }
 &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2}) &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y})
 &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y}) &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
 &gt;&gt;&gt; dic = d.asdict  # Converting to dict
 &gt;&gt;&gt; dic
-{'x': 123123, 'y': 88, '_id': 'S-_6a05b897eed2728ea8200aa3f9e90651e952a', '_ids': {'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}}
+{'x': 123123, 'y': 88, '_id': 'BZ_2ef6b00691651b6f815ba62b93416aa9b3e80', '_ids': {'x': 'CF_13e3494690e330a722667f4ab9e067c64022e', 'y': '-j_34f477bff0a6dac76fe447d0e95003e273c62'}}
 &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
 &gt;&gt;&gt; d2.show(colored=False)
 {
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;_id&quot;: &quot;S-_6a05b897eed2728ea8200aa3f9e90651e952a&quot;,
+    &quot;_id&quot;: &quot;BZ_2ef6b00691651b6f815ba62b93416aa9b3e80&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff&quot;,
-        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a&quot;
+        &quot;x&quot;: &quot;CF_13e3494690e330a722667f4ab9e067c64022e&quot;,
+        &quot;y&quot;: &quot;-j_34f477bff0a6dac76fe447d0e95003e273c62&quot;
     }
 }
 &gt;&gt;&gt; d == d2
@@ -698,18 +700,18 @@ True
 &gt;&gt;&gt; d.show(colored=False)
 {
     &quot;x&quot;: &quot;more content&quot;,
-    &quot;_id&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;,
+    &quot;_id&quot;: &quot;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;
+        &quot;x&quot;: &quot;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&quot;
     }
 }
 &gt;&gt;&gt; d = idict() &gt;&gt; {&quot;x&quot;: &quot;more content&quot;}
 &gt;&gt;&gt; d.show(colored=False)
 {
     &quot;x&quot;: &quot;more content&quot;,
-    &quot;_id&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;,
+    &quot;_id&quot;: &quot;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;
+        &quot;x&quot;: &quot;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&quot;
     }
 }
 &gt;&gt;&gt; e.ids.keys()
@@ -723,8 +725,8 @@ dict_keys(['w', 'z', 'x', 'y'])
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;w&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
-        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
+        &quot;x&quot;: &quot;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
+        &quot;y&quot;: &quot;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
     }
 }
 &gt;&gt;&gt; e.hosh == e.identity * e.ids[&quot;w&quot;] * e.ids[&quot;x&quot;] * e.ids[&quot;y&quot;]
@@ -738,8 +740,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;w&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;zG_8a2e85e3b861ec7279f5f1c357969eb907ded (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)&quot;,
-        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
+        &quot;x&quot;: &quot;Ye_5b015377273c0cfa49e037788b4c618a9431c (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)&quot;,
+        &quot;y&quot;: &quot;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
     }
 }
 &gt;&gt;&gt; f = lambda x,y: {&quot;z&quot;:x+y}
@@ -753,8 +755,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c = {}
@@ -767,8 +769,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c
@@ -776,7 +778,7 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-{'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+{'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, 'SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e': {'_id': 'SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e', '_ids': {'z': 'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
 &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 12,
@@ -785,8 +787,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c = {}
@@ -801,8 +803,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c
@@ -810,7 +812,7 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-{'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+{'...': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
 &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 12,
@@ -819,8 +821,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; f = lambda x: {&quot;y&quot;: x ** 2, &quot;_history&quot;: ...}
@@ -833,15 +835,15 @@ True
     &quot;y&quot;: &quot;→(x)&quot;,
     &quot;_history&quot;: &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87 05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;,
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge&quot;,
+    &quot;_id&quot;: &quot;FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;SKKfkobjfpGEFAccrq89n50FxtdKtmsieaekmogf&quot;,
-        &quot;_history&quot;: &quot;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&quot;,
-        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
+        &quot;y&quot;: &quot;YBZxsNb-Y8H9kotRW2ohDi4E31.Smm9mZ7nJudfx&quot;,
+        &quot;_history&quot;: &quot;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&quot;,
+        &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 &gt;&gt;&gt; (idict(x=3).hosh * &quot;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot; * &quot;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&quot;).show(colored=False)
-FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
+FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge
 &gt;&gt;&gt; a = idict(x=3)
 &gt;&gt;&gt; b = idict(y=5)
 &gt;&gt;&gt; b[&quot;d&quot;] = lambda y: a
@@ -854,79 +856,79 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;d&quot;: &quot;...&quot;,
-        &quot;y&quot;: &quot;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
+        &quot;y&quot;: &quot;EI_20378979f4669f2e318ae9742e214fd4880d7 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
     }
 }
 &gt;&gt;&gt; b.d.show(colored=False)
 {
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;,
+    &quot;_id&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;
+        &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;
     }
 }
 &gt;&gt;&gt; import json
 &gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
 {
   &quot;...&quot;: {
-    &quot;_id&quot;: &quot;_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;
+    &quot;_id&quot;: &quot;_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;
   },
-  &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;: 3,
-  &quot;_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;: {
-    &quot;_id&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;,
+  &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;: 3,
+  &quot;_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;: {
+    &quot;_id&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;,
     &quot;_ids&quot;: {
-      &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;
+      &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;
     }
   },
-  &quot;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&quot;: 5,
+  &quot;EI_20378979f4669f2e318ae9742e214fd4880d7&quot;: 5,
   &quot;...&quot;: {
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
       &quot;d&quot;: &quot;...&quot;,
-      &quot;y&quot;: &quot;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&quot;
+      &quot;y&quot;: &quot;EI_20378979f4669f2e318ae9742e214fd4880d7&quot;
     }
   }
 }
-&gt;&gt;&gt; d = idict.fromid(&quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;, cache)
+&gt;&gt;&gt; d = idict.fromid(&quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;, cache)
 &gt;&gt;&gt; d.show(colored=False)
 {
     &quot;x&quot;: &quot;→(↑)&quot;,
-    &quot;_id&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;,
+    &quot;_id&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;
+        &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;
     }
 }
 &gt;&gt;&gt; d.evaluated.show(colored=False)
 {
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;,
+    &quot;_id&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;
+        &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;
     }
 }
 &gt;&gt;&gt; idict.fromid(d.id, cache).evaluated.show(colored=False)
 {
     &quot;x&quot;: 3,
-    &quot;_id&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;,
+    &quot;_id&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&quot;
+        &quot;x&quot;: &quot;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&quot;
     }
 }
 &gt;&gt;&gt; e = idict(f=lambda x: 5)
 &gt;&gt;&gt; e.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;f&quot;: &quot;&lt;function &lt;lambda&gt; at 0x...&gt;&quot;,
-    &quot;_id&quot;: &quot;jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm&quot;,
+    &quot;_id&quot;: &quot;pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy&quot;,
     &quot;_ids&quot;: {
-        &quot;f&quot;: &quot;jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm&quot;
+        &quot;f&quot;: &quot;pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy&quot;
     }
 }
 &gt;&gt;&gt; from idict.core.appearance import idict2txt
 &gt;&gt;&gt; d = idict(x=1,y=2)
 &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
-'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&quot;\n}'
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;5G_358b45f49c547174eb4bd687079b30cbbe724&quot;,\n    &quot;_ids&quot;: &quot;fH_5142f0a4338a1da2ca3159e2d1011981ac890 S-_074b5a806933d64f111a93af359a278402f83&quot;\n}'
 &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
-'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,\n        &quot;y&quot;: &quot;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;\n    }\n}'
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;5G_358b45f49c547174eb4bd687079b30cbbe724&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,\n        &quot;y&quot;: &quot;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;\n    }\n}'
 &gt;&gt;&gt; cache = {}
 &gt;&gt;&gt; a = idict(x=5) &gt;&gt; (lambda x:{&quot;y&quot;: x**x}) &gt;&gt; [[cache]]  # Cache within double brackets has strict/eager behavior.
 &gt;&gt;&gt; a.show(colored=False)  # doctest:+ELLIPSIS
@@ -936,7 +938,7 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;y&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
     }
 }
 &gt;&gt;&gt; idict(a.id, cache).show(colored=False)  # doctest:+ELLIPSIS
@@ -946,11 +948,11 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;y&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;
     }
 }
 &gt;&gt;&gt; a.idh
-'&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;\n&lt;title&gt;&lt;/title&gt;\n&lt;style type=&quot;text/css&quot;&gt;\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground &gt; .bold,.bold &gt; .body_foreground, body.body_foreground &gt; pre &gt; .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-103 { color: #8787af; }\n.ansi38-105 { color: #8787ff; }\n.ansi38-140 { color: #af87d7; }\n.ansi38-177 { color: #d787ff; }\n.ansi38-111 { color: #87afff; }\n.ansi38-147 { color: #afafff; }\n.ansi38-181 { color: #d7afaf; }\n.ansi38-182 { color: #d7afd7; }\n.ansi38-183 { color: #d7afff; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-152 { color: #afd7d7; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body class=&quot;body_foreground body_background&quot; style=&quot;font-size: normal;&quot; &gt;\n&lt;pre class=&quot;ansi2html-content&quot;&gt;\n&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189 ansi48-0&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;ansi38-183&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-183&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-183 ansi48-0&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152 ansi48-0&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;ansi38-181&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-181&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-181 ansi48-0&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;ansi38-140&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-140&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-140 ansi48-0&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;ansi38-103&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-103&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-103 ansi48-0&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;ansi38-105&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-105&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-105 ansi48-0&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117 ansi48-0&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;ansi38-182&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-182&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-182 ansi48-0&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147 ansi48-0&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147 ansi48-0&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152 ansi48-0&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;ansi38-177&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-177&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-177 ansi48-0&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;ansi38-111&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-111&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-111 ansi48-0&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189 ansi48-0&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;ansi38-183&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-183&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-183 ansi48-0&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152 ansi48-0&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;ansi38-181&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-181&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-181 ansi48-0&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;ansi38-140&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-140&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-140 ansi48-0&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;ansi38-103&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-103&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-103 ansi48-0&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;ansi38-105&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-105&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-105 ansi48-0&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117 ansi48-0&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;ansi38-182&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-182&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-182 ansi48-0&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147 ansi48-0&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-147 ansi48-0&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152 ansi48-0&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;ansi38-177&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-177&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-177 ansi48-0&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;ansi38-111&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-111&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-111 ansi48-0&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189 ansi48-0&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;ansi38-183&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-183&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-183 ansi48-0&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-152 ansi48-0&quot;&gt;Q&lt;/span&gt;&lt;span class=&quot;ansi38-181&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-181&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-181 ansi48-0&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;ansi38-140&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-140&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-140 ansi48-0&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;ansi38-103&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-103&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-103 ansi48-0&quot;&gt;4&lt;/span&gt;\n&lt;/pre&gt;\n&lt;/body&gt;\n\n&lt;/html&gt;\n'
+'&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;\n&lt;title&gt;&lt;/title&gt;\n&lt;style type=&quot;text/css&quot;&gt;\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground &gt; .bold,.bold &gt; .body_foreground, body.body_foreground &gt; pre &gt; .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n.ansi38-122 { color: #87ffd7; }\n.ansi38-123 { color: #87ffff; }\n.ansi38-159 { color: #afffff; }\n.ansi38-194 { color: #d7ffd7; }\n.ansi38-195 { color: #d7ffff; }\n.ansi38-251 { color: #c6c6c6; }\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body class=&quot;body_foreground body_background&quot; style=&quot;font-size: normal;&quot; &gt;\n&lt;pre class=&quot;ansi2html-content&quot;&gt;\n&lt;span class=&quot;ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123 ansi48-0&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159 ansi48-0&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;Q&lt;/span&gt;&lt;span class=&quot;ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194 ansi48-0&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122 ansi48-0&quot;&gt;J&lt;/span&gt;&lt;span class=&quot;ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189 ansi48-0&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122 ansi48-0&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123 ansi48-0&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159 ansi48-0&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194 ansi48-0&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;ansi38-251&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-251&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-251 ansi48-0&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117 ansi48-0&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123 ansi48-0&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159 ansi48-0&quot;&gt;J&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194 ansi48-0&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;G&lt;/span&gt;&lt;span class=&quot;ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122 ansi48-0&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189 ansi48-0&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122 ansi48-0&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123 ansi48-0&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159 ansi48-0&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194 ansi48-0&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;ansi38-251&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-251&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-251 ansi48-0&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-117 ansi48-0&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-123 ansi48-0&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-159 ansi48-0&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-195 ansi48-0&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-194 ansi48-0&quot;&gt;Q&lt;/span&gt;&lt;span class=&quot;ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-153 ansi48-0&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-122 ansi48-0&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ansi1 ansi38-189 ansi48-0&quot;&gt;4&lt;/span&gt;\n&lt;/pre&gt;\n&lt;/body&gt;\n\n&lt;/html&gt;\n'
 </code></pre></div>
 <details class="source">
 <summary>
@@ -972,10 +974,10 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     {
         &#34;x&#34;: 5,
         &#34;y&#34;: 3,
-        &#34;_id&#34;: &#34;Gm_5a27861eacedc78bf5dc236c663f77f39933b&#34;,
+        &#34;_id&#34;: &#34;pl_8763f6625970707cdef7dfd31096db4c63c91&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;Ku_f738128d6e27a03ec6c2e76d23514b4e998e3 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; d[&#34;y&#34;]
@@ -983,7 +985,7 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     &gt;&gt;&gt; d = idict(x=123123, y=88)
     &gt;&gt;&gt; d2 = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; d2.ids  # doctest:+ELLIPSIS
-    {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#39;, &#39;y&#39;: &#39;EV_f4049757e5085edc56b4262974be71951792a&#39;}
+    {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;CF_13e3494690e330a722667f4ab9e067c64022e&#39;, &#39;y&#39;: &#39;-j_34f477bff0a6dac76fe447d0e95003e273c62&#39;}
     &gt;&gt;&gt; d2.hosh == d2.identity * d2.ids[&#34;z&#34;] * d2.ids[&#34;x&#34;] * d2.ids[&#34;y&#34;]
     True
     &gt;&gt;&gt; e = d2 &gt;&gt; (lambda x,y: {&#34;w&#34;: x/y})
@@ -997,24 +999,24 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;...&#34;,
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
+            &#34;x&#34;: &#34;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&#34;z&#34;: x**2}) &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y})
     &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&#34;w&#34;: x/y}) &gt;&gt; (lambda x: {&#34;z&#34;: x**2})
     &gt;&gt;&gt; dic = d.asdict  # Converting to dict
     &gt;&gt;&gt; dic
-    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#39;, &#39;y&#39;: &#39;EV_f4049757e5085edc56b4262974be71951792a&#39;}}
+    {&#39;x&#39;: 123123, &#39;y&#39;: 88, &#39;_id&#39;: &#39;BZ_2ef6b00691651b6f815ba62b93416aa9b3e80&#39;, &#39;_ids&#39;: {&#39;x&#39;: &#39;CF_13e3494690e330a722667f4ab9e067c64022e&#39;, &#39;y&#39;: &#39;-j_34f477bff0a6dac76fe447d0e95003e273c62&#39;}}
     &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
     &gt;&gt;&gt; d2.show(colored=False)
     {
         &#34;x&#34;: 123123,
         &#34;y&#34;: 88,
-        &#34;_id&#34;: &#34;S-_6a05b897eed2728ea8200aa3f9e90651e952a&#34;,
+        &#34;_id&#34;: &#34;BZ_2ef6b00691651b6f815ba62b93416aa9b3e80&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a&#34;
+            &#34;x&#34;: &#34;CF_13e3494690e330a722667f4ab9e067c64022e&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62&#34;
         }
     }
     &gt;&gt;&gt; d == d2
@@ -1024,18 +1026,18 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;_id&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;,
+        &#34;_id&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;
+            &#34;x&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;
         }
     }
     &gt;&gt;&gt; d = idict() &gt;&gt; {&#34;x&#34;: &#34;more content&#34;}
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;more content&#34;,
-        &#34;_id&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;,
+        &#34;_id&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;aF_64eaced14bf0114a6b9eceaac31744c2093df&#34;
+            &#34;x&#34;: &#34;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&#34;
         }
     }
     &gt;&gt;&gt; e.ids.keys()
@@ -1049,8 +1051,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
+            &#34;x&#34;: &#34;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; e.hosh == e.identity * e.ids[&#34;w&#34;] * e.ids[&#34;x&#34;] * e.ids[&#34;y&#34;]
@@ -1064,8 +1066,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;w&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;zG_8a2e85e3b861ec7279f5f1c357969eb907ded (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)&#34;,
-            &#34;y&#34;: &#34;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
+            &#34;x&#34;: &#34;Ye_5b015377273c0cfa49e037788b4c618a9431c (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)&#34;,
+            &#34;y&#34;: &#34;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&#34;
         }
     }
     &gt;&gt;&gt; f = lambda x,y: {&#34;z&#34;:x+y}
@@ -1079,8 +1081,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -1093,8 +1095,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -1102,7 +1104,7 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-    {&#39;...&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;...&#39;: {&#39;_id&#39;: &#39;...&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
+    {&#39;XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e&#39;: 12, &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;: 5, &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;: 7, &#39;SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e&#39;: {&#39;_id&#39;: &#39;SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e&#39;, &#39;x&#39;: &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;, &#39;y&#39;: &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 12,
@@ -1111,8 +1113,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c = {}
@@ -1127,8 +1129,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; c
@@ -1136,7 +1138,7 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     &gt;&gt;&gt; d3.z
     12
     &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-    {&#39;...&#39;: 12, &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;: 5, &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;: 7, &#39;...&#39;: {&#39;_id&#39;: &#39;...&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f&#39;, &#39;y&#39;: &#39;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065&#39;}}}
+    {&#39;...&#39;: 12, &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;: 5, &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;: 7, &#39;...&#39;: {&#39;_id&#39;: &#39;...&#39;, &#39;_ids&#39;: {&#39;z&#39;: &#39;...&#39;, &#39;x&#39;: &#39;GS_cb0fda15eac732cb08351e71fc359058b93bd&#39;, &#39;y&#39;: &#39;WK_6ba95267cec724067d58b3186ecbcaa4253ad&#39;}}}
     &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;z&#34;: 12,
@@ -1145,8 +1147,8 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;z&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-            &#34;y&#34;: &#34;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+            &#34;y&#34;: &#34;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&#34;
         }
     }
     &gt;&gt;&gt; f = lambda x: {&#34;y&#34;: x ** 2, &#34;_history&#34;: ...}
@@ -1159,15 +1161,15 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;y&#34;: &#34;→(x)&#34;,
         &#34;_history&#34;: &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87 05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;,
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge&#34;,
+        &#34;_id&#34;: &#34;FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge&#34;,
         &#34;_ids&#34;: {
-            &#34;y&#34;: &#34;SKKfkobjfpGEFAccrq89n50FxtdKtmsieaekmogf&#34;,
-            &#34;_history&#34;: &#34;ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-&#34;,
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;y&#34;: &#34;YBZxsNb-Y8H9kotRW2ohDi4E31.Smm9mZ7nJudfx&#34;,
+            &#34;_history&#34;: &#34;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&#34;,
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &gt;&gt;&gt; (idict(x=3).hosh * &#34;b5d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34; * &#34;05d6efbc9820dafe0d8fbe87a79adbe9797abc87&#34;).show(colored=False)
-    FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
+    FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge
     &gt;&gt;&gt; a = idict(x=3)
     &gt;&gt;&gt; b = idict(y=5)
     &gt;&gt;&gt; b[&#34;d&#34;] = lambda y: a
@@ -1180,79 +1182,79 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;d&#34;: &#34;...&#34;,
-            &#34;y&#34;: &#34;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;y&#34;: &#34;EI_20378979f4669f2e318ae9742e214fd4880d7 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; b.d.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; import json
     &gt;&gt;&gt; print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
       &#34;...&#34;: {
-        &#34;_id&#34;: &#34;_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+        &#34;_id&#34;: &#34;_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
       },
-      &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;: 3,
-      &#34;_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;: {
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+      &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;: 3,
+      &#34;_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;: {
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-          &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+          &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
       },
-      &#34;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&#34;: 5,
+      &#34;EI_20378979f4669f2e318ae9742e214fd4880d7&#34;: 5,
       &#34;...&#34;: {
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
           &#34;d&#34;: &#34;...&#34;,
-          &#34;y&#34;: &#34;ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f&#34;
+          &#34;y&#34;: &#34;EI_20378979f4669f2e318ae9742e214fd4880d7&#34;
         }
       }
     }
-    &gt;&gt;&gt; d = idict.fromid(&#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;, cache)
+    &gt;&gt;&gt; d = idict.fromid(&#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;, cache)
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;x&#34;: &#34;→(↑)&#34;,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; d.evaluated.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; idict.fromid(d.id, cache).evaluated.show(colored=False)
     {
         &#34;x&#34;: 3,
-        &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+        &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+            &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
         }
     }
     &gt;&gt;&gt; e = idict(f=lambda x: 5)
     &gt;&gt;&gt; e.show(colored=False)  # doctest:+ELLIPSIS
     {
         &#34;f&#34;: &#34;&lt;function &lt;lambda&gt; at 0x...&gt;&#34;,
-        &#34;_id&#34;: &#34;jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm&#34;,
+        &#34;_id&#34;: &#34;pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy&#34;,
         &#34;_ids&#34;: {
-            &#34;f&#34;: &#34;jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm&#34;
+            &#34;f&#34;: &#34;pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy&#34;
         }
     }
     &gt;&gt;&gt; from idict.core.appearance import idict2txt
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 S-_074b5a806933d64f111a93af359a278402f83&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
     &gt;&gt;&gt; cache = {}
     &gt;&gt;&gt; a = idict(x=5) &gt;&gt; (lambda x:{&#34;y&#34;: x**x}) &gt;&gt; [[cache]]  # Cache within double brackets has strict/eager behavior.
     &gt;&gt;&gt; a.show(colored=False)  # doctest:+ELLIPSIS
@@ -1262,7 +1264,7 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;y&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; idict(a.id, cache).show(colored=False)  # doctest:+ELLIPSIS
@@ -1272,11 +1274,11 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;_id&#34;: &#34;...&#34;,
         &#34;_ids&#34;: {
             &#34;y&#34;: &#34;...&#34;,
-            &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
+            &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;
         }
     }
     &gt;&gt;&gt; a.idh
-    &#39;&lt;!DOCTYPE HTML PUBLIC &#34;-//W3C//DTD HTML 4.01 Transitional//EN&#34; &#34;http://www.w3.org/TR/html4/loose.dtd&#34;&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34;&gt;\n&lt;title&gt;&lt;/title&gt;\n&lt;style type=&#34;text/css&#34;&gt;\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground &gt; .bold,.bold &gt; .body_foreground, body.body_foreground &gt; pre &gt; .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-103 { color: #8787af; }\n.ansi38-105 { color: #8787ff; }\n.ansi38-140 { color: #af87d7; }\n.ansi38-177 { color: #d787ff; }\n.ansi38-111 { color: #87afff; }\n.ansi38-147 { color: #afafff; }\n.ansi38-181 { color: #d7afaf; }\n.ansi38-182 { color: #d7afd7; }\n.ansi38-183 { color: #d7afff; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-152 { color: #afd7d7; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body class=&#34;body_foreground body_background&#34; style=&#34;font-size: normal;&#34; &gt;\n&lt;pre class=&#34;ansi2html-content&#34;&gt;\n&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;V&lt;/span&gt;&lt;span class=&#34;ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183 ansi48-0&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181 ansi48-0&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103 ansi48-0&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105 ansi48-0&#34;&gt;w&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182 ansi48-0&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177 ansi48-0&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111 ansi48-0&#34;&gt;v&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;M&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181 ansi48-0&#34;&gt;v&lt;/span&gt;&lt;span class=&#34;ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140 ansi48-0&#34;&gt;D&lt;/span&gt;&lt;span class=&#34;ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103 ansi48-0&#34;&gt;z&lt;/span&gt;&lt;span class=&#34;ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-105 ansi48-0&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-182 ansi48-0&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;v&lt;/span&gt;&lt;span class=&#34;ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-147 ansi48-0&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-177 ansi48-0&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-111 ansi48-0&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-183 ansi48-0&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-152 ansi48-0&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-181 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-140 ansi48-0&#34;&gt;L&lt;/span&gt;&lt;span class=&#34;ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-103 ansi48-0&#34;&gt;4&lt;/span&gt;\n&lt;/pre&gt;\n&lt;/body&gt;\n\n&lt;/html&gt;\n&#39;
+    &#39;&lt;!DOCTYPE HTML PUBLIC &#34;-//W3C//DTD HTML 4.01 Transitional//EN&#34; &#34;http://www.w3.org/TR/html4/loose.dtd&#34;&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34;&gt;\n&lt;title&gt;&lt;/title&gt;\n&lt;style type=&#34;text/css&#34;&gt;\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground &gt; .bold,.bold &gt; .body_foreground, body.body_foreground &gt; pre &gt; .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n.ansi38-122 { color: #87ffd7; }\n.ansi38-123 { color: #87ffff; }\n.ansi38-159 { color: #afffff; }\n.ansi38-194 { color: #d7ffd7; }\n.ansi38-195 { color: #d7ffff; }\n.ansi38-251 { color: #c6c6c6; }\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body class=&#34;body_foreground body_background&#34; style=&#34;font-size: normal;&#34; &gt;\n&lt;pre class=&#34;ansi2html-content&#34;&gt;\n&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;O&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;J&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;D&lt;/span&gt;&lt;span class=&#34;ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251 ansi48-0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;w&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;P&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;J&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;K&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;G&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;Y&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-251 ansi48-0&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-117 ansi48-0&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-123 ansi48-0&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-159 ansi48-0&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-195 ansi48-0&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-194 ansi48-0&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-153 ansi48-0&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-122 ansi48-0&#34;&gt;L&lt;/span&gt;&lt;span class=&#34;ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189&#34;&gt;&lt;/span&gt;&lt;span class=&#34;ansi1 ansi38-189 ansi48-0&#34;&gt;4&lt;/span&gt;\n&lt;/pre&gt;\n&lt;/body&gt;\n\n&lt;/html&gt;\n&#39;
     &#34;&#34;&#34;
 
     frozen: fro.FrozenIdentifiedDict
@@ -1288,10 +1290,12 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         self.identity = identity
         if isinstance(_dictionary, str) and isinstance(_id, (dict, Cache)):
             # Build idict from id+cache.
-            if _ids or rnd or _cloned or kwargs:
+            if _ids or rnd or _cloned or kwargs:  # pragma: no cover
                 raise Exception(&#34;Cannot pass more arguments when first argument is id and second argument is cache.&#34;)
             # TODO (minor): detect identity from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
+            if self.frozen is None:  # pragma: no cover
+                raise Exception(f&#34;Could not find {_dictionary}&#34;)
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 
@@ -1355,10 +1359,10 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         {
             &#34;x&#34;: 5,
             &#34;y&#34;: 2,
-            &#34;_id&#34;: &#34;OS_ea00e0e366f9fd9c4024ee9e7878633af1ada&#34;,
+            &#34;_id&#34;: &#34;xR_15583f654491968d294f9b1622dfb782db241&#34;,
             &#34;_ids&#34;: {
-                &#34;x&#34;: &#34;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
-                &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;
+                &#34;x&#34;: &#34;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
+                &#34;y&#34;: &#34;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;
             }
         }
         &gt;&gt;&gt; from ldict import ldict
@@ -1377,7 +1381,7 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &#34;&#34;&#34;
         &gt;&gt;&gt; d = Idict(x=2) &gt;&gt; (lambda x: {&#34;y&#34;: 2 * x})
         &gt;&gt;&gt; d.ids  # doctest:+ELLIPSIS
-        {&#39;y&#39;: &#39;...&#39;, &#39;x&#39;: &#39;vA_88beb4e68c50d7d618d97ceccfe8a5ecb5c4b&#39;}
+        {&#39;y&#39;: &#39;...&#39;, &#39;x&#39;: &#39;U8_a7205a343c568c5fe7c4619104ae78bd43279&#39;}
         &#34;&#34;&#34;
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen &gt;&gt; other
@@ -1451,9 +1455,9 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
         &gt;&gt;&gt; idict(a=1, _b=2, _history=[1,2,3]).trimmed.show(colored=False)
         {
             &#34;a&#34;: 1,
-            &#34;_id&#34;: &#34;v6_3ac82db5497101bcea46bd139d4b36862f272&#34;,
+            &#34;_id&#34;: &#34;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&#34;,
             &#34;_ids&#34;: {
-                &#34;a&#34;: &#34;v6_3ac82db5497101bcea46bd139d4b36862f272&#34;
+                &#34;a&#34;: &#34;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&#34;
             }
         }
         &#34;&#34;&#34;
@@ -1472,9 +1476,9 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     #         &#34;x&#34;: 3,
     #         &#34;_metafield_1&#34;: 5,
     #         &#34;_history&#34;: &#34;id-of-some-previous-step----------------&#34;,
-    #         &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #         &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #         &#34;_ids&#34;: {
-    #             &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #             &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #             &#34;_metafield_1&#34;: &#34;KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&#34;,
     #             &#34;_history&#34;: &#34;T4_254b4402e8d23be907236a140ff90245285a8 (content: VO_b2b5c7d8ff9718670723c03f0ff9028f085a8)&#34;
     #         }
@@ -1484,9 +1488,9 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     #     {
     #         &#34;fields&#34;: {
     #             &#34;x&#34;: 3,
-    #             &#34;_id&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #             &#34;_id&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #             &#34;_ids&#34;: {
-    #                 &#34;x&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;
+    #                 &#34;x&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;
     #             }
     #         },
     #         &#34;version&#34;: &#34;user 1&#34;,
@@ -1494,7 +1498,7 @@ FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
     #         &#34;_history&#34;: &#34;id-of-some-previous-step----------------&#34;,
     #         &#34;_id&#34;: &#34;g.0pzcYOgFTneQ8ojVDcReKkaqDuuuuuuuuuuuuu&#34;,
     #         &#34;_ids&#34;: {
-    #             &#34;fields&#34;: &#34;n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab&#34;,
+    #             &#34;fields&#34;: &#34;ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9&#34;,
     #             &#34;version&#34;: &#34;uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu&#34;,
     #             &#34;_metafield_1&#34;: &#34;KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f&#34;,
     #             &#34;_history&#34;: &#34;T4_254b4402e8d23be907236a140ff90245285a8&#34;
@@ -1750,9 +1754,9 @@ def metafields(self):
 &gt;&gt;&gt; idict(a=1, _b=2, _history=[1,2,3]).trimmed.show(colored=False)
 {
     &quot;a&quot;: 1,
-    &quot;_id&quot;: &quot;v6_3ac82db5497101bcea46bd139d4b36862f272&quot;,
+    &quot;_id&quot;: &quot;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&quot;,
     &quot;_ids&quot;: {
-        &quot;a&quot;: &quot;v6_3ac82db5497101bcea46bd139d4b36862f272&quot;
+        &quot;a&quot;: &quot;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&quot;
     }
 }
 </code></pre></div>
@@ -1767,9 +1771,9 @@ def trimmed(self):
     &gt;&gt;&gt; idict(a=1, _b=2, _history=[1,2,3]).trimmed.show(colored=False)
     {
         &#34;a&#34;: 1,
-        &#34;_id&#34;: &#34;v6_3ac82db5497101bcea46bd139d4b36862f272&#34;,
+        &#34;_id&#34;: &#34;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&#34;,
         &#34;_ids&#34;: {
-            &#34;a&#34;: &#34;v6_3ac82db5497101bcea46bd139d4b36862f272&#34;
+            &#34;a&#34;: &#34;DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb&#34;
         }
     }
     &#34;&#34;&#34;

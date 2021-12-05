@@ -49,7 +49,6 @@
 #  time spent here.
 import pickle
 
-import dill
 import lz4.frame as lz4
 
 from idict.config import GLOBAL
@@ -94,6 +93,8 @@ def pack(obj, ensure_determinism=True):
         except:
             if ensure_determinism:  # pragma: no cover
                 raise NondeterminismException(&#34;Cannot serialize deterministically.&#34;)
+            import dill
+
             dump = dill.dumps(obj, protocol=5)
             prefix = b&#34;dill_&#34;
 
@@ -110,7 +111,7 @@ def pack(obj, ensure_determinism=True):
 
         return blob
     except KeyError as e:  # pragma: no cover
-        if str(e) == &#34;&#39;__getstate__&#39;&#34;:
+        if str(e) == &#34;&#39;__getstate__&#39;&#34;:  # pragma: no cover
             raise Exception(&#34;Unpickable value:&#34;, type(obj))
         else:
             raise e
@@ -126,6 +127,8 @@ def unpack(blob):
     if prefix == b&#34;pckl_&#34;:
         return pickle.loads(lz4.decompress(blob))
     elif prefix == b&#34;dill_&#34;:
+        import dill
+
         return dill.loads(lz4.decompress(blob))
 
 
@@ -207,6 +210,8 @@ b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x8
         except:
             if ensure_determinism:  # pragma: no cover
                 raise NondeterminismException(&#34;Cannot serialize deterministically.&#34;)
+            import dill
+
             dump = dill.dumps(obj, protocol=5)
             prefix = b&#34;dill_&#34;
 
@@ -223,7 +228,7 @@ b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x8
 
         return blob
     except KeyError as e:  # pragma: no cover
-        if str(e) == &#34;&#39;__getstate__&#39;&#34;:
+        if str(e) == &#34;&#39;__getstate__&#39;&#34;:  # pragma: no cover
             raise Exception(&#34;Unpickable value:&#34;, type(obj))
         else:
             raise e</code></pre>
@@ -250,6 +255,8 @@ b'000011'
     if prefix == b&#34;pckl_&#34;:
         return pickle.loads(lz4.decompress(blob))
     elif prefix == b&#34;dill_&#34;:
+        import dill
+
         return dill.loads(lz4.decompress(blob))</code></pre>
 </details>
 </dd>

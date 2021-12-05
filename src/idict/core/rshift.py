@@ -307,4 +307,3 @@ def delete(self, k):
     if k in newhashes:
         del newhashes[k]
     return self.clone(newdata, _cloned=dict(blobs=newblobs, hashes=newhashes, hoshes=newhoshes, hosh=uf))
-

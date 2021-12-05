@@ -110,8 +110,8 @@ print(d)
     "x": 5,
     "y": 7,
     "z": 10,
-    "_id": "Mt_be4ef9609f397ed331ab79a4fcd978238325c",
-    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...VS_d56a3161e00e000e8439e0b85b2071135e367"
+    "_id": "SV_4fc23c71a6bb954f6f2ed40e440cfd2b76087",
+    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -132,8 +132,8 @@ print(d)
     "x": 5,
     "y": 7,
     "z": 10,
-    "_id": "Mt_be4ef9609f397ed331ab79a4fcd978238325c",
-    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...VS_d56a3161e00e000e8439e0b85b2071135e367"
+    "_id": "SV_4fc23c71a6bb954f6f2ed40e440cfd2b76087",
+    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -154,8 +154,8 @@ print(d2)
     "y": "→(x)",
     "x": 5,
     "z": 10,
-    "_id": "EPEbWTuDEYmI17pv9sHXsDSFzRLS.o529OTeWhNo",
-    "_ids": "w-oHtogUsQ2rrwHx9LX-YZrJIyJS.o529OTeWhNo... +1 ...VS_d56a3161e00e000e8439e0b85b2071135e367"
+    "_id": "J.WMNtqzVe2LiO8Ez4Wkgpa6zsBS.o529OTeWhNo",
+    "_ids": "j6dsrYpQ-9A6BFtY5T98d-UeFJOS.o529OTeWhNo... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -171,8 +171,8 @@ print(d)
     "x": 5,
     "y": 7,
     "z": 10,
-    "_id": "Mt_be4ef9609f397ed331ab79a4fcd978238325c",
-    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...VS_d56a3161e00e000e8439e0b85b2071135e367"
+    "_id": "SV_4fc23c71a6bb954f6f2ed40e440cfd2b76087",
+    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -197,8 +197,8 @@ print(d)
     "y": 1.4,
     "x": 5,
     "z": 10,
-    "_id": "L3TGBfQOuMx2HLJ5392mLnX0.gVZim1XGTCOzwYg",
-    "_ids": "LryMoDzli86-4VL73sipgKw48-SZim1XGTCOzwYg... +1 ...VS_d56a3161e00e000e8439e0b85b2071135e367"
+    "_id": "7uAa.i.4XbFyFY7OLx2TfzMQOeYZim1XGTCOzwYg",
+    "_ids": "S-Vd.8e3nPaYsNmqhkiGDdvZUvVZim1XGTCOzwYg... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -224,8 +224,8 @@ print(d2)
     "w": "→(a b x y)",
     "y": 1.4,
     "x": 5,
-    "_id": "U2ig87-3N8DA0xMYbqIChTucshUHK5qjURoS6ymD",
-    "_ids": "pyUA3d770et2FLb6NrpBdT3zRWXqtLoodWN3z1qn... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_id": "cLQzLVSJU.N2iT-5OaZWUEnnYWUHK5qjURoS6ymD",
+    "_ids": "u-FenHI5ID.J6D-Hvj.WShqswXAgoL5sYPWsHSoF... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -254,8 +254,8 @@ print(d2)
     "w": "→(a b ap gp x y)",
     "y": 1.4,
     "x": 5,
-    "_id": "W4vYVe4sUrzCVZDRkZ7CwHCaVqdQR7OmcORBo47s",
-    "_ids": "ExDnJaHIOeB6N9KHy-ILwivvJo3zANMrxSePQzac... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_id": "JNtKgf-Bz7S5z6QwqzWKKM5OLM4QR7OmcORBo47s",
+    "_ids": "IYglBIPS5j1KqhPE.JPs6GD89DSHtNtvgQncZo9u... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -277,8 +277,8 @@ print(d2)
     "w": "10.541350399999995",
     "y": 1.4,
     "x": 5,
-    "_id": "W4vYVe4sUrzCVZDRkZ7CwHCaVqdQR7OmcORBo47s",
-    "_ids": "ExDnJaHIOeB6N9KHy-ILwivvJo3zANMrxSePQzac... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_id": "JNtKgf-Bz7S5z6QwqzWKKM5OLM4QR7OmcORBo47s",
+    "_ids": "IYglBIPS5j1KqhPE.JPs6GD89DSHtNtvgQncZo9u... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -325,7 +325,7 @@ print(a >> b)
 {
     "x": 3,
     "y": 5,
-    "_id": "Gm_969c1762a9edc78bf5dc236c663f77f39933b",
+    "_id": "pl_bb7e60e68670707cdef7dfd31096db4c63c91",
     "_ids": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 EI_20378979f4669f2e318ae9742e214fd4880d7"
 }
 """
@@ -373,7 +373,7 @@ print(a >> b)
 {
     "x": 3,
     "y": 5,
-    "_id": "Gm_969c1762a9edc78bf5dc236c663f77f39933b",
+    "_id": "pl_bb7e60e68670707cdef7dfd31096db4c63c91",
     "_ids": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 EI_20378979f4669f2e318ae9742e214fd4880d7"
 }
 """
@@ -411,8 +411,8 @@ print(a)
     "x": 3,
     "y": 5,
     "z": 7,
-    "_id": "JzYuhY-nt20zEwyGrIzJdykvSgeP4S3OFdPs8Gab",
-    "_ids": ".BI675AlGRnAERyzBkqGZ5iWBs3P4S3OFdPs8Gab... +2 ...Ck_0b0b9d379b5b30ad6428fb35f82a492dd8065"
+    "_id": "kgdz8xfS7IuGtukIPe37KhAUrB2P4S3OFdPs8Gab",
+    "_ids": "CXqa2zRRNd7Aj5wI8JTJ0O-7ML0P4S3OFdPs8Gab... +2 ...ZN_eccacd999c26ce18c98f9a17a6f47adcf162a"
 }
 """
 ```
@@ -434,8 +434,8 @@ print(a)
     "x": 3,
     "y": 5,
     "z": 7,
-    "_id": "JzYuhY-nt20zEwyGrIzJdykvSgeP4S3OFdPs8Gab",
-    "_ids": ".BI675AlGRnAERyzBkqGZ5iWBs3P4S3OFdPs8Gab... +2 ...Ck_0b0b9d379b5b30ad6428fb35f82a492dd8065"
+    "_id": "kgdz8xfS7IuGtukIPe37KhAUrB2P4S3OFdPs8Gab",
+    "_ids": "CXqa2zRRNd7Aj5wI8JTJ0O-7ML0P4S3OFdPs8Gab... +2 ...ZN_eccacd999c26ce18c98f9a17a6f47adcf162a"
 }
 """
 ```
@@ -505,8 +505,8 @@ print(d1.z)
     "z": "→(x y)",
     "x": 5,
     "y": 7,
-    "_id": "1c.7OOQGF3MnsVn-1Uj-hscBj4KMPNZuFtrAIt6g",
-    "_ids": "5EpzVQIPvGp8hjveEbayggDFumQMPNZuFtrAIt6g... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
+    "_id": "VqfQeuBWL7Xv1FwWe6pzgqJwclRMPNZuFtrAIt6g",
+    "_ids": "9KKem6QL-I8C0Yk0q3URBt-aNXHMPNZuFtrAIt6g... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
 }
 35
 """
@@ -522,8 +522,8 @@ print(d2.z)
     "z": "→(x y)",
     "x": 5,
     "y": 7,
-    "_id": "1c.7OOQGF3MnsVn-1Uj-hscBj4KMPNZuFtrAIt6g",
-    "_ids": "5EpzVQIPvGp8hjveEbayggDFumQMPNZuFtrAIt6g... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
+    "_id": "VqfQeuBWL7Xv1FwWe6pzgqJwclRMPNZuFtrAIt6g",
+    "_ids": "9KKem6QL-I8C0Yk0q3URBt-aNXHMPNZuFtrAIt6g... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
 }
 35
 """
@@ -545,7 +545,7 @@ print(e.z)
 e = d >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 7000025.0
+e = 7025.0
 """
 ```
 
@@ -555,7 +555,7 @@ e = 7000025.0
 e = e >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 725.0
+e = 7025.0
 """
 ```
 
@@ -618,14 +618,14 @@ print(d)
 {
     "y": "→(source target x)",
     "x": 5,
-    "_id": "FJnLySx6DdA7XLVxyrmBuidElZjwDfaOqWWvzOrq",
-    "_ids": "nx1NJ0A9DYP9g2Z6oVmKLZM4SovwDfaOqWWvzOrq GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_id": "xmcjrFNT-2nEr3vizzx-44QwV5kwDfaOqWWvzOrq",
+    "_ids": "3Tv6p5fZ936EK1DUkkcYAgWPbrmwDfaOqWWvzOrq GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 {
     "y": 5,
     "x": 5,
-    "_id": "FJnLySx6DdA7XLVxyrmBuidElZjwDfaOqWWvzOrq",
-    "_ids": "nx1NJ0A9DYP9g2Z6oVmKLZM4SovwDfaOqWWvzOrq GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_id": "xmcjrFNT-2nEr3vizzx-44QwV5kwDfaOqWWvzOrq",
+    "_ids": "3Tv6p5fZ936EK1DUkkcYAgWPbrmwDfaOqWWvzOrq GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -676,8 +676,8 @@ print(d)
     "z": "→(c z→(a b x y))",
     "x": 5,
     "y": 7,
-    "_id": "YdEflrPbErn.iYwpiu4wP07NL4hmevfjG3VAFXL-",
-    "_ids": "-QaQN-KbFnfLBXhZTNW3eWxRWm7mevfjG3VAFXL-... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
+    "_id": "YZWooP03q0mFec8tjNwy3YuAohamevfjG3VAFXL-",
+    "_ids": "5PKBLX4-dGDGHUifvK.QYVLeZTgmevfjG3VAFXL-... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
 }
 """
 ```

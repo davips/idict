@@ -66,6 +66,7 @@ def pack(obj, ensure_determinism=True):
             if ensure_determinism:  # pragma: no cover
                 raise NondeterminismException("Cannot serialize deterministically.")
             import dill
+
             dump = dill.dumps(obj, protocol=5)
             prefix = b"dill_"
 
@@ -99,6 +100,7 @@ def unpack(blob):
         return pickle.loads(lz4.decompress(blob))
     elif prefix == b"dill_":
         import dill
+
         return dill.loads(lz4.decompress(blob))
 
 

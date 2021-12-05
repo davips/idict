@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "idict"
-version = "2.211204.0"
+version = "3.211205.1"
 description = "Lazy dict with predictable deterministic universally unique identifiers"
 authors = ["davips <dpsabc@gmail.com>"]
 license = "GPL"
@@ -18,7 +18,7 @@ python = "^3.8"  #">=3.8,<3.10"
 orjson = "^3.5.0"
 pdoc3 = "^0.10.0"
 lz4 = "^3.1.3"
-ldict = "^3.211202.2"
+ldict = "^3.211204.3"
 garoupa = "^2.211204.2"
 dill = "^0.3.4"
 pip = "^21.3.1"

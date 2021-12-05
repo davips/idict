@@ -53,7 +53,6 @@ import dis
 import pickle
 from inspect import signature
 
-import dill
 from orjson import dumps
 
 from garoupa import Hosh, UT40_4, Identity
@@ -92,6 +91,8 @@ def f2bin(f, approach):
         if not dill_warned:
             dill_warned = True
             print(&#34;WARNING: using &#39;dill&#39; to hash functions is not determinist&#34;)
+        import dill
+
         return dill.dumps(f)
 
 
@@ -128,45 +129,6 @@ def fhosh(f, version, approach=&#34;clean&#34;):
     return f.hosh
 
 
-# TODO: we could just use ø.hybrid * key.encode() instead of relying on this weak hash
-def key2id(key, digits):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; key2id(&#34;y&#34;, 40)
-    &#39;y-_0000000000000000000000000000000000000&#39;
-
-    &gt;&gt;&gt; key2id(&#34;_history&#34;, 40)
-    &#39;-h_6973746f72790000000000000000000000000&#39;
-
-    &gt;&gt;&gt; key2id(&#34;long bad field name&#34;, 40)
-    &#39;lo_6e6720626164206669656c64206e616d65000&#39;
-
-    &gt;&gt;&gt; key2id(&#34;long bad field name that will be truncated&#34;, 40)
-    &#39;lo_6e6720626164206669656c64206e616d65207&#39;
-
-    Parameters
-    ----------
-    key
-
-    Returns
-    -------
-
-    &#34;&#34;&#34;
-    if key.startswith(&#34;_&#34;):
-        key = &#34;-&#34; + key[1:]
-    prefix = key[:2].ljust(2, &#34;-&#34;) + &#34;_&#34;
-    rest = key[2:].encode().hex().ljust(digits - 3, &#34;0&#34;)
-    return prefix + rest[: digits - 3]
-
-
-def removal_id(template, field):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; from garoupa import ø
-    &gt;&gt;&gt; removal_id(ø.delete, &#34;myfield&#34;)
-    &#39;--------------------.............myfield&#39;
-    &#34;&#34;&#34;
-    return template[: -len(field)] + field
-
-
 def blobs_hashes_hoshes(data, identity, ids, version):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
@@ -175,11 +137,11 @@ def blobs_hashes_hoshes(data, identity, ids, version):
         &#34;x&#34;: 1,
         &#34;y&#34;: 2,
         &#34;z&#34;: 3,
-        &#34;_id&#34;: &#34;ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy&#34;,
+        &#34;_id&#34;: &#34;Sv8G-WU9SZL90Tus885EWBBf3koyyyyyyyyyyyyy&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,
+            &#34;x&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
-            &#34;z&#34;: &#34;p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;z&#34;: &#34;Nx_e12377018e5ab54023f91f7c6b7aea6676b60 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -203,7 +165,7 @@ def blobs_hashes_hoshes(data, identity, ids, version):
                     vhosh = fhosh(v, version)
                 hashes[k] = vhosh
             try:
-                hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+                hoshes[k] = hashes[k] ** k.encode()
             except KeyError as e:  # pragma: no cover
                 raise Exception(
                     f&#34;{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield.&#34;
@@ -228,11 +190,11 @@ def blobs_hashes_hoshes(data, identity, ids, version):
     &quot;x&quot;: 1,
     &quot;y&quot;: 2,
     &quot;z&quot;: 3,
-    &quot;_id&quot;: &quot;ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy&quot;,
+    &quot;_id&quot;: &quot;Sv8G-WU9SZL90Tus885EWBBf3koyyyyyyyyyyyyy&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,
+        &quot;x&quot;: &quot;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,
         &quot;y&quot;: &quot;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&quot;,
-        &quot;z&quot;: &quot;p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
+        &quot;z&quot;: &quot;Nx_e12377018e5ab54023f91f7c6b7aea6676b60 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 </code></pre></div>
@@ -248,11 +210,11 @@ def blobs_hashes_hoshes(data, identity, ids, version):
         &#34;x&#34;: 1,
         &#34;y&#34;: 2,
         &#34;z&#34;: 3,
-        &#34;_id&#34;: &#34;ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy&#34;,
+        &#34;_id&#34;: &#34;Sv8G-WU9SZL90Tus885EWBBf3koyyyyyyyyyyyyy&#34;,
         &#34;_ids&#34;: {
-            &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,
+            &#34;x&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,
             &#34;y&#34;: &#34;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy&#34;,
-            &#34;z&#34;: &#34;p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
+            &#34;z&#34;: &#34;Nx_e12377018e5ab54023f91f7c6b7aea6676b60 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&#34;
         }
     }
     &#34;&#34;&#34;
@@ -276,7 +238,7 @@ def blobs_hashes_hoshes(data, identity, ids, version):
                     vhosh = fhosh(v, version)
                 hashes[k] = vhosh
             try:
-                hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+                hoshes[k] = hashes[k] ** k.encode()
             except KeyError as e:  # pragma: no cover
                 raise Exception(
                     f&#34;{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield.&#34;
@@ -322,6 +284,8 @@ def blobs_hashes_hoshes(data, identity, ids, version):
         if not dill_warned:
             dill_warned = True
             print(&#34;WARNING: using &#39;dill&#39; to hash functions is not determinist&#34;)
+        import dill
+
         return dill.dumps(f)</code></pre>
 </details>
 </dd>
@@ -384,82 +348,6 @@ p2MGclmVa-FRxu5kFQ65RNjiK42otvusPZ9LGCi4
     return f.hosh</code></pre>
 </details>
 </dd>
-<dt id="idict.core.identification.key2id"><code class="name flex">
-<span>def <span class="ident">key2id</span></span>(<span>key, digits)</span>
-</code></dt>
-<dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; key2id(&quot;y&quot;, 40)
-'y-_0000000000000000000000000000000000000'
-</code></pre>
-<pre><code class="language-python-repl">&gt;&gt;&gt; key2id(&quot;_history&quot;, 40)
-'-h_6973746f72790000000000000000000000000'
-</code></pre>
-<pre><code class="language-python-repl">&gt;&gt;&gt; key2id(&quot;long bad field name&quot;, 40)
-'lo_6e6720626164206669656c64206e616d65000'
-</code></pre>
-<pre><code class="language-python-repl">&gt;&gt;&gt; key2id(&quot;long bad field name that will be truncated&quot;, 40)
-'lo_6e6720626164206669656c64206e616d65207'
-</code></pre>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>key</code></strong></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def key2id(key, digits):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; key2id(&#34;y&#34;, 40)
-    &#39;y-_0000000000000000000000000000000000000&#39;
-
-    &gt;&gt;&gt; key2id(&#34;_history&#34;, 40)
-    &#39;-h_6973746f72790000000000000000000000000&#39;
-
-    &gt;&gt;&gt; key2id(&#34;long bad field name&#34;, 40)
-    &#39;lo_6e6720626164206669656c64206e616d65000&#39;
-
-    &gt;&gt;&gt; key2id(&#34;long bad field name that will be truncated&#34;, 40)
-    &#39;lo_6e6720626164206669656c64206e616d65207&#39;
-
-    Parameters
-    ----------
-    key
-
-    Returns
-    -------
-
-    &#34;&#34;&#34;
-    if key.startswith(&#34;_&#34;):
-        key = &#34;-&#34; + key[1:]
-    prefix = key[:2].ljust(2, &#34;-&#34;) + &#34;_&#34;
-    rest = key[2:].encode().hex().ljust(digits - 3, &#34;0&#34;)
-    return prefix + rest[: digits - 3]</code></pre>
-</details>
-</dd>
-<dt id="idict.core.identification.removal_id"><code class="name flex">
-<span>def <span class="ident">removal_id</span></span>(<span>template, field)</span>
-</code></dt>
-<dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from garoupa import ø
-&gt;&gt;&gt; removal_id(ø.delete, &quot;myfield&quot;)
-'--------------------.............myfield'
-</code></pre></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def removal_id(template, field):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; from garoupa import ø
-    &gt;&gt;&gt; removal_id(ø.delete, &#34;myfield&#34;)
-    &#39;--------------------.............myfield&#39;
-    &#34;&#34;&#34;
-    return template[: -len(field)] + field</code></pre>
-</details>
-</dd>
 </dl>
 </section>
 <section>
@@ -481,8 +369,6 @@ p2MGclmVa-FRxu5kFQ65RNjiK42otvusPZ9LGCi4
 <li><code><a title="idict.core.identification.blobs_hashes_hoshes" href="#idict.core.identification.blobs_hashes_hoshes">blobs_hashes_hoshes</a></code></li>
 <li><code><a title="idict.core.identification.f2bin" href="#idict.core.identification.f2bin">f2bin</a></code></li>
 <li><code><a title="idict.core.identification.fhosh" href="#idict.core.identification.fhosh">fhosh</a></code></li>
-<li><code><a title="idict.core.identification.key2id" href="#idict.core.identification.key2id">key2id</a></code></li>
-<li><code><a title="idict.core.identification.removal_id" href="#idict.core.identification.removal_id">removal_id</a></code></li>
 </ul>
 </li>
 </ul>

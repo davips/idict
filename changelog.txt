@@ -1,4 +1,4 @@
-v1.211204
+v2.211205
 Replace weak hash key2id by strong implicit hashing of key.encode()
 
 v1.211203

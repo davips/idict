@@ -111,10 +111,10 @@ class iEmpty(FrozenIdentifiedDict):
 {
     &quot;x&quot;: 5,
     &quot;y&quot;: 3,
-    &quot;_id&quot;: &quot;Gm_5a27861eacedc78bf5dc236c663f77f39933b&quot;,
+    &quot;_id&quot;: &quot;pl_8763f6625970707cdef7dfd31096db4c63c91&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;Ku_f738128d6e27a03ec6c2e76d23514b4e998e3 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)&quot;
     }
 }
 &gt;&gt;&gt; d[&quot;y&quot;]
@@ -123,10 +123,10 @@ class iEmpty(FrozenIdentifiedDict):
 {
     &quot;y&quot;: 88,
     &quot;x&quot;: 123123,
-    &quot;_id&quot;: &quot;S-_6a05b897eed2728ea8200aa3f9e90651e952a&quot;,
+    &quot;_id&quot;: &quot;BZ_2ef6b00691651b6f815ba62b93416aa9b3e80&quot;,
     &quot;_ids&quot;: {
-        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;,
-        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;
+        &quot;y&quot;: &quot;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;,
+        &quot;x&quot;: &quot;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;
     }
 }
 &gt;&gt;&gt; d = idict(x=123123, y=88)
@@ -144,24 +144,24 @@ True
     &quot;_ids&quot;: {
         &quot;w&quot;: &quot;...&quot;,
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
-        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
+        &quot;x&quot;: &quot;CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)&quot;,
+        &quot;y&quot;: &quot;-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)&quot;
     }
 }
 &gt;&gt;&gt; a = d &gt;&gt; (lambda x: {&quot;z&quot;: x**2}) &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y})
 &gt;&gt;&gt; b = d &gt;&gt; (lambda x, y: {&quot;w&quot;: x/y}) &gt;&gt; (lambda x: {&quot;z&quot;: x**2})
 &gt;&gt;&gt; dic = d.asdict  # Converting to dict
 &gt;&gt;&gt; dic
-{'x': 123123, 'y': 88, '_id': 'S-_6a05b897eed2728ea8200aa3f9e90651e952a', '_ids': {'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}}
+{'x': 123123, 'y': 88, '_id': 'BZ_2ef6b00691651b6f815ba62b93416aa9b3e80', '_ids': {'x': 'CF_13e3494690e330a722667f4ab9e067c64022e', 'y': '-j_34f477bff0a6dac76fe447d0e95003e273c62'}}
 &gt;&gt;&gt; d2 = idict(dic)  # Reconstructing from a dict
 &gt;&gt;&gt; d2.show(colored=False)
 {
     &quot;x&quot;: 123123,
     &quot;y&quot;: 88,
-    &quot;_id&quot;: &quot;S-_6a05b897eed2728ea8200aa3f9e90651e952a&quot;,
+    &quot;_id&quot;: &quot;BZ_2ef6b00691651b6f815ba62b93416aa9b3e80&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;d5_fa01214009ca14a1527bd38a753b84cbc2cff&quot;,
-        &quot;y&quot;: &quot;EV_f4049757e5085edc56b4262974be71951792a&quot;
+        &quot;x&quot;: &quot;CF_13e3494690e330a722667f4ab9e067c64022e&quot;,
+        &quot;y&quot;: &quot;-j_34f477bff0a6dac76fe447d0e95003e273c62&quot;
     }
 }
 &gt;&gt;&gt; d == d2
@@ -171,9 +171,9 @@ True
 &gt;&gt;&gt; d.show(colored=False)
 {
     &quot;x&quot;: &quot;more content&quot;,
-    &quot;_id&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;,
+    &quot;_id&quot;: &quot;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&quot;,
     &quot;_ids&quot;: {
-        &quot;x&quot;: &quot;aF_64eaced14bf0114a6b9eceaac31744c2093df&quot;
+        &quot;x&quot;: &quot;zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd&quot;
     }
 }
 &gt;&gt;&gt; f = lambda x,y: {&quot;z&quot;:x+y}
@@ -187,8 +187,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c = {}
@@ -201,8 +201,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c
@@ -210,7 +210,7 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-{'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+{'...': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
 &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 12,
@@ -219,8 +219,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c = {}
@@ -234,8 +234,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 &gt;&gt;&gt; c
@@ -243,7 +243,7 @@ True
 &gt;&gt;&gt; d3.z
 12
 &gt;&gt;&gt; c  # doctest:+ELLIPSIS
-{'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+{'...': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
 &gt;&gt;&gt; d3.show(colored=False)  # doctest:+ELLIPSIS
 {
     &quot;z&quot;: 12,
@@ -252,8 +252,8 @@ True
     &quot;_id&quot;: &quot;...&quot;,
     &quot;_ids&quot;: {
         &quot;z&quot;: &quot;...&quot;,
-        &quot;x&quot;: &quot;hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
-        &quot;y&quot;: &quot;Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
+        &quot;x&quot;: &quot;GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)&quot;,
+        &quot;y&quot;: &quot;WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)&quot;
     }
 }
 </code></pre></div>

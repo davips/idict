@@ -51,8 +51,6 @@
 import json
 
 from garoupa import Hosh
-
-from idict.core.identification import key2id
 from ldict.customjson import CustomJSONEncoder
 
 
@@ -64,9 +62,9 @@ def idict2txt(d, all, history):
     &gt;&gt;&gt; from ldict.core.appearance import decolorize
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 S-_074b5a806933d64f111a93af359a278402f83&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
 
     Parameters
     ----------
@@ -86,7 +84,7 @@ def idict2txt(d, all, history):
         for k, v in d.hoshes.items():
             nokey = &#34;&#34;
             if k in d.hashes:
-                hash = v // key2id(k, v.digits)
+                hash = v // k.encode()
                 nokey = f&#34; (content: {hash.idc})&#34;
             txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt
@@ -149,9 +147,9 @@ def idict2dict(d, all, history):
 &gt;&gt;&gt; from ldict.core.appearance import decolorize
 &gt;&gt;&gt; d = idict(x=1,y=2)
 &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
-'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&quot;\n}'
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;5G_358b45f49c547174eb4bd687079b30cbbe724&quot;,\n    &quot;_ids&quot;: &quot;fH_5142f0a4338a1da2ca3159e2d1011981ac890 S-_074b5a806933d64f111a93af359a278402f83&quot;\n}'
 &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
-'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;mH_70118e827bbcd88303202a006d34eb63e4fbd&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,\n        &quot;y&quot;: &quot;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;\n    }\n}'
+'{\n    &quot;x&quot;: 1,\n    &quot;y&quot;: 2,\n    &quot;_id&quot;: &quot;5G_358b45f49c547174eb4bd687079b30cbbe724&quot;,\n    &quot;_ids&quot;: {\n        &quot;x&quot;: &quot;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&quot;,\n        &quot;y&quot;: &quot;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&quot;\n    }\n}'
 </code></pre>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -173,9 +171,9 @@ def idict2dict(d, all, history):
     &gt;&gt;&gt; from ldict.core.appearance import decolorize
     &gt;&gt;&gt; d = idict(x=1,y=2)
     &gt;&gt;&gt; decolorize(idict2txt(d, False, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b&#34;\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 S-_074b5a806933d64f111a93af359a278402f83&#34;\n}&#39;
     &gt;&gt;&gt; decolorize(idict2txt(d, True, False))
-    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;mH_70118e827bbcd88303202a006d34eb63e4fbd&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
+    &#39;{\n    &#34;x&#34;: 1,\n    &#34;y&#34;: 2,\n    &#34;_id&#34;: &#34;5G_358b45f49c547174eb4bd687079b30cbbe724&#34;,\n    &#34;_ids&#34;: {\n        &#34;x&#34;: &#34;fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)&#34;,\n        &#34;y&#34;: &#34;S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)&#34;\n    }\n}&#39;
 
     Parameters
     ----------
@@ -195,7 +193,7 @@ def idict2dict(d, all, history):
         for k, v in d.hoshes.items():
             nokey = &#34;&#34;
             if k in d.hashes:
-                hash = v // key2id(k, v.digits)
+                hash = v // k.encode()
                 nokey = f&#34; (content: {hash.idc})&#34;
             txt = txt.replace(v.id, v.idc + nokey)  # REMINDER: workaround to avoid json messing with colors
     return txt</code></pre>

@@ -64,6 +64,7 @@ def f2bin(f, approach):
             dill_warned = True
             print("WARNING: using 'dill' to hash functions is not determinist")
         import dill
+
         return dill.dumps(f)
 
 
