@@ -22,11 +22,11 @@
 from contextlib import contextmanager
 from typing import TypeVar
 
-from garoupa import ø
 from sqlalchemy import Column, String, BLOB, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
+from garoupa import ø
 from idict.data.compression import pack, unpack
 from idict.persistence.compressedcache import CompressedCache
 from ldict.core.appearance import decolorize
@@ -99,22 +99,20 @@ class SQLA(CompressedCache):
     ...     d.show(colored=False)
     ...     for i, id in enumerate(cache):
     ...         print(i, id)
-    ...     a = idict("a._5162c0b3915916c583072cf6f0da040b2fef0", cache)  # >> arff2df
-    ...     print("a", a.arff)
-    ...     b = idict("OW_29bd5266cf0a6400c5747b4c332b4a54d1955", cache)  # >> arff2df
-    ...     print("b", b)  # doctest: +NORMALIZE_WHITESPACE
+    ...     a = idict(d.id, cache)  # >> arff2df
+    ...     print("a", a.arff)  # doctest: +NORMALIZE_WHITESPACE
     {
         "arff": "@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
         "x": 3,
-        "_id": "a._5162c0b3915916c583072cf6f0da040b2fef0",
+        "_id": "KE_5f2a999248a1cab1e81cb79f66772a3be8025",
         "_ids": {
-            "arff": "OW_29bd5266cf0a6400c5747b4c332b4a54d1955 (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)",
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
+            "arff": "Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)",
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
-    0 OW_29bd5266cf0a6400c5747b4c332b4a54d1955
-    1 n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab
-    2 a._5162c0b3915916c583072cf6f0da040b2fef0
+    0 Z._c3e2b235b697e9734b9ec13084129dc30e45b
+    1 ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9
+    2 KE_5f2a999248a1cab1e81cb79f66772a3be8025
     a @RELATION mini
     @ATTRIBUTE attr1	REAL
     @ATTRIBUTE attr2 	REAL
@@ -122,7 +120,6 @@ class SQLA(CompressedCache):
     @DATA
     5.1,3.5,0
     3.1,4.5,1
-    b None
     """
 
     def copy(self):

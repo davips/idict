@@ -1,3 +1,6 @@
+v1.211204
+Replace weak hash key2id by strong implicit hashing of key.encode()
+
 v1.211203
 Add idh to show id as a html page
 Replace front_id by d.id when calculating oiu*uid

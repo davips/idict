@@ -27,7 +27,6 @@ from random import Random
 from typing import Union, Callable
 
 from garoupa import ø40
-
 from ldict.core.base import AbstractLazyDict
 from ldict.customjson import CustomJSONEncoder
 from ldict.parameter.abslet import AbstractLet
@@ -52,8 +51,8 @@ class iLet(AbstractLet):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> d2.evaluate()
@@ -65,8 +64,8 @@ class iLet(AbstractLet):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> from random import Random
@@ -79,8 +78,8 @@ class iLet(AbstractLet):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> d2.evaluate()
@@ -92,8 +91,8 @@ class iLet(AbstractLet):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> let(f, a=5) >> {"x": 5, "y": 7}
@@ -106,8 +105,8 @@ class iLet(AbstractLet):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> from ldict.core.appearance import decolorize
@@ -115,8 +114,8 @@ class iLet(AbstractLet):
     «λ{'a': 5} × {
         "x": 5,
         "y": 7,
-        "_id": "TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4",
-        "_ids": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+        "_id": "BB_fad4374ca911f344859dab8e4b016ba2fe65b",
+        "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd WK_6ba95267cec724067d58b3186ecbcaa4253ad"
     }»
     >>> let(f, a=5) >> ["mycache"]
     «λ{'a': 5} × ↑»
@@ -136,8 +135,8 @@ class iLet(AbstractLet):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
-            "y": "Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+            "y": "7Z_fb43f53bd25b4452c84de6ba3b3c5ffb29e31 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> print(d.z)
@@ -151,8 +150,8 @@ class iLet(AbstractLet):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
-            "y": "Ny_2c054fb898b960f9bf0d1fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+            "y": "7Z_fb43f53bd25b4452c84de6ba3b3c5ffb29e31 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> print(d.z)
@@ -243,7 +242,7 @@ class iLet(AbstractLet):
     def __getattr__(self, item):  # pragma: no cover
         from idict.core.idict_ import Idict
 
-        if hasattr(Idict, item):
+        if hasattr(Idict, item):  # pragma: no cover
             raise Exception(
                 "An expression will only become an 'idict' after being fed with data.\n"
                 "E.g.: 'e = let(f, par1=5)' and 'e = Ø >> f' are non-applied expressions."

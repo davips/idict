@@ -21,7 +21,6 @@
 #  time spent here.
 import json
 
-from idict.core.identification import key2id
 from ldict.core.base import AbstractLazyDict
 from ldict.lazyval import LazyVal
 
@@ -142,24 +141,24 @@ def build(id, ids, cache, identity, include_blobs=False):
     >>> b >>= [cache := {}]
     >>> print(json.dumps(cache, indent=2))
     {
-      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
-      "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c": {
-        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c"
+      "WK_6ba95267cec724067d58b3186ecbcaa4253ad": 7,
+      "u9_698c410308e557c005cda07ba00c564152401": {
+        "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f"
       },
-      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
-      "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c": 9,
-      "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c": {
-        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
+      "GS_cb0fda15eac732cb08351e71fc359058b93bd": 5,
+      "N8_524991e7434b2d3444007782c4cd0cd887261": 9,
+      "r._72191dfc2ed7d9ff4c35d514b103ac114161f": {
+        "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f",
         "_ids": {
-          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
-          "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
+          "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
+          "z": "N8_524991e7434b2d3444007782c4cd0cd887261"
         }
       },
-      "ug_32623f744b4b879f8b0b91bca8ace13993b81": {
-        "_id": "ug_32623f744b4b879f8b0b91bca8ace13993b81",
+      "oU_ab54a36ac6988bc6722654831fc721f5777ae": {
+        "_id": "oU_ab54a36ac6988bc6722654831fc721f5777ae",
         "_ids": {
-          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
-          "d": "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c"
+          "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad",
+          "d": "u9_698c410308e557c005cda07ba00c564152401"
         }
       }
     }
@@ -169,42 +168,42 @@ def build(id, ids, cache, identity, include_blobs=False):
         "d": {
             "x": 5,
             "z": 9,
-            "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
+            "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f",
             "_ids": {
-                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
-                "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
+                "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
+                "z": "N8_524991e7434b2d3444007782c4cd0cd887261"
             }
         },
-        "_id": "ug_32623f744b4b879f8b0b91bca8ace13993b81",
+        "_id": "oU_ab54a36ac6988bc6722654831fc721f5777ae",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
-            "d": "UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c (content: HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c)"
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "d": "u9_698c410308e557c005cda07ba00c564152401 (content: r._72191dfc2ed7d9ff4c35d514b103ac114161f)"
         }
     }
-    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
+    >>> (a.hosh ** b"d").show(colored=False)
+    u9_698c410308e557c005cda07ba00c564152401
     >>> a = idict(x=5)
     >>> b = idict(y=7)
     >>> b["d"] = a
     >>> b >>= [cache := {}]
     >>> print(json.dumps(cache, indent=2))
     {
-      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
-      "ug_65906b93071a1e38384abcb6a88fbde25cd8f": {
-        "_id": "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+      "WK_6ba95267cec724067d58b3186ecbcaa4253ad": 7,
+      "I0_dac96298c4c5bf8cb0cde8d8eb3e4a78ca1af": {
+        "_id": "_S_cb0fda15eac732cb08351e71fc359058b93bd"
       },
-      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
-      "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": {
-        "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+      "GS_cb0fda15eac732cb08351e71fc359058b93bd": 5,
+      "_S_cb0fda15eac732cb08351e71fc359058b93bd": {
+        "_id": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
         "_ids": {
-          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+          "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd"
         }
       },
-      "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4": {
-        "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
+      "DL_a791c4ff8388e3923e169ce05a0a152def44d": {
+        "_id": "DL_a791c4ff8388e3923e169ce05a0a152def44d",
         "_ids": {
-          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
-          "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f"
+          "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad",
+          "d": "I0_dac96298c4c5bf8cb0cde8d8eb3e4a78ca1af"
         }
       }
     }
@@ -213,10 +212,10 @@ def build(id, ids, cache, identity, include_blobs=False):
     {
         "y": "→(↑)",
         "d": "→(↑)",
-        "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
+        "_id": "DL_a791c4ff8388e3923e169ce05a0a152def44d",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
-            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)"
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "d": "I0_dac96298c4c5bf8cb0cde8d8eb3e4a78ca1af (content: GS_cb0fda15eac732cb08351e71fc359058b93bd)"
         }
     }
     >>> d.evaluated.show(colored=False)
@@ -224,19 +223,19 @@ def build(id, ids, cache, identity, include_blobs=False):
         "y": 7,
         "d": {
             "x": 5,
-            "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+            "_id": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
             "_ids": {
-                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+                "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd"
             }
         },
-        "_id": "4B_8e0bd25f553b6ed5ac6298fb91b9071035ee4",
+        "_id": "DL_a791c4ff8388e3923e169ce05a0a152def44d",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
-            "d": "ug_65906b93071a1e38384abcb6a88fbde25cd8f (content: hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f)"
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "d": "I0_dac96298c4c5bf8cb0cde8d8eb3e4a78ca1af (content: GS_cb0fda15eac732cb08351e71fc359058b93bd)"
         }
     }
-    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    ug_65906b93071a1e38384abcb6a88fbde25cd8f
+    >>> (a.hosh ** b"d").show(colored=False)
+    I0_dac96298c4c5bf8cb0cde8d8eb3e4a78ca1af
     >>> a = idict(x=5,z=9)
     >>> b = idict(y=7)
     >>> b["d"] = lambda y: a
@@ -245,23 +244,23 @@ def build(id, ids, cache, identity, include_blobs=False):
     >>> print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
       "...": {
-        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c"
+        "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f"
       },
-      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
-      "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c": 9,
-      "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c": {
-        "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
+      "GS_cb0fda15eac732cb08351e71fc359058b93bd": 5,
+      "N8_524991e7434b2d3444007782c4cd0cd887261": 9,
+      "r._72191dfc2ed7d9ff4c35d514b103ac114161f": {
+        "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f",
         "_ids": {
-          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
-          "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
+          "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
+          "z": "N8_524991e7434b2d3444007782c4cd0cd887261"
         }
       },
-      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
+      "WK_6ba95267cec724067d58b3186ecbcaa4253ad": 7,
       "...": {
         "_id": "...",
         "_ids": {
           "d": "...",
-          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+          "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad"
         }
       }
     }
@@ -270,21 +269,21 @@ def build(id, ids, cache, identity, include_blobs=False):
         "d": {
             "x": 5,
             "z": 9,
-            "_id": "HZ_922bbdb73ad1a6fc17e2329dcf72a8909aa2c",
+            "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f",
             "_ids": {
-                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
-                "z": "pH_c0fec534e9799b37ee981fbb17f2ea635ec9c"
+                "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
+                "z": "N8_524991e7434b2d3444007782c4cd0cd887261"
             }
         },
         "y": 7,
         "_id": "...",
         "_ids": {
             "d": "...",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
-    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    UX_b6e9bdf8ec93b97f17e2db72cf72a856aaa2c
+    >>> (a.hosh ** b"d").show(colored=False)
+    u9_698c410308e557c005cda07ba00c564152401
     >>> a = idict(x=5)
     >>> b = idict(y=7)
     >>> b["d"] = lambda y: a
@@ -293,21 +292,21 @@ def build(id, ids, cache, identity, include_blobs=False):
     >>> print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
       "...": {
-        "_id": "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+        "_id": "_S_cb0fda15eac732cb08351e71fc359058b93bd"
       },
-      "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": 5,
-      "_i_7d6b4783509390c5384ac2c1b88fbd3d3cd8f": {
-        "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+      "GS_cb0fda15eac732cb08351e71fc359058b93bd": 5,
+      "_S_cb0fda15eac732cb08351e71fc359058b93bd": {
+        "_id": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
         "_ids": {
-          "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+          "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd"
         }
       },
-      "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065": 7,
+      "WK_6ba95267cec724067d58b3186ecbcaa4253ad": 7,
       "...": {
         "_id": "...",
         "_ids": {
           "d": "...",
-          "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+          "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad"
         }
       }
     }
@@ -319,27 +318,27 @@ def build(id, ids, cache, identity, include_blobs=False):
         "_id": "...",
         "_ids": {
             "d": "...",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> d.evaluated.show(colored=False)  # doctest:+ELLIPSIS
     {
         "d": {
             "x": 5,
-            "_id": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f",
+            "_id": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
             "_ids": {
-                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f"
+                "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd"
             }
         },
         "y": 7,
         "_id": "...",
         "_ids": {
             "d": "...",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
-    >>> (a.hosh ** key2id("d", 40)).show(colored=False)
-    ug_65906b93071a1e38384abcb6a88fbde25cd8f
+    >>> (a.hosh ** b"d").show(colored=False)
+    I0_dac96298c4c5bf8cb0cde8d8eb3e4a78ca1af
     """
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 
@@ -362,7 +361,7 @@ def build(id, ids, cache, identity, include_blobs=False):
             raise Exception(f"Missing key={fid} or singleton key=_{fid[1:]}.\n{json.dumps(cache, indent=2)}")
         hoshes[k] = identity * fid
         if fid[2] == "_":
-            hashes[k] = hoshes[k] // key2id(k, identity.digits)
+            hashes[k] = hoshes[k] // k.encode()
 
     internals = dict(blobs={}, hashes=hashes, hoshes=hoshes, hosh=hosh)
     return FrozenIdentifiedDict(data, identity=identity, _cloned=internals)

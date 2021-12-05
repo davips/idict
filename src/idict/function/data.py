@@ -24,7 +24,7 @@
 """
 Functions to be used directly within an idict workflow
 """
-from io import BytesIO, StringIO
+from io import StringIO
 
 from arff2pandas import a2p
 
@@ -40,12 +40,12 @@ def df2np(input="df", Xout="X", yout="y", **kwargs):
         "y": "→(input Xout yout df)",
         "_history": "df2np--------pandas-1.3.4--sklearn-1.0.1",
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
-        "_id": "E44sczWfUMWFuItAavOd9v.4Q1.sklearn-1.0.1",
+        "_id": "ENV9jX8bUi9HrV-xjwOn-33B6zOsklearn-1.0.1",
         "_ids": {
-            "X": "d4mcz9Xanx8fRsribw-L8-UdKxF9mlearj-1.0.2",
-            "y": "fSwn3UKP-APakeSBnJMc6f5n6.6tklearn-1.0.3",
-            "_history": "A3RPrmvmGNuH9IfL02DgQY2007VEzNNRA8xZ0.0X",
-            "df": "ja_3dbc3e0089a672ae7896199398b692362dc99 (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
+            "X": "kdwJlaiGhjSUOZuZurFEmzDXV8IiflXdah7r7SZk",
+            "y": "EKjvH0duVbq90SZ2EzjeT6EVQqqCl6eOLc6pR6Tc",
+            "_history": "TUewFCBng1SnVs1OYGlZx7xoaGOFD05axpgd24aw",
+            "df": "q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
     >>> d.y
@@ -79,11 +79,11 @@ def df2arff(input="df", output="arff", **kwargs):
         "a": "→(input output df)",
         "_history": "df2arff----------------arff2pandas-1.0.1",
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
-        "_id": "xdyZaF3yh4jf0fQK8IxSo0m5XKfLPerBLwVuTve8",
+        "_id": "yBTQeABtgYX1SqQgcAx-ENiKjHdLPerBLwVuTve8",
         "_ids": {
-            "a": "ThqwG-KOhpzcRprusvXcZwjDrLgLPerBLwVuTve9",
-            "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "df": "ja_3dbc3e0089a672ae7896199398b692362dc99 (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
+            "a": "8Bz-W4fdt.XihohXulSzxrOeVd.AKe8Fuq2U.kdr",
+            "_history": "FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J",
+            "df": "q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
     >>> d.a
@@ -113,9 +113,9 @@ def openml(Xout="X", yout="y", name="iris", version=1):
         "_history": "openml---------------------sklearn-1.0.1",
         "_id": "openml---------------------sklearn-1.0.1",
         "_ids": {
-            "X": "ze11cyj1Gi2mcWmsh1rrjkjdzgI9mlearj-1.0.2",
-            "y": "nw5qXzxIkHrUajn6VTL7M7KIWLZsklearn-1.0.3",
-            "_history": "W46Q.9OBxnS9oeFTzDYkRbWSoDQEzNNRA8xZ0.0X"
+            "X": "GeKAJ8jVk9e5KTh1HE0VQ509rhBiflXdah7r7SZk",
+            "y": "qBLomjiklDgqdXZxEEg7Di5Ts2fCl6eOLc6pR6Tc",
+            "_history": "i9HBxuuNmXOmFi-37NoAnHxvh3.FD05axpgd24aw"
         }
     }
     >>> (Ø >> openml).X.head()
@@ -159,16 +159,16 @@ def arff2df(input="arff", output="df", **kwargs):
     >>> d.arff
     '@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1'
     >>> d >>= arff2df
-    >>> d.show(colored=False)
+    >>> d.show(colored=False)  # doctest:+ELLIPSIS
     {
         "df": "→(input output arff)",
         "_history": "arff2df----------------arff2pandas-1.0.1",
         "arff": "@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
-        "_id": "n4EMpHwlrvpM-fFo4LC5914xb892pandas-1.0.1",
+        "_id": "...pandas-1.0.1",
         "_ids": {
-            "df": "ro3YIlxbNkgwanHshPzTghlh3T.Kqandao-1.0.2",
-            "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "arff": "OW_29bd5266cf0a6400c5747b4c332b4a54d1955 (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)"
+            "df": "Cf9JXDY2nGdhA8tup7lik6uD0zSTja4hVl7r7SZk",
+            "_history": "FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J",
+            "arff": "Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)"
         }
     }
     >>> d.df

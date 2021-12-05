@@ -35,21 +35,21 @@ def split(input=["X", "y"], config={"test_size": 0.33, "shuffle": True, "stratif
         "_history": "split----------------------sklearn-1.0.1",
         "X": "«{'attr1': {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, 'attr2': {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»",
         "y": "«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»",
-        "_id": "6xSiHAhSJC9yzGXeabFahIqeniPsklearn-1.0.1",
+        "_id": "LTyes51SYhKGMY0w1sa208XhAJWsklearn-1.0.1",
         "_ids": {
-            "Xtr": "rE3WM8cu5e1XrvmPdKRVr9DJ0-L9mlearj-1.0.2",
-            "ytr": "buTGORt9MCqtqUmtRAaCUY1dot1tklearn-1.0.3",
-            "Xts": "6Z42mf0rylBy0cJV0tvi7naILYOsklearn-1.0.4",
-            "yts": "ewHi412m.1H0.kMKdlQ-tCib7s4tklearn-1.0.5",
-            "_history": "Cx0YhJSEq21qM7lw-zjsLwiJ1PelT6lxKxAV2Z2M",
-            "X": "-2_3606060c77dc8f0807deec66fac5120578d0e (content: 34_1738c83af436029507def2710bc5125f58d0e)",
-            "y": "o._080bf2a35d8ab275d4050dfd02b939104feac (content: S0_b6360d62ccafa275d4051dfd02b939104feac)"
+            "Xtr": "vfhJj1tOPtQbmoB-sTDZeET6IeDiflXdah7r7SZk",
+            "ytr": "sxMM7g0VQXSwRnhvqTTb1RYQJ.gCl6eOLc6pR6Tc",
+            "Xts": "mG2q4odt878bNfhpLO7M987Ug2uDDLj39gIk0sBh",
+            "yts": "76AfbPvQ5TH3AF6BUVGY94JhD9TSqIaR29ry.ZZl",
+            "_history": "KXaarsvnmFEPCxeto.-jV6OMXC5-uHChlsEl2GCU",
+            "X": "md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)",
+            "y": "Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)"
         }
     }
     >>> d.yts
     array([1, 0, 1, 0, 0, 0, 1])
     """
-    if input != ["X", "y"]:
+    if input != ["X", "y"]:  # pragma: no cover
         # TODO create a way in ldict to accept a dynamic dict as return value
         raise Exception(f"Not implemented for input/output different from default values: " f"{input}")
     from sklearn.model_selection import train_test_split

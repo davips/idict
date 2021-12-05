@@ -57,10 +57,10 @@ class Idict(AbstractMutableLazyDict):
     {
         "x": 5,
         "y": 3,
-        "_id": "Gm_5a27861eacedc78bf5dc236c663f77f39933b",
+        "_id": "pl_8763f6625970707cdef7dfd31096db4c63c91",
         "_ids": {
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "o4_fcbb3f8a5c5a37c5cd8260aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "Ku_f738128d6e27a03ec6c2e76d23514b4e998e3 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
     >>> d["y"]
@@ -68,7 +68,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d = idict(x=123123, y=88)
     >>> d2 = d >> (lambda x: {"z": x**2})
     >>> d2.ids  # doctest:+ELLIPSIS
-    {'z': '...', 'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}
+    {'z': '...', 'x': 'CF_13e3494690e330a722667f4ab9e067c64022e', 'y': '-j_34f477bff0a6dac76fe447d0e95003e273c62'}
     >>> d2.hosh == d2.identity * d2.ids["z"] * d2.ids["x"] * d2.ids["y"]
     True
     >>> e = d2 >> (lambda x,y: {"w": x/y})
@@ -82,24 +82,24 @@ class Idict(AbstractMutableLazyDict):
         "_ids": {
             "w": "...",
             "z": "...",
-            "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
-            "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
+            "x": "CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
+            "y": "-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
     }
     >>> a = d >> (lambda x: {"z": x**2}) >> (lambda x, y: {"w": x/y})
     >>> b = d >> (lambda x, y: {"w": x/y}) >> (lambda x: {"z": x**2})
     >>> dic = d.asdict  # Converting to dict
     >>> dic
-    {'x': 123123, 'y': 88, '_id': 'S-_6a05b897eed2728ea8200aa3f9e90651e952a', '_ids': {'x': 'd5_fa01214009ca14a1527bd38a753b84cbc2cff', 'y': 'EV_f4049757e5085edc56b4262974be71951792a'}}
+    {'x': 123123, 'y': 88, '_id': 'BZ_2ef6b00691651b6f815ba62b93416aa9b3e80', '_ids': {'x': 'CF_13e3494690e330a722667f4ab9e067c64022e', 'y': '-j_34f477bff0a6dac76fe447d0e95003e273c62'}}
     >>> d2 = idict(dic)  # Reconstructing from a dict
     >>> d2.show(colored=False)
     {
         "x": 123123,
         "y": 88,
-        "_id": "S-_6a05b897eed2728ea8200aa3f9e90651e952a",
+        "_id": "BZ_2ef6b00691651b6f815ba62b93416aa9b3e80",
         "_ids": {
-            "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff",
-            "y": "EV_f4049757e5085edc56b4262974be71951792a"
+            "x": "CF_13e3494690e330a722667f4ab9e067c64022e",
+            "y": "-j_34f477bff0a6dac76fe447d0e95003e273c62"
         }
     }
     >>> d == d2
@@ -109,18 +109,18 @@ class Idict(AbstractMutableLazyDict):
     >>> d.show(colored=False)
     {
         "x": "more content",
-        "_id": "aF_64eaced14bf0114a6b9eceaac31744c2093df",
+        "_id": "zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd",
         "_ids": {
-            "x": "aF_64eaced14bf0114a6b9eceaac31744c2093df"
+            "x": "zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd"
         }
     }
     >>> d = idict() >> {"x": "more content"}
     >>> d.show(colored=False)
     {
         "x": "more content",
-        "_id": "aF_64eaced14bf0114a6b9eceaac31744c2093df",
+        "_id": "zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd",
         "_ids": {
-            "x": "aF_64eaced14bf0114a6b9eceaac31744c2093df"
+            "x": "zd_6a3f5ec407f6c5c24b89b35ff7cc1793969fd"
         }
     }
     >>> e.ids.keys()
@@ -134,8 +134,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "w": "...",
-            "x": "d5_fa01214009ca14a1527bd38a753b84cbc2cff (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
-            "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
+            "x": "CF_13e3494690e330a722667f4ab9e067c64022e (content: I6_bcc6fa41b424962f427be985853b8416b2cff)",
+            "y": "-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
     }
     >>> e.hosh == e.identity * e.ids["w"] * e.ids["x"] * e.ids["y"]
@@ -149,8 +149,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "w": "...",
-            "x": "zG_8a2e85e3b861ec7279f5f1c357969eb907ded (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)",
-            "y": "EV_f4049757e5085edc56b4262974be71951792a (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
+            "x": "Ye_5b015377273c0cfa49e037788b4c618a9431c (content: 2I_96abdb2113ef4fff69f518ce57969e04f6ded)",
+            "y": "-j_34f477bff0a6dac76fe447d0e95003e273c62 (content: 6X_ceb4a9cfad6b3b5a56b49c3484be71dff692a)"
         }
     }
     >>> f = lambda x,y: {"z":x+y}
@@ -164,8 +164,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c = {}
@@ -178,8 +178,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c
@@ -187,7 +187,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d3.z
     12
     >>> c  # doctest:+ELLIPSIS
-    {'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+    {'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, 'SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e': {'_id': 'SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e', '_ids': {'z': 'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
     >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 12,
@@ -196,8 +196,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c = {}
@@ -212,8 +212,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> c
@@ -221,7 +221,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d3.z
     12
     >>> c  # doctest:+ELLIPSIS
-    {'...': 12, 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f': 5, 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f', 'y': 'Bk_b75c77bb5e2640ad6428eb35f82a492dd8065'}}}
+    {'...': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, '...': {'_id': '...', '_ids': {'z': '...', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
     >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 12,
@@ -230,8 +230,8 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "z": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)"
         }
     }
     >>> f = lambda x: {"y": x ** 2, "_history": ...}
@@ -244,15 +244,15 @@ class Idict(AbstractMutableLazyDict):
         "y": "→(x)",
         "_history": "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87 05d6efbc9820dafe0d8fbe87a79adbe9797abc87",
         "x": 3,
-        "_id": "FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge",
+        "_id": "FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge",
         "_ids": {
-            "y": "SKKfkobjfpGEFAccrq89n50FxtdKtmsieaekmogf",
-            "_history": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
+            "y": "YBZxsNb-Y8H9kotRW2ohDi4E31.Smm9mZ7nJudfx",
+            "_history": "FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J",
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
     >>> (idict(x=3).hosh * "b5d6efbc9820dafe0d8fbe87a79adbe9797abc87" * "05d6efbc9820dafe0d8fbe87a79adbe9797abc87").show(colored=False)
-    FWBpAOEbVb-c8wa-jJbreKTOkZq1smsieeekmoge
+    FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge
     >>> a = idict(x=3)
     >>> b = idict(y=5)
     >>> b["d"] = lambda y: a
@@ -265,79 +265,79 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "d": "...",
-            "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+            "y": "EI_20378979f4669f2e318ae9742e214fd4880d7 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
     >>> b.d.show(colored=False)
     {
         "x": 3,
-        "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+        "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
         "_ids": {
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
         }
     }
     >>> import json
     >>> print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
       "...": {
-        "_id": "_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+        "_id": "_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
       },
-      "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab": 3,
-      "_4_51866e4dc164a1c5cd82c0babdafb9a65d5ab": {
-        "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+      "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9": 3,
+      "_E_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9": {
+        "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
         "_ids": {
-          "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+          "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
         }
       },
-      "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f": 5,
+      "EI_20378979f4669f2e318ae9742e214fd4880d7": 5,
       "...": {
         "_id": "...",
         "_ids": {
           "d": "...",
-          "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f"
+          "y": "EI_20378979f4669f2e318ae9742e214fd4880d7"
         }
       }
     }
-    >>> d = idict.fromid("n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab", cache)
+    >>> d = idict.fromid("ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9", cache)
     >>> d.show(colored=False)
     {
         "x": "→(↑)",
-        "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+        "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
         "_ids": {
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
         }
     }
     >>> d.evaluated.show(colored=False)
     {
         "x": 3,
-        "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+        "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
         "_ids": {
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
         }
     }
     >>> idict.fromid(d.id, cache).evaluated.show(colored=False)
     {
         "x": 3,
-        "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+        "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
         "_ids": {
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
         }
     }
     >>> e = idict(f=lambda x: 5)
     >>> e.show(colored=False)  # doctest:+ELLIPSIS
     {
         "f": "<function <lambda> at 0x...>",
-        "_id": "jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm",
+        "_id": "pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy",
         "_ids": {
-            "f": "jvnzqh2e6TjL2fzatsuk0nNTAYYMFC6QA.xVsZcm"
+            "f": "pqmFNR-9nNXACJsyc6Ro3BA.wfz.mD0zHOgI9vYy"
         }
     }
     >>> from idict.core.appearance import idict2txt
     >>> d = idict(x=1,y=2)
     >>> decolorize(idict2txt(d, False, False))
-    '{\n    "x": 1,\n    "y": 2,\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\n    "_ids": "S6_787ce43265467bacea460e239d4b36762f272 wA_8d94995016666dd618d91cdccfe8a5fcb5c4b"\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "5G_358b45f49c547174eb4bd687079b30cbbe724",\n    "_ids": "fH_5142f0a4338a1da2ca3159e2d1011981ac890 S-_074b5a806933d64f111a93af359a278402f83"\n}'
     >>> decolorize(idict2txt(d, True, False))
-    '{\n    "x": 1,\n    "y": 2,\n    "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",\n    "_ids": {\n        "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",\n        "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"\n    }\n}'
+    '{\n    "x": 1,\n    "y": 2,\n    "_id": "5G_358b45f49c547174eb4bd687079b30cbbe724",\n    "_ids": {\n        "x": "fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",\n        "y": "S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"\n    }\n}'
     >>> cache = {}
     >>> a = idict(x=5) >> (lambda x:{"y": x**x}) >> [[cache]]  # Cache within double brackets has strict/eager behavior.
     >>> a.show(colored=False)  # doctest:+ELLIPSIS
@@ -347,7 +347,7 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "y": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
     >>> idict(a.id, cache).show(colored=False)  # doctest:+ELLIPSIS
@@ -357,11 +357,11 @@ class Idict(AbstractMutableLazyDict):
         "_id": "...",
         "_ids": {
             "y": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
     >>> a.idh
-    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n<title></title>\n<style type="text/css">\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground > .bold,.bold > .body_foreground, body.body_foreground > pre > .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-103 { color: #8787af; }\n.ansi38-105 { color: #8787ff; }\n.ansi38-140 { color: #af87d7; }\n.ansi38-177 { color: #d787ff; }\n.ansi38-111 { color: #87afff; }\n.ansi38-147 { color: #afafff; }\n.ansi38-181 { color: #d7afaf; }\n.ansi38-182 { color: #d7afd7; }\n.ansi38-183 { color: #d7afff; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-152 { color: #afd7d7; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n</style>\n</head>\n<body class="body_foreground body_background" style="font-size: normal;" >\n<pre class="ansi2html-content">\n<span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">Z</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">.</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">V</span><span class="ansi38-183"></span><span class="ansi1 ansi38-183"></span><span class="ansi1 ansi38-183 ansi48-0">y</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">S</span><span class="ansi38-181"></span><span class="ansi1 ansi38-181"></span><span class="ansi1 ansi38-181 ansi48-0">j</span><span class="ansi38-140"></span><span class="ansi1 ansi38-140"></span><span class="ansi1 ansi38-140 ansi48-0">.</span><span class="ansi38-103"></span><span class="ansi1 ansi38-103"></span><span class="ansi1 ansi38-103 ansi48-0">A</span><span class="ansi38-105"></span><span class="ansi1 ansi38-105"></span><span class="ansi1 ansi38-105 ansi48-0">w</span><span class="ansi38-117"></span><span class="ansi1 ansi38-117"></span><span class="ansi1 ansi38-117 ansi48-0">R</span><span class="ansi38-182"></span><span class="ansi1 ansi38-182"></span><span class="ansi1 ansi38-182 ansi48-0">A</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">8</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">8</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">u</span><span class="ansi38-177"></span><span class="ansi1 ansi38-177"></span><span class="ansi1 ansi38-177 ansi48-0">c</span><span class="ansi38-111"></span><span class="ansi1 ansi38-111"></span><span class="ansi1 ansi38-111 ansi48-0">v</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">R</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">M</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">B</span><span class="ansi38-183"></span><span class="ansi1 ansi38-183"></span><span class="ansi1 ansi38-183 ansi48-0">8</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">B</span><span class="ansi38-181"></span><span class="ansi1 ansi38-181"></span><span class="ansi1 ansi38-181 ansi48-0">v</span><span class="ansi38-140"></span><span class="ansi1 ansi38-140"></span><span class="ansi1 ansi38-140 ansi48-0">D</span><span class="ansi38-103"></span><span class="ansi1 ansi38-103"></span><span class="ansi1 ansi38-103 ansi48-0">z</span><span class="ansi38-105"></span><span class="ansi1 ansi38-105"></span><span class="ansi1 ansi38-105 ansi48-0">8</span><span class="ansi38-117"></span><span class="ansi1 ansi38-117"></span><span class="ansi1 ansi38-117 ansi48-0">9</span><span class="ansi38-182"></span><span class="ansi1 ansi38-182"></span><span class="ansi1 ansi38-182 ansi48-0">2</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">v</span><span class="ansi38-147"></span><span class="ansi1 ansi38-147"></span><span class="ansi1 ansi38-147 ansi48-0">j</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">1</span><span class="ansi38-177"></span><span class="ansi1 ansi38-177"></span><span class="ansi1 ansi38-177 ansi48-0">6</span><span class="ansi38-111"></span><span class="ansi1 ansi38-111"></span><span class="ansi1 ansi38-111 ansi48-0">i</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">t</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">l</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">1</span><span class="ansi38-183"></span><span class="ansi1 ansi38-183"></span><span class="ansi1 ansi38-183 ansi48-0">y</span><span class="ansi38-152"></span><span class="ansi1 ansi38-152"></span><span class="ansi1 ansi38-152 ansi48-0">Q</span><span class="ansi38-181"></span><span class="ansi1 ansi38-181"></span><span class="ansi1 ansi38-181 ansi48-0">B</span><span class="ansi38-140"></span><span class="ansi1 ansi38-140"></span><span class="ansi1 ansi38-140 ansi48-0">L</span><span class="ansi38-103"></span><span class="ansi1 ansi38-103"></span><span class="ansi1 ansi38-103 ansi48-0">4</span>\n</pre>\n</body>\n\n</html>\n'
+    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n<title></title>\n<style type="text/css">\n.ansi2html-content { display: inline; white-space: pre-wrap; word-wrap: break-word; }\n.body_foreground { color: #AAAAAA; }\n.body_background { background-color: #000000; }\n.body_foreground > .bold,.bold > .body_foreground, body.body_foreground > pre > .bold { color: #FFFFFF; font-weight: normal; }\n.inv_foreground { color: #000000; }\n.inv_background { background-color: #AAAAAA; }\n.ansi1 { font-weight: bold; }\n.ansi48-0 { background-color: #000316; }\n.ansi38-117 { color: #87d7ff; }\n.ansi38-153 { color: #afd7ff; }\n.ansi38-189 { color: #d7d7ff; }\n.ansi38-122 { color: #87ffd7; }\n.ansi38-123 { color: #87ffff; }\n.ansi38-159 { color: #afffff; }\n.ansi38-194 { color: #d7ffd7; }\n.ansi38-195 { color: #d7ffff; }\n.ansi38-251 { color: #c6c6c6; }\n</style>\n</head>\n<body class="body_foreground body_background" style="font-size: normal;" >\n<pre class="ansi2html-content">\n<span class="ansi38-123"></span><span class="ansi1 ansi38-123"></span><span class="ansi1 ansi38-123 ansi48-0">q</span><span class="ansi38-159"></span><span class="ansi1 ansi38-159"></span><span class="ansi1 ansi38-159 ansi48-0">1</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">O</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">Q</span><span class="ansi38-194"></span><span class="ansi1 ansi38-194"></span><span class="ansi1 ansi38-194 ansi48-0">E</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">t</span><span class="ansi38-122"></span><span class="ansi1 ansi38-122"></span><span class="ansi1 ansi38-122 ansi48-0">J</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">.</span><span class="ansi38-122"></span><span class="ansi1 ansi38-122"></span><span class="ansi1 ansi38-122 ansi48-0">n</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">4</span><span class="ansi38-123"></span><span class="ansi1 ansi38-123"></span><span class="ansi1 ansi38-123 ansi48-0">q</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">t</span><span class="ansi38-159"></span><span class="ansi1 ansi38-159"></span><span class="ansi1 ansi38-159 ansi48-0">4</span><span class="ansi38-194"></span><span class="ansi1 ansi38-194"></span><span class="ansi1 ansi38-194 ansi48-0">D</span><span class="ansi38-251"></span><span class="ansi1 ansi38-251"></span><span class="ansi1 ansi38-251 ansi48-0">.</span><span class="ansi38-117"></span><span class="ansi1 ansi38-117"></span><span class="ansi1 ansi38-117 ansi48-0">w</span><span class="ansi38-123"></span><span class="ansi1 ansi38-123"></span><span class="ansi1 ansi38-123 ansi48-0">P</span><span class="ansi38-159"></span><span class="ansi1 ansi38-159"></span><span class="ansi1 ansi38-159 ansi48-0">J</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">K</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">l</span><span class="ansi38-194"></span><span class="ansi1 ansi38-194"></span><span class="ansi1 ansi38-194 ansi48-0">S</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">G</span><span class="ansi38-122"></span><span class="ansi1 ansi38-122"></span><span class="ansi1 ansi38-122 ansi48-0">F</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">F</span><span class="ansi38-122"></span><span class="ansi1 ansi38-122"></span><span class="ansi1 ansi38-122 ansi48-0">E</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">x</span><span class="ansi38-123"></span><span class="ansi1 ansi38-123"></span><span class="ansi1 ansi38-123 ansi48-0">Y</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">u</span><span class="ansi38-159"></span><span class="ansi1 ansi38-159"></span><span class="ansi1 ansi38-159 ansi48-0">j</span><span class="ansi38-194"></span><span class="ansi1 ansi38-194"></span><span class="ansi1 ansi38-194 ansi48-0">1</span><span class="ansi38-251"></span><span class="ansi1 ansi38-251"></span><span class="ansi1 ansi38-251 ansi48-0">6</span><span class="ansi38-117"></span><span class="ansi1 ansi38-117"></span><span class="ansi1 ansi38-117 ansi48-0">i</span><span class="ansi38-123"></span><span class="ansi1 ansi38-123"></span><span class="ansi1 ansi38-123 ansi48-0">t</span><span class="ansi38-159"></span><span class="ansi1 ansi38-159"></span><span class="ansi1 ansi38-159 ansi48-0">l</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">1</span><span class="ansi38-195"></span><span class="ansi1 ansi38-195"></span><span class="ansi1 ansi38-195 ansi48-0">y</span><span class="ansi38-194"></span><span class="ansi1 ansi38-194"></span><span class="ansi1 ansi38-194 ansi48-0">Q</span><span class="ansi38-153"></span><span class="ansi1 ansi38-153"></span><span class="ansi1 ansi38-153 ansi48-0">B</span><span class="ansi38-122"></span><span class="ansi1 ansi38-122"></span><span class="ansi1 ansi38-122 ansi48-0">L</span><span class="ansi38-189"></span><span class="ansi1 ansi38-189"></span><span class="ansi1 ansi38-189 ansi48-0">4</span>\n</pre>\n</body>\n\n</html>\n'
     """
 
     frozen: fro.FrozenIdentifiedDict
@@ -373,10 +373,12 @@ class Idict(AbstractMutableLazyDict):
         self.identity = identity
         if isinstance(_dictionary, str) and isinstance(_id, (dict, Cache)):
             # Build idict from id+cache.
-            if _ids or rnd or _cloned or kwargs:
+            if _ids or rnd or _cloned or kwargs:  # pragma: no cover
                 raise Exception("Cannot pass more arguments when first argument is id and second argument is cache.")
             # TODO (minor): detect identity from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
+            if self.frozen is None:  # pragma: no cover
+                raise Exception(f"Could not find {_dictionary}")
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 
@@ -440,10 +442,10 @@ class Idict(AbstractMutableLazyDict):
         {
             "x": 5,
             "y": 2,
-            "_id": "OS_ea00e0e366f9fd9c4024ee9e7878633af1ada",
+            "_id": "xR_15583f654491968d294f9b1622dfb782db241",
             "_ids": {
-                "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-                "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"
+                "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+                "y": "S-_074b5a806933d64f111a93af359a278402f83 (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)"
             }
         }
         >>> from ldict import ldict
@@ -462,7 +464,7 @@ class Idict(AbstractMutableLazyDict):
         """
         >>> d = Idict(x=2) >> (lambda x: {"y": 2 * x})
         >>> d.ids  # doctest:+ELLIPSIS
-        {'y': '...', 'x': 'vA_88beb4e68c50d7d618d97ceccfe8a5ecb5c4b'}
+        {'y': '...', 'x': 'U8_a7205a343c568c5fe7c4619104ae78bd43279'}
         """
         clone = self.__class__(identity=self.identity)
         clone.frozen = self.frozen >> other
@@ -536,9 +538,9 @@ class Idict(AbstractMutableLazyDict):
         >>> idict(a=1, _b=2, _history=[1,2,3]).trimmed.show(colored=False)
         {
             "a": 1,
-            "_id": "v6_3ac82db5497101bcea46bd139d4b36862f272",
+            "_id": "DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb",
             "_ids": {
-                "a": "v6_3ac82db5497101bcea46bd139d4b36862f272"
+                "a": "DZ_3d0ee28486d9b4f5e2fe257bc33f1266688fb"
             }
         }
         """
@@ -557,9 +559,9 @@ class Idict(AbstractMutableLazyDict):
     #         "x": 3,
     #         "_metafield_1": 5,
     #         "_history": "id-of-some-previous-step----------------",
-    #         "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #         "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
     #         "_ids": {
-    #             "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #             "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
     #             "_metafield_1": "KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
     #             "_history": "T4_254b4402e8d23be907236a140ff90245285a8 (content: VO_b2b5c7d8ff9718670723c03f0ff9028f085a8)"
     #         }
@@ -569,9 +571,9 @@ class Idict(AbstractMutableLazyDict):
     #     {
     #         "fields": {
     #             "x": 3,
-    #             "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #             "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
     #             "_ids": {
-    #                 "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+    #                 "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
     #             }
     #         },
     #         "version": "user 1",
@@ -579,7 +581,7 @@ class Idict(AbstractMutableLazyDict):
     #         "_history": "id-of-some-previous-step----------------",
     #         "_id": "g.0pzcYOgFTneQ8ojVDcReKkaqDuuuuuuuuuuuuu",
     #         "_ids": {
-    #             "fields": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+    #             "fields": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
     #             "version": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
     #             "_metafield_1": "KG_c33bb4404f27e9a7878b29dcb88fbd772cd8f",
     #             "_history": "T4_254b4402e8d23be907236a140ff90245285a8"

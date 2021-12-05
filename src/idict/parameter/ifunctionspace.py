@@ -24,9 +24,8 @@ from operator import xor as cop
 from random import Random
 from typing import Union, Callable
 
-from ldict.core.base import AbstractLazyDict
-
 from idict.parameter.ilet import iLet
+from ldict.core.base import AbstractLazyDict
 
 
 class iFunctionSpace:
@@ -40,10 +39,10 @@ class iFunctionSpace:
     {
         "y": 7,
         "x": 5,
-        "_id": "TC_15c7ce3faeb9d063ac62bef6a1b9076a15ee4",
+        "_id": "BB_fad4374ca911f344859dab8e4b016ba2fe65b",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
         }
     }
     >>> fs >>= idict(y=7)
@@ -51,15 +50,15 @@ class iFunctionSpace:
     >>> print(decolorize(str(fs)))
     «{'x': 5} × {
         "y": 7,
-        "_id": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
-        "_ids": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+        "_id": "WK_6ba95267cec724067d58b3186ecbcaa4253ad",
+        "_ids": "WK_6ba95267cec724067d58b3186ecbcaa4253ad"
     }»
     >>> fs >>= lambda x,y: {"z": x*y}
     >>> print(decolorize(str(fs)))
     «{'x': 5} × {
         "y": 7,
-        "_id": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065",
-        "_ids": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065"
+        "_id": "WK_6ba95267cec724067d58b3186ecbcaa4253ad",
+        "_ids": "WK_6ba95267cec724067d58b3186ecbcaa4253ad"
     } × λ»
     """
 

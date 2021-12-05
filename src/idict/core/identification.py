@@ -100,45 +100,6 @@ def fhosh(f, version, approach="clean"):
     return f.hosh
 
 
-# TODO: we could just use ø.hybrid * key.encode() instead of relying on this weak hash
-def key2id(key, digits):
-    """
-    >>> key2id("y", 40)
-    'y-_0000000000000000000000000000000000000'
-
-    >>> key2id("_history", 40)
-    '-h_6973746f72790000000000000000000000000'
-
-    >>> key2id("long bad field name", 40)
-    'lo_6e6720626164206669656c64206e616d65000'
-
-    >>> key2id("long bad field name that will be truncated", 40)
-    'lo_6e6720626164206669656c64206e616d65207'
-
-    Parameters
-    ----------
-    key
-
-    Returns
-    -------
-
-    """
-    if key.startswith("_"):
-        key = "-" + key[1:]
-    prefix = key[:2].ljust(2, "-") + "_"
-    rest = key[2:].encode().hex().ljust(digits - 3, "0")
-    return prefix + rest[: digits - 3]
-
-
-def removal_id(template, field):
-    """
-    >>> from garoupa import ø
-    >>> removal_id(ø.delete, "myfield")
-    '--------------------.............myfield'
-    """
-    return template[: -len(field)] + field
-
-
 def blobs_hashes_hoshes(data, identity, ids, version):
     """
     >>> from idict import idict
@@ -147,11 +108,11 @@ def blobs_hashes_hoshes(data, identity, ids, version):
         "x": 1,
         "y": 2,
         "z": 3,
-        "_id": "ehAAElGxN36TOvo7LdUwseCKVJyyyyyyyyyyyyyy",
+        "_id": "Sv8G-WU9SZL90Tus885EWBBf3koyyyyyyyyyyyyy",
         "_ids": {
-            "x": "S6_787ce43265467bacea460e239d4b36762f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",
+            "x": "fH_5142f0a4338a1da2ca3159e2d1011981ac890 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)",
             "y": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-            "z": "p4_15e02e02df7f27c5cd8270aabdafb9b65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
+            "z": "Nx_e12377018e5ab54023f91f7c6b7aea6676b60 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
     """
@@ -175,7 +136,7 @@ def blobs_hashes_hoshes(data, identity, ids, version):
                     vhosh = fhosh(v, version)
                 hashes[k] = vhosh
             try:
-                hoshes[k] = hashes[k] ** key2id(k, identity.digits)
+                hoshes[k] = hashes[k] ** k.encode()
             except KeyError as e:  # pragma: no cover
                 raise Exception(
                     f"{str(e)} is not allowed in field name: {k}. It is only accepted as the first character to indicate a metafield."

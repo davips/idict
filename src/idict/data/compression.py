@@ -82,7 +82,7 @@ def pack(obj, ensure_determinism=True):
 
         return blob
     except KeyError as e:  # pragma: no cover
-        if str(e) == "'__getstate__'":
+        if str(e) == "'__getstate__'":  # pragma: no cover
             raise Exception("Unpickable value:", type(obj))
         else:
             raise e

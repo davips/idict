@@ -37,8 +37,8 @@ class TestLdict(TestCase):
         self.assertFalse(a == {"a": 3})
         self.assertNotEqual(a, {"a": 3})
         d = {
-            "_id": "mH_70118e827bbcd88303202a006d34eb63e4fbd",
-            "_ids": {"x": "S6_787ce43265467bacea460e239d4b36762f272", "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b"},
+            "_id": "5G_358b45f49c547174eb4bd687079b30cbbe724",
+            "_ids": {"x": "fH_5142f0a4338a1da2ca3159e2d1011981ac890", "y": "S-_074b5a806933d64f111a93af359a278402f83"},
             "x": 1,
             "y": 2,
         }
@@ -60,11 +60,11 @@ class TestLdict(TestCase):
     "x": 3,
     "y": 4,
     "z": 5,
-    "_id": "ol_e5c16dd16f412466a532f45ddb120cb746448",
+    "_id": "uN_ffd1a1a656d34bc1e3c450b6334481cf39273",
     "_ids": {
-        "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
-        "y": "I-_f967564db1ccce58af55d7fb75e2841e9c01d (content: a0_019baa6057e1ce58af55e7fb75e2841e9c01d)",
-        "z": "ji_e6b7ae77dbae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+        "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+        "y": "2p_1f3a332e3920c543b89549b3ea84065bf8355 (content: a0_019baa6057e1ce58af55e7fb75e2841e9c01d)",
+        "z": "HL_e332871b8bae94409da13193665aeefc55354 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
     }
 }""",
             decolorize(d.all),
@@ -81,11 +81,11 @@ class TestLdict(TestCase):
     "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "_id": "myrg84IihhE5MVLCd8c7tZ6EcRIMPNZuFtrAIt6g",
+    "_id": "wnN2sFeynlPdlFUyqmhIrXDz56QMPNZuFtrAIt6g",
     "_ids": {
-        "z": "Us4dnSNAAvXkXQixDWcF2jdrxaTMPNZuFtrAIt6g",
-        "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
-        "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+        "z": "BxpUP79x3yGOGt8jpOWYnwAYPLKMPNZuFtrAIt6g",
+        "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+        "y": "EI_20378979f4669f2e318ae9742e214fd4880d7 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
     }
 }""",
             decolorize(d.all),
@@ -102,11 +102,11 @@ class TestLdict(TestCase):
             "z": "→(x y)",
             "x": 3,
             "y": 5,
-            "_id": "myrg84IihhE5MVLCd8c7tZ6EcRIMPNZuFtrAIt6g",
+            "_id": "wnN2sFeynlPdlFUyqmhIrXDz56QMPNZuFtrAIt6g",
             "_ids": {
-                "z": "Us4dnSNAAvXkXQixDWcF2jdrxaTMPNZuFtrAIt6g",
-                "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
-                "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+                "z": "BxpUP79x3yGOGt8jpOWYnwAYPLKMPNZuFtrAIt6g",
+                "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+                "y": "EI_20378979f4669f2e318ae9742e214fd4880d7 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
             },
         }
         self.assertEqual(d, de)
@@ -133,11 +133,11 @@ class TestLdict(TestCase):
     "z": "→(x y)",
     "x": 3,
     "y": 5,
-    "_id": "myrg84IihhE5MVLCd8c7tZ6EcRIMPNZuFtrAIt6g",
+    "_id": "wnN2sFeynlPdlFUyqmhIrXDz56QMPNZuFtrAIt6g",
     "_ids": {
-        "z": "Us4dnSNAAvXkXQixDWcF2jdrxaTMPNZuFtrAIt6g",
-        "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
-        "y": "ii_6ee7b815d7ae16c5384a72b1b88fbd4d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
+        "z": "BxpUP79x3yGOGt8jpOWYnwAYPLKMPNZuFtrAIt6g",
+        "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)",
+        "y": "EI_20378979f4669f2e318ae9742e214fd4880d7 (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)"
     }
 }""",
             str(decolorize(d.all)),
@@ -168,10 +168,10 @@ class TestLdict(TestCase):
         self.assertEqual(
             d,
             {
-                "_id": "mk4s98q27bY4EJsgn-BEJyM.wOuYp2E8pA4Gubx6",
+                "_id": "SmicWca2i6bdY-.RVGjl1UmC1DEYp2E8pA4Gubx6",
                 "_ids": {
-                    "x": "S6_787ce43265467bacea460e239d4b36762f272",
-                    "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b",
+                    "x": "fH_5142f0a4338a1da2ca3159e2d1011981ac890",
+                    "y": "S-_074b5a806933d64f111a93af359a278402f83",
                     "z": "r2NUGYeVL5ztMXEY1L1VqAXfPYzYp2E8pA4Gubx6",
                 },
                 "x": 1,
@@ -192,11 +192,11 @@ class TestLdict(TestCase):
         self.assertEqual(
             d,
             {
-                "_id": "953IlfJ437JG94zYVYHXVnPOuzHyf7UpbFd-ryzj",
+                "_id": "m3hxUQZSMBBhQK.RRKMlgxwfa-Gyf7UpbFd-ryzj",
                 "_ids": {
-                    "x": "S6_787ce43265467bacea460e239d4b36762f272",
-                    "y": "wA_8d94995016666dd618d91cdccfe8a5fcb5c4b",
-                    "z": "kPE-4CyOi-JcD2vEAJ7cEp-2NJMyf7UpbFd-ryzj",
+                    "x": "fH_5142f0a4338a1da2ca3159e2d1011981ac890",
+                    "y": "S-_074b5a806933d64f111a93af359a278402f83",
+                    "z": "iV2sljdf9X6023.369RkVIx5SsMyf7UpbFd-ryzj",
                 },
                 "x": 1,
                 "y": 2,

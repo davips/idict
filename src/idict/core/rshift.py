@@ -22,13 +22,13 @@
 
 import operator
 from functools import reduce
-from typing import Dict
+from typing import Dict, Union
 
-from garoupa import Hosh
-
+from garoupa import Hosh, rho_elem, removal_elem
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-from idict.core.identification import fhosh, removal_id, blobs_hashes_hoshes
+from idict.core.identification import fhosh, blobs_hashes_hoshes
 from idict.parameter.ilet import iLet
+from ldict.core.base import AbstractLazyDict
 
 
 def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
@@ -43,10 +43,10 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     {
         "y": "→(x)",
         "x": 3,
-        "_id": "9CQTZ.-ZMrtDr6MTnOPpxL5.2gsfffffffffffff",
+        "_id": "JAsdh.I6zV6p5eiqJkTGxM4g5Dnfffffffffffff",
         "_ids": {
-            "y": "-UXfi8wcv0uck6LcY6QOTpEl7arfffffffffffff",
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
+            "y": "23KQ2fUFGjKDTiIseYxUGS9tXqtfffffffffffff",
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 (content: S5_331b7e710abd1443cd82d6b5cdafb9f04d5ab)"
         }
     }
     >>> d2.hosh / f.metadata["id"] == d.id
@@ -84,7 +84,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         for i, k in enumerate(outputs):
             newdata[k] = frozen.data[k]
             if i < noutputs - 1:
-                field_hosh = ufu_1 * rho(c, self.identity.digits)
+                field_hosh = ufu_1 * rho_elem(c)
                 c += 1
                 acc *= field_hosh
             else:
@@ -103,39 +103,33 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
     return self.clone(newdata, _cloned=cloned_internals)
 
 
-def delete(self, k):
-    f_hosh = self.identity * removal_id(self.identity.delete, k)  # d' = d * "--------------------...................y"
-    uf = self.hosh * f_hosh
-    newdata = self.data.copy()
-    newdata[k] = None
-    newhoshes, newblobs, newhashes, = (
-        self.hoshes.copy(),
-        self.blobs.copy(),
-        self.hashes.copy(),
-    )
-    newhoshes[k] = placeholder(k, f_hosh, self.identity, self.hoshes)
-    if k in newblobs:
-        del newblobs[k]
-    if k in newhashes:
-        del newhashes[k]
-    return self.clone(newdata, _cloned=dict(blobs=newblobs, hashes=newhashes, hoshes=newhoshes, hosh=uf))
-
-
-def ihandle_dict(self, dictlike):
+def ihandle_dict(self, dictlike: Union[AbstractLazyDict, dict]):
     """
     >>> from idict.core.frozenidentifieddict import FrozenIdentifiedDict as idict
     >>> d = idict(x=5, y=7, z=8)
+    >>> d.show(colored=False)
+    {
+        "x": 5,
+        "y": 7,
+        "z": 8,
+        "_id": "LB_8c3817cc329ce53b9a02233dbe666a9c05819",
+        "_ids": {
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "z": "90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
+        }
+    }
     >>> di = ihandle_dict(d, {"y":None})
     >>> di.show(colored=False)
     {
         "x": 5,
         "y": null,
         "z": 8,
-        "_id": "d45pzBr6XLzQMA5yn1ft1TCeE9Y............y",
+        "_id": "2teR7BgSlcNN0XkG9NShsLJqLZLUp-A7p2gW8E3i",
         "_ids": {
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
-            "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i",
+            "z": "90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> di2 = ihandle_dict(di, {"w":lambda x,z: x**z})
@@ -145,12 +139,12 @@ def ihandle_dict(self, dictlike):
         "x": 5,
         "y": null,
         "z": 8,
-        "_id": "...",
+        "_id": "Q0jOriyrlj63FL3CHO27WUS2rd350InR5ysi4Vfi",
         "_ids": {
-            "w": "...",
-            "x": "hi_7d6b4783509390c5384ac2c1b88fbd3d3cd8f (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
-            "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
-            "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
+            "w": "ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0",
+            "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd (content: Mj_3bcd9aefb5020343384ae8ccb88fbd872cd8f)",
+            "y": "1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i",
+            "z": "90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> ihandle_dict(di2, {"x": 55555}).show(colored=False)  # doctest:+ELLIPSIS
@@ -159,20 +153,20 @@ def ihandle_dict(self, dictlike):
         "x": 55555,
         "y": null,
         "z": 8,
-        "_id": "...",
+        "_id": "fqC1B4bcNgfT9zTqPDTIBKkOfb350InR5ysi4Vfi",
         "_ids": {
-            "w": "...",
-            "x": "yU_9d40a5fbe9781c6e90f0eb45bd45cd962a94b (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)",
-            "y": "e2AeAgvblRse-zBdTCB74l9IgRV............y",
-            "z": "Oy_f8cbcfbad5de50f9bf0d2fd7c59add74ecbf8 (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
+            "w": "ZothRZe0R17sOdagBGqPouJ7ZwlcCJOJIvcoXgc0",
+            "x": "Xs_cef5ebf024434be670eb110ae10b9067b7f69 (content: 1W_b62d995bf2d19eeb90f0f150cd45cde01a94b)",
+            "y": "1hDHzktW1h8pWCu7CsjgxBcPk0FUp-A7p2gW8E3i",
+            "z": "90_a163ef70987bf1f6157477ae63650fe9161cd (content: fA_de7615cbcc0d4d67bf0d85f2d59addbeccbf8)"
         }
     }
     >>> (d := ihandle_dict(idict(), {"x": 1555})).show(colored=False)
     {
         "x": 1555,
-        "_id": "RU_2b5abc50f25ebdae4523f9cc684d0d70823ba",
+        "_id": "et_a95995634419ec27251e2f71acf2ef31109d8",
         "_ids": {
-            "x": "RU_2b5abc50f25ebdae4523f9cc684d0d70823ba"
+            "x": "et_a95995634419ec27251e2f71acf2ef31109d8"
         }
     }
     >>> d >>= lambda x: {"x": x**2}
@@ -189,15 +183,14 @@ def ihandle_dict(self, dictlike):
     {
         "y": 7,
         "x": "→(x)",
-        "_id": "...",
+        "_id": "kSXVu8FBqNHPSdEaa1dXgyOXI5yWX7zUjhvy-1n0",
         "_ids": {
-            "y": "Bk_b75c77bb5e2640ad6428eb35f82a492dd8065 (content: 3m_131910d18a892d1b64285250092a4967c8065)",
-            "x": "..."
+            "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad (content: 3m_131910d18a892d1b64285250092a4967c8065)",
+            "x": "SSBT4S9CxTb9pCd1US4DCDlXIEwWX7zUjhvy-1n0 (content: cgNWCdJP7XKZASgpBlTRcNAJMPoMv3y0LQcFOoIK)"
         }
     }
     """
     from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-    from ldict.core.base import AbstractLazyDict
 
     clone = self.clone(rnd=dictlike.rnd) if isinstance(dictlike, AbstractLazyDict) and dictlike.rnd else self.clone()
     for k, v in dictlike.items():
@@ -247,18 +240,18 @@ def solve(hoshes, output, uf: Hosh):
     >>> a.show(colored=False)
     {
         "x": 3,
-        "_id": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab",
+        "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
         "_ids": {
-            "x": "n4_51866e4dc164a1c5cd82c0babdafb9a65d5ab"
+            "x": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
         }
     }
     >>> a >>= (lambda x: {"x": x+2})
     >>> a.show(colored=False)
     {
         "x": "→(x)",
-        "_id": "yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr",
+        "_id": "y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr",
         "_ids": {
-            "x": "yiiPWwXPpxtv8My5yoE5cwxJdG15XkvCAtYc9OWr"
+            "x": "y.yeWyCCKqZ36hpE39Y9pta9JiV4XkvCAtYc9OWr"
         }
     }
     >>> a = idict(x=3, y=5) >> (lambda x: {"x": x+2})
@@ -282,12 +275,12 @@ def solve(hoshes, output, uf: Hosh):
         "y": "→(w x y)",
         "w": 2,
         "z": 1,
-        "_id": "aXitjV7Yex2rXIwwVM2ptHlEto7KdJ-3GBbIubB7",
+        "_id": "JN-puhssoMO2iTwz8coREZG5ts9KdJ-3GBbIubB7",
         "_ids": {
-            "x": "V70NPr0hfwLd.LZQGuQ.nushi96rfJ-3GxbIubB8",
-            "y": "ofEb.nRSYsUsgAnnyp4KYFovZaUOV6000sv....-",
-            "w": "uA_df37fcf59e3bd7d618d96ceccfe8a5ecb5c4b (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)",
-            "z": "U6_9e5ffd6b1d6101bcea46bd139d4b36862f272 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)"
+            "x": "0216.kBAcz301hb6vAa56OI8ijFgaJH7prk5D0Aq",
+            "y": "FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J",
+            "w": "Tr_9c39277012db0264069f5c777cdf5ae3c57bc (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)",
+            "z": "fA_f76604de6c618f2740bd6cf44b16673648837 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)"
         }
     }
     """
@@ -298,5 +291,20 @@ def solve(hoshes, output, uf: Hosh):
     return uf * ~previous
 
 
-def rho(c, digits):
-    return digits // 2 * "-" + str(c).rjust(digits // 2, ".")
+def delete(self, k):
+    f_hosh = removal_elem(k)
+    uf = self.hosh * f_hosh
+    newdata = self.data.copy()
+    newdata[k] = None
+    newhoshes, newblobs, newhashes, = (
+        self.hoshes.copy(),
+        self.blobs.copy(),
+        self.hashes.copy(),
+    )
+    newhoshes[k] = placeholder(k, f_hosh, self.identity, self.hoshes)
+    if k in newblobs:
+        del newblobs[k]
+    if k in newhashes:
+        del newhashes[k]
+    return self.clone(newdata, _cloned=dict(blobs=newblobs, hashes=newhashes, hoshes=newhoshes, hosh=uf))
+
