@@ -26,27 +26,52 @@ import lz4.frame as lz4
 from idict.config import GLOBAL
 
 
+# TODO: different unpacking strategies: safe_unpack[text, np, pd, bin]; unpack[pickle/dill and also the safe ones]
+from idict.data.serialization import serialize_json, deserialize_json, serialize_numpy
+
+
 def pack(obj, ensure_determinism=True):
     r"""
     >>> from idict import setup
     >>> setup(compression_cachelimit_MB=0.000_100)
     >>> memo = GLOBAL["compression_cache"] = {}
     >>> GLOBAL["compression_cachesize"] = 0
-    >>> b = b"000011"
-    >>> pack(b)
-    b'pckl_\x04"M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00'
+    >>> b = b"001234567"
+    >>> unpack(pack(b))
+    b'001234567'
     >>> memo[id(b)]["unpacked"]
-    b'000011'
+    b'001234567'
     >>> len(memo), GLOBAL["compression_cachesize"], GLOBAL["compression_cachelimit"]
-    (1, 47, 100)
+    (1, 37, 100)
     >>> pack(b"asd")
-    b'pckl_\x04"M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00'
+    b'byte_\x04"M\x18h@\x03\x00\x00\x00\x00\x00\x00\x00\x87\x03\x00\x00\x80asd\x00\x00\x00\x00'
     >>> len(memo), GLOBAL["compression_cachesize"], GLOBAL["compression_cachelimit"]
-    (2, 91, 100)
+    (2, 68, 100)
     >>> len(pack(b"123"))
-    44
+    31
     >>> len(memo), GLOBAL["compression_cachesize"], GLOBAL["compression_cachelimit"]
-    (2, 88, 100)
+    (3, 99, 100)
+    >>> v = 12345
+    >>> unpack(pack(v))
+    12345
+    >>> v = "12345"
+    >>> unpack(pack(v))
+    '12345'
+    >>> v = 1/9238734
+    >>> v
+    1.0823993850239654e-07
+    >>> unpack(pack(v))
+    1.0823993850239654e-07
+    >>> v = True
+    >>> unpack(pack(v))
+    True
+    >>> v = None
+    >>> unpack(pack(v))
+    >>> import numpy as np
+    >>> v = np.array([[1/3, 5/4], [1.3**6, "text"]])
+    >>> unpack(pack(v))
+    array([['0.3333333333333333', '1.25'],
+           ['4.826809000000001', 'text']], dtype='<U32')    >>> unpack(pack(v))
     """
     memid = id(obj)
     memo = GLOBAL["compression_cache"]
@@ -59,18 +84,30 @@ def pack(obj, ensure_determinism=True):
             del memo[memid]
 
     try:
-        try:
-            dump = pickle.dumps(obj, protocol=5)
-            prefix = b"pckl_"
-        except:
-            if ensure_determinism:  # pragma: no cover
-                raise NondeterminismException("Cannot serialize deterministically.")
-            import dill
+        if isinstance(obj, (bytes, bytearray)):
+            dump = obj
+            prefix = b"byte_"
+        elif isinstance(obj, (str, int, float, bool)) or obj is None:
+            dump = serialize_json(obj)
+            prefix = b"json_"
+        elif str(type(obj)) == "<class 'numpy.ndarray'>":
+            dump = serialize_numpy(obj)
+            prefix = b""
+        elif str(type(obj)) in ["<class 'pandas.core.frame.DataFrame'>", "<class 'pandas.core.series.Series'>"]:
+            dump = pandas_serialize(obj)
+        else:
+            try:
+                dump = pickle.dumps(obj, protocol=5)
+                prefix = b"pckl_"
+            except:
+                if ensure_determinism:  # pragma: no cover
+                    raise NondeterminismException("Cannot serialize deterministically.")
+                import dill
 
-            dump = dill.dumps(obj, protocol=5)
-            prefix = b"dill_"
+                dump = dill.dumps(obj, protocol=5)
+                prefix = b"dill_"
 
-        blob = prefix + lz4.compress(dump)
+        blob = prefix + lz4.compress(dump, compression_level=0)
         GLOBAL["compression_cachesize"] += len(blob)
         memo[memid] = {"unpacked": obj, "packed": blob}
 
@@ -90,19 +127,22 @@ def pack(obj, ensure_determinism=True):
 
 
 def unpack(blob):
-    r"""
-    >>> unpack(b'pckl_\x04"M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00')
-    b'000011'
-    """
-    prefix = blob[:5]
-    blob = blob[5:]
-    if prefix == b"pckl_":
-        return pickle.loads(lz4.decompress(blob))
-    elif prefix == b"dill_":
-        import dill
-
-        return dill.loads(lz4.decompress(blob))
-
+    view = memoryview(blob)
+    prefix = view[:5]
+    zipped = view[5:]
+    bin = lz4.decompress(zipped)
+    if prefix == b"byte_":
+        value = bin
+    elif prefix == b"json_":
+        value = deserialize_json(bin)
+    # if prefix == b"pckl_":
+    #     return pickle.loads(lz4.decompress(blob))
+    # if prefix == b"dill_":
+    #     import dill
+    #     return dill.loads(lz4.decompress(blob))
+    else:
+        raise Exception(f"Unknown prefix={bytes(prefix)}")
+    return  value
 
 class NondeterminismException(Exception):
     pass
