@@ -56,7 +56,7 @@ def cached(d, cache) -> AbstractLazyDict:
 
     # TODO (minor): do the same for fetch(). useful in the future if needed to speedup syncing of caches avoiding *pack
     store = storeblob_func(cache, d.blobs) if hasattr(cache, "setblob") else storevalue_func(cache)
-    front_id = handle_singleton_id(d)
+    front_id = "_" + d.id[1:]
 
     def closure(outputf, fid, fids, data, output_fields, id):
         def func(**kwargs):
@@ -75,7 +75,7 @@ def cached(d, cache) -> AbstractLazyDict:
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[v] = {"_id": handle_singleton_id(data[k])}
+                    cache[v] = {"_id": "_" + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
                 else:
                     store(k, v, data[k])
@@ -119,7 +119,7 @@ def cached(d, cache) -> AbstractLazyDict:
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
-                    cache[fid] = {"_id": handle_singleton_id(data[k])}
+                    cache[fid] = {"_id": "_" + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
                 else:
                     store(k, fid, data[k])
@@ -144,18 +144,18 @@ def build(id, ids, cache, identity, include_blobs=False):
     {
       "WK_6ba95267cec724067d58b3186ecbcaa4253ad": 7,
       "u9_698c410308e557c005cda07ba00c564152401": {
-        "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f"
+        "_id": "_._72191dfc2ed7d9ff4c35d514b103ac114161f"
       },
       "GS_cb0fda15eac732cb08351e71fc359058b93bd": 5,
       "N8_524991e7434b2d3444007782c4cd0cd887261": 9,
-      "r._72191dfc2ed7d9ff4c35d514b103ac114161f": {
+      "_._72191dfc2ed7d9ff4c35d514b103ac114161f": {
         "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f",
         "_ids": {
           "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
           "z": "N8_524991e7434b2d3444007782c4cd0cd887261"
         }
       },
-      "oU_ab54a36ac6988bc6722654831fc721f5777ae": {
+      "_U_ab54a36ac6988bc6722654831fc721f5777ae": {
         "_id": "oU_ab54a36ac6988bc6722654831fc721f5777ae",
         "_ids": {
           "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad",
@@ -200,7 +200,7 @@ def build(id, ids, cache, identity, include_blobs=False):
           "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd"
         }
       },
-      "DL_a791c4ff8388e3923e169ce05a0a152def44d": {
+      "_L_a791c4ff8388e3923e169ce05a0a152def44d": {
         "_id": "DL_a791c4ff8388e3923e169ce05a0a152def44d",
         "_ids": {
           "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad",
@@ -244,12 +244,12 @@ def build(id, ids, cache, identity, include_blobs=False):
     >>> _ = b.d
     >>> print(json.dumps(cache, indent=2))  # doctest:+ELLIPSIS
     {
-      "...": {
-        "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f"
+      "h8xF5VS3x8yt.ZM3I1D1oKzdS6GcYmec-Y0cnAIl": {
+        "_id": "_._72191dfc2ed7d9ff4c35d514b103ac114161f"
       },
       "GS_cb0fda15eac732cb08351e71fc359058b93bd": 5,
       "N8_524991e7434b2d3444007782c4cd0cd887261": 9,
-      "r._72191dfc2ed7d9ff4c35d514b103ac114161f": {
+      "_._72191dfc2ed7d9ff4c35d514b103ac114161f": {
         "_id": "r._72191dfc2ed7d9ff4c35d514b103ac114161f",
         "_ids": {
           "x": "GS_cb0fda15eac732cb08351e71fc359058b93bd",
@@ -257,10 +257,10 @@ def build(id, ids, cache, identity, include_blobs=False):
         }
       },
       "WK_6ba95267cec724067d58b3186ecbcaa4253ad": 7,
-      "...": {
-        "_id": "...",
+      "_P9idohZcsojDgKThROI-YoSzRBcYmec-Y0cnAIl": {
+        "_id": "UP9idohZcsojDgKThROI-YoSzRBcYmec-Y0cnAIl",
         "_ids": {
-          "d": "...",
+          "d": "h8xF5VS3x8yt.ZM3I1D1oKzdS6GcYmec-Y0cnAIl",
           "y": "WK_6ba95267cec724067d58b3186ecbcaa4253ad"
         }
       }
@@ -374,10 +374,6 @@ def get_following_pointers(fid, cache):
     while isinstance(result, dict) and list(result.keys()) == ["_id"]:
         result = cache[result["_id"]]
     return result
-
-
-def handle_singleton_id(d):
-    return "_" + d.id[1:] if len(d.ids) == 1 else d.id
 
 
 class LockedEntryException(Exception):

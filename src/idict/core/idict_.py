@@ -187,7 +187,7 @@ class Idict(AbstractMutableLazyDict):
     >>> d3.z
     12
     >>> c  # doctest:+ELLIPSIS
-    {'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, 'SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e': {'_id': 'SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e', '_ids': {'z': 'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
+    {'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e': 12, 'GS_cb0fda15eac732cb08351e71fc359058b93bd': 5, 'WK_6ba95267cec724067d58b3186ecbcaa4253ad': 7, '_NHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e': {'_id': 'SNHayCulARZBLYdg-niJJt-SyOeafTxoqcpJj46e', '_ids': {'z': 'XZJr5b7N0ASkdIo2alN.Crfx7plafTxoqcpJj46e', 'x': 'GS_cb0fda15eac732cb08351e71fc359058b93bd', 'y': 'WK_6ba95267cec724067d58b3186ecbcaa4253ad'}}}
     >>> d3.show(colored=False)  # doctest:+ELLIPSIS
     {
         "z": 12,
