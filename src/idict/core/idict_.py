@@ -377,8 +377,6 @@ class Idict(AbstractMutableLazyDict):
                 raise Exception("Cannot pass more arguments when first argument is id and second argument is cache.")
             # TODO (minor): detect identity from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
-            if self.frozen is None:  # pragma: no cover
-                raise Exception(f"Could not find {_dictionary}")
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 

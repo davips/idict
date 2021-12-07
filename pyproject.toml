@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "idict"
-version = "2.211207.4"
+version = "2.211207.5"
 description = "Lazy dict with predictable deterministic universally unique identifiers"
 authors = ["davips <dpsabc@gmail.com>"]
 license = "GPL"

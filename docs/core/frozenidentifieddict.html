@@ -603,15 +603,14 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         &gt;&gt;&gt; d == d2
         True
         &#34;&#34;&#34;
-        if hasattr(cache, &#34;user_hosh&#34;):
+        if hasattr(cache, &#34;user_hosh&#34;) and not id.startswith(&#34;_&#34;):
             id2 = (id * cache.user_hosh).id
         else:
             id2 = &#34;_&#34; + id[1:]
         val = get_following_pointers(id2, cache)
         isdescriptor = isinstance(val, dict) and &#34;_id&#34; in val and &#34;_ids&#34; in val
-        if val is None or not isdescriptor:
-            # print(f&#34;Not found: {id}/{id2}&#34;)
-            return None
+        if val is None or not isdescriptor:  # pragma: no cover
+            raise Exception(f&#34;Could not find {id}/{id2}&#34;)
         return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)
 
     @staticmethod
@@ -1452,15 +1451,14 @@ True
         &gt;&gt;&gt; d == d2
         True
         &#34;&#34;&#34;
-        if hasattr(cache, &#34;user_hosh&#34;):
+        if hasattr(cache, &#34;user_hosh&#34;) and not id.startswith(&#34;_&#34;):
             id2 = (id * cache.user_hosh).id
         else:
             id2 = &#34;_&#34; + id[1:]
         val = get_following_pointers(id2, cache)
         isdescriptor = isinstance(val, dict) and &#34;_id&#34; in val and &#34;_ids&#34; in val
-        if val is None or not isdescriptor:
-            # print(f&#34;Not found: {id}/{id2}&#34;)
-            return None
+        if val is None or not isdescriptor:  # pragma: no cover
+            raise Exception(f&#34;Could not find {id}/{id2}&#34;)
         return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)
 
     @staticmethod
@@ -1820,15 +1818,14 @@ def fromid(id, cache, identity=ø40) -&gt; Union[&#34;FrozenIdentifiedDict&#34;,
     &gt;&gt;&gt; d == d2
     True
     &#34;&#34;&#34;
-    if hasattr(cache, &#34;user_hosh&#34;):
+    if hasattr(cache, &#34;user_hosh&#34;) and not id.startswith(&#34;_&#34;):
         id2 = (id * cache.user_hosh).id
     else:
         id2 = &#34;_&#34; + id[1:]
     val = get_following_pointers(id2, cache)
     isdescriptor = isinstance(val, dict) and &#34;_id&#34; in val and &#34;_ids&#34; in val
-    if val is None or not isdescriptor:
-        # print(f&#34;Not found: {id}/{id2}&#34;)
-        return None
+    if val is None or not isdescriptor:  # pragma: no cover
+        raise Exception(f&#34;Could not find {id}/{id2}&#34;)
     return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)</code></pre>
 </details>
 </dd>

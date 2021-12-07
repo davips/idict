@@ -575,15 +575,14 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         >>> d == d2
         True
         """
-        if hasattr(cache, "user_hosh"):
+        if hasattr(cache, "user_hosh") and not id.startswith("_"):
             id2 = (id * cache.user_hosh).id
         else:
             id2 = "_" + id[1:]
         val = get_following_pointers(id2, cache)
         isdescriptor = isinstance(val, dict) and "_id" in val and "_ids" in val
-        if val is None or not isdescriptor:
-            # print(f"Not found: {id}/{id2}")
-            return None
+        if val is None or not isdescriptor:  # pragma: no cover
+            raise Exception(f"Could not find {id}/{id2}")
         return build(val["_id"], val["_ids"], cache, identity)
 
     @staticmethod
