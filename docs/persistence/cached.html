@@ -114,6 +114,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
 
             front_id_ = front_id
             if hasattr(cache, &#34;user_hosh&#34;):
+                # print(&#34;has hosh&#34;, d.id)
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
                 front_id_ = (d.id * cache.user_hosh).id
@@ -924,6 +925,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 
             front_id_ = front_id
             if hasattr(cache, &#34;user_hosh&#34;):
+                # print(&#34;has hosh&#34;, d.id)
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
                 front_id_ = (d.id * cache.user_hosh).id

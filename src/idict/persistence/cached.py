@@ -86,6 +86,7 @@ def cached(d, cache) -> AbstractLazyDict:
 
             front_id_ = front_id
             if hasattr(cache, "user_hosh"):
+                # print("has hosh", d.id)
                 if front_id_ not in cache:
                     cache[front_id_] = {"_id": id, "_ids": {k: v for k, v in fids.items() if not k.startswith("_")}}
                 front_id_ = (d.id * cache.user_hosh).id
