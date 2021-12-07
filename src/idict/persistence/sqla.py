@@ -176,10 +176,11 @@ class SQLA(CompressedCache):
         check(key)
         with self.sessionctx() as session:
             if ret := session.query(Content).get(key):
-                ret = ret.blob
-                if packing:
-                    ret = unpack(ret)
-        return ret or None
+                if ret is not None:
+                    ret = ret.blob
+                    if packing:
+                        ret = unpack(ret)
+        return ret
 
     def __delitem__(self, key):
         check(key)
