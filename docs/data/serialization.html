@@ -48,102 +48,216 @@
 #  part of this work is illegal and it is unethical regarding the effort and
 #  time spent here.
 #
-from json import loads
+import json
+from importlib import import_module
 
-from ldict.exception import check_package
-from orjson import dumps, OPT_SORT_KEYS, OPT_SERIALIZE_NUMPY
-
-
-def default_orjson_encoder(obj):
-    r&#34;&#34;&#34;
-    &gt;&gt;&gt; import numpy as np
-    &gt;&gt;&gt; default_orjson_encoder(np.array([[1/3,5/4],[1.3**64, -1]]))
-    {&#39;_type&#39;: &#34;&lt;class &#39;numpy.ndarray&#39;&gt;&#34;, &#39;repr&#39;: &#39;str&#39;, &#39;dtype&#39;: &#39;float64&#39;, &#39;obj&#39;: &#39;[[0.3333333333333333,1.25],[19605347.64307615,-1.0]]&#39;}
-    &#34;&#34;&#34;
-    if m := check_package(&#34;pandas.core&#34;, obj):
-        if isinstance(obj, (m.frame.DataFrame, m.series.Series)):
-            dic = obj.to_dict()
-            dic[&#34;_type&#34;] = str(type(obj))
-            return dic
-    elif m := check_package(&#34;numpy&#34;, obj):
-        if isinstance(obj, m.ndarray):
-            try:
-                dump = dumps(obj, option=OPT_SORT_KEYS | OPT_SERIALIZE_NUMPY)
-                obj2, repr = dump.decode(encoding=&#34;utf8&#34;), &#34;str&#34;
-            except TypeError:
-                obj2, repr = obj.tolist(), &#34;list&#34;
-            return {&#34;_type&#34;: str(type(obj)), &#34;repr&#34;: repr, &#34;dtype&#34;: str(obj.dtype), &#34;obj&#34;: obj2}
-    raise TypeError  # pragma: no cover
+from orjson import dumps, OPT_SORT_KEYS
 
 
-def encode(obj):
-    r&#34;&#34;&#34;
-    &gt;&gt;&gt; import pandas as pd
-    &gt;&gt;&gt; df = pd.DataFrame(
-    ...     [[1/3, 5/4], [1.3**54, &#34;text&#34;]],
-    ...     index=[&#34;row 1&#34;, &#34;row 2&#34;],
-    ...     columns=[&#34;col 1&#34;, &#34;col 2&#34;],
-    ... )
-    &gt;&gt;&gt; df
-                  col 1 col 2
-    row 1  3.333333e-01  1.25
-    row 2  1.422136e+06  text
-    &gt;&gt;&gt; encode(df)
-    b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;,&#34;col 1&#34;:{&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1422135.6537506874},&#34;col 2&#34;:{&#34;row 1&#34;:1.25,&#34;row 2&#34;:&#34;text&#34;}}&#39;
-    &gt;&gt;&gt; s = pd.Series(
-    ...     [1/3, 5/4, (1.3)**54, &#34;text&#34;],
-    ...     index=[&#34;row 1&#34;, &#34;row 2&#34;, &#34;row 3&#34;, &#34;row 4&#34;],
-    ... )
-    &gt;&gt;&gt; s
-    row 1          0.333333
-    row 2              1.25
-    row 3    1422135.653751
-    row 4              text
-    dtype: object
-    &gt;&gt;&gt; encode(s)
-    b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;,&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1.25,&#34;row 3&#34;:1422135.6537506874,&#34;row 4&#34;:&#34;text&#34;}&#39;
-    &gt;&gt;&gt; import numpy as np
-    &gt;&gt;&gt; encode(np.array([[1/3,5/4],[1.3**64, &#34;text&#34;]]))
-    b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;numpy.ndarray\&#39;&gt;&#34;,&#34;dtype&#34;:&#34;&lt;U32&#34;,&#34;obj&#34;:[[&#34;0.3333333333333333&#34;,&#34;1.25&#34;],[&#34;19605347.64307615&#34;,&#34;text&#34;]],&#34;repr&#34;:&#34;list&#34;}&#39;
-    &#34;&#34;&#34;
-    return dumps(obj, default=default_orjson_encoder, option=OPT_SORT_KEYS)
+def import_dependence(dep):
+    try:
+        return import_module(dep)
+    except ImportError as e:
+        raise Exception(f&#34;Missing {dep} library. Need a complete install\n&#34; &#34;pip install -U idict[full]&#34;)
+
+
+def custom_orjson_encoder(obj):
+    # E.g., pandas dataframes.
+    typ = str(type(obj))
+    if typ == &#34;&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;&#34;:
+        return obj.to_numpy()
+    if typ == &#34;&lt;class &#39;pandas.core.series.Series&#39;&gt;&#34;:
+        return obj.to_numpy()
+    # if hasattr(obj, &#39;to_json&#39;):
+    #     # REMINDER: default_handler=str is to avoid infinite recursion, e.g., on iris.arff
+    #     txt = obj.to_json(force_ascii=False, default_handler=str)
+    #     return {&#34;_type_orjson&#34;: str(type(obj)), &#34;_obj.to_json()&#34;: txt}
+
+    # Numpy objects generic type and ndarray, keeping dtype.
+    if typ == &#34;&lt;class &#39;numpy.ndarray&#39;&gt;&#34;:
+        print(typ)
+        try:
+            return serialize_numpy(obj)
+        except Exception as e:
+            print(e)
+            exit()
+
+    # try:
+    #     import numpy
+    #     if isinstance(obj, numpy.generic):
+    #         return {&#34;_type_orjson&#34;: str(obj.dtype), &#34;_numpy.asscalar(obj)&#34;: numpy.asscalar(obj)}
+    #     if isinstance(obj, numpy.ndarray):
+    #         return {&#34;_type_orjson&#34;: str(obj.dtype), &#34;_numpy.ndarray.tolist()&#34;: obj.tolist()}
+    # except ImportError as e:
+    #     pass
+
+    if isinstance(obj, bytes):
+        return obj.decode()  # nem todo byte vira string!
+    raise TypeError
 
 
 def json_object_hook_decoder(dic):
-    if &#34;_type&#34; in dic:
-        if &#34;pandas&#34; in (typ := dic.pop(&#34;_type&#34;)):
-            m = check_package(&#34;pandas.core&#34;)
-            if &#34;DataFrame&#34; in typ:
-                return m.frame.DataFrame.from_dict(dic)
-            elif &#34;Series&#34; in typ:
-                return m.series.Series(data=dic.values(), index=dic.keys())
-        if &#34;ndarray&#34; in typ and &#34;numpy&#34; in typ:
-            m = check_package(&#34;numpy&#34;)
-            obj = loads(dic[&#34;obj&#34;]) if dic[&#34;repr&#34;] == &#34;str&#34; else dic[&#34;obj&#34;]
-            return m.array(obj, dtype=dic[&#34;dtype&#34;])
+    if &#34;_type_orjson&#34; in dic:
+        if &#34;_obj.to_json()&#34; in dic:
+            if dic[&#34;_type_orjson&#34;] == &#34;&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;&#34;:
+                m = import_dependence(&#34;pandas&#34;)
+                return m.read_json(dic[&#34;_obj.to_json()&#34;])  # , default_handler=str)
+            if dic[&#34;_type_orjson&#34;] == &#34;&lt;class &#39;pandas.core.series.Series&#39;&gt;&#34;:
+                m = import_dependence(&#34;pandas&#34;)
+                # default_handler=callable
+                return m.read_json(dic[&#34;_obj.to_json()&#34;], typ=dic[&#34;_type_orjson&#34;])
+            else:  # pragma: no cover
+                raise Exception(f&#34;Cannot desserialize object of type &#39;{dic[&#39;_type_orjson&#39;]}&#39;&#34;)
+        if (c := &#34;_numpy.asscalar(obj)&#34;) in dic or (c := &#34;_numpy.ndarray.tolist()&#34;) in dic:
+            m = import_dependence(&#34;numpy&#34;)
+            dtype = &#34;str&#34; if len(dic[&#34;_type_orjson&#34;]) &gt; 10 else dic[&#34;_type_orjson&#34;]
+            return m.array(dic[c], dtype=dtype)
     return dic
 
 
-def decode(blob):
+def serialize_json(obj):
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; import numpy as np
+    # &gt;&gt;&gt; import math
+    # &gt;&gt;&gt; a = np.array([[1/3, 5/4], [1.3**6, &#34;text&#34;]])
+    # &gt;&gt;&gt; a
+    # array([[&#39;0.3333333333333333&#39;, &#39;1.25&#39;],
+    #        [&#39;4.826809000000001&#39;, &#39;text&#39;]], dtype=&#39;&lt;U32&#39;)
+    # &gt;&gt;&gt; b = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int64)
+    # &gt;&gt;&gt; b
+    # array([[0, 1],
+    #        [4, 4]])
+    # &gt;&gt;&gt; c = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int8)
+    # &gt;&gt;&gt; c
+    # array([[0, 1],
+    #        [4, 4]], dtype=int8)
+    # &gt;&gt;&gt; serialize_json([math.inf, a, b, c])
+    # b&#39;[null,{&#34;_numpy.ndarray.tolist()&#34;:[[&#34;0.3333333333333333&#34;,&#34;1.25&#34;],[&#34;4.826809000000001&#34;,&#34;text&#34;]],&#34;_type_orjson&#34;:&#34;&lt;U32&#34;},{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int64&#34;},{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int8&#34;}]&#39;
+    # &gt;&gt;&gt; import pandas as pd
+    # &gt;&gt;&gt; df = pd.DataFrame(
+    # ...     [[1/3, 5/4], [1.3**54, &#34;text&#34;]],
+    # ...     index=[&#34;row 1&#34;, &#34;row 2&#34;],
+    # ...     columns=[&#34;col 1&#34;, &#34;col 2&#34;],
+    # ... )
+    # &gt;&gt;&gt; df
+    #               col 1 col 2
+    # row 1  3.333333e-01  1.25
+    # row 2  1.422136e+06  text
+    # &gt;&gt;&gt; serialize_json(df)
+    # b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;col 1\\&#34;:{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1422135.6537506874},\\&#34;col 2\\&#34;:{\\&#34;row 1\\&#34;:1.25,\\&#34;row 2\\&#34;:\\&#34;text\\&#34;}}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;}&#39;
+    # &gt;&gt;&gt; s = pd.Series(
+    # ...     [1/3, 5/4, (1.3)**54, &#34;text&#34;],
+    # ...     index=[&#34;row 1&#34;, &#34;row 2&#34;, &#34;row 3&#34;, &#34;row 4&#34;],
+    # ... )
+    # &gt;&gt;&gt; s
+    # row 1          0.333333
+    # row 2              1.25
+    # row 3    1422135.653751
+    # row 4              text
+    # dtype: object
+    # &gt;&gt;&gt; serialize_json(s)
+    # b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1.25,\\&#34;row 3\\&#34;:1422135.6537506874,\\&#34;row 4\\&#34;:\\&#34;text\\&#34;}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;}&#39;
+    # &#34;&#34;&#34;
+    return dumps(obj, default=custom_orjson_encoder, option=OPT_SORT_KEYS)
+
+
+def deserialize_json(blob):
     r&#34;&#34;&#34;
-    &gt;&gt;&gt; df = b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;,&#34;col 1&#34;:{&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1422135.6537506874},&#34;col 2&#34;:{&#34;row 1&#34;:1.25,&#34;row 2&#34;:&#34;text&#34;}}&#39;
-    &gt;&gt;&gt; decode(df)
+    &gt;&gt;&gt; deserialize_json(b&#39;null&#39;)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_numpy.ndarray.tolist()&#34;:[[&#34;0.3333333333333333&#34;,&#34;1.25&#34;],[&#34;4.826809000000001&#34;,&#34;text&#34;]],&#34;_type_orjson&#34;:&#34;&lt;U32&#34;}&#39;)
+    array([[&#39;0.3333333333333333&#39;, &#39;1.25&#39;],
+           [&#39;4.826809000000001&#39;, &#39;text&#39;]], dtype=&#39;&lt;U32&#39;)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int64&#34;}&#39;)
+    array([[0, 1],
+           [4, 4]])
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int8&#34;}&#39;)
+    array([[0, 1],
+           [4, 4]], dtype=int8)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;col 1\\&#34;:{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1422135.6537506874},\\&#34;col 2\\&#34;:{\\&#34;row 1\\&#34;:1.25,\\&#34;row 2\\&#34;:\\&#34;text\\&#34;}}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;}&#39;)
                   col 1 col 2
     row 1  3.333333e-01  1.25
     row 2  1.422136e+06  text
-    &gt;&gt;&gt; s = b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;,&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1.25,&#34;row 3&#34;:1422135.6537506874,&#34;row 4&#34;:&#34;text&#34;}&#39;
-    &gt;&gt;&gt; decode(s)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1.25,\\&#34;row 3\\&#34;:1422135.6537506874,\\&#34;row 4\\&#34;:\\&#34;text\\&#34;}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;}&#39;)
     row 1          0.333333
     row 2              1.25
     row 3    1422135.653751
     row 4              text
     dtype: object
-    &gt;&gt;&gt; n = {&#39;_type&#39;: &#34;&lt;class &#39;numpy.ndarray&#39;&gt;&#34;, &#39;repr&#39;: &#39;str&#39;, &#39;dtype&#39;: &#39;float64&#39;, &#39;obj&#39;: &#39;[[0.3333333333333333,1.25],[19605347.64307615,-1.0]]&#39;}
-    &gt;&gt;&gt; decode(encode(n))
-    array([[ 3.33333333e-01,  1.25000000e+00],
-           [ 1.96053476e+07, -1.00000000e+00]])
     &#34;&#34;&#34;
-    return loads(blob, object_hook=json_object_hook_decoder)</code></pre>
+    return json.loads(blob, object_hook=json_object_hook_decoder)
+
+
+def serialize_numpy(obj):
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; import numpy as np
+    # &gt;&gt;&gt; m = np.array([1,2,3,4])
+    # &gt;&gt;&gt; m
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4]])
+    # &gt;&gt;&gt; m
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; m = np.array([1,2.7,3,4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1. , 2.7, 3. , 4. ])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4/3]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1.        , 2.        ],
+    #        [3.        , 1.33333333]])
+    # &gt;&gt;&gt; m = np.array([1,2,3,&#34;txt&#34;])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;txt&#39;], dtype=&#39;&lt;U21&#39;)
+    # &gt;&gt;&gt; m = np.array([[1,&#34;txt&#34;],[3,4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[&#39;1&#39;, &#39;txt&#39;],
+    #        [&#39;3&#39;, &#39;4&#39;]], dtype=&#39;&lt;U21&#39;)
+    # &#34;&#34;&#34;
+    import numpy
+
+    if isinstance(obj, numpy.ndarray):
+        dims = len(obj.shape)
+        dtype = str(obj.dtype)
+        headerlen = 1 + len(dtype)
+        header = f&#34;{headerlen}§{dims}§{dtype}§&#34;.encode() + integers2bytes(obj.shape)
+        return header, obj.data
+    raise Exception(f&#34;Cannot handle this type {type(obj)}, check its shape or dtype&#34;)
+
+
+# passar memoryview direto pro compressor, talvez cada serializador tenha que comprimir por si
+# faz msm mais sentido o header fora da parte comprimida
+# tentar fazer com que json resolva tudo, só q delegando numpy e pandas pra mim. testar depois veocidade
+#   vantagem: numpys nested inside dict/lists/sets
+#   desvantagem?: converter de bytes p/ str
+
+
+def deserialize_numpy(blob):
+    import numpy
+
+    view = memoryview(blob)
+    prefix, dtype, hw = view[:30].split(b&#34;_&#34;)
+    dims = int(chr(prefix[2]))
+    dtype = dtype.decode().rstrip()
+    h, w = bytes2integers(hw)
+    dump = blob[30:]
+    m = numpy.frombuffer(dump, dtype=dtype)
+    if dims == 2:
+        m = numpy.reshape(m, newshape=(h, w))
+    return m
+
+
+def integers2bytes(lst, n=4) -&gt; bytes:
+    &#34;&#34;&#34;Each int becomes N bytes. max=4294967294 for 4 bytes&#34;&#34;&#34;
+    return b&#34;&#34;.join(d.to_bytes(n, byteorder=&#34;little&#34;) for d in lst)
+
+
+def bytes2integers(bytes_content: bytes, n=4):
+    &#34;&#34;&#34;Each 4 bytes become an int.&#34;&#34;&#34;
+    return [int.from_bytes(bytes_content[i : i + n], &#34;little&#34;) for i in range(0, len(bytes_content), n)]</code></pre>
 </details>
 </section>
 <section>
@@ -153,154 +267,171 @@ def decode(blob):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="idict.data.serialization.decode"><code class="name flex">
-<span>def <span class="ident">decode</span></span>(<span>blob)</span>
+<dt id="idict.data.serialization.bytes2integers"><code class="name flex">
+<span>def <span class="ident">bytes2integers</span></span>(<span>bytes_content: bytes, n=4)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; df = b'{&quot;_type&quot;:&quot;&lt;class \'pandas.core.frame.DataFrame\'&gt;&quot;,&quot;col 1&quot;:{&quot;row 1&quot;:0.3333333333333333,&quot;row 2&quot;:1422135.6537506874},&quot;col 2&quot;:{&quot;row 1&quot;:1.25,&quot;row 2&quot;:&quot;text&quot;}}'
-&gt;&gt;&gt; decode(df)
+<div class="desc"><p>Each 4 bytes become an int.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bytes2integers(bytes_content: bytes, n=4):
+    &#34;&#34;&#34;Each 4 bytes become an int.&#34;&#34;&#34;
+    return [int.from_bytes(bytes_content[i : i + n], &#34;little&#34;) for i in range(0, len(bytes_content), n)]</code></pre>
+</details>
+</dd>
+<dt id="idict.data.serialization.custom_orjson_encoder"><code class="name flex">
+<span>def <span class="ident">custom_orjson_encoder</span></span>(<span>obj)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def custom_orjson_encoder(obj):
+    # E.g., pandas dataframes.
+    typ = str(type(obj))
+    if typ == &#34;&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;&#34;:
+        return obj.to_numpy()
+    if typ == &#34;&lt;class &#39;pandas.core.series.Series&#39;&gt;&#34;:
+        return obj.to_numpy()
+    # if hasattr(obj, &#39;to_json&#39;):
+    #     # REMINDER: default_handler=str is to avoid infinite recursion, e.g., on iris.arff
+    #     txt = obj.to_json(force_ascii=False, default_handler=str)
+    #     return {&#34;_type_orjson&#34;: str(type(obj)), &#34;_obj.to_json()&#34;: txt}
+
+    # Numpy objects generic type and ndarray, keeping dtype.
+    if typ == &#34;&lt;class &#39;numpy.ndarray&#39;&gt;&#34;:
+        print(typ)
+        try:
+            return serialize_numpy(obj)
+        except Exception as e:
+            print(e)
+            exit()
+
+    # try:
+    #     import numpy
+    #     if isinstance(obj, numpy.generic):
+    #         return {&#34;_type_orjson&#34;: str(obj.dtype), &#34;_numpy.asscalar(obj)&#34;: numpy.asscalar(obj)}
+    #     if isinstance(obj, numpy.ndarray):
+    #         return {&#34;_type_orjson&#34;: str(obj.dtype), &#34;_numpy.ndarray.tolist()&#34;: obj.tolist()}
+    # except ImportError as e:
+    #     pass
+
+    if isinstance(obj, bytes):
+        return obj.decode()  # nem todo byte vira string!
+    raise TypeError</code></pre>
+</details>
+</dd>
+<dt id="idict.data.serialization.deserialize_json"><code class="name flex">
+<span>def <span class="ident">deserialize_json</span></span>(<span>blob)</span>
+</code></dt>
+<dd>
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; deserialize_json(b'null')
+&gt;&gt;&gt; deserialize_json(b'{&quot;_numpy.ndarray.tolist()&quot;:[[&quot;0.3333333333333333&quot;,&quot;1.25&quot;],[&quot;4.826809000000001&quot;,&quot;text&quot;]],&quot;_type_orjson&quot;:&quot;&lt;U32&quot;}')
+array([['0.3333333333333333', '1.25'],
+       ['4.826809000000001', 'text']], dtype='&lt;U32')
+&gt;&gt;&gt; deserialize_json(b'{&quot;_numpy.ndarray.tolist()&quot;:[[0,1],[4,4]],&quot;_type_orjson&quot;:&quot;int64&quot;}')
+array([[0, 1],
+       [4, 4]])
+&gt;&gt;&gt; deserialize_json(b'{&quot;_numpy.ndarray.tolist()&quot;:[[0,1],[4,4]],&quot;_type_orjson&quot;:&quot;int8&quot;}')
+array([[0, 1],
+       [4, 4]], dtype=int8)
+&gt;&gt;&gt; deserialize_json(b'{&quot;_obj.to_json()&quot;:&quot;{\\&quot;col 1\\&quot;:{\\&quot;row 1\\&quot;:0.3333333333,\\&quot;row 2\\&quot;:1422135.6537506874},\\&quot;col 2\\&quot;:{\\&quot;row 1\\&quot;:1.25,\\&quot;row 2\\&quot;:\\&quot;text\\&quot;}}&quot;,&quot;_type_orjson&quot;:&quot;&lt;class \'pandas.core.frame.DataFrame\'&gt;&quot;}')
               col 1 col 2
 row 1  3.333333e-01  1.25
 row 2  1.422136e+06  text
-&gt;&gt;&gt; s = b'{&quot;_type&quot;:&quot;&lt;class \'pandas.core.series.Series\'&gt;&quot;,&quot;row 1&quot;:0.3333333333333333,&quot;row 2&quot;:1.25,&quot;row 3&quot;:1422135.6537506874,&quot;row 4&quot;:&quot;text&quot;}'
-&gt;&gt;&gt; decode(s)
+&gt;&gt;&gt; deserialize_json(b'{&quot;_obj.to_json()&quot;:&quot;{\\&quot;row 1\\&quot;:0.3333333333,\\&quot;row 2\\&quot;:1.25,\\&quot;row 3\\&quot;:1422135.6537506874,\\&quot;row 4\\&quot;:\\&quot;text\\&quot;}&quot;,&quot;_type_orjson&quot;:&quot;&lt;class \'pandas.core.series.Series\'&gt;&quot;}')
 row 1          0.333333
 row 2              1.25
 row 3    1422135.653751
 row 4              text
 dtype: object
-&gt;&gt;&gt; n = {'_type': &quot;&lt;class 'numpy.ndarray'&gt;&quot;, 'repr': 'str', 'dtype': 'float64', 'obj': '[[0.3333333333333333,1.25],[19605347.64307615,-1.0]]'}
-&gt;&gt;&gt; decode(encode(n))
-array([[ 3.33333333e-01,  1.25000000e+00],
-       [ 1.96053476e+07, -1.00000000e+00]])
 </code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def decode(blob):
+<pre><code class="python">def deserialize_json(blob):
     r&#34;&#34;&#34;
-    &gt;&gt;&gt; df = b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;,&#34;col 1&#34;:{&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1422135.6537506874},&#34;col 2&#34;:{&#34;row 1&#34;:1.25,&#34;row 2&#34;:&#34;text&#34;}}&#39;
-    &gt;&gt;&gt; decode(df)
+    &gt;&gt;&gt; deserialize_json(b&#39;null&#39;)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_numpy.ndarray.tolist()&#34;:[[&#34;0.3333333333333333&#34;,&#34;1.25&#34;],[&#34;4.826809000000001&#34;,&#34;text&#34;]],&#34;_type_orjson&#34;:&#34;&lt;U32&#34;}&#39;)
+    array([[&#39;0.3333333333333333&#39;, &#39;1.25&#39;],
+           [&#39;4.826809000000001&#39;, &#39;text&#39;]], dtype=&#39;&lt;U32&#39;)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int64&#34;}&#39;)
+    array([[0, 1],
+           [4, 4]])
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int8&#34;}&#39;)
+    array([[0, 1],
+           [4, 4]], dtype=int8)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;col 1\\&#34;:{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1422135.6537506874},\\&#34;col 2\\&#34;:{\\&#34;row 1\\&#34;:1.25,\\&#34;row 2\\&#34;:\\&#34;text\\&#34;}}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;}&#39;)
                   col 1 col 2
     row 1  3.333333e-01  1.25
     row 2  1.422136e+06  text
-    &gt;&gt;&gt; s = b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;,&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1.25,&#34;row 3&#34;:1422135.6537506874,&#34;row 4&#34;:&#34;text&#34;}&#39;
-    &gt;&gt;&gt; decode(s)
+    &gt;&gt;&gt; deserialize_json(b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1.25,\\&#34;row 3\\&#34;:1422135.6537506874,\\&#34;row 4\\&#34;:\\&#34;text\\&#34;}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;}&#39;)
     row 1          0.333333
     row 2              1.25
     row 3    1422135.653751
     row 4              text
     dtype: object
-    &gt;&gt;&gt; n = {&#39;_type&#39;: &#34;&lt;class &#39;numpy.ndarray&#39;&gt;&#34;, &#39;repr&#39;: &#39;str&#39;, &#39;dtype&#39;: &#39;float64&#39;, &#39;obj&#39;: &#39;[[0.3333333333333333,1.25],[19605347.64307615,-1.0]]&#39;}
-    &gt;&gt;&gt; decode(encode(n))
-    array([[ 3.33333333e-01,  1.25000000e+00],
-           [ 1.96053476e+07, -1.00000000e+00]])
     &#34;&#34;&#34;
-    return loads(blob, object_hook=json_object_hook_decoder)</code></pre>
+    return json.loads(blob, object_hook=json_object_hook_decoder)</code></pre>
 </details>
 </dd>
-<dt id="idict.data.serialization.default_orjson_encoder"><code class="name flex">
-<span>def <span class="ident">default_orjson_encoder</span></span>(<span>obj)</span>
+<dt id="idict.data.serialization.deserialize_numpy"><code class="name flex">
+<span>def <span class="ident">deserialize_numpy</span></span>(<span>blob)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; default_orjson_encoder(np.array([[1/3,5/4],[1.3**64, -1]]))
-{'_type': &quot;&lt;class 'numpy.ndarray'&gt;&quot;, 'repr': 'str', 'dtype': 'float64', 'obj': '[[0.3333333333333333,1.25],[19605347.64307615,-1.0]]'}
-</code></pre></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def default_orjson_encoder(obj):
-    r&#34;&#34;&#34;
-    &gt;&gt;&gt; import numpy as np
-    &gt;&gt;&gt; default_orjson_encoder(np.array([[1/3,5/4],[1.3**64, -1]]))
-    {&#39;_type&#39;: &#34;&lt;class &#39;numpy.ndarray&#39;&gt;&#34;, &#39;repr&#39;: &#39;str&#39;, &#39;dtype&#39;: &#39;float64&#39;, &#39;obj&#39;: &#39;[[0.3333333333333333,1.25],[19605347.64307615,-1.0]]&#39;}
-    &#34;&#34;&#34;
-    if m := check_package(&#34;pandas.core&#34;, obj):
-        if isinstance(obj, (m.frame.DataFrame, m.series.Series)):
-            dic = obj.to_dict()
-            dic[&#34;_type&#34;] = str(type(obj))
-            return dic
-    elif m := check_package(&#34;numpy&#34;, obj):
-        if isinstance(obj, m.ndarray):
-            try:
-                dump = dumps(obj, option=OPT_SORT_KEYS | OPT_SERIALIZE_NUMPY)
-                obj2, repr = dump.decode(encoding=&#34;utf8&#34;), &#34;str&#34;
-            except TypeError:
-                obj2, repr = obj.tolist(), &#34;list&#34;
-            return {&#34;_type&#34;: str(type(obj)), &#34;repr&#34;: repr, &#34;dtype&#34;: str(obj.dtype), &#34;obj&#34;: obj2}
-    raise TypeError  # pragma: no cover</code></pre>
+<pre><code class="python">def deserialize_numpy(blob):
+    import numpy
+
+    view = memoryview(blob)
+    prefix, dtype, hw = view[:30].split(b&#34;_&#34;)
+    dims = int(chr(prefix[2]))
+    dtype = dtype.decode().rstrip()
+    h, w = bytes2integers(hw)
+    dump = blob[30:]
+    m = numpy.frombuffer(dump, dtype=dtype)
+    if dims == 2:
+        m = numpy.reshape(m, newshape=(h, w))
+    return m</code></pre>
 </details>
 </dd>
-<dt id="idict.data.serialization.encode"><code class="name flex">
-<span>def <span class="ident">encode</span></span>(<span>obj)</span>
+<dt id="idict.data.serialization.import_dependence"><code class="name flex">
+<span>def <span class="ident">import_dependence</span></span>(<span>dep)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; import pandas as pd
-&gt;&gt;&gt; df = pd.DataFrame(
-...     [[1/3, 5/4], [1.3**54, &quot;text&quot;]],
-...     index=[&quot;row 1&quot;, &quot;row 2&quot;],
-...     columns=[&quot;col 1&quot;, &quot;col 2&quot;],
-... )
-&gt;&gt;&gt; df
-              col 1 col 2
-row 1  3.333333e-01  1.25
-row 2  1.422136e+06  text
-&gt;&gt;&gt; encode(df)
-b'{&quot;_type&quot;:&quot;&lt;class \'pandas.core.frame.DataFrame\'&gt;&quot;,&quot;col 1&quot;:{&quot;row 1&quot;:0.3333333333333333,&quot;row 2&quot;:1422135.6537506874},&quot;col 2&quot;:{&quot;row 1&quot;:1.25,&quot;row 2&quot;:&quot;text&quot;}}'
-&gt;&gt;&gt; s = pd.Series(
-...     [1/3, 5/4, (1.3)**54, &quot;text&quot;],
-...     index=[&quot;row 1&quot;, &quot;row 2&quot;, &quot;row 3&quot;, &quot;row 4&quot;],
-... )
-&gt;&gt;&gt; s
-row 1          0.333333
-row 2              1.25
-row 3    1422135.653751
-row 4              text
-dtype: object
-&gt;&gt;&gt; encode(s)
-b'{&quot;_type&quot;:&quot;&lt;class \'pandas.core.series.Series\'&gt;&quot;,&quot;row 1&quot;:0.3333333333333333,&quot;row 2&quot;:1.25,&quot;row 3&quot;:1422135.6537506874,&quot;row 4&quot;:&quot;text&quot;}'
-&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; encode(np.array([[1/3,5/4],[1.3**64, &quot;text&quot;]]))
-b'{&quot;_type&quot;:&quot;&lt;class \'numpy.ndarray\'&gt;&quot;,&quot;dtype&quot;:&quot;&lt;U32&quot;,&quot;obj&quot;:[[&quot;0.3333333333333333&quot;,&quot;1.25&quot;],[&quot;19605347.64307615&quot;,&quot;text&quot;]],&quot;repr&quot;:&quot;list&quot;}'
-</code></pre></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def encode(obj):
-    r&#34;&#34;&#34;
-    &gt;&gt;&gt; import pandas as pd
-    &gt;&gt;&gt; df = pd.DataFrame(
-    ...     [[1/3, 5/4], [1.3**54, &#34;text&#34;]],
-    ...     index=[&#34;row 1&#34;, &#34;row 2&#34;],
-    ...     columns=[&#34;col 1&#34;, &#34;col 2&#34;],
-    ... )
-    &gt;&gt;&gt; df
-                  col 1 col 2
-    row 1  3.333333e-01  1.25
-    row 2  1.422136e+06  text
-    &gt;&gt;&gt; encode(df)
-    b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;,&#34;col 1&#34;:{&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1422135.6537506874},&#34;col 2&#34;:{&#34;row 1&#34;:1.25,&#34;row 2&#34;:&#34;text&#34;}}&#39;
-    &gt;&gt;&gt; s = pd.Series(
-    ...     [1/3, 5/4, (1.3)**54, &#34;text&#34;],
-    ...     index=[&#34;row 1&#34;, &#34;row 2&#34;, &#34;row 3&#34;, &#34;row 4&#34;],
-    ... )
-    &gt;&gt;&gt; s
-    row 1          0.333333
-    row 2              1.25
-    row 3    1422135.653751
-    row 4              text
-    dtype: object
-    &gt;&gt;&gt; encode(s)
-    b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;,&#34;row 1&#34;:0.3333333333333333,&#34;row 2&#34;:1.25,&#34;row 3&#34;:1422135.6537506874,&#34;row 4&#34;:&#34;text&#34;}&#39;
-    &gt;&gt;&gt; import numpy as np
-    &gt;&gt;&gt; encode(np.array([[1/3,5/4],[1.3**64, &#34;text&#34;]]))
-    b&#39;{&#34;_type&#34;:&#34;&lt;class \&#39;numpy.ndarray\&#39;&gt;&#34;,&#34;dtype&#34;:&#34;&lt;U32&#34;,&#34;obj&#34;:[[&#34;0.3333333333333333&#34;,&#34;1.25&#34;],[&#34;19605347.64307615&#34;,&#34;text&#34;]],&#34;repr&#34;:&#34;list&#34;}&#39;
-    &#34;&#34;&#34;
-    return dumps(obj, default=default_orjson_encoder, option=OPT_SORT_KEYS)</code></pre>
+<pre><code class="python">def import_dependence(dep):
+    try:
+        return import_module(dep)
+    except ImportError as e:
+        raise Exception(f&#34;Missing {dep} library. Need a complete install\n&#34; &#34;pip install -U idict[full]&#34;)</code></pre>
+</details>
+</dd>
+<dt id="idict.data.serialization.integers2bytes"><code class="name flex">
+<span>def <span class="ident">integers2bytes</span></span>(<span>lst, n=4) ‑> bytes</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Each int becomes N bytes. max=4294967294 for 4 bytes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def integers2bytes(lst, n=4) -&gt; bytes:
+    &#34;&#34;&#34;Each int becomes N bytes. max=4294967294 for 4 bytes&#34;&#34;&#34;
+    return b&#34;&#34;.join(d.to_bytes(n, byteorder=&#34;little&#34;) for d in lst)</code></pre>
 </details>
 </dd>
 <dt id="idict.data.serialization.json_object_hook_decoder"><code class="name flex">
@@ -313,18 +444,127 @@ b'{&quot;_type&quot;:&quot;&lt;class \'numpy.ndarray\'&gt;&quot;,&quot;dtype&quo
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def json_object_hook_decoder(dic):
-    if &#34;_type&#34; in dic:
-        if &#34;pandas&#34; in (typ := dic.pop(&#34;_type&#34;)):
-            m = check_package(&#34;pandas.core&#34;)
-            if &#34;DataFrame&#34; in typ:
-                return m.frame.DataFrame.from_dict(dic)
-            elif &#34;Series&#34; in typ:
-                return m.series.Series(data=dic.values(), index=dic.keys())
-        if &#34;ndarray&#34; in typ and &#34;numpy&#34; in typ:
-            m = check_package(&#34;numpy&#34;)
-            obj = loads(dic[&#34;obj&#34;]) if dic[&#34;repr&#34;] == &#34;str&#34; else dic[&#34;obj&#34;]
-            return m.array(obj, dtype=dic[&#34;dtype&#34;])
+    if &#34;_type_orjson&#34; in dic:
+        if &#34;_obj.to_json()&#34; in dic:
+            if dic[&#34;_type_orjson&#34;] == &#34;&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;&#34;:
+                m = import_dependence(&#34;pandas&#34;)
+                return m.read_json(dic[&#34;_obj.to_json()&#34;])  # , default_handler=str)
+            if dic[&#34;_type_orjson&#34;] == &#34;&lt;class &#39;pandas.core.series.Series&#39;&gt;&#34;:
+                m = import_dependence(&#34;pandas&#34;)
+                # default_handler=callable
+                return m.read_json(dic[&#34;_obj.to_json()&#34;], typ=dic[&#34;_type_orjson&#34;])
+            else:  # pragma: no cover
+                raise Exception(f&#34;Cannot desserialize object of type &#39;{dic[&#39;_type_orjson&#39;]}&#39;&#34;)
+        if (c := &#34;_numpy.asscalar(obj)&#34;) in dic or (c := &#34;_numpy.ndarray.tolist()&#34;) in dic:
+            m = import_dependence(&#34;numpy&#34;)
+            dtype = &#34;str&#34; if len(dic[&#34;_type_orjson&#34;]) &gt; 10 else dic[&#34;_type_orjson&#34;]
+            return m.array(dic[c], dtype=dtype)
     return dic</code></pre>
+</details>
+</dd>
+<dt id="idict.data.serialization.serialize_json"><code class="name flex">
+<span>def <span class="ident">serialize_json</span></span>(<span>obj)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serialize_json(obj):
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; import numpy as np
+    # &gt;&gt;&gt; import math
+    # &gt;&gt;&gt; a = np.array([[1/3, 5/4], [1.3**6, &#34;text&#34;]])
+    # &gt;&gt;&gt; a
+    # array([[&#39;0.3333333333333333&#39;, &#39;1.25&#39;],
+    #        [&#39;4.826809000000001&#39;, &#39;text&#39;]], dtype=&#39;&lt;U32&#39;)
+    # &gt;&gt;&gt; b = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int64)
+    # &gt;&gt;&gt; b
+    # array([[0, 1],
+    #        [4, 4]])
+    # &gt;&gt;&gt; c = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int8)
+    # &gt;&gt;&gt; c
+    # array([[0, 1],
+    #        [4, 4]], dtype=int8)
+    # &gt;&gt;&gt; serialize_json([math.inf, a, b, c])
+    # b&#39;[null,{&#34;_numpy.ndarray.tolist()&#34;:[[&#34;0.3333333333333333&#34;,&#34;1.25&#34;],[&#34;4.826809000000001&#34;,&#34;text&#34;]],&#34;_type_orjson&#34;:&#34;&lt;U32&#34;},{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int64&#34;},{&#34;_numpy.ndarray.tolist()&#34;:[[0,1],[4,4]],&#34;_type_orjson&#34;:&#34;int8&#34;}]&#39;
+    # &gt;&gt;&gt; import pandas as pd
+    # &gt;&gt;&gt; df = pd.DataFrame(
+    # ...     [[1/3, 5/4], [1.3**54, &#34;text&#34;]],
+    # ...     index=[&#34;row 1&#34;, &#34;row 2&#34;],
+    # ...     columns=[&#34;col 1&#34;, &#34;col 2&#34;],
+    # ... )
+    # &gt;&gt;&gt; df
+    #               col 1 col 2
+    # row 1  3.333333e-01  1.25
+    # row 2  1.422136e+06  text
+    # &gt;&gt;&gt; serialize_json(df)
+    # b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;col 1\\&#34;:{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1422135.6537506874},\\&#34;col 2\\&#34;:{\\&#34;row 1\\&#34;:1.25,\\&#34;row 2\\&#34;:\\&#34;text\\&#34;}}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.frame.DataFrame\&#39;&gt;&#34;}&#39;
+    # &gt;&gt;&gt; s = pd.Series(
+    # ...     [1/3, 5/4, (1.3)**54, &#34;text&#34;],
+    # ...     index=[&#34;row 1&#34;, &#34;row 2&#34;, &#34;row 3&#34;, &#34;row 4&#34;],
+    # ... )
+    # &gt;&gt;&gt; s
+    # row 1          0.333333
+    # row 2              1.25
+    # row 3    1422135.653751
+    # row 4              text
+    # dtype: object
+    # &gt;&gt;&gt; serialize_json(s)
+    # b&#39;{&#34;_obj.to_json()&#34;:&#34;{\\&#34;row 1\\&#34;:0.3333333333,\\&#34;row 2\\&#34;:1.25,\\&#34;row 3\\&#34;:1422135.6537506874,\\&#34;row 4\\&#34;:\\&#34;text\\&#34;}&#34;,&#34;_type_orjson&#34;:&#34;&lt;class \&#39;pandas.core.series.Series\&#39;&gt;&#34;}&#39;
+    # &#34;&#34;&#34;
+    return dumps(obj, default=custom_orjson_encoder, option=OPT_SORT_KEYS)</code></pre>
+</details>
+</dd>
+<dt id="idict.data.serialization.serialize_numpy"><code class="name flex">
+<span>def <span class="ident">serialize_numpy</span></span>(<span>obj)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serialize_numpy(obj):
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; import numpy as np
+    # &gt;&gt;&gt; m = np.array([1,2,3,4])
+    # &gt;&gt;&gt; m
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4]])
+    # &gt;&gt;&gt; m
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; m = np.array([1,2.7,3,4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1. , 2.7, 3. , 4. ])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4/3]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1.        , 2.        ],
+    #        [3.        , 1.33333333]])
+    # &gt;&gt;&gt; m = np.array([1,2,3,&#34;txt&#34;])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;txt&#39;], dtype=&#39;&lt;U21&#39;)
+    # &gt;&gt;&gt; m = np.array([[1,&#34;txt&#34;],[3,4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[&#39;1&#39;, &#39;txt&#39;],
+    #        [&#39;3&#39;, &#39;4&#39;]], dtype=&#39;&lt;U21&#39;)
+    # &#34;&#34;&#34;
+    import numpy
+
+    if isinstance(obj, numpy.ndarray):
+        dims = len(obj.shape)
+        dtype = str(obj.dtype)
+        headerlen = 1 + len(dtype)
+        header = f&#34;{headerlen}§{dims}§{dtype}§&#34;.encode() + integers2bytes(obj.shape)
+        return header, obj.data
+    raise Exception(f&#34;Cannot handle this type {type(obj)}, check its shape or dtype&#34;)</code></pre>
 </details>
 </dd>
 </dl>
@@ -345,10 +585,15 @@ b'{&quot;_type&quot;:&quot;&lt;class \'numpy.ndarray\'&gt;&quot;,&quot;dtype&quo
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="idict.data.serialization.decode" href="#idict.data.serialization.decode">decode</a></code></li>
-<li><code><a title="idict.data.serialization.default_orjson_encoder" href="#idict.data.serialization.default_orjson_encoder">default_orjson_encoder</a></code></li>
-<li><code><a title="idict.data.serialization.encode" href="#idict.data.serialization.encode">encode</a></code></li>
+<li><code><a title="idict.data.serialization.bytes2integers" href="#idict.data.serialization.bytes2integers">bytes2integers</a></code></li>
+<li><code><a title="idict.data.serialization.custom_orjson_encoder" href="#idict.data.serialization.custom_orjson_encoder">custom_orjson_encoder</a></code></li>
+<li><code><a title="idict.data.serialization.deserialize_json" href="#idict.data.serialization.deserialize_json">deserialize_json</a></code></li>
+<li><code><a title="idict.data.serialization.deserialize_numpy" href="#idict.data.serialization.deserialize_numpy">deserialize_numpy</a></code></li>
+<li><code><a title="idict.data.serialization.import_dependence" href="#idict.data.serialization.import_dependence">import_dependence</a></code></li>
+<li><code><a title="idict.data.serialization.integers2bytes" href="#idict.data.serialization.integers2bytes">integers2bytes</a></code></li>
 <li><code><a title="idict.data.serialization.json_object_hook_decoder" href="#idict.data.serialization.json_object_hook_decoder">json_object_hook_decoder</a></code></li>
+<li><code><a title="idict.data.serialization.serialize_json" href="#idict.data.serialization.serialize_json">serialize_json</a></code></li>
+<li><code><a title="idict.data.serialization.serialize_numpy" href="#idict.data.serialization.serialize_numpy">serialize_numpy</a></code></li>
 </ul>
 </li>
 </ul>

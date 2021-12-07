@@ -30,13 +30,12 @@ def import_dependence(dep):
     try:
         return import_module(dep)
     except ImportError as e:
-        raise Exception(f"Missing {dep} library. Need a complete install\n"
-                        "pip install -U idict[full]")
+        raise Exception(f"Missing {dep} library. Need a complete install\n" "pip install -U idict[full]")
 
 
 def custom_orjson_encoder(obj):
     # E.g., pandas dataframes.
-    typ=str(type(obj))
+    typ = str(type(obj))
     if typ == "<class 'pandas.core.frame.DataFrame'>":
         return obj.to_numpy()
     if typ == "<class 'pandas.core.series.Series'>":
@@ -65,7 +64,7 @@ def custom_orjson_encoder(obj):
     #     pass
 
     if isinstance(obj, bytes):
-        return obj.decode() # nem todo byte vira string!
+        return obj.decode()  # nem todo byte vira string!
     raise TypeError
 
 
@@ -89,48 +88,48 @@ def json_object_hook_decoder(dic):
 
 
 def serialize_json(obj):
-    r"""
-    >>> import numpy as np
-    >>> import math
-    >>> a = np.array([[1/3, 5/4], [1.3**6, "text"]])
-    >>> a
-    array([['0.3333333333333333', '1.25'],
-           ['4.826809000000001', 'text']], dtype='<U32')
-    >>> b = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int64)
-    >>> b
-    array([[0, 1],
-           [4, 4]])
-    >>> c = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int8)
-    >>> c
-    array([[0, 1],
-           [4, 4]], dtype=int8)
-    >>> serialize_json([math.inf, a, b, c])
-    b'[null,{"_numpy.ndarray.tolist()":[["0.3333333333333333","1.25"],["4.826809000000001","text"]],"_type_orjson":"<U32"},{"_numpy.ndarray.tolist()":[[0,1],[4,4]],"_type_orjson":"int64"},{"_numpy.ndarray.tolist()":[[0,1],[4,4]],"_type_orjson":"int8"}]'
-    >>> import pandas as pd
-    >>> df = pd.DataFrame(
-    ...     [[1/3, 5/4], [1.3**54, "text"]],
-    ...     index=["row 1", "row 2"],
-    ...     columns=["col 1", "col 2"],
-    ... )
-    >>> df
-                  col 1 col 2
-    row 1  3.333333e-01  1.25
-    row 2  1.422136e+06  text
-    >>> serialize_json(df)
-    b'{"_obj.to_json()":"{\\"col 1\\":{\\"row 1\\":0.3333333333,\\"row 2\\":1422135.6537506874},\\"col 2\\":{\\"row 1\\":1.25,\\"row 2\\":\\"text\\"}}","_type_orjson":"<class \'pandas.core.frame.DataFrame\'>"}'
-    >>> s = pd.Series(
-    ...     [1/3, 5/4, (1.3)**54, "text"],
-    ...     index=["row 1", "row 2", "row 3", "row 4"],
-    ... )
-    >>> s
-    row 1          0.333333
-    row 2              1.25
-    row 3    1422135.653751
-    row 4              text
-    dtype: object
-    >>> serialize_json(s)
-    b'{"_obj.to_json()":"{\\"row 1\\":0.3333333333,\\"row 2\\":1.25,\\"row 3\\":1422135.6537506874,\\"row 4\\":\\"text\\"}","_type_orjson":"<class \'pandas.core.series.Series\'>"}'
-    """
+    # r"""
+    # >>> import numpy as np
+    # >>> import math
+    # >>> a = np.array([[1/3, 5/4], [1.3**6, "text"]])
+    # >>> a
+    # array([['0.3333333333333333', '1.25'],
+    #        ['4.826809000000001', 'text']], dtype='<U32')
+    # >>> b = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int64)
+    # >>> b
+    # array([[0, 1],
+    #        [4, 4]])
+    # >>> c = np.array([[1/3,5/4], [1.3**6, 4]], dtype = np.int8)
+    # >>> c
+    # array([[0, 1],
+    #        [4, 4]], dtype=int8)
+    # >>> serialize_json([math.inf, a, b, c])
+    # b'[null,{"_numpy.ndarray.tolist()":[["0.3333333333333333","1.25"],["4.826809000000001","text"]],"_type_orjson":"<U32"},{"_numpy.ndarray.tolist()":[[0,1],[4,4]],"_type_orjson":"int64"},{"_numpy.ndarray.tolist()":[[0,1],[4,4]],"_type_orjson":"int8"}]'
+    # >>> import pandas as pd
+    # >>> df = pd.DataFrame(
+    # ...     [[1/3, 5/4], [1.3**54, "text"]],
+    # ...     index=["row 1", "row 2"],
+    # ...     columns=["col 1", "col 2"],
+    # ... )
+    # >>> df
+    #               col 1 col 2
+    # row 1  3.333333e-01  1.25
+    # row 2  1.422136e+06  text
+    # >>> serialize_json(df)
+    # b'{"_obj.to_json()":"{\\"col 1\\":{\\"row 1\\":0.3333333333,\\"row 2\\":1422135.6537506874},\\"col 2\\":{\\"row 1\\":1.25,\\"row 2\\":\\"text\\"}}","_type_orjson":"<class \'pandas.core.frame.DataFrame\'>"}'
+    # >>> s = pd.Series(
+    # ...     [1/3, 5/4, (1.3)**54, "text"],
+    # ...     index=["row 1", "row 2", "row 3", "row 4"],
+    # ... )
+    # >>> s
+    # row 1          0.333333
+    # row 2              1.25
+    # row 3    1422135.653751
+    # row 4              text
+    # dtype: object
+    # >>> serialize_json(s)
+    # b'{"_obj.to_json()":"{\\"row 1\\":0.3333333333,\\"row 2\\":1.25,\\"row 3\\":1422135.6537506874,\\"row 4\\":\\"text\\"}","_type_orjson":"<class \'pandas.core.series.Series\'>"}'
+    # """
     return dumps(obj, default=custom_orjson_encoder, option=OPT_SORT_KEYS)
 
 
@@ -161,51 +160,56 @@ def deserialize_json(blob):
 
 
 def serialize_numpy(obj):
-    r"""
-    >>> import numpy as np
-    >>> m = np.array([1,2,3,4])
-    >>> m
-    array([1, 2, 3, 4])
-    >>> deserialize_numpy(serialize_numpy(m))
-    array([1, 2, 3, 4])
-    >>> m = np.array([[1,2],[3,4]])
-    >>> m
-    array([[1, 2],
-           [3, 4]])
-    >>> deserialize_numpy(serialize_numpy(m))
-    array([[1, 2],
-           [3, 4]])
-    >>> m = np.array([1,2.7,3,4])
-    >>> deserialize_numpy(serialize_numpy(m))
-    array([1. , 2.7, 3. , 4. ])
-    >>> m = np.array([[1,2],[3,4/3]])
-    >>> deserialize_numpy(serialize_numpy(m))
-    array([[1.        , 2.        ],
-           [3.        , 1.33333333]])
-    >>> m = np.array([1,2,3,"txt"])
-    >>> deserialize_numpy(serialize_numpy(m))
-    array(['1', '2', '3', 'txt'], dtype='<U21')
-    >>> m = np.array([[1,"txt"],[3,4]])
-    >>> deserialize_numpy(serialize_numpy(m))
-    array([['1', 'txt'],
-           ['3', '4']], dtype='<U21')
-    """
+    # r"""
+    # >>> import numpy as np
+    # >>> m = np.array([1,2,3,4])
+    # >>> m
+    # array([1, 2, 3, 4])
+    # >>> deserialize_numpy(serialize_numpy(m))
+    # array([1, 2, 3, 4])
+    # >>> m = np.array([[1,2],[3,4]])
+    # >>> m
+    # array([[1, 2],
+    #        [3, 4]])
+    # >>> deserialize_numpy(serialize_numpy(m))
+    # array([[1, 2],
+    #        [3, 4]])
+    # >>> m = np.array([1,2.7,3,4])
+    # >>> deserialize_numpy(serialize_numpy(m))
+    # array([1. , 2.7, 3. , 4. ])
+    # >>> m = np.array([[1,2],[3,4/3]])
+    # >>> deserialize_numpy(serialize_numpy(m))
+    # array([[1.        , 2.        ],
+    #        [3.        , 1.33333333]])
+    # >>> m = np.array([1,2,3,"txt"])
+    # >>> deserialize_numpy(serialize_numpy(m))
+    # array(['1', '2', '3', 'txt'], dtype='<U21')
+    # >>> m = np.array([[1,"txt"],[3,4]])
+    # >>> deserialize_numpy(serialize_numpy(m))
+    # array([['1', 'txt'],
+    #        ['3', '4']], dtype='<U21')
+    # """
     import numpy
+
     if isinstance(obj, numpy.ndarray):
         dims = len(obj.shape)
         dtype = str(obj.dtype)
-        headerlen = 1+len(dtype)
+        headerlen = 1 + len(dtype)
         header = f"{headerlen}§{dims}§{dtype}§".encode() + integers2bytes(obj.shape)
         return header, obj.data
     raise Exception(f"Cannot handle this type {type(obj)}, check its shape or dtype")
+
+
 # passar memoryview direto pro compressor, talvez cada serializador tenha que comprimir por si
 # faz msm mais sentido o header fora da parte comprimida
 # tentar fazer com que json resolva tudo, só q delegando numpy e pandas pra mim. testar depois veocidade
 #   vantagem: numpys nested inside dict/lists/sets
 #   desvantagem?: converter de bytes p/ str
 
+
 def deserialize_numpy(blob):
     import numpy
+
     view = memoryview(blob)
     prefix, dtype, hw = view[:30].split(b"_")
     dims = int(chr(prefix[2]))
@@ -225,4 +229,4 @@ def integers2bytes(lst, n=4) -> bytes:
 
 def bytes2integers(bytes_content: bytes, n=4):
     """Each 4 bytes become an int."""
-    return [int.from_bytes(bytes_content[i: i + n], "little") for i in range(0, len(bytes_content), n)]
+    return [int.from_bytes(bytes_content[i : i + n], "little") for i in range(0, len(bytes_content), n)]
