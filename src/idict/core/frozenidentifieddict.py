@@ -532,7 +532,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     #     return FrozenIdentifiedDict(fields=self.trimmed, version=version, _id=hosh.id, _ids=ids, **self.metafields)
 
     @staticmethod
-    def fromid(id, cache, identity=ø40) -> "FrozenIdentifiedDict":
+    def fromid(id, cache, identity=ø40) -> Union["FrozenIdentifiedDict", None]:
         """
         >>> from idict import idict
         >>> cache = {}
@@ -576,13 +576,13 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         True
         """
         if hasattr(cache, "user_hosh"):
-            id = (id * cache.user_hosh).id
-        if (newid := "_" + id[1:]) in cache:
-            id = newid
-        val = get_following_pointers(id, cache)
+            id2 = (id * cache.user_hosh).id
+        else:
+            id2 = "_" + id[1:]
+        val = get_following_pointers(id2, cache)
         isdescriptor = isinstance(val, dict) and "_id" in val and "_ids" in val
         if val is None or not isdescriptor:
-            # print(f"Not found: {id0}/{id}")
+            # print(f"Not found: {id}/{id2}")
             return None
         return build(val["_id"], val["_ids"], cache, identity)
 
