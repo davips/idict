@@ -323,7 +323,7 @@ ssh = ["paramiko"]
 
 [[package]]
 name = "garoupa"
-version = "2.211204.3"
+version = "2.211207.1"
 description = "Predictable operable hash-based identifiers and abstract algebra groups"
 category = "main"
 optional = false
@@ -1158,7 +1158,7 @@ full = ["pandas", "arff2pandas", "SQLAlchemy"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"  #">=3.8,<3.10"
-content-hash = "f6fd7383d092a8ca534e9c5c3c1c6cb8daf45fd30e26572b91126e9363f0f7ca"
+content-hash = "b492ba51d30e76da5269293f68d633d392b6b30f1da2935b31a274c958e9fd45"
 
 [metadata.files]
 aiohttp = [
@@ -1462,8 +1462,8 @@ fsspec = [
     {file = "fsspec-2021.11.1.tar.gz", hash = "sha256:03683e606651d5e4bd9180525d57477bd5430e5dc68d2e459835dc14cecc3dd4"},
 ]
 garoupa = [
-    {file = "garoupa-2.211204.3-py3-none-any.whl", hash = "sha256:5b3d1b2a10efdff46293a301fabbd53c734510df1267380c295ae834125cd8cf"},
-    {file = "garoupa-2.211204.3.tar.gz", hash = "sha256:adf34249e833a55d91b54cf6d202f8a8eeff7881096d3f7977c14df6f5e22748"},
+    {file = "garoupa-2.211207.1-py3-none-any.whl", hash = "sha256:edf4dff0477aaec08d773d47c9c5b049c28dd47c4634c9eda31f532a2c3ab3b1"},
+    {file = "garoupa-2.211207.1.tar.gz", hash = "sha256:101726bd527de0f2e2bab4467270f132494710841b2fc2b8517a2fd655e8ad08"},
 ]
 greenlet = [
     {file = "greenlet-1.1.2-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:58df5c2a0e293bf665a51f8a100d3e9956febfbf1d9aaf8c0677cf70218910c6"},
@@ -1886,6 +1886,7 @@ pathspec = [
     {file = "pathspec-0.9.0.tar.gz", hash = "sha256:e564499435a2673d586f6b2130bb5b95f04a3ba06f81b8f895b651a3c76aabb1"},
 ]
 pdoc3 = [
+    {file = "pdoc3-0.10.0-py3-none-any.whl", hash = "sha256:ba45d1ada1bd987427d2bf5cdec30b2631a3ff5fb01f6d0e77648a572ce6028b"},
     {file = "pdoc3-0.10.0.tar.gz", hash = "sha256:5f22e7bcb969006738e1aa4219c75a32f34c2d62d46dc9d2fb2d3e0b0287e4b7"},
 ]
 pexpect = [
