@@ -545,7 +545,7 @@ print(e.z)
 e = d >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 32.0
+e = 25.007
 """
 ```
 
@@ -555,7 +555,7 @@ e = 32.0
 e = e >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 32.0
+e = 700025.0
 """
 ```
 
