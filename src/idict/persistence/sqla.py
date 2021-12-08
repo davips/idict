@@ -178,7 +178,7 @@ class SQLA(CompressedCache):
             if ret := session.query(Content).get(key):
                 if ret is not None:
                     ret = ret.blob
-                    if packing:
+                    if self.autopack and packing:
                         ret = unpack(ret)
         return ret
 
