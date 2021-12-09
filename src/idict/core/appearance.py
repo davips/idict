@@ -49,9 +49,8 @@ def idict2txt(d, all, history):
     """
     dic = idict2dict(d, all, history)
     txt = json.dumps(dic, indent=4, ensure_ascii=False, cls=CustomJSONEncoder)
-    for k, v in dic.items():
-        if k == "_id":
-            txt = txt.replace(dic[k], d.hosh.idc)
+    if "_id" in dic:
+        txt = txt.replace(dic["_id"], d.hosh.idc)
     if all:
         for k, v in d.hoshes.items():
             nokey = ""

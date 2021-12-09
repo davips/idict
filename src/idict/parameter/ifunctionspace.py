@@ -19,13 +19,16 @@
 #  works or verbatim, obfuscated, compiled or rewritten versions of any
 #  part of this work is illegal and unethical regarding the effort and
 #  time spent here.
+import operator
+from itertools import chain, repeat
 from operator import rshift as aop
 from operator import xor as cop
 from random import Random
 from typing import Union, Callable
 
-from idict.parameter.ilet import iLet
 from ldict.core.base import AbstractLazyDict
+
+from idict.parameter.ilet import iLet
 
 
 class iFunctionSpace:
@@ -63,45 +66,49 @@ class iFunctionSpace:
     """
 
     def __init__(self, *args):
-        self.functions = args
+        self.functions_and_ops = args
+
+    @staticmethod
+    def fromfunctions(*functions):
+        return iFunctionSpace(*intersperse(functions, operator.rshift))
 
     def __rrshift__(self, left: Union[dict, list, Random, Callable, iLet]):
         if isinstance(left, AbstractLazyDict):
             from idict.core.idict_ import Idict
 
-            return reduce3(lambda a, op, b: op(a, b), (left, aop) + self.functions)
+            return reduce3(lambda a, op, b: op(a, b), (left, aop) + self.functions_and_ops)
         if isinstance(left, dict):
             from idict.core.idict_ import Idict
 
             # TODO iFunctionSpace lacks 'self.identity' to be able to provide here, e.g., number of digits to Idict(..)
 
-            return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions)
+            return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions_and_ops)
         if isinstance(left, (list, Random, Callable, iLet)):
-            return iFunctionSpace(left, aop, *self.functions)
+            return iFunctionSpace(left, aop, *self.functions_and_ops)
         return NotImplemented
 
     def __rshift__(self, other: Union[dict, list, Random, Callable, iLet, AbstractLazyDict, "iFunctionSpace"]):
         if isinstance(other, (dict, list, Random, Callable, iLet)):
-            return iFunctionSpace(*self.functions, aop, other)
+            return iFunctionSpace(*self.functions_and_ops, aop, other)
         if isinstance(other, iFunctionSpace):
-            return iFunctionSpace(*self.functions, aop, *other.functions)
+            return iFunctionSpace(*self.functions_and_ops, aop, *other.functions_and_ops)
         return NotImplemented
 
     def __rxor__(self, left: Union[dict, list, Random, Callable, iLet]):
         if isinstance(left, (dict, list, Random, Callable, iLet)) and not isinstance(left, AbstractLazyDict):
-            return iFunctionSpace(left, aop, *self.functions)
+            return iFunctionSpace(left, aop, *self.functions_and_ops)
         return NotImplemented
 
     def __xor__(self, other: Union[dict, list, Random, Callable, iLet, AbstractLazyDict, "iFunctionSpace"]):
         if isinstance(other, (dict, list, Random, Callable, iLet, AbstractLazyDict)):
-            return iFunctionSpace(*self.functions, cop, other)
+            return iFunctionSpace(*self.functions_and_ops, cop, other)
         if isinstance(other, iFunctionSpace):
-            return iFunctionSpace(*self.functions, cop, *other.functions)
+            return iFunctionSpace(*self.functions_and_ops, cop, *other.functions_and_ops)
         return NotImplemented
 
     def __repr__(self):
         txt = []
-        for f in self.functions:
+        for f in self.functions_and_ops:
             if str(f).startswith("<built-in "):  # Skip >> and ^.
                 continue
             if isinstance(f, list):
@@ -130,3 +137,11 @@ def reduce3(f, lst):
             break
         next_args = [f(*next_args)]
     return next_args[0]
+
+
+def intersperse(lst, fill=...):
+    """
+    >>> list(intersperse([1,2,3,4]))
+    [1, Ellipsis, 2, Ellipsis, 3, Ellipsis, 4]
+    """
+    return chain(*zip(lst[:-1], repeat(fill)), [lst[-1]])

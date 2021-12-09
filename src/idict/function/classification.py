@@ -39,7 +39,7 @@ def fit(algorithm=None, config={}, Xin="X", yin="y", output="model", version=0, 
 
 
 fit.metadata = {
-    "id": "fit--------------------------------idict",
+    "id": "idict-----------------------wrapper--fit",
     "name": "fit",
     "description": "Induce a model.",
     "parameters": ...,
@@ -52,7 +52,7 @@ def predict(input="model", Xin="X", yout="z", version=0, **kwargs):
 
 
 predict.metadata = {
-    "id": "predict----------------------------idict",
+    "id": "idict-------------------wrapper--predict",
     "name": "predict",
     "description": "Predict values according to a model.",
     "parameters": ...,

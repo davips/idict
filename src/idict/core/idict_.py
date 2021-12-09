@@ -27,20 +27,22 @@ from operator import xor as cop
 from random import Random
 from typing import TypeVar, Union, Callable
 
-import idict.core.frozenidentifieddict as fro
 from garoupa import ø40
-from idict.parameter.ifunctionspace import iFunctionSpace
-from idict.parameter.ilet import iLet
-from idict.persistence.cache import Cache
 from ldict.core.appearance import decolorize
 from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
 from ldict.exception import WrongKeyType
+
+import idict.core.frozenidentifieddict as fro
+from idict.parameter.ifunctionspace import iFunctionSpace
+from idict.parameter.ilet import iLet
+from idict.persistence.cache import Cache
 
 VT = TypeVar("VT")
 
 
 # TODO: colorize show() for "_history": "split----------------------sklearn-1.0.1 fit--------------------------------idict predict----------------------------idict"
 # TODO(minor): implement extend, to avoid excessive calculation when batch inserting values
+# TODO: let(f, ..., omit=["_name", ...])
 class Idict(AbstractMutableLazyDict):
     r"""Mutable lazy identified dict for serializable (picklable) pairs str->value
 
@@ -369,7 +371,6 @@ class Idict(AbstractMutableLazyDict):
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
-
         self.identity = identity
         if isinstance(_dictionary, str) and isinstance(_id, (dict, Cache)):
             # Build idict from id+cache.
