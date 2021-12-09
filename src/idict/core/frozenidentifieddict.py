@@ -267,7 +267,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         self.data = self.frozen.data
         self.id = _id
         self.ids = _ids
-        self.idh = self.hosh.html
+        self.fields = list(k for k in _ids.keys() if not k.startswith("_"))
 
     def __getitem__(self, item):
         return self.frozen[item]
@@ -442,7 +442,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return NotImplemented
 
     def __rshift__(
-        self, other: Union[list, dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
+            self,
+            other: Union[list, dict, AbstractLazyDict, "FrozenIdentifiedDict", Callable, iLet, iFunctionSpace, Random]
     ):
         from idict.core.rshift import application, ihandle_dict
         from idict.core.idict_ import Idict

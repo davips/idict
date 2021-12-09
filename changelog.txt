@@ -1,5 +1,1 @@
-    Add Xy2scatterplot, xywrapper
-    Add id2ansi for history str
-    Add more functions / Improve handwritten ids
-    Add _name to arff2df
-    Add close to SQLA session
+Add idict.fields
