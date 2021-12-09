@@ -3,8 +3,9 @@
 from sklearn.ensemble import RandomForestClassifier as RF
 
 from idict import let, idict
-from idict.function.classification import fit, predict
 from idict.function.evaluation import split
+from idict.function.model import fit, predict
+
 cache = {}
 
 d = (

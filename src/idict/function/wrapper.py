@@ -21,40 +21,22 @@
 #  time spent here.
 #
 
-
-def fit(algorithm=None, config={}, Xin="X", yin="y", output="model", version=0, **kwargs):
+def xywrapper(function=None, config={}, Xin="X", yin="y", Xout="X", yout="y", version=0, **kwargs):
+    r"""
+    >>> from sklearn.utils import resample
+    >>> X=[[1,2,3], [4,5,6], [11,12,13]]
+    >>> y=[7,8,9]
+    >>> xywrapper(resample, config={"n_samples":2, "random_state":0}, X=X, y=y)
+    {'X': [[1, 2, 3], [4, 5, 6]], 'y': [7, 8], '_history': Ellipsis}
     """
-    >>> from sklearn.ensemble import RandomForestClassifier as RF
-    >>> from idict import idict, let
-    >>> d = idict.fromtoy() >> let(fit, algorithm=RF)
-    >>> d.model
-    RandomForestClassifier()
-    >>> d >>= predict
-    >>> d.z
-    array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
-    """
-    obj = algorithm(**config)
-    obj.fit(kwargs[Xin], kwargs[yin])
-    return {output: obj, "_history": ...}
+    result = function(kwargs[Xin], kwargs[yin], **config)
+    return {Xout: result[0], yout: result[1], "_history": ...}
 
 
-fit.metadata = {
-    "id": "idict-----------------------wrapper--fit",
-    "name": "fit",
-    "description": "Induce a model.",
-    "parameters": ...,
-    "code": ...,
-}
-
-
-def predict(input="model", Xin="X", yout="z", version=0, **kwargs):
-    return {yout: kwargs[input].predict(kwargs[Xin]), "_history": ...}
-
-
-predict.metadata = {
-    "id": "idict-------------------wrapper--predict",
-    "name": "predict",
-    "description": "Predict values according to a model.",
+xywrapper.metadata = {
+    "id": "idict-----------------wrapper--xywrapper",
+    "name": "xywrapper",
+    "description": "Wrapper for Xy-based funcions.",
     "parameters": ...,
     "code": ...,
 }
