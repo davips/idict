@@ -371,6 +371,7 @@ class Idict(AbstractMutableLazyDict):
     # noinspection PyMissingConstructor
     def __init__(self, /, _dictionary=None, _id=None, _ids=None, rnd=None, identity=ø40, _cloned=None, **kwargs):
         from idict.core.frozenidentifieddict import FrozenIdentifiedDict
+
         self.identity = identity
         if isinstance(_dictionary, str) and isinstance(_id, (dict, Cache)):
             # Build idict from id+cache.

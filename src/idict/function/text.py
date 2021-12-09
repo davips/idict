@@ -18,4 +18,3 @@ value2text.metadata = {
     "parameters": ...,
     "code": ...,
 }
-

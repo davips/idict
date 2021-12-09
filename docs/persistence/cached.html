@@ -53,6 +53,7 @@ from ldict.core.base import AbstractLazyDict
 from ldict.lazyval import LazyVal
 
 
+# TODO: store metafield even if idict-id is already stored
 def storevalue_func(cache):
     def f(k, id, value):
         cache[id] = value

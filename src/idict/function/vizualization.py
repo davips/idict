@@ -42,15 +42,13 @@ def Xy2scatterplot(colx=0, coly=1, Xin="X", yin="y", output="scatterplot", **kwa
             else:
                 right = str(float(y[k]))
             if left == right:
-                inner.append({
-                    "x": float(X[k, colx]),
-                    "y": float(X[k, coly]),
-                })
-        result.append(
-            {
-                "id": m,
-                "data": inner
-            })
+                inner.append(
+                    {
+                        "x": float(X[k, colx]),
+                        "y": float(X[k, coly]),
+                    }
+                )
+        result.append({"id": m, "data": inner})
     return {output: result, "_history": ...}
 
 

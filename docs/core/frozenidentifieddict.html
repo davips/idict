@@ -56,18 +56,19 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-from idict.config import GLOBAL
-from idict.core.appearance import idict2txt
-from idict.core.identification import blobs_hashes_hoshes
-from idict.data.load import file2df
-from idict.function.data import openml, df2np
-from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
-from idict.parameter.ilet import iLet
-from idict.persistence.cached import cached, get_following_pointers, build
 from ldict.core.appearance import decolorize
 from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
 from ldict.customjson import CustomJSONEncoder
 from ldict.frozenlazydict import FrozenLazyDict
+
+from idict.config import GLOBAL
+from idict.core.appearance import idict2txt
+from idict.core.identification import blobs_hashes_hoshes
+from idict.data.load import file2df
+from idict.function.dataset import openml, df2np
+from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
+from idict.parameter.ilet import iLet
+from idict.persistence.cached import cached, get_following_pointers, build
 
 VT = TypeVar(&#34;VT&#34;)
 
@@ -510,7 +511,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         if callable(other):
             return application(self, other, other, self.identity)
         if isinstance(other, iFunctionSpace):
-            return reduce3(lambda a, op, b: op(a, b), (self, aop) + other.functions)
+            return reduce3(lambda a, op, b: op(a, b), (self, aop) + other.functions_and_ops)
         return NotImplemented
 
     def __rxor__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
@@ -522,7 +523,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         if callable(other) or isinstance(other, (dict, Random, list, iLet)):
             return cached(self, GLOBAL[&#34;cache&#34;]) &gt;&gt; other
         if isinstance(other, iFunctionSpace):
-            return reduce3(lambda a, op, b: op(a, b), (self, cop) + other.functions)
+            return reduce3(lambda a, op, b: op(a, b), (self, cop) + other.functions_and_ops)
         return NotImplemented
 
     @cached_property
@@ -1358,7 +1359,7 @@ True
         if callable(other):
             return application(self, other, other, self.identity)
         if isinstance(other, iFunctionSpace):
-            return reduce3(lambda a, op, b: op(a, b), (self, aop) + other.functions)
+            return reduce3(lambda a, op, b: op(a, b), (self, aop) + other.functions_and_ops)
         return NotImplemented
 
     def __rxor__(self, left: Union[Random, dict, Callable, iFunctionSpace]):
@@ -1370,7 +1371,7 @@ True
         if callable(other) or isinstance(other, (dict, Random, list, iLet)):
             return cached(self, GLOBAL[&#34;cache&#34;]) &gt;&gt; other
         if isinstance(other, iFunctionSpace):
-            return reduce3(lambda a, op, b: op(a, b), (self, cop) + other.functions)
+            return reduce3(lambda a, op, b: op(a, b), (self, cop) + other.functions_and_ops)
         return NotImplemented
 
     @cached_property

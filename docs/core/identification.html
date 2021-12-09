@@ -53,11 +53,11 @@ import dis
 import pickle
 from inspect import signature
 
+from garoupa import Hosh, UT40_4, Identity
+from ldict.exception import NoInputException
 from orjson import dumps
 
-from garoupa import Hosh, UT40_4, Identity
 from idict.data.compression import pack, NondeterminismException
-from ldict.exception import NoInputException
 
 dill_warned = False
 
@@ -86,7 +86,7 @@ def f2bin(f, approach):
         #  it could allow a broader range of default values (numpy, models)
         return code_bin + pickle.dumps(fields_and_params, protocol=5)
     if approach == &#34;dill&#34;:
-        # TODO: one advantage of dill here is to be able to hash a custom callable instead of only functions.
+        # TODO: one advantage of dill here is to be able to hash a custom callable, instead of only functions.
         global dill_warned
         if not dill_warned:
             dill_warned = True
@@ -279,7 +279,7 @@ def blobs_hashes_hoshes(data, identity, ids, version):
         #  it could allow a broader range of default values (numpy, models)
         return code_bin + pickle.dumps(fields_and_params, protocol=5)
     if approach == &#34;dill&#34;:
-        # TODO: one advantage of dill here is to be able to hash a custom callable instead of only functions.
+        # TODO: one advantage of dill here is to be able to hash a custom callable, instead of only functions.
         global dill_warned
         if not dill_warned:
             dill_warned = True
