@@ -295,7 +295,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         self.data = self.frozen.data
         self.id = _id
         self.ids = _ids
-        self.idh = self.hosh.html
+        self.fields = list(k for k in _ids.keys() if not k.startswith(&#34;_&#34;))
 
     def __getitem__(self, item):
         return self.frozen[item]
@@ -1143,7 +1143,7 @@ True
         self.data = self.frozen.data
         self.id = _id
         self.ids = _ids
-        self.idh = self.hosh.html
+        self.fields = list(k for k in _ids.keys() if not k.startswith(&#34;_&#34;))
 
     def __getitem__(self, item):
         return self.frozen[item]
