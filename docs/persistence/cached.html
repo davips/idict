@@ -133,8 +133,9 @@ def cached(d, cache) -&gt; AbstractLazyDict:
     output_fields = []
     for field, v in list(data.items()):
         if isinstance(v, LazyVal):
-            if field.startswith(&#34;_&#34;):  # pragma: no cover
-                raise Exception(&#34;Cannot have a lazy value in a metafield.&#34;, field)
+            # REMINDER: Check removed because metafield values recovered from cache are lazy.
+            # if field.startswith(&#34;_&#34;):  # pragma: no cover
+            #     raise Exception(&#34;Cannot have a lazy value in a metafield.&#34;, field)
             output_fields.append(field)
             lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id
@@ -940,8 +941,9 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
     output_fields = []
     for field, v in list(data.items()):
         if isinstance(v, LazyVal):
-            if field.startswith(&#34;_&#34;):  # pragma: no cover
-                raise Exception(&#34;Cannot have a lazy value in a metafield.&#34;, field)
+            # REMINDER: Check removed because metafield values recovered from cache are lazy.
+            # if field.startswith(&#34;_&#34;):  # pragma: no cover
+            #     raise Exception(&#34;Cannot have a lazy value in a metafield.&#34;, field)
             output_fields.append(field)
             lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id

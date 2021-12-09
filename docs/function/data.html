@@ -57,13 +57,9 @@ Functions to be used directly within an idict workflow
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
-
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
+# TODO: break down all sklearn and numpy used inside binarize,
+#  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
+from idict.macro import is_number
 
 
 def nomcols(input=&#34;X&#34;, output=&#34;nomcols&#34;, **kwargs):
@@ -98,9 +94,6 @@ def binarize(input=&#34;X&#34;, idxsin=&#34;nomcols&#34;, output=&#34;Xbin&#34;,
     Xout = np.column_stack((nom, num))
     return {output: Xout, &#34;_history&#34;: ...}
 
-
-# TODO: break down all sklearn and numpy used inside binarize,
-#  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
 
 nomcols.metadata = {
     &#34;id&#34;: &#34;---------------------------------nomcols&#34;,
@@ -158,23 +151,6 @@ binarize.metadata = {
     return {output: Xout, &#34;_history&#34;: ...}</code></pre>
 </details>
 </dd>
-<dt id="idict.function.data.is_number"><code class="name flex">
-<span>def <span class="ident">is_number</span></span>(<span>s)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False</code></pre>
-</details>
-</dd>
 <dt id="idict.function.data.nomcols"><code class="name flex">
 <span>def <span class="ident">nomcols</span></span>(<span>input='X', output='nomcols', **kwargs)</span>
 </code></dt>
@@ -222,7 +198,6 @@ binarize.metadata = {
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="idict.function.data.binarize" href="#idict.function.data.binarize">binarize</a></code></li>
-<li><code><a title="idict.function.data.is_number" href="#idict.function.data.is_number">is_number</a></code></li>
 <li><code><a title="idict.function.data.nomcols" href="#idict.function.data.nomcols">nomcols</a></code></li>
 </ul>
 </li>
