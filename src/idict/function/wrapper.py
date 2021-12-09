@@ -22,6 +22,26 @@
 #
 
 
+def call(method=None, input=None, output=None, **kwargs):
+    r"""
+    >>> from idict import idict, let
+    >>> d = idict.fromtoy(output_format="df")
+    >>> cache = {}
+    >>> d >>= let(call, input="df", method="head", output="head") >> [cache]
+    >>> d.head
+       attr1  attr2  class
+    0    5.1    6.4      0
+    1    1.1    2.5      1
+    2    6.1    3.6      0
+    3    1.1    3.5      1
+    4    3.1    2.5      0
+    >>> d = idict(d.id, cache)
+    >>> d.history
+    {'idict----------------------wrapper--call': {'name': 'call', 'description': 'Call a method on a given field.', 'parameters': {'method': 'head', 'input': 'df', 'output': 'head'}, 'code': "def f(method=None, input=None, output=None, **kwargs):\nreturn {output: getattr(kwargs[input], method)(), '_history': ...}"}}
+    """
+    return {output: getattr(kwargs[input], method)(), "_history": ...}
+
+
 def xywrapper(function=None, config={}, Xin="X", yin="y", Xout="X", yout="y", version=0, **kwargs):
     r"""
     >>> from sklearn.utils import resample
@@ -33,6 +53,14 @@ def xywrapper(function=None, config={}, Xin="X", yin="y", Xout="X", yout="y", ve
     result = function(kwargs[Xin], kwargs[yin], **config)
     return {Xout: result[0], yout: result[1], "_history": ...}
 
+
+call.metadata = {
+    "id": "idict----------------------wrapper--call",
+    "name": "call",
+    "description": "Call a method on a given field.",
+    "parameters": ...,
+    "code": ...,
+}
 
 xywrapper.metadata = {
     "id": "idict-----------------wrapper--xywrapper",

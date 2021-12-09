@@ -28,13 +28,9 @@ Functions to be used directly within an idict workflow
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
-
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
+# TODO: break down all sklearn and numpy used inside binarize,
+#  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
+from idict.macro import is_number
 
 
 def nomcols(input="X", output="nomcols", **kwargs):
@@ -69,9 +65,6 @@ def binarize(input="X", idxsin="nomcols", output="Xbin", **kwargs):
     Xout = np.column_stack((nom, num))
     return {output: Xout, "_history": ...}
 
-
-# TODO: break down all sklearn and numpy used inside binarize,
-#  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
 
 nomcols.metadata = {
     "id": "---------------------------------nomcols",
