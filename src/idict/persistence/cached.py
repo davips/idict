@@ -105,8 +105,9 @@ def cached(d, cache) -> AbstractLazyDict:
     output_fields = []
     for field, v in list(data.items()):
         if isinstance(v, LazyVal):
-            if field.startswith("_"):  # pragma: no cover
-                raise Exception("Cannot have a lazy value in a metafield.", field)
+            # REMINDER: Check removed because metafield values recovered from cache are lazy.
+            # if field.startswith("_"):  # pragma: no cover
+            #     raise Exception("Cannot have a lazy value in a metafield.", field)
             output_fields.append(field)
             lazies = True
             id = d.hashes[field].id if field in d.hashes else d.hoshes[field].id

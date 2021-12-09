@@ -40,7 +40,6 @@ from idict.persistence.cache import Cache
 VT = TypeVar("VT")
 
 
-# TODO: colorize show() for "_history": "split----------------------sklearn-1.0.1 fit--------------------------------idict predict----------------------------idict"
 # TODO(minor): implement extend, to avoid excessive calculation when batch inserting values
 # TODO: let(f, ..., omit=["_name", ...])
 class Idict(AbstractMutableLazyDict):
