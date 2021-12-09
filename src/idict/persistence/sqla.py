@@ -22,14 +22,14 @@
 from contextlib import contextmanager
 from typing import TypeVar
 
+from garoupa import ø
+from ldict.core.appearance import decolorize
 from sqlalchemy import Column, String, BLOB, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
-from garoupa import ø
 from idict.data.compression import pack, unpack
 from idict.persistence.compressedcache import CompressedCache
-from ldict.core.appearance import decolorize
 
 VT = TypeVar("VT")
 Base = declarative_base()
@@ -139,7 +139,9 @@ class SQLA(CompressedCache):
             def sessionctx():
                 engine = create_engine(url=session, echo=debug)
                 Base.metadata.create_all(engine)
-                yield Session(engine)
+                session_ = Session(engine)
+                yield session_
+                session_.close()
 
         else:
 
