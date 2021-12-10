@@ -40,8 +40,14 @@ from idict.persistence.cache import Cache
 VT = TypeVar("VT")
 
 
+# TODO: k-fold CV
 # TODO (minor):  implement extend, to avoid excessive calculation when batch inserting values
 # TODO (minor): let(f, ..., omit=["_name", ...])
+# TODO: serialize pandas (and define safe/unsafe unpack), or some of the options bellow
+# TODO: Store DF as LazyDF that depends on column metafeatures?
+#   or column metafeatures?
+#   or depends on a cache? Or both?    LazyDF(cols, indices, cache)
+# TODO: document multilevel cache:  .. >> [oka, disk, RAM] >> ..
 class Idict(AbstractMutableLazyDict):
     r"""Mutable lazy identified dict for serializable (picklable) pairs str->value
 
