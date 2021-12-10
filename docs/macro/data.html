@@ -52,11 +52,11 @@ from idict import let
 from idict.function.wrapper import call
 
 
-def dfhead(input=&#34;df&#34;, output=&#34;head&#34;, **kwargs):
+def df_head(input=&#34;df&#34;, output=&#34;head&#34;):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
-    &gt;&gt;&gt; d &gt;&gt;= dfhead()
+    &gt;&gt;&gt; d &gt;&gt;= df_head()
     &gt;&gt;&gt; d.head
        attr1  attr2  class
     0    5.1    6.4      0
@@ -75,13 +75,13 @@ def dfhead(input=&#34;df&#34;, output=&#34;head&#34;, **kwargs):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="idict.macro.data.dfhead"><code class="name flex">
-<span>def <span class="ident">dfhead</span></span>(<span>input='df', output='head', **kwargs)</span>
+<dt id="idict.macro.data.df_head"><code class="name flex">
+<span>def <span class="ident">df_head</span></span>(<span>input='df', output='head')</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
 &gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;)
-&gt;&gt;&gt; d &gt;&gt;= dfhead()
+&gt;&gt;&gt; d &gt;&gt;= df_head()
 &gt;&gt;&gt; d.head
    attr1  attr2  class
 0    5.1    6.4      0
@@ -94,11 +94,11 @@ def dfhead(input=&#34;df&#34;, output=&#34;head&#34;, **kwargs):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def dfhead(input=&#34;df&#34;, output=&#34;head&#34;, **kwargs):
+<pre><code class="python">def df_head(input=&#34;df&#34;, output=&#34;head&#34;):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
-    &gt;&gt;&gt; d &gt;&gt;= dfhead()
+    &gt;&gt;&gt; d &gt;&gt;= df_head()
     &gt;&gt;&gt; d.head
        attr1  attr2  class
     0    5.1    6.4      0
@@ -128,7 +128,7 @@ def dfhead(input=&#34;df&#34;, output=&#34;head&#34;, **kwargs):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="idict.macro.data.dfhead" href="#idict.macro.data.dfhead">dfhead</a></code></li>
+<li><code><a title="idict.macro.data.df_head" href="#idict.macro.data.df_head">df_head</a></code></li>
 </ul>
 </li>
 </ul>

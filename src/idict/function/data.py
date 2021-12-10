@@ -78,6 +78,7 @@ def df2list(input="df", output="list", **kwargs):
     lst = [list(M.columns)] + M.to_numpy().tolist()
     return {output: lst, "_history": ...}
 
+
 nomcols.metadata = {
     "id": "idict----------------------------nomcols",
     "name": "nomcols",

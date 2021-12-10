@@ -82,11 +82,12 @@ def f2bin(f, approach):
     if approach == &#34;direct&#34;:
         c = f.__code__
         code_bin = c.co_code + str(c.co_consts).encode()
-        # TODO: replace pickle for a deterministic dill if possible?
+        # TODO (minor): replace pickle for a deterministic dill if possible?
         #  it could allow a broader range of default values (numpy, models)
         return code_bin + pickle.dumps(fields_and_params, protocol=5)
     if approach == &#34;dill&#34;:
-        # TODO: one advantage of dill here is to be able to hash a custom callable, instead of only functions.
+        # TODO (minor): one advantage of dill here is to be able to hash a custom callable, instead of only functions.
+        #  However, preferably, custom callables are expected to provided custom ids.
         global dill_warned
         if not dill_warned:
             dill_warned = True
@@ -275,11 +276,12 @@ def blobs_hashes_hoshes(data, identity, ids, version):
     if approach == &#34;direct&#34;:
         c = f.__code__
         code_bin = c.co_code + str(c.co_consts).encode()
-        # TODO: replace pickle for a deterministic dill if possible?
+        # TODO (minor): replace pickle for a deterministic dill if possible?
         #  it could allow a broader range of default values (numpy, models)
         return code_bin + pickle.dumps(fields_and_params, protocol=5)
     if approach == &#34;dill&#34;:
-        # TODO: one advantage of dill here is to be able to hash a custom callable, instead of only functions.
+        # TODO (minor): one advantage of dill here is to be able to hash a custom callable, instead of only functions.
+        #  However, preferably, custom callables are expected to provided custom ids.
         global dill_warned
         if not dill_warned:
             dill_warned = True

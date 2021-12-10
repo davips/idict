@@ -73,7 +73,7 @@ from idict.persistence.cached import cached, get_following_pointers, build
 VT = TypeVar(&#34;VT&#34;)
 
 
-# TODO(minor): pq frozen.keys retorna KeysView, que contem valores tb?
+# TODO (minor): pq frozen.keys retorna KeysView, que contem valores tb?
 class FrozenIdentifiedDict(AbstractLazyDict):
     &#34;&#34;&#34;Immutable lazy universally identified dict for serializable (picklable) pairs str-&gt;value
 
@@ -616,7 +616,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     @staticmethod
     def fromfile(name, output=[&#34;df&#34;], output_format=&#34;df&#34;, include_name=False, identity=ø40):
-        &#34;&#34;&#34;Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5
+        &#34;&#34;&#34;Input format is defined by file extension: .arff, .csv
         &gt;&gt;&gt; d = FrozenIdentifiedDict.fromminiarff()
         &gt;&gt;&gt; d.show(colored=False)
         {
@@ -1464,7 +1464,7 @@ True
 
     @staticmethod
     def fromfile(name, output=[&#34;df&#34;], output_format=&#34;df&#34;, include_name=False, identity=ø40):
-        &#34;&#34;&#34;Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5
+        &#34;&#34;&#34;Input format is defined by file extension: .arff, .csv
         &gt;&gt;&gt; d = FrozenIdentifiedDict.fromminiarff()
         &gt;&gt;&gt; d.show(colored=False)
         {
@@ -1622,7 +1622,7 @@ True
 <span>def <span class="ident">fromfile</span></span>(<span>name, output=['df'], output_format='df', include_name=False, identity=[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;158m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;147m[1m[48;5;0m0[0m[38;5;86m[1m[48;5;0m0[0m[38;5;159m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;195m[1m[48;5;0m0[0m[38;5;194m[1m[48;5;0m0[0m[38;5;153m[1m[48;5;0m0[0m[38;5;123m[1m[48;5;0m0[0m[38;5;157m[1m[48;5;0m0[0m[38;5;117m[1m[48;5;0m0[0m)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5</p>
+<div class="desc"><p>Input format is defined by file extension: .arff, .csv</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; d = FrozenIdentifiedDict.fromminiarff()
 &gt;&gt;&gt; d.show(colored=False)
 {
@@ -1667,7 +1667,7 @@ True
 </summary>
 <pre><code class="python">@staticmethod
 def fromfile(name, output=[&#34;df&#34;], output_format=&#34;df&#34;, include_name=False, identity=ø40):
-    &#34;&#34;&#34;Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5
+    &#34;&#34;&#34;Input format is defined by file extension: .arff, .csv
     &gt;&gt;&gt; d = FrozenIdentifiedDict.fromminiarff()
     &gt;&gt;&gt; d.show(colored=False)
     {

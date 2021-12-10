@@ -1,1 +1,2 @@
-Add call,dfhead functions
+Improve TODO notes and function ids
+Check before trying to insert a value (cached.py)
