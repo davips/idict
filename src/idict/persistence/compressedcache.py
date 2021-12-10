@@ -47,7 +47,7 @@ class CompressedCache(Cache):  # pragma: no cover
         return self.__getitem__(id, packing=False)
 
     def lockid(self, id):
-        # TODO: launch thread at cached
+        # TODO (minor):  launch thread at cached (to allow non redundant distributed processing)
         pass
         # t = Thread(target=alive, args=(10,))
         # t.start()

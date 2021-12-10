@@ -163,7 +163,7 @@ class iLet(AbstractLet):
 
         super().__init__(f, Idict, config=None)
         self.config = {k: kwargs[k] for k in sorted(kwargs.keys())}
-        #     TODO: iLet needs to detect the identity from idict if it is induced by one
+        #     TODO (minor): iLet needs to detect the identity from idict if it is induced by one
         self.identity = identity
 
     @cached_property

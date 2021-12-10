@@ -212,7 +212,16 @@ class SQLA(CompressedCache):
         return {k: self[k] for k in self}
 
 
-# TODO: passar comentários da lousa pras docs das classes
+# TODO (minor): convert this annotation to a document somewhere else:
+"""
+multiuser                   |   single user
+----------------------------------------------
+cache = SQLA(session)       |               ->  for already opened/permanent/global sessions
+with sqla(url) as cache:    |   shelve      ->  a single session taht open/close automatically
+cache = SQLA(DBMS url)      |   Disk        ->
+----------------------------------------------
+Oka(web url); cache         |   dict        -> dict-like cache  
+"""
 
 
 class WrongKeyType(Exception):

@@ -64,7 +64,7 @@ def custom_orjson_encoder(obj):
     #     pass
 
     if isinstance(obj, bytes):
-        return obj.decode()  # nem todo byte vira string!
+        return obj.decode()  # nem qq byte vira string!
     raise TypeError
 
 

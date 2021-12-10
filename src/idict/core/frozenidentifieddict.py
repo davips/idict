@@ -45,7 +45,7 @@ from idict.persistence.cached import cached, get_following_pointers, build
 VT = TypeVar("VT")
 
 
-# TODO(minor): pq frozen.keys retorna KeysView, que contem valores tb?
+# TODO (minor): pq frozen.keys retorna KeysView, que contem valores tb?
 class FrozenIdentifiedDict(AbstractLazyDict):
     """Immutable lazy universally identified dict for serializable (picklable) pairs str->value
 
@@ -588,7 +588,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
 
     @staticmethod
     def fromfile(name, output=["df"], output_format="df", include_name=False, identity=ø40):
-        """Input format is defined by file extension: .arff, .csv, TODO: .json, .pickle5
+        """Input format is defined by file extension: .arff, .csv
         >>> d = FrozenIdentifiedDict.fromminiarff()
         >>> d.show(colored=False)
         {

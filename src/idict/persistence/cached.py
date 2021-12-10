@@ -78,7 +78,7 @@ def cached(d, cache) -> AbstractLazyDict:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
                     cache[v] = {"_id": "_" + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
-                else:
+                elif k not in cache:
                     store(k, v, data[k])
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:

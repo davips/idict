@@ -25,7 +25,7 @@
 Functions to be used directly within an idict workflow
 """
 
-import numpy as np
+import numpy
 from sklearn.preprocessing import OneHotEncoder
 
 # TODO: break down all sklearn and numpy used inside binarize,
@@ -61,22 +61,41 @@ def binarize(input="X", idxsin="nomcols", output="Xbin", **kwargs):
     cols = kwargs[idxsin]
     encoder = OneHotEncoder()
     nom = encoder.fit_transform(X[:, cols]).toarray()
-    num = np.delete(X, cols, axis=1).astype(float)
-    Xout = np.column_stack((nom, num))
+    num = numpy.delete(X, cols, axis=1).astype(float)
+    Xout = numpy.column_stack((nom, num))
     return {output: Xout, "_history": ...}
 
 
+def df2list(input="df", output="list", **kwargs):
+    """
+    >>> from idict import idict
+    >>> d = idict.fromtoy(output_format="df")
+    >>> d >>= df2list
+    >>> d.list
+    [['attr1', 'attr2', 'class'], [5.1, 6.4, 0.0], [1.1, 2.5, 1.0], [6.1, 3.6, 0.0], [1.1, 3.5, 1.0], [3.1, 2.5, 0.0], [4.7, 4.9, 1.0], [9.1, 3.5, 0.0], [8.3, 2.9, 1.0], [9.1, 7.2, 0.0], [2.5, 4.5, 1.0], [7.1, 6.6, 0.0], [0.1, 4.3, 1.0], [2.1, 0.1, 0.0], [0.1, 4.0, 1.0], [5.1, 4.5, 0.0], [31.1, 4.7, 1.0], [1.1, 3.2, 0.0], [2.2, 8.5, 1.0], [3.1, 2.5, 0.0], [1.1, 8.5, 1.0]]
+    """
+    M = kwargs[input]
+    lst = [list(M.columns)] + M.to_numpy().tolist()
+    return {output: lst, "_history": ...}
+
 nomcols.metadata = {
-    "id": "---------------------------------nomcols",
+    "id": "idict----------------------------nomcols",
     "name": "nomcols",
     "description": "List column indices of nominal attributes.",
     "parameters": ...,
     "code": ...,
 }
 binarize.metadata = {
-    "id": "--------------------------------binarize",
+    "id": "sklearn-1.0.1--np-1.21.4---OHE--binarize",
     "name": "binarize",
     "description": "Binarize nominal attributes so they can be handled as numeric.",
+    "parameters": ...,
+    "code": ...,
+}
+df2list.metadata = {
+    "id": "idict---pandas-1.3.4--np-1.21.4--df2list",
+    "name": "df2list",
+    "description": "Convert DataFrame to nested lists.",
     "parameters": ...,
     "code": ...,
 }

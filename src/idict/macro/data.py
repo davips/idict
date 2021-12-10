@@ -24,11 +24,11 @@ from idict import let
 from idict.function.wrapper import call
 
 
-def dfhead(input="df", output="head", **kwargs):
+def df_head(input="df", output="head"):
     """
     >>> from idict import idict
     >>> d = idict.fromtoy(output_format="df")
-    >>> d >>= dfhead()
+    >>> d >>= df_head()
     >>> d.head
        attr1  attr2  class
     0    5.1    6.4      0

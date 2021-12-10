@@ -20,6 +20,7 @@
 #  part of this work is illegal and it is unethical regarding the effort and
 #  time spent here.
 #
+from sklearn.model_selection import train_test_split
 
 
 def split(input=["X", "y"], config={"test_size": 0.33, "shuffle": True, "stratify": "y", "random_state": 0}, **kwargs):
@@ -52,7 +53,6 @@ def split(input=["X", "y"], config={"test_size": 0.33, "shuffle": True, "stratif
     if input != ["X", "y"]:  # pragma: no cover
         # TODO create a way in ldict to accept a dynamic dict as return value
         raise Exception(f"Not implemented for input/output different from default values: " f"{input}")
-    from sklearn.model_selection import train_test_split
 
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
     args = {}
@@ -68,7 +68,7 @@ def split(input=["X", "y"], config={"test_size": 0.33, "shuffle": True, "stratif
 
 
 split.metadata = {
-    "id": "split----------------------sklearn-1.0.1",
+    "id": "idict--------------sklearn-1.0.1---split",
     "name": "split",
     "description": "Split data in two sets.",
     "parameters": ...,

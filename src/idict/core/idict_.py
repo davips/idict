@@ -40,8 +40,8 @@ from idict.persistence.cache import Cache
 VT = TypeVar("VT")
 
 
-# TODO(minor): implement extend, to avoid excessive calculation when batch inserting values
-# TODO: let(f, ..., omit=["_name", ...])
+# TODO (minor):  implement extend, to avoid excessive calculation when batch inserting values
+# TODO (minor): let(f, ..., omit=["_name", ...])
 class Idict(AbstractMutableLazyDict):
     r"""Mutable lazy identified dict for serializable (picklable) pairs str->value
 
@@ -378,7 +378,7 @@ class Idict(AbstractMutableLazyDict):
             # Build idict from id+cache.
             if _ids or rnd or _cloned or kwargs:  # pragma: no cover
                 raise Exception("Cannot pass more arguments when first argument is id and second argument is cache.")
-            # TODO (minor): detect identity from number of digits
+            # TODO (minor): detect identity (other than ø40) from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)

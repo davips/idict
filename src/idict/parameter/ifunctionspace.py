@@ -80,7 +80,8 @@ class iFunctionSpace:
         if isinstance(left, dict):
             from idict.core.idict_ import Idict
 
-            # TODO iFunctionSpace lacks 'self.identity' to be able to provide here, e.g., number of digits to Idict(..)
+            # TODO (minor):
+            #  iFunctionSpace lacks 'self.identity' to be able to provide here, e.g., number of digits to Idict(..)
 
             return reduce3(lambda a, op, b: op(a, b), (Idict(left), aop) + self.functions_and_ops)
         if isinstance(left, (list, Random, Callable, iLet)):
