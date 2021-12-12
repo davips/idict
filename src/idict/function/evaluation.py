@@ -23,16 +23,20 @@
 from sklearn.model_selection import train_test_split
 
 
-def split(input=["X", "y"], config={"test_size": 0.33, "shuffle": True, "stratify": "y", "random_state": 0}, **kwargs):
+# TODO (minor): enforce versions by runtime checking (sklearn etc)
+
+
+def split(input=["X", "y"], output=["Xtr", "ytr", "Xts", "yts"],
+          config={"test_size": 0.33, "shuffle": True, "stratify": "y", "random_state": 0}, **kwargs):
     r"""
     >>> from idict import idict, let
     >>> d = idict.fromtoy() >> split
     >>> d.show(colored=False)
     {
-        "Xtr": "→(input config X y)",
-        "ytr": "→(input config X y)",
-        "Xts": "→(input config X y)",
-        "yts": "→(input config X y)",
+        "Xtr": "→(input output config X y)",
+        "ytr": "→(input output config X y)",
+        "Xts": "→(input output config X y)",
+        "yts": "→(input output config X y)",
         "_history": "idict--------------sklearn-1.0.1---split",
         "X": "«{'attr1': {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, 'attr2': {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»",
         "y": "«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»",
@@ -50,21 +54,19 @@ def split(input=["X", "y"], config={"test_size": 0.33, "shuffle": True, "stratif
     >>> d.yts
     array([1, 0, 1, 0, 0, 0, 1])
     """
-    if input != ["X", "y"]:  # pragma: no cover
-        # TODO create a way in ldict to accept a dynamic dict as return value
-        raise Exception(f"Not implemented for input/output different from default values: " f"{input}")
-
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
-    args = {}
+    multidynamic_input = {}
     for i, _ in enumerate(input):
-        args[input[i]] = kwargs[input[i]]
+        multidynamic_input[input[i]] = kwargs[input[i]]
 
     if "stratify" in config and isinstance(config["stratify"], str):
         if config["stratify"] not in input:  # pragma: no cover
             raise Exception(f"Missing field {config['stratify']} for stratification.")
-        config["stratify"] = args[config["stratify"]]
-    Xtr, Xts, ytr, yts = train_test_split(*args.values(), **config)
-    return {"Xtr": Xtr, "ytr": ytr, "Xts": Xts, "yts": yts, "_history": ...}
+        config["stratify"] = multidynamic_input[config["stratify"]]
+    result = train_test_split(*multidynamic_input.values(), **config)
+    out = {k: v for k, v in zip(output, result)}
+    # Multidynamic output cannot be detected, so it can only be defined as metadata.
+    return out
 
 
 split.metadata = {
@@ -73,6 +75,10 @@ split.metadata = {
     "description": "Split data in two sets.",
     "parameters": ...,
     "code": ...,
+    "output": {
+        "fields": [],
+        "auto": ["_history"],
+        "meta": [],
+        "dynamic": ["output"]
+    }
 }
-
-# TODO: enforce versions by runtime checking (sklearn etc)

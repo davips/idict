@@ -28,14 +28,14 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40
-from ldict.core.appearance import decolorize
-from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
-from ldict.exception import WrongKeyType
 
 import idict.core.frozenidentifieddict as fro
 from idict.parameter.ifunctionspace import iFunctionSpace
 from idict.parameter.ilet import iLet
 from idict.persistence.cache import Cache
+from ldict.core.appearance import decolorize
+from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
+from ldict.exception import WrongKeyType
 
 VT = TypeVar("VT")
 
@@ -386,6 +386,8 @@ class Idict(AbstractMutableLazyDict):
                 raise Exception("Cannot pass more arguments when first argument is id and second argument is cache.")
             # TODO (minor): detect identity (other than ø40) from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
+        elif isinstance(_dictionary, FrozenIdentifiedDict):
+            self.frozen = _dictionary
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 

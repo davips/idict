@@ -48,15 +48,15 @@ def pack(obj, ensure_determinism=True):
     >>> len(memo), GLOBAL["compression_cachesize"], GLOBAL["compression_cachelimit"]
     (2, 88, 100)
     """
-    memid = id(obj)
-    memo = GLOBAL["compression_cache"]
-    if memid in memo:
-        if obj is memo[memid]["unpacked"]:
-            return memo[memid]["packed"]
-        else:
-            # rare collision
-            GLOBAL["compression_cachesize"] -= memo[memid]["packed"]
-            del memo[memid]
+    # memid = id(obj)
+    # memo = GLOBAL["compression_cache"]
+    # if memid in memo:
+    #     if obj is memo[memid]["unpacked"]:
+    #         return memo[memid]["packed"]
+    #     else:
+    #         # rare collision
+    #         GLOBAL["compression_cachesize"] -= memo[memid]["packed"]
+    #         del memo[memid]
 
     try:
         try:
@@ -71,15 +71,15 @@ def pack(obj, ensure_determinism=True):
             prefix = b"dill_"
 
         blob = prefix + lz4.compress(dump)
-        GLOBAL["compression_cachesize"] += len(blob)
-        memo[memid] = {"unpacked": obj, "packed": blob}
+        # GLOBAL["compression_cachesize"] += len(blob)
+        # memo[memid] = {"unpacked": obj, "packed": blob}
 
-        # LRU
-        keys = iter(list(memo.keys()))
-        while len(memo) > 0 and GLOBAL["compression_cachesize"] > GLOBAL["compression_cachelimit"]:
-            k = next(keys)
-            v = memo.pop(k)["packed"]
-            GLOBAL["compression_cachesize"] -= len(v)
+        # # LRU
+        # keys = iter(list(memo.keys()))
+        # while len(memo) > 0 and GLOBAL["compression_cachesize"] > GLOBAL["compression_cachelimit"]:
+        #     k = next(keys)
+        #     v = memo.pop(k)["packed"]
+        #     GLOBAL["compression_cachesize"] -= len(v)
 
         return blob
     except KeyError as e:  # pragma: no cover

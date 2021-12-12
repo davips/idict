@@ -587,7 +587,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return build(val["_id"], val["_ids"], cache, identity)
 
     @staticmethod
-    def fromfile(name, output=["df"], output_format="df", include_name=False, identity=ø40):
+    def fromfile(name, output=None, output_format="df", include_name=False, identity=ø40):
         """Input format is defined by file extension: .arff, .csv
         >>> d = FrozenIdentifiedDict.fromminiarff()
         >>> d.show(colored=False)
@@ -627,6 +627,8 @@ class FrozenIdentifiedDict(AbstractLazyDict):
             }
         }
         """
+        if output is None:
+            output = ["df"]
         df, name = file2df(name)
         metafields = {"_name": name} if include_name else {}
         if output_format == "df":
@@ -712,6 +714,4 @@ class FrozenIdentifiedDict(AbstractLazyDict):
     def asmutable(self):
         from idict.core.idict_ import Idict
 
-        mut = Idict(identity=self.identity)
-        mut.frozen = self
-        return mut
+        return Idict(self, identity=self.identity)
