@@ -38,8 +38,8 @@ def split(
     >>> d.show(colored=False)
     {
         "Xtr": "→(input output config X y)",
-        "ytr": "→(input output config X y)",
         "Xts": "→(input output config X y)",
+        "ytr": "→(input output config X y)",
         "yts": "→(input output config X y)",
         "_history": "idict--------------sklearn-1.0.1---split",
         "X": "«{'attr1': {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, 'attr2': {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»",
@@ -47,8 +47,8 @@ def split(
         "_id": "8eGk98oY-ZJCTDqlI6cQpv.ScL12.0.1---split",
         "_ids": {
             "Xtr": "XfsV-At5YI8NOBUjjJ-0vEa.qJLAX0I5JQ7SxahM",
-            "ytr": "CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE",
-            "Xts": "ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI",
+            "Xts": "CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE",
+            "ytr": "ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI",
             "yts": "DojEKdt2iJ0wrptdFUnxUqPGet097oXIBIrZpihN",
             "_history": "c12dMve-KehkFGbdmaqUHg5jXum1pLkGI164PIIC",
             "X": "md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)",

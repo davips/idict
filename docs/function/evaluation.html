@@ -56,7 +56,7 @@ from sklearn.model_selection import train_test_split
 
 def split(
     input=[&#34;X&#34;, &#34;y&#34;],
-    output=[&#34;Xtr&#34;, &#34;ytr&#34;, &#34;Xts&#34;, &#34;yts&#34;],
+    output=[&#34;Xtr&#34;, &#34;Xts&#34;, &#34;ytr&#34;, &#34;yts&#34;],
     config={&#34;test_size&#34;: 0.33, &#34;shuffle&#34;: True, &#34;stratify&#34;: &#34;y&#34;, &#34;random_state&#34;: 0},
     **kwargs,
 ):
@@ -66,8 +66,8 @@ def split(
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;Xtr&#34;: &#34;→(input output config X y)&#34;,
-        &#34;ytr&#34;: &#34;→(input output config X y)&#34;,
         &#34;Xts&#34;: &#34;→(input output config X y)&#34;,
+        &#34;ytr&#34;: &#34;→(input output config X y)&#34;,
         &#34;yts&#34;: &#34;→(input output config X y)&#34;,
         &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1---split&#34;,
         &#34;X&#34;: &#34;«{&#39;attr1&#39;: {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, &#39;attr2&#39;: {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&#34;,
@@ -75,8 +75,8 @@ def split(
         &#34;_id&#34;: &#34;8eGk98oY-ZJCTDqlI6cQpv.ScL12.0.1---split&#34;,
         &#34;_ids&#34;: {
             &#34;Xtr&#34;: &#34;XfsV-At5YI8NOBUjjJ-0vEa.qJLAX0I5JQ7SxahM&#34;,
-            &#34;ytr&#34;: &#34;CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE&#34;,
-            &#34;Xts&#34;: &#34;ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI&#34;,
+            &#34;Xts&#34;: &#34;CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE&#34;,
+            &#34;ytr&#34;: &#34;ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI&#34;,
             &#34;yts&#34;: &#34;DojEKdt2iJ0wrptdFUnxUqPGet097oXIBIrZpihN&#34;,
             &#34;_history&#34;: &#34;c12dMve-KehkFGbdmaqUHg5jXum1pLkGI164PIIC&#34;,
             &#34;X&#34;: &#34;md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)&#34;,
@@ -119,7 +119,7 @@ split.metadata = {
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.function.evaluation.split"><code class="name flex">
-<span>def <span class="ident">split</span></span>(<span>input=['X', 'y'], output=['Xtr', 'ytr', 'Xts', 'yts'], config={'test_size': 0.33, 'shuffle': True, 'stratify': 'y', 'random_state': 0}, **kwargs)</span>
+<span>def <span class="ident">split</span></span>(<span>input=['X', 'y'], output=['Xtr', 'Xts', 'ytr', 'yts'], config={'test_size': 0.33, 'shuffle': True, 'stratify': 'y', 'random_state': 0}, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
@@ -127,8 +127,8 @@ split.metadata = {
 &gt;&gt;&gt; d.show(colored=False)
 {
     &quot;Xtr&quot;: &quot;→(input output config X y)&quot;,
-    &quot;ytr&quot;: &quot;→(input output config X y)&quot;,
     &quot;Xts&quot;: &quot;→(input output config X y)&quot;,
+    &quot;ytr&quot;: &quot;→(input output config X y)&quot;,
     &quot;yts&quot;: &quot;→(input output config X y)&quot;,
     &quot;_history&quot;: &quot;idict--------------sklearn-1.0.1---split&quot;,
     &quot;X&quot;: &quot;«{'attr1': {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, 'attr2': {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&quot;,
@@ -136,8 +136,8 @@ split.metadata = {
     &quot;_id&quot;: &quot;8eGk98oY-ZJCTDqlI6cQpv.ScL12.0.1---split&quot;,
     &quot;_ids&quot;: {
         &quot;Xtr&quot;: &quot;XfsV-At5YI8NOBUjjJ-0vEa.qJLAX0I5JQ7SxahM&quot;,
-        &quot;ytr&quot;: &quot;CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE&quot;,
-        &quot;Xts&quot;: &quot;ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI&quot;,
+        &quot;Xts&quot;: &quot;CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE&quot;,
+        &quot;ytr&quot;: &quot;ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI&quot;,
         &quot;yts&quot;: &quot;DojEKdt2iJ0wrptdFUnxUqPGet097oXIBIrZpihN&quot;,
         &quot;_history&quot;: &quot;c12dMve-KehkFGbdmaqUHg5jXum1pLkGI164PIIC&quot;,
         &quot;X&quot;: &quot;md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)&quot;,
@@ -153,7 +153,7 @@ array([1, 0, 1, 0, 0, 0, 1])
 </summary>
 <pre><code class="python">def split(
     input=[&#34;X&#34;, &#34;y&#34;],
-    output=[&#34;Xtr&#34;, &#34;ytr&#34;, &#34;Xts&#34;, &#34;yts&#34;],
+    output=[&#34;Xtr&#34;, &#34;Xts&#34;, &#34;ytr&#34;, &#34;yts&#34;],
     config={&#34;test_size&#34;: 0.33, &#34;shuffle&#34;: True, &#34;stratify&#34;: &#34;y&#34;, &#34;random_state&#34;: 0},
     **kwargs,
 ):
@@ -163,8 +163,8 @@ array([1, 0, 1, 0, 0, 0, 1])
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;Xtr&#34;: &#34;→(input output config X y)&#34;,
-        &#34;ytr&#34;: &#34;→(input output config X y)&#34;,
         &#34;Xts&#34;: &#34;→(input output config X y)&#34;,
+        &#34;ytr&#34;: &#34;→(input output config X y)&#34;,
         &#34;yts&#34;: &#34;→(input output config X y)&#34;,
         &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1---split&#34;,
         &#34;X&#34;: &#34;«{&#39;attr1&#39;: {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, &#39;attr2&#39;: {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&#34;,
@@ -172,8 +172,8 @@ array([1, 0, 1, 0, 0, 0, 1])
         &#34;_id&#34;: &#34;8eGk98oY-ZJCTDqlI6cQpv.ScL12.0.1---split&#34;,
         &#34;_ids&#34;: {
             &#34;Xtr&#34;: &#34;XfsV-At5YI8NOBUjjJ-0vEa.qJLAX0I5JQ7SxahM&#34;,
-            &#34;ytr&#34;: &#34;CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE&#34;,
-            &#34;Xts&#34;: &#34;ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI&#34;,
+            &#34;Xts&#34;: &#34;CRh.K81gKNvdsngaWupSWn9JwTpU1O-FiM6QfraE&#34;,
+            &#34;ytr&#34;: &#34;ZzQ4QJL8HWGdMxK5QZl2XLDxq2rVjr4XHPILqMUI&#34;,
             &#34;yts&#34;: &#34;DojEKdt2iJ0wrptdFUnxUqPGet097oXIBIrZpihN&#34;,
             &#34;_history&#34;: &#34;c12dMve-KehkFGbdmaqUHg5jXum1pLkGI164PIIC&#34;,
             &#34;X&#34;: &#34;md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)&#34;,

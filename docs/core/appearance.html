@@ -52,7 +52,9 @@ import json
 
 from garoupa import Hosh
 from garoupa.misc.colors import id2ansi
+
 from ldict.customjson import CustomJSONEncoder
+from ldict.lazyval import LazyVal
 
 
 def idict2txt(d, all, history):
@@ -81,8 +83,11 @@ def idict2txt(d, all, history):
     if &#34;_id&#34; in dic:
         txt = txt.replace(dic[&#34;_id&#34;], d.hosh.idc)
     if &#34;_history&#34; in dic:
-        for id in dic[&#34;_history&#34;].split(&#34; &#34;):
-            txt = txt.replace(id, id2ansi(id))
+        if isinstance(dic[&#34;_history&#34;], LazyVal):
+            dic[&#34;_history&#34;] = dic[&#34;_history&#34;]()
+        if isinstance(dic[&#34;_history&#34;], str):
+            for id in dic[&#34;_history&#34;].split(&#34; &#34;):
+                txt = txt.replace(id, id2ansi(id))
     if all:
         for k, v in d.hoshes.items():
             nokey = &#34;&#34;
@@ -192,8 +197,11 @@ def idict2dict(d, all, history):
     if &#34;_id&#34; in dic:
         txt = txt.replace(dic[&#34;_id&#34;], d.hosh.idc)
     if &#34;_history&#34; in dic:
-        for id in dic[&#34;_history&#34;].split(&#34; &#34;):
-            txt = txt.replace(id, id2ansi(id))
+        if isinstance(dic[&#34;_history&#34;], LazyVal):
+            dic[&#34;_history&#34;] = dic[&#34;_history&#34;]()
+        if isinstance(dic[&#34;_history&#34;], str):
+            for id in dic[&#34;_history&#34;].split(&#34; &#34;):
+                txt = txt.replace(id, id2ansi(id))
     if all:
         for k, v in d.hoshes.items():
             nokey = &#34;&#34;
