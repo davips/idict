@@ -28,7 +28,7 @@ from sklearn.model_selection import train_test_split
 
 def split(
     input=["X", "y"],
-    output=["Xtr", "ytr", "Xts", "yts"],
+    output=["Xtr", "Xts", "ytr", "yts"],
     config={"test_size": 0.33, "shuffle": True, "stratify": "y", "random_state": 0},
     **kwargs,
 ):
