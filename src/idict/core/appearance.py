@@ -24,7 +24,9 @@ import json
 
 from garoupa import Hosh
 from garoupa.misc.colors import id2ansi
+
 from ldict.customjson import CustomJSONEncoder
+from ldict.lazyval import LazyVal
 
 
 def idict2txt(d, all, history):
@@ -53,8 +55,11 @@ def idict2txt(d, all, history):
     if "_id" in dic:
         txt = txt.replace(dic["_id"], d.hosh.idc)
     if "_history" in dic:
-        for id in dic["_history"].split(" "):
-            txt = txt.replace(id, id2ansi(id))
+        if isinstance(dic["_history"], LazyVal):
+            dic["_history"] = dic["_history"]()
+        if isinstance(dic["_history"], str):
+            for id in dic["_history"].split(" "):
+                txt = txt.replace(id, id2ansi(id))
     if all:
         for k, v in d.hoshes.items():
             nokey = ""
