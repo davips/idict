@@ -56,20 +56,26 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40
-from ldict.core.appearance import decolorize
-from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
-from ldict.exception import WrongKeyType
 
 import idict.core.frozenidentifieddict as fro
 from idict.parameter.ifunctionspace import iFunctionSpace
 from idict.parameter.ilet import iLet
 from idict.persistence.cache import Cache
+from ldict.core.appearance import decolorize
+from ldict.core.base import AbstractMutableLazyDict, AbstractLazyDict
+from ldict.exception import WrongKeyType
 
 VT = TypeVar(&#34;VT&#34;)
 
 
+# TODO: k-fold CV
 # TODO (minor):  implement extend, to avoid excessive calculation when batch inserting values
 # TODO (minor): let(f, ..., omit=[&#34;_name&#34;, ...])
+# TODO: serialize pandas (and define safe/unsafe unpack), or some of the options bellow
+# TODO: Store DF as LazyDF that depends on column metafeatures?
+#   or column metafeatures?
+#   or depends on a cache? Or both?    LazyDF(cols, indices, cache)
+# TODO: document multilevel cache:  .. &gt;&gt; [oka, disk, RAM] &gt;&gt; ..
 class Idict(AbstractMutableLazyDict):
     r&#34;&#34;&#34;Mutable lazy identified dict for serializable (picklable) pairs str-&gt;value
 
@@ -408,6 +414,8 @@ class Idict(AbstractMutableLazyDict):
                 raise Exception(&#34;Cannot pass more arguments when first argument is id and second argument is cache.&#34;)
             # TODO (minor): detect identity (other than ø40) from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
+        elif isinstance(_dictionary, FrozenIdentifiedDict):
+            self.frozen = _dictionary
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 
@@ -1298,6 +1306,8 @@ FHezbXIcslIpb9mWpbUat7LaEAk1smsieeekmoge
                 raise Exception(&#34;Cannot pass more arguments when first argument is id and second argument is cache.&#34;)
             # TODO (minor): detect identity (other than ø40) from number of digits
             self.frozen = FrozenIdentifiedDict.fromid(_dictionary, _id, identity=identity)
+        elif isinstance(_dictionary, FrozenIdentifiedDict):
+            self.frozen = _dictionary
         else:
             self.frozen = FrozenIdentifiedDict(_dictionary, _id, _ids, rnd, identity, _cloned, **kwargs)
 

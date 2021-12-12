@@ -48,54 +48,247 @@
 #  part of this work is illegal and it is unethical regarding the effort and
 #  time spent here.
 #
+from typing import Iterator
 
 
-def call(method=None, input=None, output=None, **kwargs):
+def new(classin=&#34;class_&#34;, input=&#34;[]&#34;, translated_input=&#34;[]&#34;, output=&#34;obj&#34;, configin=&#34;config=None&#34;, version=0, **kwargs):
     r&#34;&#34;&#34;
+    Instantiate a Python class
+
+    &#39;config&#39; overrides &#39;input&#39;, when conflicting keys are provided.
+
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
+    &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+    &gt;&gt;&gt; config = {&#34;n_splits&#34;:2, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+    &gt;&gt;&gt; d.obj
+    StratifiedKFold(n_splits=2, random_state=0, shuffle=True)
+    &#34;&#34;&#34;
+    if input == &#34;[]&#34;:
+        input = []
+    if translated_input == &#34;[]&#34;:
+        translated_input = []
+    class_ = kwargs[classin]
+    config = kwargs[configin]
+    if translated_input:
+        multidynamic_input = {}
+        for i, tr in enumerate(translated_input):
+            multidynamic_input[tr] = kwargs[input[i]]
+        result = class_(**multidynamic_input, **config)
+    else:
+        multidynamic_input = [kwargs[_i] for _i in input]
+        result = class_(*multidynamic_input, **config)
+    return {output: result, &#34;_history&#34;: ...}
+
+
+# REMINDER: A field cannot be used to define a dependence on another field.
+#   Only parameters can do that.
+#   Otherwise, it would lead to kwargs[kwargs[field]], whose detection is messy at the application step.
+def call(
+    field=&#34;obj&#34;,
+    methodin=&#34;method&#34;,
+    input=&#34;[]&#34;,
+    translated_input=&#34;[]&#34;,
+    output=&#34;call&#34;,
+    configin=&#34;config=None&#34;,
+    version=0,
+    **kwargs
+):
+    r&#34;&#34;&#34;
+    Call a method on a field
+
+    Evaluate iterators, if any.
+    &#39;config&#39; overrides &#39;input&#39;, when conflicting keys are provided.
+
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;Xy&#34;)
+    &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+    &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+    &gt;&gt;&gt; d.obj
+    StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;X&#34;,&#34;y&#34;], output=[&#34;partition1&#34;, &#34;partition2&#34;, &#34;partition3&#34;])
+    &gt;&gt;&gt; d.partition2
+    (array([ 0,  2,  5,  6,  7,  8,  9, 11, 12, 13, 14, 16, 17]), array([ 1,  3,  4, 10, 15, 18, 19]))
+    &#34;&#34;&#34;
+    # Multidynamic input is only detected when the kwargs index is also indexed by something.
+    if input == &#34;[]&#34;:
+        input = []
+    if translated_input == &#34;[]&#34;:
+        translated_input = []
+    config = kwargs[configin] if configin in kwargs else {}
+    if translated_input:
+        multidynamic_input = {}
+        for i, tr in enumerate(translated_input):
+            multidynamic_input[tr] = kwargs[input[i]]
+        result = getattr(kwargs[field], kwargs[methodin])(**multidynamic_input, **config)
+    else:
+        multidynamic_input = [kwargs[_i] for _i in input]
+        result = getattr(kwargs[field], kwargs[methodin])(*multidynamic_input, **config)
+
+    if isinstance(result, Iterator):
+        result = list(result)
+    if isinstance(output, str):
+        return {output: result}
+    # Multidynamic output cannot be detected, so it can only be defined as metadata.
+    return {k: v for k, v in zip(output, result)}
+
+
+def at(field=&#34;obj&#34;, indexin=&#34;index&#34;, output=&#34;at&#34;, version=0, **kwargs):
+    r&#34;&#34;&#34;
+    Access value inside an indexed field
+
+    Evaluate value-iterator, if it is the case.
+
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
+    &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+    &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+    &gt;&gt;&gt; d.obj
+    StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
+    &gt;&gt;&gt; d[&#34;y&#34;] = d.df.iloc[:,-1]
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;df&#34;, &#34;y&#34;], translated_input=[&#34;X&#34;, &#34;y&#34;], output=[f&#34;p{i}&#34; for i in range(3)])
+    &gt;&gt;&gt; d[&#34;itr&#34;], d[&#34;its&#34;] = d.p2
+    &gt;&gt;&gt; d.its
+    array([ 2,  6,  9, 11, 12, 17])
+    &gt;&gt;&gt; d &gt;&gt;= let(at, field=&#34;df&#34;, indexin=&#34;its&#34;, output=&#34;ts&#34;)
+    &gt;&gt;&gt; d.ts
+        attr1  attr2  class
+    2     6.1    3.6      0
+    6     9.1    3.5      0
+    9     2.5    4.5      1
+    11    0.1    4.3      1
+    12    2.1    0.1      0
+    17    2.2    8.5      1
+    &#34;&#34;&#34;
+    obj = kwargs[field]
+    if hasattr(obj, &#34;iloc&#34;):
+        result = obj.iloc[kwargs[indexin]]
+    else:
+        result = obj[kwargs[indexin]]
+    if isinstance(result, Iterator):
+        result = list(result)
+    if isinstance(output, str):
+        return {output: result}
+    # Multidynamic output cannot be detected, so it can only be defined as metadata.
+    return {k: v for k, v in zip(output, result)}
+
+
+def access(field=&#34;obj&#34;, propertyin=&#34;property&#34;, output=&#34;access&#34;, version=0, **kwargs):
+    r&#34;&#34;&#34;
+    Access a property on a field
+
     &gt;&gt;&gt; from idict import idict, let
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
     &gt;&gt;&gt; cache = {}
-    &gt;&gt;&gt; d &gt;&gt;= let(call, input=&#34;df&#34;, method=&#34;head&#34;, output=&#34;head&#34;) &gt;&gt; [cache]
+    &gt;&gt;&gt; d &gt;&gt;= let(access, field=&#34;df&#34;, property=&#34;head&#34;, output=&#34;head&#34;) &gt;&gt; [cache]
     &gt;&gt;&gt; d.head
-       attr1  attr2  class
-    0    5.1    6.4      0
-    1    1.1    2.5      1
-    2    6.1    3.6      0
-    3    1.1    3.5      1
-    4    3.1    2.5      0
+    &lt;bound method NDFrame.head of     attr1  attr2  class
+    0     5.1    6.4      0
+    1     1.1    2.5      1
+    2     6.1    3.6      0
+    3     1.1    3.5      1
+    4     3.1    2.5      0
+    5     4.7    4.9      1
+    6     9.1    3.5      0
+    7     8.3    2.9      1
+    8     9.1    7.2      0
+    9     2.5    4.5      1
+    10    7.1    6.6      0
+    11    0.1    4.3      1
+    12    2.1    0.1      0
+    13    0.1    4.0      1
+    14    5.1    4.5      0
+    15   31.1    4.7      1
+    16    1.1    3.2      0
+    17    2.2    8.5      1
+    18    3.1    2.5      0
+    19    1.1    8.5      1&gt;
     &gt;&gt;&gt; d = idict(d.id, cache)
     &gt;&gt;&gt; d.history
-    {&#39;idict----------------------wrapper--call&#39;: {&#39;name&#39;: &#39;call&#39;, &#39;description&#39;: &#39;Call a method on a given field.&#39;, &#39;parameters&#39;: {&#39;method&#39;: &#39;head&#39;, &#39;input&#39;: &#39;df&#39;, &#39;output&#39;: &#39;head&#39;}, &#39;code&#39;: &#34;def f(method=None, input=None, output=None, **kwargs):\nreturn {output: getattr(kwargs[input], method)(), &#39;_history&#39;: ...}&#34;}}
+    {&#39;idict--------------------wrapper--access&#39;: {&#39;name&#39;: &#39;access&#39;, &#39;description&#39;: &#39;Access a property on a given field.&#39;, &#39;parameters&#39;: {&#39;field&#39;: &#39;df&#39;, &#39;propertyin&#39;: &#39;property&#39;, &#39;output&#39;: &#39;head&#39;, &#39;version&#39;: 0, &#39;property&#39;: &#39;head&#39;}, &#39;code&#39;: &#34;def f(field=&#39;obj&#39;, propertyin=&#39;property&#39;, output=&#39;access&#39;, version=0, **kwargs):\nreturn {output: getattr(kwargs[field], kwargs[propertyin]), &#39;_history&#39;: ...}&#34;}}
     &#34;&#34;&#34;
-    return {output: getattr(kwargs[input], method)(), &#34;_history&#34;: ...}
+    return {output: getattr(kwargs[field], kwargs[propertyin]), &#34;_history&#34;: ...}
 
 
-def xywrapper(function=None, config={}, Xin=&#34;X&#34;, yin=&#34;y&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, version=0, **kwargs):
+def apply(
+    functionin=&#34;function&#34;,
+    input=&#34;[]&#34;,
+    translated_input=&#34;[]&#34;,
+    output=[&#34;apply&#34;],
+    configin=&#34;config=None&#34;,
+    version=0,
+    **kwargs
+):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from sklearn.utils import resample
-    &gt;&gt;&gt; X=[[1,2,3], [4,5,6], [11,12,13]]
-    &gt;&gt;&gt; y=[7,8,9]
-    &gt;&gt;&gt; xywrapper(resample, config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0}, X=X, y=y)
-    {&#39;X&#39;: [[1, 2, 3], [4, 5, 6]], &#39;y&#39;: [7, 8], &#39;_history&#39;: Ellipsis}
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict(X=[[1,2,3], [4,5,6], [11,12,13]], y=[7,8,9])
+    &gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&#34;X&#34;, &#34;y&#34;], output=[&#34;X&#34;, &#34;y&#34;], config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0})
+    &gt;&gt;&gt; d.X
+    [[1, 2, 3], [4, 5, 6]]
+    &gt;&gt;&gt; d.y
+    [7, 8]
     &#34;&#34;&#34;
-    result = function(kwargs[Xin], kwargs[yin], **config)
-    return {Xout: result[0], yout: result[1], &#34;_history&#34;: ...}
+    if input == &#34;[]&#34;:
+        input = []
+    if translated_input == &#34;[]&#34;:
+        translated_input = []
+    f = kwargs[functionin]
+    config = kwargs[configin]
+    if translated_input:
+        multidynamic_input = {}
+        for i, tr in enumerate(translated_input):
+            multidynamic_input[tr] = kwargs[input[i]]
+        result = f(**multidynamic_input, **config)
+    else:
+        multidynamic_input = [kwargs[_i] for _i in input]
+        result = f(*multidynamic_input, **config)
+
+    out = {k: v for k, v in zip(output, result)}
+    # Multidynamic output cannot be detected, so it can only be defined as metadata.
+    return out
 
 
+new.metadata = {
+    &#34;id&#34;: &#34;idict-----------------------wrapper--new&#34;,
+    &#34;name&#34;: &#34;new&#34;,
+    &#34;description&#34;: &#34;Instantiate a Python class.&#34;,
+    &#34;parameters&#34;: ...,
+    &#34;code&#34;: ...,
+}
 call.metadata = {
     &#34;id&#34;: &#34;idict----------------------wrapper--call&#34;,
     &#34;name&#34;: &#34;call&#34;,
     &#34;description&#34;: &#34;Call a method on a given field.&#34;,
     &#34;parameters&#34;: ...,
     &#34;code&#34;: ...,
+    &#34;output&#34;: {&#34;fields&#34;: [], &#34;auto&#34;: [&#34;_history&#34;], &#34;meta&#34;: [], &#34;dynamic&#34;: [&#34;output&#34;]},
 }
-
-xywrapper.metadata = {
-    &#34;id&#34;: &#34;idict-----------------wrapper--xywrapper&#34;,
-    &#34;name&#34;: &#34;xywrapper&#34;,
-    &#34;description&#34;: &#34;Wrapper for Xy-based funcions.&#34;,
+at.metadata = {
+    &#34;id&#34;: &#34;idict------------------------wrapper--at&#34;,
+    &#34;name&#34;: &#34;at&#34;,
+    &#34;description&#34;: &#34;Access value inside an indexed field.&#34;,
     &#34;parameters&#34;: ...,
     &#34;code&#34;: ...,
+    &#34;output&#34;: {&#34;fields&#34;: [], &#34;auto&#34;: [&#34;_history&#34;], &#34;meta&#34;: [], &#34;dynamic&#34;: [&#34;output&#34;]},
+}
+access.metadata = {
+    &#34;id&#34;: &#34;idict--------------------wrapper--access&#34;,
+    &#34;name&#34;: &#34;access&#34;,
+    &#34;description&#34;: &#34;Access a property on a given field.&#34;,
+    &#34;parameters&#34;: ...,
+    &#34;code&#34;: ...,
+}
+apply.metadata = {
+    &#34;id&#34;: &#34;idict---------------------wrapper--apply&#34;,
+    &#34;name&#34;: &#34;apply&#34;,
+    &#34;description&#34;: &#34;Apply a function.&#34;,
+    &#34;parameters&#34;: ...,
+    &#34;code&#34;: ...,
+    &#34;output&#34;: {&#34;fields&#34;: [], &#34;auto&#34;: [&#34;_history&#34;], &#34;meta&#34;: [], &#34;dynamic&#34;: [&#34;output&#34;]},
 }</code></pre>
 </details>
 </section>
@@ -106,73 +299,330 @@ xywrapper.metadata = {
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="idict.function.wrapper.call"><code class="name flex">
-<span>def <span class="ident">call</span></span>(<span>method=None, input=None, output=None, **kwargs)</span>
+<dt id="idict.function.wrapper.access"><code class="name flex">
+<span>def <span class="ident">access</span></span>(<span>field='obj', propertyin='property', output='access', version=0, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
+<div class="desc"><p>Access a property on a field</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
 &gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;)
 &gt;&gt;&gt; cache = {}
-&gt;&gt;&gt; d &gt;&gt;= let(call, input=&quot;df&quot;, method=&quot;head&quot;, output=&quot;head&quot;) &gt;&gt; [cache]
+&gt;&gt;&gt; d &gt;&gt;= let(access, field=&quot;df&quot;, property=&quot;head&quot;, output=&quot;head&quot;) &gt;&gt; [cache]
 &gt;&gt;&gt; d.head
-   attr1  attr2  class
-0    5.1    6.4      0
-1    1.1    2.5      1
-2    6.1    3.6      0
-3    1.1    3.5      1
-4    3.1    2.5      0
+&lt;bound method NDFrame.head of     attr1  attr2  class
+0     5.1    6.4      0
+1     1.1    2.5      1
+2     6.1    3.6      0
+3     1.1    3.5      1
+4     3.1    2.5      0
+5     4.7    4.9      1
+6     9.1    3.5      0
+7     8.3    2.9      1
+8     9.1    7.2      0
+9     2.5    4.5      1
+10    7.1    6.6      0
+11    0.1    4.3      1
+12    2.1    0.1      0
+13    0.1    4.0      1
+14    5.1    4.5      0
+15   31.1    4.7      1
+16    1.1    3.2      0
+17    2.2    8.5      1
+18    3.1    2.5      0
+19    1.1    8.5      1&gt;
 &gt;&gt;&gt; d = idict(d.id, cache)
 &gt;&gt;&gt; d.history
-{'idict----------------------wrapper--call': {'name': 'call', 'description': 'Call a method on a given field.', 'parameters': {'method': 'head', 'input': 'df', 'output': 'head'}, 'code': &quot;def f(method=None, input=None, output=None, **kwargs):\nreturn {output: getattr(kwargs[input], method)(), '_history': ...}&quot;}}
+{'idict--------------------wrapper--access': {'name': 'access', 'description': 'Access a property on a given field.', 'parameters': {'field': 'df', 'propertyin': 'property', 'output': 'head', 'version': 0, 'property': 'head'}, 'code': &quot;def f(field='obj', propertyin='property', output='access', version=0, **kwargs):\nreturn {output: getattr(kwargs[field], kwargs[propertyin]), '_history': ...}&quot;}}
 </code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def call(method=None, input=None, output=None, **kwargs):
+<pre><code class="python">def access(field=&#34;obj&#34;, propertyin=&#34;property&#34;, output=&#34;access&#34;, version=0, **kwargs):
     r&#34;&#34;&#34;
+    Access a property on a field
+
     &gt;&gt;&gt; from idict import idict, let
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
     &gt;&gt;&gt; cache = {}
-    &gt;&gt;&gt; d &gt;&gt;= let(call, input=&#34;df&#34;, method=&#34;head&#34;, output=&#34;head&#34;) &gt;&gt; [cache]
+    &gt;&gt;&gt; d &gt;&gt;= let(access, field=&#34;df&#34;, property=&#34;head&#34;, output=&#34;head&#34;) &gt;&gt; [cache]
     &gt;&gt;&gt; d.head
-       attr1  attr2  class
-    0    5.1    6.4      0
-    1    1.1    2.5      1
-    2    6.1    3.6      0
-    3    1.1    3.5      1
-    4    3.1    2.5      0
+    &lt;bound method NDFrame.head of     attr1  attr2  class
+    0     5.1    6.4      0
+    1     1.1    2.5      1
+    2     6.1    3.6      0
+    3     1.1    3.5      1
+    4     3.1    2.5      0
+    5     4.7    4.9      1
+    6     9.1    3.5      0
+    7     8.3    2.9      1
+    8     9.1    7.2      0
+    9     2.5    4.5      1
+    10    7.1    6.6      0
+    11    0.1    4.3      1
+    12    2.1    0.1      0
+    13    0.1    4.0      1
+    14    5.1    4.5      0
+    15   31.1    4.7      1
+    16    1.1    3.2      0
+    17    2.2    8.5      1
+    18    3.1    2.5      0
+    19    1.1    8.5      1&gt;
     &gt;&gt;&gt; d = idict(d.id, cache)
     &gt;&gt;&gt; d.history
-    {&#39;idict----------------------wrapper--call&#39;: {&#39;name&#39;: &#39;call&#39;, &#39;description&#39;: &#39;Call a method on a given field.&#39;, &#39;parameters&#39;: {&#39;method&#39;: &#39;head&#39;, &#39;input&#39;: &#39;df&#39;, &#39;output&#39;: &#39;head&#39;}, &#39;code&#39;: &#34;def f(method=None, input=None, output=None, **kwargs):\nreturn {output: getattr(kwargs[input], method)(), &#39;_history&#39;: ...}&#34;}}
+    {&#39;idict--------------------wrapper--access&#39;: {&#39;name&#39;: &#39;access&#39;, &#39;description&#39;: &#39;Access a property on a given field.&#39;, &#39;parameters&#39;: {&#39;field&#39;: &#39;df&#39;, &#39;propertyin&#39;: &#39;property&#39;, &#39;output&#39;: &#39;head&#39;, &#39;version&#39;: 0, &#39;property&#39;: &#39;head&#39;}, &#39;code&#39;: &#34;def f(field=&#39;obj&#39;, propertyin=&#39;property&#39;, output=&#39;access&#39;, version=0, **kwargs):\nreturn {output: getattr(kwargs[field], kwargs[propertyin]), &#39;_history&#39;: ...}&#34;}}
     &#34;&#34;&#34;
-    return {output: getattr(kwargs[input], method)(), &#34;_history&#34;: ...}</code></pre>
+    return {output: getattr(kwargs[field], kwargs[propertyin]), &#34;_history&#34;: ...}</code></pre>
 </details>
 </dd>
-<dt id="idict.function.wrapper.xywrapper"><code class="name flex">
-<span>def <span class="ident">xywrapper</span></span>(<span>function=None, config={}, Xin='X', yin='y', Xout='X', yout='y', version=0, **kwargs)</span>
+<dt id="idict.function.wrapper.apply"><code class="name flex">
+<span>def <span class="ident">apply</span></span>(<span>functionin='function', input='[]', translated_input='[]', output=['apply'], configin='config=None', version=0, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from sklearn.utils import resample
-&gt;&gt;&gt; X=[[1,2,3], [4,5,6], [11,12,13]]
-&gt;&gt;&gt; y=[7,8,9]
-&gt;&gt;&gt; xywrapper(resample, config={&quot;n_samples&quot;:2, &quot;random_state&quot;:0}, X=X, y=y)
-{'X': [[1, 2, 3], [4, 5, 6]], 'y': [7, 8], '_history': Ellipsis}
+&gt;&gt;&gt; from idict import idict, let
+&gt;&gt;&gt; d = idict(X=[[1,2,3], [4,5,6], [11,12,13]], y=[7,8,9])
+&gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&quot;X&quot;, &quot;y&quot;], output=[&quot;X&quot;, &quot;y&quot;], config={&quot;n_samples&quot;:2, &quot;random_state&quot;:0})
+&gt;&gt;&gt; d.X
+[[1, 2, 3], [4, 5, 6]]
+&gt;&gt;&gt; d.y
+[7, 8]
 </code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def xywrapper(function=None, config={}, Xin=&#34;X&#34;, yin=&#34;y&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, version=0, **kwargs):
+<pre><code class="python">def apply(
+    functionin=&#34;function&#34;,
+    input=&#34;[]&#34;,
+    translated_input=&#34;[]&#34;,
+    output=[&#34;apply&#34;],
+    configin=&#34;config=None&#34;,
+    version=0,
+    **kwargs
+):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from sklearn.utils import resample
-    &gt;&gt;&gt; X=[[1,2,3], [4,5,6], [11,12,13]]
-    &gt;&gt;&gt; y=[7,8,9]
-    &gt;&gt;&gt; xywrapper(resample, config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0}, X=X, y=y)
-    {&#39;X&#39;: [[1, 2, 3], [4, 5, 6]], &#39;y&#39;: [7, 8], &#39;_history&#39;: Ellipsis}
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict(X=[[1,2,3], [4,5,6], [11,12,13]], y=[7,8,9])
+    &gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&#34;X&#34;, &#34;y&#34;], output=[&#34;X&#34;, &#34;y&#34;], config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0})
+    &gt;&gt;&gt; d.X
+    [[1, 2, 3], [4, 5, 6]]
+    &gt;&gt;&gt; d.y
+    [7, 8]
     &#34;&#34;&#34;
-    result = function(kwargs[Xin], kwargs[yin], **config)
-    return {Xout: result[0], yout: result[1], &#34;_history&#34;: ...}</code></pre>
+    if input == &#34;[]&#34;:
+        input = []
+    if translated_input == &#34;[]&#34;:
+        translated_input = []
+    f = kwargs[functionin]
+    config = kwargs[configin]
+    if translated_input:
+        multidynamic_input = {}
+        for i, tr in enumerate(translated_input):
+            multidynamic_input[tr] = kwargs[input[i]]
+        result = f(**multidynamic_input, **config)
+    else:
+        multidynamic_input = [kwargs[_i] for _i in input]
+        result = f(*multidynamic_input, **config)
+
+    out = {k: v for k, v in zip(output, result)}
+    # Multidynamic output cannot be detected, so it can only be defined as metadata.
+    return out</code></pre>
+</details>
+</dd>
+<dt id="idict.function.wrapper.at"><code class="name flex">
+<span>def <span class="ident">at</span></span>(<span>field='obj', indexin='index', output='at', version=0, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Access value inside an indexed field</p>
+<p>Evaluate value-iterator, if it is the case.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
+&gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;)
+&gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+&gt;&gt;&gt; config = {&quot;n_splits&quot;:3, &quot;random_state&quot;:0, &quot;shuffle&quot;:True}
+&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+&gt;&gt;&gt; d.obj
+StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
+&gt;&gt;&gt; d[&quot;y&quot;] = d.df.iloc[:,-1]
+&gt;&gt;&gt; d &gt;&gt;= let(call, method=&quot;split&quot;, input=[&quot;df&quot;, &quot;y&quot;], translated_input=[&quot;X&quot;, &quot;y&quot;], output=[f&quot;p{i}&quot; for i in range(3)])
+&gt;&gt;&gt; d[&quot;itr&quot;], d[&quot;its&quot;] = d.p2
+&gt;&gt;&gt; d.its
+array([ 2,  6,  9, 11, 12, 17])
+&gt;&gt;&gt; d &gt;&gt;= let(at, field=&quot;df&quot;, indexin=&quot;its&quot;, output=&quot;ts&quot;)
+&gt;&gt;&gt; d.ts
+    attr1  attr2  class
+2     6.1    3.6      0
+6     9.1    3.5      0
+9     2.5    4.5      1
+11    0.1    4.3      1
+12    2.1    0.1      0
+17    2.2    8.5      1
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def at(field=&#34;obj&#34;, indexin=&#34;index&#34;, output=&#34;at&#34;, version=0, **kwargs):
+    r&#34;&#34;&#34;
+    Access value inside an indexed field
+
+    Evaluate value-iterator, if it is the case.
+
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
+    &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+    &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+    &gt;&gt;&gt; d.obj
+    StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
+    &gt;&gt;&gt; d[&#34;y&#34;] = d.df.iloc[:,-1]
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;df&#34;, &#34;y&#34;], translated_input=[&#34;X&#34;, &#34;y&#34;], output=[f&#34;p{i}&#34; for i in range(3)])
+    &gt;&gt;&gt; d[&#34;itr&#34;], d[&#34;its&#34;] = d.p2
+    &gt;&gt;&gt; d.its
+    array([ 2,  6,  9, 11, 12, 17])
+    &gt;&gt;&gt; d &gt;&gt;= let(at, field=&#34;df&#34;, indexin=&#34;its&#34;, output=&#34;ts&#34;)
+    &gt;&gt;&gt; d.ts
+        attr1  attr2  class
+    2     6.1    3.6      0
+    6     9.1    3.5      0
+    9     2.5    4.5      1
+    11    0.1    4.3      1
+    12    2.1    0.1      0
+    17    2.2    8.5      1
+    &#34;&#34;&#34;
+    obj = kwargs[field]
+    if hasattr(obj, &#34;iloc&#34;):
+        result = obj.iloc[kwargs[indexin]]
+    else:
+        result = obj[kwargs[indexin]]
+    if isinstance(result, Iterator):
+        result = list(result)
+    if isinstance(output, str):
+        return {output: result}
+    # Multidynamic output cannot be detected, so it can only be defined as metadata.
+    return {k: v for k, v in zip(output, result)}</code></pre>
+</details>
+</dd>
+<dt id="idict.function.wrapper.call"><code class="name flex">
+<span>def <span class="ident">call</span></span>(<span>field='obj', methodin='method', input='[]', translated_input='[]', output='call', configin='config=None', version=0, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Call a method on a field</p>
+<p>Evaluate iterators, if any.
+'config' overrides 'input', when conflicting keys are provided.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
+&gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;Xy&quot;)
+&gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+&gt;&gt;&gt; config = {&quot;n_splits&quot;:3, &quot;random_state&quot;:0, &quot;shuffle&quot;:True}
+&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+&gt;&gt;&gt; d.obj
+StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
+&gt;&gt;&gt; d &gt;&gt;= let(call, method=&quot;split&quot;, input=[&quot;X&quot;,&quot;y&quot;], output=[&quot;partition1&quot;, &quot;partition2&quot;, &quot;partition3&quot;])
+&gt;&gt;&gt; d.partition2
+(array([ 0,  2,  5,  6,  7,  8,  9, 11, 12, 13, 14, 16, 17]), array([ 1,  3,  4, 10, 15, 18, 19]))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def call(
+    field=&#34;obj&#34;,
+    methodin=&#34;method&#34;,
+    input=&#34;[]&#34;,
+    translated_input=&#34;[]&#34;,
+    output=&#34;call&#34;,
+    configin=&#34;config=None&#34;,
+    version=0,
+    **kwargs
+):
+    r&#34;&#34;&#34;
+    Call a method on a field
+
+    Evaluate iterators, if any.
+    &#39;config&#39; overrides &#39;input&#39;, when conflicting keys are provided.
+
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;Xy&#34;)
+    &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+    &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+    &gt;&gt;&gt; d.obj
+    StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;X&#34;,&#34;y&#34;], output=[&#34;partition1&#34;, &#34;partition2&#34;, &#34;partition3&#34;])
+    &gt;&gt;&gt; d.partition2
+    (array([ 0,  2,  5,  6,  7,  8,  9, 11, 12, 13, 14, 16, 17]), array([ 1,  3,  4, 10, 15, 18, 19]))
+    &#34;&#34;&#34;
+    # Multidynamic input is only detected when the kwargs index is also indexed by something.
+    if input == &#34;[]&#34;:
+        input = []
+    if translated_input == &#34;[]&#34;:
+        translated_input = []
+    config = kwargs[configin] if configin in kwargs else {}
+    if translated_input:
+        multidynamic_input = {}
+        for i, tr in enumerate(translated_input):
+            multidynamic_input[tr] = kwargs[input[i]]
+        result = getattr(kwargs[field], kwargs[methodin])(**multidynamic_input, **config)
+    else:
+        multidynamic_input = [kwargs[_i] for _i in input]
+        result = getattr(kwargs[field], kwargs[methodin])(*multidynamic_input, **config)
+
+    if isinstance(result, Iterator):
+        result = list(result)
+    if isinstance(output, str):
+        return {output: result}
+    # Multidynamic output cannot be detected, so it can only be defined as metadata.
+    return {k: v for k, v in zip(output, result)}</code></pre>
+</details>
+</dd>
+<dt id="idict.function.wrapper.new"><code class="name flex">
+<span>def <span class="ident">new</span></span>(<span>classin='class_', input='[]', translated_input='[]', output='obj', configin='config=None', version=0, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instantiate a Python class</p>
+<p>'config' overrides 'input', when conflicting keys are provided.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
+&gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;)
+&gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+&gt;&gt;&gt; config = {&quot;n_splits&quot;:2, &quot;random_state&quot;:0, &quot;shuffle&quot;:True}
+&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+&gt;&gt;&gt; d.obj
+StratifiedKFold(n_splits=2, random_state=0, shuffle=True)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def new(classin=&#34;class_&#34;, input=&#34;[]&#34;, translated_input=&#34;[]&#34;, output=&#34;obj&#34;, configin=&#34;config=None&#34;, version=0, **kwargs):
+    r&#34;&#34;&#34;
+    Instantiate a Python class
+
+    &#39;config&#39; overrides &#39;input&#39;, when conflicting keys are provided.
+
+    &gt;&gt;&gt; from idict import idict, let
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
+    &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
+    &gt;&gt;&gt; config = {&#34;n_splits&#34;:2, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
+    &gt;&gt;&gt; d.obj
+    StratifiedKFold(n_splits=2, random_state=0, shuffle=True)
+    &#34;&#34;&#34;
+    if input == &#34;[]&#34;:
+        input = []
+    if translated_input == &#34;[]&#34;:
+        translated_input = []
+    class_ = kwargs[classin]
+    config = kwargs[configin]
+    if translated_input:
+        multidynamic_input = {}
+        for i, tr in enumerate(translated_input):
+            multidynamic_input[tr] = kwargs[input[i]]
+        result = class_(**multidynamic_input, **config)
+    else:
+        multidynamic_input = [kwargs[_i] for _i in input]
+        result = class_(*multidynamic_input, **config)
+    return {output: result, &#34;_history&#34;: ...}</code></pre>
 </details>
 </dd>
 </dl>
@@ -193,8 +643,11 @@ xywrapper.metadata = {
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="idict.function.wrapper.access" href="#idict.function.wrapper.access">access</a></code></li>
+<li><code><a title="idict.function.wrapper.apply" href="#idict.function.wrapper.apply">apply</a></code></li>
+<li><code><a title="idict.function.wrapper.at" href="#idict.function.wrapper.at">at</a></code></li>
 <li><code><a title="idict.function.wrapper.call" href="#idict.function.wrapper.call">call</a></code></li>
-<li><code><a title="idict.function.wrapper.xywrapper" href="#idict.function.wrapper.xywrapper">xywrapper</a></code></li>
+<li><code><a title="idict.function.wrapper.new" href="#idict.function.wrapper.new">new</a></code></li>
 </ul>
 </li>
 </ul>

@@ -44,7 +44,6 @@ def kfold(k=10, seed=0):
            19]), array([ 2, 11])), (array([ 0,  1,  2,  3,  4,  5,  7,  8, 10, 11, 12, 13, 14, 15, 16, 17, 18,
            19]), array([6, 9]))]
     """
-    return (
-            let(new, class_=StratifiedKFold, config={"n_splits": k, "random_state": seed, "shuffle": True})
-            >> let(call, method="split", input={"X": "X", "y": "y"}, output="indices")
+    return let(new, class_=StratifiedKFold, config={"n_splits": k, "random_state": seed, "shuffle": True}) >> let(
+        call, method="split", input={"X": "X", "y": "y"}, output="indices"
     )

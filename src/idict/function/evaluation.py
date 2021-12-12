@@ -26,8 +26,12 @@ from sklearn.model_selection import train_test_split
 # TODO (minor): enforce versions by runtime checking (sklearn etc)
 
 
-def split(input=["X", "y"], output=["Xtr", "ytr", "Xts", "yts"],
-          config={"test_size": 0.33, "shuffle": True, "stratify": "y", "random_state": 0}, **kwargs):
+def split(
+    input=["X", "y"],
+    output=["Xtr", "ytr", "Xts", "yts"],
+    config={"test_size": 0.33, "shuffle": True, "stratify": "y", "random_state": 0},
+    **kwargs,
+):
     r"""
     >>> from idict import idict, let
     >>> d = idict.fromtoy() >> split
@@ -75,10 +79,5 @@ split.metadata = {
     "description": "Split data in two sets.",
     "parameters": ...,
     "code": ...,
-    "output": {
-        "fields": [],
-        "auto": ["_history"],
-        "meta": [],
-        "dynamic": ["output"]
-    }
+    "output": {"fields": [], "auto": ["_history"], "meta": [], "dynamic": ["output"]},
 }

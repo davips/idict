@@ -55,37 +55,37 @@ from idict.config import GLOBAL
 
 
 def pack(obj, ensure_determinism=True):
-    r&#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import setup
-    &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
-    &gt;&gt;&gt; memo = GLOBAL[&#34;compression_cache&#34;] = {}
-    &gt;&gt;&gt; GLOBAL[&#34;compression_cachesize&#34;] = 0
-    &gt;&gt;&gt; b = b&#34;000011&#34;
-    &gt;&gt;&gt; pack(b)
-    b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
-    &gt;&gt;&gt; memo[id(b)][&#34;unpacked&#34;]
-    b&#39;000011&#39;
-    &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (1, 47, 100)
-    &gt;&gt;&gt; pack(b&#34;asd&#34;)
-    b&#39;pckl_\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
-    &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 91, 100)
-    &gt;&gt;&gt; len(pack(b&#34;123&#34;))
-    44
-    &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 88, 100)
-    &#34;&#34;&#34;
-    memid = id(obj)
-    memo = GLOBAL[&#34;compression_cache&#34;]
-    if memid in memo:
-        if obj is memo[memid][&#34;unpacked&#34;]:
-            return memo[memid][&#34;packed&#34;]
-        else:
-            # rare collision
-            GLOBAL[&#34;compression_cachesize&#34;] -= memo[memid][&#34;packed&#34;]
-            del memo[memid]
-
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; from idict import setup
+    # &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
+    # &gt;&gt;&gt; memo = GLOBAL[&#34;compression_cache&#34;] = {}
+    # &gt;&gt;&gt; GLOBAL[&#34;compression_cachesize&#34;] = 0
+    # &gt;&gt;&gt; b = b&#34;000011&#34;
+    # &gt;&gt;&gt; pack(b)
+    # b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
+    # &gt;&gt;&gt; memo[id(b)][&#34;unpacked&#34;]
+    # b&#39;000011&#39;
+    # &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
+    # (1, 47, 100)
+    # &gt;&gt;&gt; pack(b&#34;asd&#34;)
+    # b&#39;pckl_\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
+    # &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
+    # (2, 91, 100)
+    # &gt;&gt;&gt; len(pack(b&#34;123&#34;))
+    # 44
+    # &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
+    # (2, 88, 100)
+    # &#34;&#34;&#34;
+    # # memid = id(obj)
+    # # memo = GLOBAL[&#34;compression_cache&#34;]
+    # # if memid in memo:
+    # #     if obj is memo[memid][&#34;unpacked&#34;]:
+    # #         return memo[memid][&#34;packed&#34;]
+    # #     else:
+    # #         # rare collision
+    # #         GLOBAL[&#34;compression_cachesize&#34;] -= memo[memid][&#34;packed&#34;]
+    # #         del memo[memid]
+    #
     try:
         try:
             dump = pickle.dumps(obj, protocol=5)
@@ -99,16 +99,16 @@ def pack(obj, ensure_determinism=True):
             prefix = b&#34;dill_&#34;
 
         blob = prefix + lz4.compress(dump)
-        GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
-        memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
-
-        # LRU
-        keys = iter(list(memo.keys()))
-        while len(memo) &gt; 0 and GLOBAL[&#34;compression_cachesize&#34;] &gt; GLOBAL[&#34;compression_cachelimit&#34;]:
-            k = next(keys)
-            v = memo.pop(k)[&#34;packed&#34;]
-            GLOBAL[&#34;compression_cachesize&#34;] -= len(v)
-
+        #     # GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
+        #     # memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
+        #
+        #     # # LRU
+        #     # keys = iter(list(memo.keys()))
+        #     # while len(memo) &gt; 0 and GLOBAL[&#34;compression_cachesize&#34;] &gt; GLOBAL[&#34;compression_cachelimit&#34;]:
+        #     #     k = next(keys)
+        #     #     v = memo.pop(k)[&#34;packed&#34;]
+        #     #     GLOBAL[&#34;compression_cachesize&#34;] -= len(v)
+        #
         return blob
     except KeyError as e:  # pragma: no cover
         if str(e) == &#34;&#39;__getstate__&#39;&#34;:  # pragma: no cover
@@ -147,62 +147,43 @@ class NondeterminismException(Exception):
 <span>def <span class="ident">pack</span></span>(<span>obj, ensure_determinism=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import setup
-&gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
-&gt;&gt;&gt; memo = GLOBAL[&quot;compression_cache&quot;] = {}
-&gt;&gt;&gt; GLOBAL[&quot;compression_cachesize&quot;] = 0
-&gt;&gt;&gt; b = b&quot;000011&quot;
-&gt;&gt;&gt; pack(b)
-b'pckl_\x04&quot;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00'
-&gt;&gt;&gt; memo[id(b)][&quot;unpacked&quot;]
-b'000011'
-&gt;&gt;&gt; len(memo), GLOBAL[&quot;compression_cachesize&quot;], GLOBAL[&quot;compression_cachelimit&quot;]
-(1, 47, 100)
-&gt;&gt;&gt; pack(b&quot;asd&quot;)
-b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00'
-&gt;&gt;&gt; len(memo), GLOBAL[&quot;compression_cachesize&quot;], GLOBAL[&quot;compression_cachelimit&quot;]
-(2, 91, 100)
-&gt;&gt;&gt; len(pack(b&quot;123&quot;))
-44
-&gt;&gt;&gt; len(memo), GLOBAL[&quot;compression_cachesize&quot;], GLOBAL[&quot;compression_cachelimit&quot;]
-(2, 88, 100)
-</code></pre></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def pack(obj, ensure_determinism=True):
-    r&#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import setup
-    &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
-    &gt;&gt;&gt; memo = GLOBAL[&#34;compression_cache&#34;] = {}
-    &gt;&gt;&gt; GLOBAL[&#34;compression_cachesize&#34;] = 0
-    &gt;&gt;&gt; b = b&#34;000011&#34;
-    &gt;&gt;&gt; pack(b)
-    b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
-    &gt;&gt;&gt; memo[id(b)][&#34;unpacked&#34;]
-    b&#39;000011&#39;
-    &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (1, 47, 100)
-    &gt;&gt;&gt; pack(b&#34;asd&#34;)
-    b&#39;pckl_\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
-    &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 91, 100)
-    &gt;&gt;&gt; len(pack(b&#34;123&#34;))
-    44
-    &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
-    (2, 88, 100)
-    &#34;&#34;&#34;
-    memid = id(obj)
-    memo = GLOBAL[&#34;compression_cache&#34;]
-    if memid in memo:
-        if obj is memo[memid][&#34;unpacked&#34;]:
-            return memo[memid][&#34;packed&#34;]
-        else:
-            # rare collision
-            GLOBAL[&#34;compression_cachesize&#34;] -= memo[memid][&#34;packed&#34;]
-            del memo[memid]
-
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; from idict import setup
+    # &gt;&gt;&gt; setup(compression_cachelimit_MB=0.000_100)
+    # &gt;&gt;&gt; memo = GLOBAL[&#34;compression_cache&#34;] = {}
+    # &gt;&gt;&gt; GLOBAL[&#34;compression_cachesize&#34;] = 0
+    # &gt;&gt;&gt; b = b&#34;000011&#34;
+    # &gt;&gt;&gt; pack(b)
+    # b&#39;pckl_\x04&#34;M\x18h@\x15\x00\x00\x00\x00\x00\x00\x006\x13\x00\x00\x00R\x80\x05\x95\n\x00\x01\x00\xa0C\x06000011\x94.\x00\x00\x00\x00&#39;
+    # &gt;&gt;&gt; memo[id(b)][&#34;unpacked&#34;]
+    # b&#39;000011&#39;
+    # &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
+    # (1, 47, 100)
+    # &gt;&gt;&gt; pack(b&#34;asd&#34;)
+    # b&#39;pckl_\x04&#34;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x80\x05\x95\x07\x00\x01\x00pC\x03asd\x94.\x00\x00\x00\x00&#39;
+    # &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
+    # (2, 91, 100)
+    # &gt;&gt;&gt; len(pack(b&#34;123&#34;))
+    # 44
+    # &gt;&gt;&gt; len(memo), GLOBAL[&#34;compression_cachesize&#34;], GLOBAL[&#34;compression_cachelimit&#34;]
+    # (2, 88, 100)
+    # &#34;&#34;&#34;
+    # # memid = id(obj)
+    # # memo = GLOBAL[&#34;compression_cache&#34;]
+    # # if memid in memo:
+    # #     if obj is memo[memid][&#34;unpacked&#34;]:
+    # #         return memo[memid][&#34;packed&#34;]
+    # #     else:
+    # #         # rare collision
+    # #         GLOBAL[&#34;compression_cachesize&#34;] -= memo[memid][&#34;packed&#34;]
+    # #         del memo[memid]
+    #
     try:
         try:
             dump = pickle.dumps(obj, protocol=5)
@@ -216,16 +197,16 @@ b'pckl_\x04&quot;M\x18h@\x12\x00\x00\x00\x00\x00\x00\x00\xd9\x10\x00\x00\x00R\x8
             prefix = b&#34;dill_&#34;
 
         blob = prefix + lz4.compress(dump)
-        GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
-        memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
-
-        # LRU
-        keys = iter(list(memo.keys()))
-        while len(memo) &gt; 0 and GLOBAL[&#34;compression_cachesize&#34;] &gt; GLOBAL[&#34;compression_cachelimit&#34;]:
-            k = next(keys)
-            v = memo.pop(k)[&#34;packed&#34;]
-            GLOBAL[&#34;compression_cachesize&#34;] -= len(v)
-
+        #     # GLOBAL[&#34;compression_cachesize&#34;] += len(blob)
+        #     # memo[memid] = {&#34;unpacked&#34;: obj, &#34;packed&#34;: blob}
+        #
+        #     # # LRU
+        #     # keys = iter(list(memo.keys()))
+        #     # while len(memo) &gt; 0 and GLOBAL[&#34;compression_cachesize&#34;] &gt; GLOBAL[&#34;compression_cachelimit&#34;]:
+        #     #     k = next(keys)
+        #     #     v = memo.pop(k)[&#34;packed&#34;]
+        #     #     GLOBAL[&#34;compression_cachesize&#34;] -= len(v)
+        #
         return blob
     except KeyError as e:  # pragma: no cover
         if str(e) == &#34;&#39;__getstate__&#39;&#34;:  # pragma: no cover

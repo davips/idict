@@ -23,8 +23,7 @@
 from typing import Iterator
 
 
-def new(classin="class_", input="[]", translated_input="[]", output="obj", configin="config=None",
-        version=0, **kwargs):
+def new(classin="class_", input="[]", translated_input="[]", output="obj", configin="config=None", version=0, **kwargs):
     r"""
     Instantiate a Python class
 
@@ -58,8 +57,16 @@ def new(classin="class_", input="[]", translated_input="[]", output="obj", confi
 # REMINDER: A field cannot be used to define a dependence on another field.
 #   Only parameters can do that.
 #   Otherwise, it would lead to kwargs[kwargs[field]], whose detection is messy at the application step.
-def call(field="obj", methodin="method", input="[]", translated_input="[]", output="call", configin="config=None",
-         version=0, **kwargs):
+def call(
+    field="obj",
+    methodin="method",
+    input="[]",
+    translated_input="[]",
+    output="call",
+    configin="config=None",
+    version=0,
+    **kwargs
+):
     r"""
     Call a method on a field
 
@@ -178,9 +185,15 @@ def access(field="obj", propertyin="property", output="access", version=0, **kwa
     return {output: getattr(kwargs[field], kwargs[propertyin]), "_history": ...}
 
 
-def apply(functionin="function", input="[]", translated_input="[]", output=["apply"],
-          configin="config=None", version=0,
-          **kwargs):
+def apply(
+    functionin="function",
+    input="[]",
+    translated_input="[]",
+    output=["apply"],
+    configin="config=None",
+    version=0,
+    **kwargs
+):
     r"""
     >>> from sklearn.utils import resample
     >>> from idict import idict, let
@@ -224,12 +237,7 @@ call.metadata = {
     "description": "Call a method on a given field.",
     "parameters": ...,
     "code": ...,
-    "output": {
-        "fields": [],
-        "auto": ["_history"],
-        "meta": [],
-        "dynamic": ["output"]
-    }
+    "output": {"fields": [], "auto": ["_history"], "meta": [], "dynamic": ["output"]},
 }
 at.metadata = {
     "id": "idict------------------------wrapper--at",
@@ -237,12 +245,7 @@ at.metadata = {
     "description": "Access value inside an indexed field.",
     "parameters": ...,
     "code": ...,
-    "output": {
-        "fields": [],
-        "auto": ["_history"],
-        "meta": [],
-        "dynamic": ["output"]
-    }
+    "output": {"fields": [], "auto": ["_history"], "meta": [], "dynamic": ["output"]},
 }
 access.metadata = {
     "id": "idict--------------------wrapper--access",
@@ -257,10 +260,5 @@ apply.metadata = {
     "description": "Apply a function.",
     "parameters": ...,
     "code": ...,
-    "output": {
-        "fields": [],
-        "auto": ["_history"],
-        "meta": [],
-        "dynamic": ["output"]
-    }
+    "output": {"fields": [], "auto": ["_history"], "meta": [], "dynamic": ["output"]},
 }
