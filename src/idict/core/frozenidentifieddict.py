@@ -37,7 +37,7 @@ from idict.config import GLOBAL
 from idict.core.appearance import idict2txt
 from idict.core.identification import blobs_hashes_hoshes
 from idict.data.load import file2df
-from idict.function.dataset import openml, df2np
+from idict.function.dataset import openml, df2Xy
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached, get_following_pointers, build
@@ -642,7 +642,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
                 output = ["X", "y"]
             if len(output) != 2:  # pragma: no cover
                 raise Exception(f"Wrong number of fields {len(output)}. Expected: 2.", output)
-            dic = df2np(df=df)
+            dic = df2Xy(df=df)
             del dic["_history"]
             return FrozenIdentifiedDict({output[0]: dic["X"], output[1]: dic["y"]}, identity=identity, **metafields)
         else:  # pragma: no cover

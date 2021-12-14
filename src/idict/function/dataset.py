@@ -29,22 +29,22 @@ from io import StringIO
 from arff2pandas import a2p
 
 
-def df2np(input="df", Xout="X", yout="y", **kwargs):
+def df2Xy(input="df", Xout="X", yout="y", **kwargs):
     """
     >>> from idict import let, idict
     >>> d = idict.fromminiarff()
-    >>> d >>= df2np
+    >>> d >>= df2Xy
     >>> d.show(colored=False)
     {
         "X": "→(input Xout yout df)",
         "y": "→(input Xout yout df)",
-        "_history": "------pandas-1.3.4--sklearn-1.0.1--df2np",
+        "_history": "------pandas-1.3.4--sklearn-1.0.1--df2Xy",
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
-        "_id": "ntYQ11kSGHzHoBZQCkABoFBx1uy-1.0.1--df2np",
+        "_id": "Irssl15fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy",
         "_ids": {
-            "X": "davD8MV9BBxD.fQ.-5A6GO-YWAZw--J2NP7DnTlI",
-            "y": "LTJPien6IwIEe7Fq5DybjSKu--CQ4M0DmL6B58fA",
-            "_history": "IlfBVHPvARHNexTbDlQlk.v47lf8WmilWOf1O2O8",
+            "X": "Z953PJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR",
+            "y": "A7WhQM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ",
+            "_history": "pWMO3xGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.",
             "df": "q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
@@ -163,10 +163,10 @@ def arff2df(input="arff", output="df", **kwargs):
     return {output: df, "_name": relation, "_history": ...}
 
 
-df2np.metadata = {
-    "id": "------pandas-1.3.4--sklearn-1.0.1--df2np",
-    "name": "df2np",
-    "description": "DataFrame (pandas) to X,y (numpy) converter.",
+df2Xy.metadata = {
+    "id": "------pandas-1.3.4--sklearn-1.0.1--df2Xy",
+    "name": "df2Xy",
+    "description": "DataFrame (pandas) to X,y (pandas) converter.",
     "parameters": ...,
     "code": ...,
 }
