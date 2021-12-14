@@ -77,7 +77,7 @@ def Xy2scatterplot(colx=0, coly=1, Xin=&#34;X&#34;, yin=&#34;y&#34;, output=&#34
     X = kwargs[Xin]
     y = kwargs[yin]
     result = []
-    for m in numpy.unique(y):
+    for m in numpy.unique(y).tolist():
         inner = []
         for k in range(len(X)):
             left = m if isinstance(m, str) else str(float(m))
@@ -202,7 +202,7 @@ Xy2scatterplot.metadata = {
     X = kwargs[Xin]
     y = kwargs[yin]
     result = []
-    for m in numpy.unique(y):
+    for m in numpy.unique(y).tolist():
         inner = []
         for k in range(len(X)):
             left = m if isinstance(m, str) else str(float(m))
