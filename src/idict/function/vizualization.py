@@ -49,7 +49,7 @@ def Xy2scatterplot(colx=0, coly=1, Xin="X", yin="y", output="scatterplot", **kwa
     X = kwargs[Xin]
     y = kwargs[yin]
     result = []
-    for m in numpy.unique(y):
+    for m in numpy.unique(y).tolist():
         inner = []
         for k in range(len(X)):
             left = m if isinstance(m, str) else str(float(m))
