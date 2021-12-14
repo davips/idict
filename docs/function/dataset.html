@@ -58,22 +58,22 @@ from io import StringIO
 from arff2pandas import a2p
 
 
-def df2np(input=&#34;df&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, **kwargs):
+def df2Xy(input=&#34;df&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, **kwargs):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import let, idict
     &gt;&gt;&gt; d = idict.fromminiarff()
-    &gt;&gt;&gt; d &gt;&gt;= df2np
+    &gt;&gt;&gt; d &gt;&gt;= df2Xy
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;X&#34;: &#34;→(input Xout yout df)&#34;,
         &#34;y&#34;: &#34;→(input Xout yout df)&#34;,
-        &#34;_history&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2np&#34;,
+        &#34;_history&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
         &#34;df&#34;: &#34;«{&#39;attr1@REAL&#39;: {0: 5.1, 1: 3.1}, &#39;attr2@REAL&#39;: {0: 3.5, 1: 4.5}, &#39;class@{0,1}&#39;: {0: &#39;0&#39;, 1: &#39;1&#39;}}»&#34;,
-        &#34;_id&#34;: &#34;ntYQ11kSGHzHoBZQCkABoFBx1uy-1.0.1--df2np&#34;,
+        &#34;_id&#34;: &#34;Irssl15fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&#34;,
         &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;davD8MV9BBxD.fQ.-5A6GO-YWAZw--J2NP7DnTlI&#34;,
-            &#34;y&#34;: &#34;LTJPien6IwIEe7Fq5DybjSKu--CQ4M0DmL6B58fA&#34;,
-            &#34;_history&#34;: &#34;IlfBVHPvARHNexTbDlQlk.v47lf8WmilWOf1O2O8&#34;,
+            &#34;X&#34;: &#34;Z953PJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&#34;,
+            &#34;y&#34;: &#34;A7WhQM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&#34;,
+            &#34;_history&#34;: &#34;pWMO3xGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&#34;,
             &#34;df&#34;: &#34;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&#34;
         }
     }
@@ -192,10 +192,10 @@ def arff2df(input=&#34;arff&#34;, output=&#34;df&#34;, **kwargs):
     return {output: df, &#34;_name&#34;: relation, &#34;_history&#34;: ...}
 
 
-df2np.metadata = {
-    &#34;id&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2np&#34;,
-    &#34;name&#34;: &#34;df2np&#34;,
-    &#34;description&#34;: &#34;DataFrame (pandas) to X,y (numpy) converter.&#34;,
+df2Xy.metadata = {
+    &#34;id&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
+    &#34;name&#34;: &#34;df2Xy&#34;,
+    &#34;description&#34;: &#34;DataFrame (pandas) to X,y (pandas) converter.&#34;,
     &#34;parameters&#34;: ...,
     &#34;code&#34;: ...,
 }
@@ -304,6 +304,65 @@ arff2df.metadata = {
     return {output: df, &#34;_name&#34;: relation, &#34;_history&#34;: ...}</code></pre>
 </details>
 </dd>
+<dt id="idict.function.dataset.df2Xy"><code class="name flex">
+<span>def <span class="ident">df2Xy</span></span>(<span>input='df', Xout='X', yout='y', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import let, idict
+&gt;&gt;&gt; d = idict.fromminiarff()
+&gt;&gt;&gt; d &gt;&gt;= df2Xy
+&gt;&gt;&gt; d.show(colored=False)
+{
+    &quot;X&quot;: &quot;→(input Xout yout df)&quot;,
+    &quot;y&quot;: &quot;→(input Xout yout df)&quot;,
+    &quot;_history&quot;: &quot;------pandas-1.3.4--sklearn-1.0.1--df2Xy&quot;,
+    &quot;df&quot;: &quot;«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»&quot;,
+    &quot;_id&quot;: &quot;Irssl15fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&quot;,
+    &quot;_ids&quot;: {
+        &quot;X&quot;: &quot;Z953PJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&quot;,
+        &quot;y&quot;: &quot;A7WhQM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&quot;,
+        &quot;_history&quot;: &quot;pWMO3xGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&quot;,
+        &quot;df&quot;: &quot;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&quot;
+    }
+}
+&gt;&gt;&gt; d.y
+array([0, 1])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def df2Xy(input=&#34;df&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, **kwargs):
+    &#34;&#34;&#34;
+    &gt;&gt;&gt; from idict import let, idict
+    &gt;&gt;&gt; d = idict.fromminiarff()
+    &gt;&gt;&gt; d &gt;&gt;= df2Xy
+    &gt;&gt;&gt; d.show(colored=False)
+    {
+        &#34;X&#34;: &#34;→(input Xout yout df)&#34;,
+        &#34;y&#34;: &#34;→(input Xout yout df)&#34;,
+        &#34;_history&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
+        &#34;df&#34;: &#34;«{&#39;attr1@REAL&#39;: {0: 5.1, 1: 3.1}, &#39;attr2@REAL&#39;: {0: 3.5, 1: 4.5}, &#39;class@{0,1}&#39;: {0: &#39;0&#39;, 1: &#39;1&#39;}}»&#34;,
+        &#34;_id&#34;: &#34;Irssl15fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&#34;,
+        &#34;_ids&#34;: {
+            &#34;X&#34;: &#34;Z953PJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&#34;,
+            &#34;y&#34;: &#34;A7WhQM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&#34;,
+            &#34;_history&#34;: &#34;pWMO3xGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&#34;,
+            &#34;df&#34;: &#34;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&#34;
+        }
+    }
+    &gt;&gt;&gt; d.y
+    array([0, 1])
+    &#34;&#34;&#34;
+    from sklearn.preprocessing import LabelEncoder
+
+    le = LabelEncoder()
+    df = kwargs[input]
+    X_ = df.drop(df.columns[[-1]], axis=1)
+    y_ = le.fit_transform(df[df.columns[-1]])
+    return {Xout: X_, yout: y_, &#34;_history&#34;: ...}</code></pre>
+</details>
+</dd>
 <dt id="idict.function.dataset.df2arff"><code class="name flex">
 <span>def <span class="ident">df2arff</span></span>(<span>input='df', output='arff', **kwargs)</span>
 </code></dt>
@@ -353,65 +412,6 @@ arff2df.metadata = {
     from arff2pandas import a2p
 
     return {output: a2p.dumps(kwargs[input]), &#34;_history&#34;: ...}</code></pre>
-</details>
-</dd>
-<dt id="idict.function.dataset.df2np"><code class="name flex">
-<span>def <span class="ident">df2np</span></span>(<span>input='df', Xout='X', yout='y', **kwargs)</span>
-</code></dt>
-<dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import let, idict
-&gt;&gt;&gt; d = idict.fromminiarff()
-&gt;&gt;&gt; d &gt;&gt;= df2np
-&gt;&gt;&gt; d.show(colored=False)
-{
-    &quot;X&quot;: &quot;→(input Xout yout df)&quot;,
-    &quot;y&quot;: &quot;→(input Xout yout df)&quot;,
-    &quot;_history&quot;: &quot;------pandas-1.3.4--sklearn-1.0.1--df2np&quot;,
-    &quot;df&quot;: &quot;«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»&quot;,
-    &quot;_id&quot;: &quot;ntYQ11kSGHzHoBZQCkABoFBx1uy-1.0.1--df2np&quot;,
-    &quot;_ids&quot;: {
-        &quot;X&quot;: &quot;davD8MV9BBxD.fQ.-5A6GO-YWAZw--J2NP7DnTlI&quot;,
-        &quot;y&quot;: &quot;LTJPien6IwIEe7Fq5DybjSKu--CQ4M0DmL6B58fA&quot;,
-        &quot;_history&quot;: &quot;IlfBVHPvARHNexTbDlQlk.v47lf8WmilWOf1O2O8&quot;,
-        &quot;df&quot;: &quot;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&quot;
-    }
-}
-&gt;&gt;&gt; d.y
-array([0, 1])
-</code></pre></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def df2np(input=&#34;df&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, **kwargs):
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import let, idict
-    &gt;&gt;&gt; d = idict.fromminiarff()
-    &gt;&gt;&gt; d &gt;&gt;= df2np
-    &gt;&gt;&gt; d.show(colored=False)
-    {
-        &#34;X&#34;: &#34;→(input Xout yout df)&#34;,
-        &#34;y&#34;: &#34;→(input Xout yout df)&#34;,
-        &#34;_history&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2np&#34;,
-        &#34;df&#34;: &#34;«{&#39;attr1@REAL&#39;: {0: 5.1, 1: 3.1}, &#39;attr2@REAL&#39;: {0: 3.5, 1: 4.5}, &#39;class@{0,1}&#39;: {0: &#39;0&#39;, 1: &#39;1&#39;}}»&#34;,
-        &#34;_id&#34;: &#34;ntYQ11kSGHzHoBZQCkABoFBx1uy-1.0.1--df2np&#34;,
-        &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;davD8MV9BBxD.fQ.-5A6GO-YWAZw--J2NP7DnTlI&#34;,
-            &#34;y&#34;: &#34;LTJPien6IwIEe7Fq5DybjSKu--CQ4M0DmL6B58fA&#34;,
-            &#34;_history&#34;: &#34;IlfBVHPvARHNexTbDlQlk.v47lf8WmilWOf1O2O8&#34;,
-            &#34;df&#34;: &#34;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&#34;
-        }
-    }
-    &gt;&gt;&gt; d.y
-    array([0, 1])
-    &#34;&#34;&#34;
-    from sklearn.preprocessing import LabelEncoder
-
-    le = LabelEncoder()
-    df = kwargs[input]
-    X_ = df.drop(df.columns[[-1]], axis=1)
-    y_ = le.fit_transform(df[df.columns[-1]])
-    return {Xout: X_, yout: y_, &#34;_history&#34;: ...}</code></pre>
 </details>
 </dd>
 <dt id="idict.function.dataset.openml"><code class="name flex">
@@ -507,8 +507,8 @@ Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="idict.function.dataset.arff2df" href="#idict.function.dataset.arff2df">arff2df</a></code></li>
+<li><code><a title="idict.function.dataset.df2Xy" href="#idict.function.dataset.df2Xy">df2Xy</a></code></li>
 <li><code><a title="idict.function.dataset.df2arff" href="#idict.function.dataset.df2arff">df2arff</a></code></li>
-<li><code><a title="idict.function.dataset.df2np" href="#idict.function.dataset.df2np">df2np</a></code></li>
 <li><code><a title="idict.function.dataset.openml" href="#idict.function.dataset.openml">openml</a></code></li>
 </ul>
 </li>
