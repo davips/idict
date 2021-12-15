@@ -43,10 +43,8 @@ def X2histogram(col=0, input=&#34;X&#34;, output=&#34;histogram&#34;, **kwargs):
     &gt;&gt;&gt; d.histogram
     [{&#39;x&#39;: &#39;(-0.9, 2.2]&#39;, &#39;count&#39;: 8}, {&#39;x&#39;: &#39;(2.2, 5.3]&#39;, &#39;count&#39;: 6}, {&#39;x&#39;: &#39;(5.3, 8.4]&#39;, &#39;count&#39;: 3}, {&#39;x&#39;: &#39;(8.4, 11.5]&#39;, &#39;count&#39;: 2}, {&#39;x&#39;: &#39;(11.5, 14.6]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(14.6, 17.7]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(17.7, 20.8]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(20.8, 23.9]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(23.9, 27.0]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(27.0, 30.1]&#39;, &#39;count&#39;: 0}]
     &#34;&#34;&#34;
-    from pandas import DataFrame
-
     X = kwargs[input]
-    idxs = X.iloc[:, col] if isinstance(X, DataFrame) else X[:, col]
+    idxs = X.iloc[:, col] if hasattr(X, &#34;iloc&#34;) else X[:, col]
     cut = list(map(float, idxs))
     maximum = max(cut)
     minimum = min(cut)
@@ -88,8 +86,8 @@ def Xy2scatterplot(colx=0, coly=1, Xin=&#34;X&#34;, yin=&#34;y&#34;, output=&#34
             if left == right:
                 inner.append(
                     {
-                        &#34;x&#34;: float(X.iloc[k, colx] if isinstance(X, DataFrame) else X[k, colx]),
-                        &#34;y&#34;: float(X.iloc[k, coly] if isinstance(X, DataFrame) else X[k, coly]),
+                        &#34;x&#34;: float(X.iloc[k, colx] if hasattr(X, &#34;iloc&#34;) else X[k, colx]),
+                        &#34;y&#34;: float(X.iloc[k, coly] if hasattr(X, &#34;iloc&#34;) else X[k, coly]),
                     }
                 )
         result.append({&#34;id&#34;: m, &#34;data&#34;: inner})
@@ -149,10 +147,8 @@ Xy2scatterplot.metadata = {
     &gt;&gt;&gt; d.histogram
     [{&#39;x&#39;: &#39;(-0.9, 2.2]&#39;, &#39;count&#39;: 8}, {&#39;x&#39;: &#39;(2.2, 5.3]&#39;, &#39;count&#39;: 6}, {&#39;x&#39;: &#39;(5.3, 8.4]&#39;, &#39;count&#39;: 3}, {&#39;x&#39;: &#39;(8.4, 11.5]&#39;, &#39;count&#39;: 2}, {&#39;x&#39;: &#39;(11.5, 14.6]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(14.6, 17.7]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(17.7, 20.8]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(20.8, 23.9]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(23.9, 27.0]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(27.0, 30.1]&#39;, &#39;count&#39;: 0}]
     &#34;&#34;&#34;
-    from pandas import DataFrame
-
     X = kwargs[input]
-    idxs = X.iloc[:, col] if isinstance(X, DataFrame) else X[:, col]
+    idxs = X.iloc[:, col] if hasattr(X, &#34;iloc&#34;) else X[:, col]
     cut = list(map(float, idxs))
     maximum = max(cut)
     minimum = min(cut)
@@ -213,8 +209,8 @@ Xy2scatterplot.metadata = {
             if left == right:
                 inner.append(
                     {
-                        &#34;x&#34;: float(X.iloc[k, colx] if isinstance(X, DataFrame) else X[k, colx]),
-                        &#34;y&#34;: float(X.iloc[k, coly] if isinstance(X, DataFrame) else X[k, coly]),
+                        &#34;x&#34;: float(X.iloc[k, colx] if hasattr(X, &#34;iloc&#34;) else X[k, colx]),
+                        &#34;y&#34;: float(X.iloc[k, coly] if hasattr(X, &#34;iloc&#34;) else X[k, coly]),
                     }
                 )
         result.append({&#34;id&#34;: m, &#34;data&#34;: inner})

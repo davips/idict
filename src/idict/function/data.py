@@ -65,11 +65,13 @@ def binarize(input="X", idxsin="nomcols", output="Xbin", **kwargs):
     cols = kwargs[idxsin]
     if X.__class__.__name__ in ["DataFrame", "Series"]:
         import pandas
+
         clabels = X.columns[cols]
         Xout = pandas.get_dummies(X, prefix=clabels, columns=clabels)
     else:
         import numpy
         from sklearn.preprocessing import OneHotEncoder
+
         encoder = OneHotEncoder()
         nom = encoder.fit_transform(X.iloc[:, cols] if hasattr(X, "iloc") else X[:, cols]).toarray()
         num = numpy.delete(X, cols, axis=1).astype(float)

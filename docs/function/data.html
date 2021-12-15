@@ -54,9 +54,6 @@
 Functions to be used directly within an idict workflow
 &#34;&#34;&#34;
 
-import numpy
-from sklearn.preprocessing import OneHotEncoder
-
 # TODO: break down all sklearn and numpy used inside binarize,
 #  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
 from idict.macro import is_number
@@ -71,7 +68,7 @@ def nomcols(input=&#34;X&#34;, output=&#34;nomcols&#34;, **kwargs):
     &#34;&#34;&#34;
     X = kwargs[input]
     idxs = []
-    for i, x in enumerate(X[0]):
+    for i, x in enumerate(X.iloc[0] if hasattr(X, &#34;iloc&#34;) else X[0]):
         if not is_number(x):
             idxs.append(i)
     return {output: idxs, &#34;_history&#34;: ...}
@@ -80,18 +77,34 @@ def nomcols(input=&#34;X&#34;, output=&#34;nomcols&#34;, **kwargs):
 def binarize(input=&#34;X&#34;, idxsin=&#34;nomcols&#34;, output=&#34;Xbin&#34;, **kwargs):
     &#34;&#34;&#34;
     &gt;&gt;&gt; import numpy as np
-    &gt;&gt;&gt; X = np.array([[0, &#34;a&#34;, 1.6], [3.2, &#34;b&#34;, 2], [8, &#34;c&#34;, 3]])
-    &gt;&gt;&gt; binarize(X=X, nomcols=[1])
-    {&#39;Xbin&#39;: array([[1. , 0. , 0. , 0. , 1.6],
-           [0. , 1. , 0. , 3.2, 2. ],
-           [0. , 0. , 1. , 8. , 3. ]]), &#39;_history&#39;: Ellipsis}
+    &gt;&gt;&gt; from pandas import DataFrame as DF
+    &gt;&gt;&gt; X = DF(np.array([[0, &#34;a&#34;, 1.6], [3.2, &#34;b&#34;, 2], [8, &#34;c&#34;, 3]]))
+    &gt;&gt;&gt; X
+         0  1    2
+    0    0  a  1.6
+    1  3.2  b    2
+    2    8  c    3
+    &gt;&gt;&gt; binarize(X=X, nomcols=[1])[&#34;Xbin&#34;]
+         0    2  1_a  1_b  1_c
+    0    0  1.6    1    0    0
+    1  3.2    2    0    1    0
+    2    8    3    0    0    1
     &#34;&#34;&#34;
     X = kwargs[input]
     cols = kwargs[idxsin]
-    encoder = OneHotEncoder()
-    nom = encoder.fit_transform(X[:, cols]).toarray()
-    num = numpy.delete(X, cols, axis=1).astype(float)
-    Xout = numpy.column_stack((nom, num))
+    if X.__class__.__name__ in [&#34;DataFrame&#34;, &#34;Series&#34;]:
+        import pandas
+
+        clabels = X.columns[cols]
+        Xout = pandas.get_dummies(X, prefix=clabels, columns=clabels)
+    else:
+        import numpy
+        from sklearn.preprocessing import OneHotEncoder
+
+        encoder = OneHotEncoder()
+        nom = encoder.fit_transform(X.iloc[:, cols] if hasattr(X, &#34;iloc&#34;) else X[:, cols]).toarray()
+        num = numpy.delete(X, cols, axis=1).astype(float)
+        Xout = numpy.column_stack((nom, num))
     return {output: Xout, &#34;_history&#34;: ...}
 
 
@@ -116,7 +129,7 @@ nomcols.metadata = {
     &#34;code&#34;: ...,
 }
 binarize.metadata = {
-    &#34;id&#34;: &#34;sklearn-1.0.1--np-1.21.4---OHE--binarize&#34;,
+    &#34;id&#34;: &#34;sk-1.0.1--pd-1.3.4--np-1.21.4---binarize&#34;,
     &#34;name&#34;: &#34;binarize&#34;,
     &#34;description&#34;: &#34;Binarize nominal attributes so they can be handled as numeric.&#34;,
     &#34;parameters&#34;: ...,
@@ -143,11 +156,18 @@ df2list.metadata = {
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; X = np.array([[0, &quot;a&quot;, 1.6], [3.2, &quot;b&quot;, 2], [8, &quot;c&quot;, 3]])
-&gt;&gt;&gt; binarize(X=X, nomcols=[1])
-{'Xbin': array([[1. , 0. , 0. , 0. , 1.6],
-       [0. , 1. , 0. , 3.2, 2. ],
-       [0. , 0. , 1. , 8. , 3. ]]), '_history': Ellipsis}
+&gt;&gt;&gt; from pandas import DataFrame as DF
+&gt;&gt;&gt; X = DF(np.array([[0, &quot;a&quot;, 1.6], [3.2, &quot;b&quot;, 2], [8, &quot;c&quot;, 3]]))
+&gt;&gt;&gt; X
+     0  1    2
+0    0  a  1.6
+1  3.2  b    2
+2    8  c    3
+&gt;&gt;&gt; binarize(X=X, nomcols=[1])[&quot;Xbin&quot;]
+     0    2  1_a  1_b  1_c
+0    0  1.6    1    0    0
+1  3.2    2    0    1    0
+2    8    3    0    0    1
 </code></pre></div>
 <details class="source">
 <summary>
@@ -156,18 +176,34 @@ df2list.metadata = {
 <pre><code class="python">def binarize(input=&#34;X&#34;, idxsin=&#34;nomcols&#34;, output=&#34;Xbin&#34;, **kwargs):
     &#34;&#34;&#34;
     &gt;&gt;&gt; import numpy as np
-    &gt;&gt;&gt; X = np.array([[0, &#34;a&#34;, 1.6], [3.2, &#34;b&#34;, 2], [8, &#34;c&#34;, 3]])
-    &gt;&gt;&gt; binarize(X=X, nomcols=[1])
-    {&#39;Xbin&#39;: array([[1. , 0. , 0. , 0. , 1.6],
-           [0. , 1. , 0. , 3.2, 2. ],
-           [0. , 0. , 1. , 8. , 3. ]]), &#39;_history&#39;: Ellipsis}
+    &gt;&gt;&gt; from pandas import DataFrame as DF
+    &gt;&gt;&gt; X = DF(np.array([[0, &#34;a&#34;, 1.6], [3.2, &#34;b&#34;, 2], [8, &#34;c&#34;, 3]]))
+    &gt;&gt;&gt; X
+         0  1    2
+    0    0  a  1.6
+    1  3.2  b    2
+    2    8  c    3
+    &gt;&gt;&gt; binarize(X=X, nomcols=[1])[&#34;Xbin&#34;]
+         0    2  1_a  1_b  1_c
+    0    0  1.6    1    0    0
+    1  3.2    2    0    1    0
+    2    8    3    0    0    1
     &#34;&#34;&#34;
     X = kwargs[input]
     cols = kwargs[idxsin]
-    encoder = OneHotEncoder()
-    nom = encoder.fit_transform(X[:, cols]).toarray()
-    num = numpy.delete(X, cols, axis=1).astype(float)
-    Xout = numpy.column_stack((nom, num))
+    if X.__class__.__name__ in [&#34;DataFrame&#34;, &#34;Series&#34;]:
+        import pandas
+
+        clabels = X.columns[cols]
+        Xout = pandas.get_dummies(X, prefix=clabels, columns=clabels)
+    else:
+        import numpy
+        from sklearn.preprocessing import OneHotEncoder
+
+        encoder = OneHotEncoder()
+        nom = encoder.fit_transform(X.iloc[:, cols] if hasattr(X, &#34;iloc&#34;) else X[:, cols]).toarray()
+        num = numpy.delete(X, cols, axis=1).astype(float)
+        Xout = numpy.column_stack((nom, num))
     return {output: Xout, &#34;_history&#34;: ...}</code></pre>
 </details>
 </dd>
@@ -220,7 +256,7 @@ df2list.metadata = {
     &#34;&#34;&#34;
     X = kwargs[input]
     idxs = []
-    for i, x in enumerate(X[0]):
+    for i, x in enumerate(X.iloc[0] if hasattr(X, &#34;iloc&#34;) else X[0]):
         if not is_number(x):
             idxs.append(i)
     return {output: idxs, &#34;_history&#34;: ...}</code></pre>
