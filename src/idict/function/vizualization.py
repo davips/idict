@@ -33,6 +33,7 @@ def X2histogram(col=0, input="X", output="histogram", **kwargs):
         dic = df2.to_dict()[0]
     else:
         from pandas import Series
+
         dic = Series(vals).value_counts()
     result = [{"x": str(k), "count": v} for k, v in dic.items()]
     return {output: result, "_history": ...}
@@ -56,12 +57,12 @@ def Xy2scatterplot(colx=0, coly=1, Xin="X", yin="y", output="scatterplot", **kwa
     >>> Xy2scatterplot(X=X, y=y, colx=1, coly=2)
     {'scatterplot': [{'id': 'a', 'data': [{'x': 2.1, 'y': 1.6}]}, {'id': 'b', 'data': [{'x': 3.2, 'y': 2.3}]}, {'id': 'c', 'data': [{'x': 7.0, 'y': 3.0}]}], '_history': Ellipsis}
     >>> Xy2scatterplot(X=X, y=y, colx=1, coly=0)
-    {'scatterplot': [{'id': 'a', 'data': [{'x': 2.1, 'y': 0}]}, {'id': 'b', 'data': [{'x': 3.2, 'y': 1}]}, {'id': 'c', 'data': [{'x': 7.0, 'y': 2}]}], '_history': Ellipsis}
+    {'scatterplot': [{'id': 'a', 'data': [{'x': 2.1, 'y': 0.0}]}, {'id': 'b', 'data': [{'x': 3.2, 'y': 1.0}]}, {'id': 'c', 'data': [{'x': 7.0, 'y': 2.0}]}], '_history': Ellipsis}
     >>> from idict import idict
     >>> from idict.function.dataset import df2Xy
     >>> d = idict.fromtoy(output_format="df") >> df2Xy >> Xy2scatterplot
     >>> d.scatterplot
-    [{'id': 0, 'data': [{'x': 5.1, 'y': 6.4}, {'x': 6.1, 'y': 3.6}, {'x': 3.1, 'y': 2.5}, {'x': 9.1, 'y': 3.5}, {'x': 9.1, 'y': 7.2}, {'x': 7.1, 'y': 6.6}, {'x': 2.1, 'y': 0.1}, {'x': 5.1, 'y': 4.5}, {'x': 1.1, 'y': 3.2}, {'x': 3.1, 'y': 2.5}]}, {'id': 1, 'data': [{'x': 1.1, 'y': 2.5}, {'x': 1.1, 'y': 3.5}, {'x': 4.7, 'y': 4.9}, {'x': 8.3, 'y': 2.9}, {'x': 2.5, 'y': 4.5}, {'x': 0.1, 'y': 4.3}, {'x': 0.1, 'y': 4.0}, {'x': 31.1, 'y': 4.7}, {'x': 2.2, 'y': 8.5}, {'x': 1.1, 'y': 8.5}]}]
+    [{'id': '0', 'data': [{'x': 5.1, 'y': 6.4}, {'x': 6.1, 'y': 3.6}, {'x': 3.1, 'y': 2.5}, {'x': 9.1, 'y': 3.5}, {'x': 9.1, 'y': 7.2}, {'x': 7.1, 'y': 6.6}, {'x': 2.1, 'y': 0.1}, {'x': 5.1, 'y': 4.5}, {'x': 1.1, 'y': 3.2}, {'x': 3.1, 'y': 2.5}]}, {'id': '1', 'data': [{'x': 1.1, 'y': 2.5}, {'x': 1.1, 'y': 3.5}, {'x': 4.7, 'y': 4.9}, {'x': 8.3, 'y': 2.9}, {'x': 2.5, 'y': 4.5}, {'x': 0.1, 'y': 4.3}, {'x': 0.1, 'y': 4.0}, {'x': 31.1, 'y': 4.7}, {'x': 2.2, 'y': 8.5}, {'x': 1.1, 'y': 8.5}]}]
     """
     X = kwargs[Xin]
     y = kwargs[yin]

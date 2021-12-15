@@ -106,7 +106,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
                     cache[v] = {&#34;_id&#34;: &#34;_&#34; + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
-                elif k not in cache:
+                elif v not in cache:
                     store(k, v, data[k])
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
@@ -914,7 +914,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
                     cache[v] = {&#34;_id&#34;: &#34;_&#34; + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
-                elif k not in cache:
+                elif v not in cache:
                     store(k, v, data[k])
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
