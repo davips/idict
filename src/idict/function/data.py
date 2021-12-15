@@ -27,7 +27,7 @@ Functions to be used directly within an idict workflow
 
 # TODO: break down all sklearn and numpy used inside binarize,
 #  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
-from idict.macro import is_number
+from idict.macro import isnumber
 
 
 def nomcols(input="X", output="nomcols", **kwargs):
@@ -40,7 +40,7 @@ def nomcols(input="X", output="nomcols", **kwargs):
     X = kwargs[input]
     idxs = []
     for i, x in enumerate(X.iloc[0] if hasattr(X, "iloc") else X[0]):
-        if not is_number(x):
+        if not isnumber(x):
             idxs.append(i)
     return {output: idxs, "_history": ...}
 

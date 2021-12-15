@@ -22,7 +22,7 @@
 #
 
 
-def is_number(s):
+def isnumber(s):
     try:
         float(s)
         return True

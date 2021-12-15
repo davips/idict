@@ -1,1 +1,3 @@
-Extend pandas support to all related functions
+Fix previously cached value check
+
+Improve functions to accept nominal values
