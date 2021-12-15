@@ -1,1 +1,1 @@
-Fix numpy object inside scatterplot
+Extend pandas support to all related functions

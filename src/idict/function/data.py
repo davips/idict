@@ -25,9 +25,6 @@
 Functions to be used directly within an idict workflow
 """
 
-import numpy
-from sklearn.preprocessing import OneHotEncoder
-
 # TODO: break down all sklearn and numpy used inside binarize,
 #  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
 from idict.macro import is_number
@@ -42,7 +39,7 @@ def nomcols(input="X", output="nomcols", **kwargs):
     """
     X = kwargs[input]
     idxs = []
-    for i, x in enumerate(X[0]):
+    for i, x in enumerate(X.iloc[0] if hasattr(X, "iloc") else X[0]):
         if not is_number(x):
             idxs.append(i)
     return {output: idxs, "_history": ...}
@@ -51,18 +48,32 @@ def nomcols(input="X", output="nomcols", **kwargs):
 def binarize(input="X", idxsin="nomcols", output="Xbin", **kwargs):
     """
     >>> import numpy as np
-    >>> X = np.array([[0, "a", 1.6], [3.2, "b", 2], [8, "c", 3]])
-    >>> binarize(X=X, nomcols=[1])
-    {'Xbin': array([[1. , 0. , 0. , 0. , 1.6],
-           [0. , 1. , 0. , 3.2, 2. ],
-           [0. , 0. , 1. , 8. , 3. ]]), '_history': Ellipsis}
+    >>> from pandas import DataFrame as DF
+    >>> X = DF(np.array([[0, "a", 1.6], [3.2, "b", 2], [8, "c", 3]]))
+    >>> X
+         0  1    2
+    0    0  a  1.6
+    1  3.2  b    2
+    2    8  c    3
+    >>> binarize(X=X, nomcols=[1])["Xbin"]
+         0    2  1_a  1_b  1_c
+    0    0  1.6    1    0    0
+    1  3.2    2    0    1    0
+    2    8    3    0    0    1
     """
     X = kwargs[input]
     cols = kwargs[idxsin]
-    encoder = OneHotEncoder()
-    nom = encoder.fit_transform(X[:, cols]).toarray()
-    num = numpy.delete(X, cols, axis=1).astype(float)
-    Xout = numpy.column_stack((nom, num))
+    if X.__class__.__name__ in ["DataFrame", "Series"]:
+        import pandas
+        clabels = X.columns[cols]
+        Xout = pandas.get_dummies(X, prefix=clabels, columns=clabels)
+    else:
+        import numpy
+        from sklearn.preprocessing import OneHotEncoder
+        encoder = OneHotEncoder()
+        nom = encoder.fit_transform(X.iloc[:, cols] if hasattr(X, "iloc") else X[:, cols]).toarray()
+        num = numpy.delete(X, cols, axis=1).astype(float)
+        Xout = numpy.column_stack((nom, num))
     return {output: Xout, "_history": ...}
 
 
@@ -87,7 +98,7 @@ nomcols.metadata = {
     "code": ...,
 }
 binarize.metadata = {
-    "id": "sklearn-1.0.1--np-1.21.4---OHE--binarize",
+    "id": "sk-1.0.1--pd-1.3.4--np-1.21.4---binarize",
     "name": "binarize",
     "description": "Binarize nominal attributes so they can be handled as numeric.",
     "parameters": ...,

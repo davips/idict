@@ -15,10 +15,8 @@ def X2histogram(col=0, input="X", output="histogram", **kwargs):
     >>> d.histogram
     [{'x': '(-0.9, 2.2]', 'count': 8}, {'x': '(2.2, 5.3]', 'count': 6}, {'x': '(5.3, 8.4]', 'count': 3}, {'x': '(8.4, 11.5]', 'count': 2}, {'x': '(11.5, 14.6]', 'count': 0}, {'x': '(14.6, 17.7]', 'count': 0}, {'x': '(17.7, 20.8]', 'count': 0}, {'x': '(20.8, 23.9]', 'count': 0}, {'x': '(23.9, 27.0]', 'count': 0}, {'x': '(27.0, 30.1]', 'count': 0}]
     """
-    from pandas import DataFrame
-
     X = kwargs[input]
-    idxs = X.iloc[:, col] if isinstance(X, DataFrame) else X[:, col]
+    idxs = X.iloc[:, col] if hasattr(X, "iloc") else X[:, col]
     cut = list(map(float, idxs))
     maximum = max(cut)
     minimum = min(cut)
@@ -60,8 +58,8 @@ def Xy2scatterplot(colx=0, coly=1, Xin="X", yin="y", output="scatterplot", **kwa
             if left == right:
                 inner.append(
                     {
-                        "x": float(X.iloc[k, colx] if isinstance(X, DataFrame) else X[k, colx]),
-                        "y": float(X.iloc[k, coly] if isinstance(X, DataFrame) else X[k, coly]),
+                        "x": float(X.iloc[k, colx] if hasattr(X, "iloc") else X[k, colx]),
+                        "y": float(X.iloc[k, coly] if hasattr(X, "iloc") else X[k, coly]),
                     }
                 )
         result.append({"id": m, "data": inner})
