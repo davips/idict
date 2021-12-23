@@ -23,6 +23,9 @@ import pickle
 from timeit import timeit
 
 import lz4.frame as lz4
+import zlib
+import bz2
+import lzma
 from pandas import DataFrame
 from scipy.io.arff import loadarff
 
@@ -36,7 +39,7 @@ from scipy.io.arff import loadarff
 # print(ø * pack(DataFrame(ar)))
 # exit()
 
-for file in ["airlines50k.arff"]:  # , "airlines100k.arff"]:
+for file in ["../../airlines50k.arff"]:  # , "airlines100k.arff"]:
     print()
     print(file)
 
@@ -53,8 +56,24 @@ for file in ["airlines50k.arff"]:  # , "airlines100k.arff"]:
         return x[1]
 
 
-    def comp(pi):
+    def complz4(pi):
+        # x[2] = lz4.compress(pi, compression_level=0)
         x[2] = lz4.compress(pi)
+        return x[2]
+
+    def compzlib(pi):
+        # x[2] = zlib.compress(pi, level=0)
+        x[2] = zlib.compress(pi)
+        return x[2]
+
+    def compbz2(pi):
+        # x[2] = bz2.compress(pi, compresslevel=1)
+        x[2] = bz2.compress(pi)
+        return x[2]
+
+    def complzma(pi):
+        # x[2] = bz2.compress(pi, compresslevel=1)
+        x[2] = lzma.compress(pi)
         return x[2]
 
 
@@ -80,13 +99,23 @@ for file in ["airlines50k.arff"]:  # , "airlines100k.arff"]:
 
     print("load arff", timeit(f, number=1), sep="\t")
     print("convert to pandas", timeit(lambda: df(x[6]), number=1), sep="\t")
-    print("pickle", timeit(lambda: pick(x[0]), number=1000), sep="\t")
-    print(">>>>>>>>>> to str", timeit(lambda: tostr(x[1]), number=1000), sep="\t")
-    print("pickle size:", len(x[0]))
-    print(">>>>>>>>>> str size:", len(x[1]))
-    print("compress lz4", timeit(lambda: comp(x[1]), number=1000), sep="\t")
+    print("pickle", timeit(lambda: pick(x[0]), number=10), sep="\t")
+    # print(">>>>>>>>>> to str", timeit(lambda: tostr(x[1]), number=1000), sep="\t")
+    # print("pickle size:", len(x[0]))
+    # print(">>>>>>>>>> str size:", len(x[1]))
+    n=1
+    print("compress lz4", timeit(lambda: complz4(x[1]), number=n), sep="\t")
+    print("     final size:", len(x[2]))
+    print("compress bz2", timeit(lambda: compbz2(x[1]), number=n), sep="\t")
+    print("     final size:", len(x[2]))
+    print("compress zlib", timeit(lambda: compzlib(x[1]), number=n), sep="\t")
+    print("     final size:", len(x[2]))
+    print("compress lzma", timeit(lambda: complzma(x[1]), number=n), sep="\t")
+    print("     final size:", len(x[2]))
+
+    exit()
     print(">>>>>>>>>> to str [compressed]", timeit(lambda: tostr(x[2]), number=1000), sep="\t")
-    print("final size:", len(x[0]))
+    print("     final size:", len(x[0]))
     print(">>>>>>>>>> str size:", len(x[1]))
     print("uncompress lz4", timeit(lambda: decomp(x[2]), number=1), sep="\t")
     print("unpickle", timeit(lambda: unpick(x[4]), number=1), sep="\t")
