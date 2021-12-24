@@ -58,6 +58,7 @@ def Xy2M(input=["X", "y"], output="M", **kwargs):
            [ 1.1,  8.5,  1. ]])
     """
     import numpy
+
     return {output: numpy.column_stack((kwargs[input[0]], kwargs[input[1]]))}
 
 
@@ -183,6 +184,7 @@ def arff2df(input="arff", output="df", **kwargs):
     1         3.1         4.5           1
     """
     from arff2pandas import a2p
+
     relation = "<Unnamed>"
     with StringIO() as f:
         f.write(kwargs[input])

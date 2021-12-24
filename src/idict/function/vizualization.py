@@ -18,6 +18,7 @@ def X2histogram(col=0, input="X", output="histogram", bins=8, **kwargs):
     """
     import numpy as np
     import pandas
+
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, "iloc") else X[:, col]
     if isnumber(vals[0]):
