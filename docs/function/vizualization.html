@@ -50,7 +50,7 @@ def X2histogram(col=0, input=&#34;X&#34;, output=&#34;histogram&#34;, bins=8, **
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, &#34;iloc&#34;) else X[:, col]
     if isnumber(vals[0]):
-        cut = pandas.qcut(np.array(list(map(float, vals))), bins)
+        cut = pandas.qcut(np.array(list(map(float, vals))), bins, duplicates=&#34;drop&#34;)
         df = pandas.DataFrame(cut)
         df2 = df.groupby(cut).count()
         dic = df2.to_dict()[0]
@@ -167,7 +167,7 @@ Xy2scatterplot.metadata = {
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, &#34;iloc&#34;) else X[:, col]
     if isnumber(vals[0]):
-        cut = pandas.qcut(np.array(list(map(float, vals))), bins)
+        cut = pandas.qcut(np.array(list(map(float, vals))), bins, duplicates=&#34;drop&#34;)
         df = pandas.DataFrame(cut)
         df2 = df.groupby(cut).count()
         dic = df2.to_dict()[0]
