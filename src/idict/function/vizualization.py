@@ -1,35 +1,29 @@
 from itertools import repeat
 
-import numpy as np
-import pandas
-
 from idict.macro import isnumber
 
 
-def X2histogram(col=0, input="X", output="histogram", **kwargs):
+def X2histogram(col=0, input="X", output="histogram", bins=8, **kwargs):
     """
     >>> import numpy as np
     >>> from idict import let
     >>> X = np.array([["a", 2.1, 1.6], ["a", 3, 2], ["b", 7, 3]])
-    >>> X2histogram(X=X, col=0)
-    {'histogram': [{'x': 'a', 'count': 2}, {'x': 'b', 'count': 1}], '_history': Ellipsis}
+    >>> X2histogram(X=X, col=1, bins=2)
+    {'histogram': [{'x': '(2.099, 3.0]', 'count': 2}, {'x': '(3.0, 7.0]', 'count': 1}], '_history': Ellipsis}
     >>> from idict import idict
     >>> from idict.function.dataset import df2Xy
-    >>> d = idict.fromtoy(output_format="df") >> df2Xy >> X2histogram
+    >>> d = idict.fromtoy(output_format="df") >> df2Xy >> let(X2histogram, bins=3)
     >>> d.histogram
-    [{'x': '(-0.9, 2.2]', 'count': 8}, {'x': '(2.2, 5.3]', 'count': 6}, {'x': '(5.3, 8.4]', 'count': 3}, {'x': '(8.4, 11.5]', 'count': 2}, {'x': '(11.5, 14.6]', 'count': 0}, {'x': '(14.6, 17.7]', 'count': 0}, {'x': '(17.7, 20.8]', 'count': 0}, {'x': '(20.8, 23.9]', 'count': 0}, {'x': '(23.9, 27.0]', 'count': 0}, {'x': '(27.0, 30.1]', 'count': 0}]
+    [{'x': '(0.099, 2.133]', 'count': 7}, {'x': '(2.133, 5.1]', 'count': 7}, {'x': '(5.1, 31.1]', 'count': 6}]
     """
+    import numpy as np
+    import pandas
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, "iloc") else X[:, col]
     if isnumber(vals[0]):
-        cut = list(map(float, vals))
-        maximum = max(cut)
-        minimum = min(cut)
-        step = (maximum - minimum) / 10
-        ranges = np.arange(minimum - 1, maximum + 1, step)
-
+        cut = pandas.qcut(np.array(list(map(float, vals))), bins)
         df = pandas.DataFrame(cut)
-        df2 = df.groupby(pandas.cut(cut, ranges)).count()
+        df2 = df.groupby(cut).count()
         dic = df2.to_dict()[0]
     else:
         from pandas import Series

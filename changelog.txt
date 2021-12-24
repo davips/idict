@@ -1,1 +1,1 @@
-Fix ARFF name extraction
+Fix histogram

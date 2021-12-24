@@ -26,9 +26,39 @@ Functions to be used directly within an idict workflow
 """
 from io import StringIO
 
-from arff2pandas import a2p
-
 from idict.function import isplit
+
+
+def Xy2M(input=["X", "y"], output="M", **kwargs):
+    """
+    >>> from idict import idict
+    >>> from idict.function.dataset import df2Xy
+    >>> d = idict.fromtoy(output_format="df")
+    >>> d = d >> df2Xy >> Xy2M
+    >>> d.M
+    array([[ 5.1,  6.4,  0. ],
+           [ 1.1,  2.5,  1. ],
+           [ 6.1,  3.6,  0. ],
+           [ 1.1,  3.5,  1. ],
+           [ 3.1,  2.5,  0. ],
+           [ 4.7,  4.9,  1. ],
+           [ 9.1,  3.5,  0. ],
+           [ 8.3,  2.9,  1. ],
+           [ 9.1,  7.2,  0. ],
+           [ 2.5,  4.5,  1. ],
+           [ 7.1,  6.6,  0. ],
+           [ 0.1,  4.3,  1. ],
+           [ 2.1,  0.1,  0. ],
+           [ 0.1,  4. ,  1. ],
+           [ 5.1,  4.5,  0. ],
+           [31.1,  4.7,  1. ],
+           [ 1.1,  3.2,  0. ],
+           [ 2.2,  8.5,  1. ],
+           [ 3.1,  2.5,  0. ],
+           [ 1.1,  8.5,  1. ]])
+    """
+    import numpy
+    return {output: numpy.column_stack((kwargs[input[0]], kwargs[input[1]]))}
 
 
 def df2Xy(input="df", Xout="X", yout="y", **kwargs):
@@ -152,6 +182,7 @@ def arff2df(input="arff", output="df", **kwargs):
     0         5.1         3.5           0
     1         3.1         4.5           1
     """
+    from arff2pandas import a2p
     relation = "<Unnamed>"
     with StringIO() as f:
         f.write(kwargs[input])

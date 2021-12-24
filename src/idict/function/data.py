@@ -27,6 +27,7 @@ Functions to be used directly within an idict workflow
 
 # TODO: break down all sklearn and numpy used inside binarize,
 #  so e.g. the fit-wrapper can be used for OHE; and binarize can be a composition.
+
 from idict.macro import isnumber
 
 
