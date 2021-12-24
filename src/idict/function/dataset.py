@@ -28,6 +28,8 @@ from io import StringIO
 
 from arff2pandas import a2p
 
+from idict.function import isplit
+
 
 def df2Xy(input="df", Xout="X", yout="y", **kwargs):
     """
@@ -144,7 +146,7 @@ def arff2df(input="arff", output="df", **kwargs):
         }
     }
     >>> d.name
-    '<Unnamed>'
+    'mini'
     >>> d.df
        attr1@REAL  attr2@REAL class@{0,1}
     0         5.1         3.5           0
@@ -155,37 +157,37 @@ def arff2df(input="arff", output="df", **kwargs):
         f.write(kwargs[input])
         text = f.getvalue()
         df = a2p.loads(text)
-        for line in text:
+        for line in isplit(text, "\n"):
             if line[:9].upper() == "@RELATION":
-                relation = line[9:-1]
+                relation = line[9:].strip()
                 break
 
     return {output: df, "_name": relation, "_history": ...}
 
 
 df2Xy.metadata = {
-    "id": "------pandas-1.3.4--sklearn-1.0.1--df2Xy",
+    "id": "idict-pandas-1.3.4--sklearn-1.0.1--df2Xy",
     "name": "df2Xy",
     "description": "DataFrame (pandas) to X,y (pandas) converter.",
     "parameters": ...,
     "code": ...,
 }
 df2arff.metadata = {
-    "id": "--------------arff2pandas-1.0.1--df2arff",
+    "id": "idict---------arff2pandas-1.0.1--df2arff",
     "name": "df2arff",
     "description": "DataFrame (pandas) to ARFF converter.",
     "parameters": ...,
     "code": ...,
 }
 openml.metadata = {
-    "id": "-------------------sklearn-1.0.1--openml",
+    "id": "idict--------------sklearn-1.0.1--openml",
     "name": "openml",
     "description": "Fetch DataFrame+Series (pandas) from OpenML.",
     "parameters": ...,
     "code": ...,
 }
 arff2df.metadata = {
-    "id": "--------------arff2pandas-1.0.1--arff2df",
+    "id": "idict---------arff2pandas-1.0.1--arff2df",
     "name": "arff2df",
     "description": "ARFF to DataFrame (pandas) converter.",
     "parameters": ...,

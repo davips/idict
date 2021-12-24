@@ -46,7 +46,7 @@ def storeblob_func(cache, blobs):
 def cached(d, cache) -> AbstractLazyDict:
     """
     Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
-    When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
+    When the dict is a singleton, we have to use "_"+id[1:] as dict id to workaround the ambiguity did=fid.
 
     Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.
     """

@@ -1,2 +1,1 @@
-Reduce 500MiB dependences
-    Fix dangling numpy dep through pandas through unused datasets lib
+Fix ARFF name extraction
