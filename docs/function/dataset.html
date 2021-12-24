@@ -57,6 +57,8 @@ from io import StringIO
 
 from arff2pandas import a2p
 
+from idict.function import isplit
+
 
 def df2Xy(input=&#34;df&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, **kwargs):
     &#34;&#34;&#34;
@@ -67,13 +69,13 @@ def df2Xy(input=&#34;df&#34;, Xout=&#34;X&#34;, yout=&#34;y&#34;, **kwargs):
     {
         &#34;X&#34;: &#34;→(input Xout yout df)&#34;,
         &#34;y&#34;: &#34;→(input Xout yout df)&#34;,
-        &#34;_history&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
+        &#34;_history&#34;: &#34;idict-pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
         &#34;df&#34;: &#34;«{&#39;attr1@REAL&#39;: {0: 5.1, 1: 3.1}, &#39;attr2@REAL&#39;: {0: 3.5, 1: 4.5}, &#39;class@{0,1}&#39;: {0: &#39;0&#39;, 1: &#39;1&#39;}}»&#34;,
-        &#34;_id&#34;: &#34;Irssl15fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&#34;,
+        &#34;_id&#34;: &#34;0GLFP05fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&#34;,
         &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;Z953PJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&#34;,
-            &#34;y&#34;: &#34;A7WhQM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&#34;,
-            &#34;_history&#34;: &#34;pWMO3xGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&#34;,
+            &#34;X&#34;: &#34;hooghJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&#34;,
+            &#34;y&#34;: &#34;UldviM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&#34;,
+            &#34;_history&#34;: &#34;5ItBBxGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&#34;,
             &#34;df&#34;: &#34;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&#34;
         }
     }
@@ -97,11 +99,11 @@ def df2arff(input=&#34;df&#34;, output=&#34;arff&#34;, **kwargs):
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;a&#34;: &#34;→(input output df)&#34;,
-        &#34;_history&#34;: &#34;--------------arff2pandas-1.0.1--df2arff&#34;,
+        &#34;_history&#34;: &#34;idict---------arff2pandas-1.0.1--df2arff&#34;,
         &#34;df&#34;: &#34;«{&#39;attr1@REAL&#39;: {0: 5.1, 1: 3.1}, &#39;attr2@REAL&#39;: {0: 3.5, 1: 4.5}, &#39;class@{0,1}&#39;: {0: &#39;0&#39;, 1: &#39;1&#39;}}»&#34;,
-        &#34;_id&#34;: &#34;u57YR7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul&#34;,
+        &#34;_id&#34;: &#34;Ojq9k7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul&#34;,
         &#34;_ids&#34;: {
-            &#34;a&#34;: &#34;e1EO6PVXE2hlKyGKeGZ3Klpi3LYxm3PpjcjUaLtE&#34;,
+            &#34;a&#34;: &#34;yfX.AOVXE2hlKyGKeGZ3Klpi3LYxm3PpjcjUaLtE&#34;,
             &#34;_history&#34;: &#34;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&#34;,
             &#34;df&#34;: &#34;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&#34;
         }
@@ -121,12 +123,12 @@ def openml(Xout=&#34;X&#34;, yout=&#34;y&#34;, name=&#34;iris&#34;, version=1):
     {
         &#34;X&#34;: &#34;→(Xout yout name version)&#34;,
         &#34;y&#34;: &#34;→(Xout yout name version)&#34;,
-        &#34;_history&#34;: &#34;-------------------sklearn-1.0.1--openml&#34;,
-        &#34;_id&#34;: &#34;-------------------sklearn-1.0.1--openml&#34;,
+        &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
+        &#34;_id&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
         &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;L7XeYBlZZACO6sy.bZQCc.uyT3vAX0I5JQxOmclE&#34;,
-            &#34;y&#34;: &#34;RMdWEPtmNX2vQh25rxwCe6MvK5cU1O-FiMwM4tew&#34;,
-            &#34;_history&#34;: &#34;Rj86lWzvXYmS2WrFfopoDhMo9xC4Zkki-NRROJOc&#34;
+            &#34;X&#34;: &#34;3mesqBlZZACO6sy.bZQCc.uyT3vAX0I5JQxOmclE&#34;,
+            &#34;y&#34;: &#34;9.w77PtmNX2vQh25rxwCe6MvK5cU1O-FiMwM4tew&#34;,
+            &#34;_history&#34;: &#34;x5RUSWzvXYmS2WrFfopoDhMo9xC4Zkki-NRROJOc&#34;
         }
     }
     &gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()
@@ -162,18 +164,18 @@ def arff2df(input=&#34;arff&#34;, output=&#34;df&#34;, **kwargs):
     {
         &#34;df&#34;: &#34;→(input output arff)&#34;,
         &#34;_name&#34;: &#34;→(input output arff)&#34;,
-        &#34;_history&#34;: &#34;--------------arff2pandas-1.0.1--arff2df&#34;,
+        &#34;_history&#34;: &#34;idict---------arff2pandas-1.0.1--arff2df&#34;,
         &#34;arff&#34;: &#34;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#34;,
-        &#34;_id&#34;: &#34;DdTnd2sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df&#34;,
+        &#34;_id&#34;: &#34;XraBH1sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df&#34;,
         &#34;_ids&#34;: {
-            &#34;df&#34;: &#34;Amuuia7QvqLnnzzID7JTDbqRpqUQX-K1K4AEnTby&#34;,
-            &#34;_name&#34;: &#34;YD6Zvf2rKoEZwN4N9d5bs83RCbE82M1Cj0zC585q&#34;,
-            &#34;_history&#34;: &#34;FHG7kK7riNIANfskLtRiJOT3rmmQYmhmZxP.N2Yi&#34;,
+            &#34;df&#34;: &#34;UANHM97QvqLnnzzID7JTDbqRpqUQX-K1K4AEnTby&#34;,
+            &#34;_name&#34;: &#34;gSpa-e2rKoEZwN4N9d5bs83RCbE82M1Cj0zC585q&#34;,
+            &#34;_history&#34;: &#34;ltnWRK7riNIANfskLtRiJOT3rmmQYmhmZxP.N2Yi&#34;,
             &#34;arff&#34;: &#34;Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&#34;
         }
     }
     &gt;&gt;&gt; d.name
-    &#39;&lt;Unnamed&gt;&#39;
+    &#39;mini&#39;
     &gt;&gt;&gt; d.df
        attr1@REAL  attr2@REAL class@{0,1}
     0         5.1         3.5           0
@@ -184,37 +186,37 @@ def arff2df(input=&#34;arff&#34;, output=&#34;df&#34;, **kwargs):
         f.write(kwargs[input])
         text = f.getvalue()
         df = a2p.loads(text)
-        for line in text:
+        for line in isplit(text, &#34;\n&#34;):
             if line[:9].upper() == &#34;@RELATION&#34;:
-                relation = line[9:-1]
+                relation = line[9:].strip()
                 break
 
     return {output: df, &#34;_name&#34;: relation, &#34;_history&#34;: ...}
 
 
 df2Xy.metadata = {
-    &#34;id&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
+    &#34;id&#34;: &#34;idict-pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
     &#34;name&#34;: &#34;df2Xy&#34;,
     &#34;description&#34;: &#34;DataFrame (pandas) to X,y (pandas) converter.&#34;,
     &#34;parameters&#34;: ...,
     &#34;code&#34;: ...,
 }
 df2arff.metadata = {
-    &#34;id&#34;: &#34;--------------arff2pandas-1.0.1--df2arff&#34;,
+    &#34;id&#34;: &#34;idict---------arff2pandas-1.0.1--df2arff&#34;,
     &#34;name&#34;: &#34;df2arff&#34;,
     &#34;description&#34;: &#34;DataFrame (pandas) to ARFF converter.&#34;,
     &#34;parameters&#34;: ...,
     &#34;code&#34;: ...,
 }
 openml.metadata = {
-    &#34;id&#34;: &#34;-------------------sklearn-1.0.1--openml&#34;,
+    &#34;id&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
     &#34;name&#34;: &#34;openml&#34;,
     &#34;description&#34;: &#34;Fetch DataFrame+Series (pandas) from OpenML.&#34;,
     &#34;parameters&#34;: ...,
     &#34;code&#34;: ...,
 }
 arff2df.metadata = {
-    &#34;id&#34;: &#34;--------------arff2pandas-1.0.1--arff2df&#34;,
+    &#34;id&#34;: &#34;idict---------arff2pandas-1.0.1--arff2df&#34;,
     &#34;name&#34;: &#34;arff2df&#34;,
     &#34;description&#34;: &#34;ARFF to DataFrame (pandas) converter.&#34;,
     &#34;parameters&#34;: ...,
@@ -242,18 +244,18 @@ arff2df.metadata = {
 {
     &quot;df&quot;: &quot;→(input output arff)&quot;,
     &quot;_name&quot;: &quot;→(input output arff)&quot;,
-    &quot;_history&quot;: &quot;--------------arff2pandas-1.0.1--arff2df&quot;,
+    &quot;_history&quot;: &quot;idict---------arff2pandas-1.0.1--arff2df&quot;,
     &quot;arff&quot;: &quot;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&quot;,
-    &quot;_id&quot;: &quot;DdTnd2sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df&quot;,
+    &quot;_id&quot;: &quot;XraBH1sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df&quot;,
     &quot;_ids&quot;: {
-        &quot;df&quot;: &quot;Amuuia7QvqLnnzzID7JTDbqRpqUQX-K1K4AEnTby&quot;,
-        &quot;_name&quot;: &quot;YD6Zvf2rKoEZwN4N9d5bs83RCbE82M1Cj0zC585q&quot;,
-        &quot;_history&quot;: &quot;FHG7kK7riNIANfskLtRiJOT3rmmQYmhmZxP.N2Yi&quot;,
+        &quot;df&quot;: &quot;UANHM97QvqLnnzzID7JTDbqRpqUQX-K1K4AEnTby&quot;,
+        &quot;_name&quot;: &quot;gSpa-e2rKoEZwN4N9d5bs83RCbE82M1Cj0zC585q&quot;,
+        &quot;_history&quot;: &quot;ltnWRK7riNIANfskLtRiJOT3rmmQYmhmZxP.N2Yi&quot;,
         &quot;arff&quot;: &quot;Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&quot;
     }
 }
 &gt;&gt;&gt; d.name
-'&lt;Unnamed&gt;'
+'mini'
 &gt;&gt;&gt; d.df
    attr1@REAL  attr2@REAL class@{0,1}
 0         5.1         3.5           0
@@ -274,18 +276,18 @@ arff2df.metadata = {
     {
         &#34;df&#34;: &#34;→(input output arff)&#34;,
         &#34;_name&#34;: &#34;→(input output arff)&#34;,
-        &#34;_history&#34;: &#34;--------------arff2pandas-1.0.1--arff2df&#34;,
+        &#34;_history&#34;: &#34;idict---------arff2pandas-1.0.1--arff2df&#34;,
         &#34;arff&#34;: &#34;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#34;,
-        &#34;_id&#34;: &#34;DdTnd2sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df&#34;,
+        &#34;_id&#34;: &#34;XraBH1sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df&#34;,
         &#34;_ids&#34;: {
-            &#34;df&#34;: &#34;Amuuia7QvqLnnzzID7JTDbqRpqUQX-K1K4AEnTby&#34;,
-            &#34;_name&#34;: &#34;YD6Zvf2rKoEZwN4N9d5bs83RCbE82M1Cj0zC585q&#34;,
-            &#34;_history&#34;: &#34;FHG7kK7riNIANfskLtRiJOT3rmmQYmhmZxP.N2Yi&#34;,
+            &#34;df&#34;: &#34;UANHM97QvqLnnzzID7JTDbqRpqUQX-K1K4AEnTby&#34;,
+            &#34;_name&#34;: &#34;gSpa-e2rKoEZwN4N9d5bs83RCbE82M1Cj0zC585q&#34;,
+            &#34;_history&#34;: &#34;ltnWRK7riNIANfskLtRiJOT3rmmQYmhmZxP.N2Yi&#34;,
             &#34;arff&#34;: &#34;Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&#34;
         }
     }
     &gt;&gt;&gt; d.name
-    &#39;&lt;Unnamed&gt;&#39;
+    &#39;mini&#39;
     &gt;&gt;&gt; d.df
        attr1@REAL  attr2@REAL class@{0,1}
     0         5.1         3.5           0
@@ -296,9 +298,9 @@ arff2df.metadata = {
         f.write(kwargs[input])
         text = f.getvalue()
         df = a2p.loads(text)
-        for line in text:
+        for line in isplit(text, &#34;\n&#34;):
             if line[:9].upper() == &#34;@RELATION&#34;:
-                relation = line[9:-1]
+                relation = line[9:].strip()
                 break
 
     return {output: df, &#34;_name&#34;: relation, &#34;_history&#34;: ...}</code></pre>
@@ -315,13 +317,13 @@ arff2df.metadata = {
 {
     &quot;X&quot;: &quot;→(input Xout yout df)&quot;,
     &quot;y&quot;: &quot;→(input Xout yout df)&quot;,
-    &quot;_history&quot;: &quot;------pandas-1.3.4--sklearn-1.0.1--df2Xy&quot;,
+    &quot;_history&quot;: &quot;idict-pandas-1.3.4--sklearn-1.0.1--df2Xy&quot;,
     &quot;df&quot;: &quot;«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»&quot;,
-    &quot;_id&quot;: &quot;Irssl15fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&quot;,
+    &quot;_id&quot;: &quot;0GLFP05fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&quot;,
     &quot;_ids&quot;: {
-        &quot;X&quot;: &quot;Z953PJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&quot;,
-        &quot;y&quot;: &quot;A7WhQM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&quot;,
-        &quot;_history&quot;: &quot;pWMO3xGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&quot;,
+        &quot;X&quot;: &quot;hooghJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&quot;,
+        &quot;y&quot;: &quot;UldviM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&quot;,
+        &quot;_history&quot;: &quot;5ItBBxGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&quot;,
         &quot;df&quot;: &quot;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&quot;
     }
 }
@@ -341,13 +343,13 @@ array([0, 1])
     {
         &#34;X&#34;: &#34;→(input Xout yout df)&#34;,
         &#34;y&#34;: &#34;→(input Xout yout df)&#34;,
-        &#34;_history&#34;: &#34;------pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
+        &#34;_history&#34;: &#34;idict-pandas-1.3.4--sklearn-1.0.1--df2Xy&#34;,
         &#34;df&#34;: &#34;«{&#39;attr1@REAL&#39;: {0: 5.1, 1: 3.1}, &#39;attr2@REAL&#39;: {0: 3.5, 1: 4.5}, &#39;class@{0,1}&#39;: {0: &#39;0&#39;, 1: &#39;1&#39;}}»&#34;,
-        &#34;_id&#34;: &#34;Irssl15fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&#34;,
+        &#34;_id&#34;: &#34;0GLFP05fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy&#34;,
         &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;Z953PJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&#34;,
-            &#34;y&#34;: &#34;A7WhQM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&#34;,
-            &#34;_history&#34;: &#34;pWMO3xGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&#34;,
+            &#34;X&#34;: &#34;hooghJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR&#34;,
+            &#34;y&#34;: &#34;UldviM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ&#34;,
+            &#34;_history&#34;: &#34;5ItBBxGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.&#34;,
             &#34;df&#34;: &#34;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&#34;
         }
     }
@@ -373,11 +375,11 @@ array([0, 1])
 &gt;&gt;&gt; d.show(colored=False)
 {
     &quot;a&quot;: &quot;→(input output df)&quot;,
-    &quot;_history&quot;: &quot;--------------arff2pandas-1.0.1--df2arff&quot;,
+    &quot;_history&quot;: &quot;idict---------arff2pandas-1.0.1--df2arff&quot;,
     &quot;df&quot;: &quot;«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»&quot;,
-    &quot;_id&quot;: &quot;u57YR7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul&quot;,
+    &quot;_id&quot;: &quot;Ojq9k7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul&quot;,
     &quot;_ids&quot;: {
-        &quot;a&quot;: &quot;e1EO6PVXE2hlKyGKeGZ3Klpi3LYxm3PpjcjUaLtE&quot;,
+        &quot;a&quot;: &quot;yfX.AOVXE2hlKyGKeGZ3Klpi3LYxm3PpjcjUaLtE&quot;,
         &quot;_history&quot;: &quot;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&quot;,
         &quot;df&quot;: &quot;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&quot;
     }
@@ -397,11 +399,11 @@ array([0, 1])
     &gt;&gt;&gt; d.show(colored=False)
     {
         &#34;a&#34;: &#34;→(input output df)&#34;,
-        &#34;_history&#34;: &#34;--------------arff2pandas-1.0.1--df2arff&#34;,
+        &#34;_history&#34;: &#34;idict---------arff2pandas-1.0.1--df2arff&#34;,
         &#34;df&#34;: &#34;«{&#39;attr1@REAL&#39;: {0: 5.1, 1: 3.1}, &#39;attr2@REAL&#39;: {0: 3.5, 1: 4.5}, &#39;class@{0,1}&#39;: {0: &#39;0&#39;, 1: &#39;1&#39;}}»&#34;,
-        &#34;_id&#34;: &#34;u57YR7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul&#34;,
+        &#34;_id&#34;: &#34;Ojq9k7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul&#34;,
         &#34;_ids&#34;: {
-            &#34;a&#34;: &#34;e1EO6PVXE2hlKyGKeGZ3Klpi3LYxm3PpjcjUaLtE&#34;,
+            &#34;a&#34;: &#34;yfX.AOVXE2hlKyGKeGZ3Klpi3LYxm3PpjcjUaLtE&#34;,
             &#34;_history&#34;: &#34;FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J&#34;,
             &#34;df&#34;: &#34;q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)&#34;
         }
@@ -423,12 +425,12 @@ array([0, 1])
 {
     &quot;X&quot;: &quot;→(Xout yout name version)&quot;,
     &quot;y&quot;: &quot;→(Xout yout name version)&quot;,
-    &quot;_history&quot;: &quot;-------------------sklearn-1.0.1--openml&quot;,
-    &quot;_id&quot;: &quot;-------------------sklearn-1.0.1--openml&quot;,
+    &quot;_history&quot;: &quot;idict--------------sklearn-1.0.1--openml&quot;,
+    &quot;_id&quot;: &quot;idict--------------sklearn-1.0.1--openml&quot;,
     &quot;_ids&quot;: {
-        &quot;X&quot;: &quot;L7XeYBlZZACO6sy.bZQCc.uyT3vAX0I5JQxOmclE&quot;,
-        &quot;y&quot;: &quot;RMdWEPtmNX2vQh25rxwCe6MvK5cU1O-FiMwM4tew&quot;,
-        &quot;_history&quot;: &quot;Rj86lWzvXYmS2WrFfopoDhMo9xC4Zkki-NRROJOc&quot;
+        &quot;X&quot;: &quot;3mesqBlZZACO6sy.bZQCc.uyT3vAX0I5JQxOmclE&quot;,
+        &quot;y&quot;: &quot;9.w77PtmNX2vQh25rxwCe6MvK5cU1O-FiMwM4tew&quot;,
+        &quot;_history&quot;: &quot;x5RUSWzvXYmS2WrFfopoDhMo9xC4Zkki-NRROJOc&quot;
     }
 }
 &gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()
@@ -458,12 +460,12 @@ Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
     {
         &#34;X&#34;: &#34;→(Xout yout name version)&#34;,
         &#34;y&#34;: &#34;→(Xout yout name version)&#34;,
-        &#34;_history&#34;: &#34;-------------------sklearn-1.0.1--openml&#34;,
-        &#34;_id&#34;: &#34;-------------------sklearn-1.0.1--openml&#34;,
+        &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
+        &#34;_id&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
         &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;L7XeYBlZZACO6sy.bZQCc.uyT3vAX0I5JQxOmclE&#34;,
-            &#34;y&#34;: &#34;RMdWEPtmNX2vQh25rxwCe6MvK5cU1O-FiMwM4tew&#34;,
-            &#34;_history&#34;: &#34;Rj86lWzvXYmS2WrFfopoDhMo9xC4Zkki-NRROJOc&#34;
+            &#34;X&#34;: &#34;3mesqBlZZACO6sy.bZQCc.uyT3vAX0I5JQxOmclE&#34;,
+            &#34;y&#34;: &#34;9.w77PtmNX2vQh25rxwCe6MvK5cU1O-FiMwM4tew&#34;,
+            &#34;_history&#34;: &#34;x5RUSWzvXYmS2WrFfopoDhMo9xC4Zkki-NRROJOc&#34;
         }
     }
     &gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()

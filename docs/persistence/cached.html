@@ -74,7 +74,7 @@ def storeblob_func(cache, blobs):
 def cached(d, cache) -&gt; AbstractLazyDict:
     &#34;&#34;&#34;
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
-    When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
+    When the dict is a singleton, we have to use &#34;_&#34;+id[1:] as dict id to workaround the ambiguity did=fid.
 
     Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.
     &#34;&#34;&#34;
@@ -872,8 +872,8 @@ I0_dac96298c4c5bf8cb0cde8d8eb3e4a78ca1af
 <span>def <span class="ident">cached</span></span>(<span>d, cache) ‑> ldict.core.base.AbstractLazyDict</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Store each value (fid: value) and an extra value containing the fids (did: {"_id": did, "_ids": fids}).
-When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.</p>
+<div class="desc"><p>Store each value (fid: value) and an extra value containing the fids (did: {"<em>id": did, "_ids": fids}).
+When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workaround the ambiguity did=fid.</p>
 <p>Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.</p></div>
 <details class="source">
 <summary>
@@ -882,7 +882,7 @@ When the dict is a singleton, we have to use id² as dict id to workaround the a
 <pre><code class="python">def cached(d, cache) -&gt; AbstractLazyDict:
     &#34;&#34;&#34;
     Store each value (fid: value) and an extra value containing the fids (did: {&#34;_id&#34;: did, &#34;_ids&#34;: fids}).
-    When the dict is a singleton, we have to use id² as dict id to workaround the ambiguity did=fid.
+    When the dict is a singleton, we have to use &#34;_&#34;+id[1:] as dict id to workaround the ambiguity did=fid.
 
     Lock the id during the job, to avoid duplicate jobs in a distributed system, if supported by the provided cache.
     &#34;&#34;&#34;
