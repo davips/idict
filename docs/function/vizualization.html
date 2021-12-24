@@ -37,12 +37,12 @@ def X2histogram(col=0, input=&#34;X&#34;, output=&#34;histogram&#34;, bins=8, **
     &gt;&gt;&gt; from idict import let
     &gt;&gt;&gt; X = np.array([[&#34;a&#34;, 2.1, 1.6], [&#34;a&#34;, 3, 2], [&#34;b&#34;, 7, 3]])
     &gt;&gt;&gt; X2histogram(X=X, col=1, bins=2)
-    {&#39;histogram&#39;: [{&#39;x&#39;: &#39;(2.099, 3.0]&#39;, &#39;count&#39;: 2}, {&#39;x&#39;: &#39;(3.0, 7.0]&#39;, &#39;count&#39;: 1}], &#39;_history&#39;: Ellipsis}
+    {&#39;histogram&#39;: [{&#39;x&#39;: &#39;(2.095, 4.55]&#39;, &#39;count&#39;: 2}, {&#39;x&#39;: &#39;(4.55, 7.0]&#39;, &#39;count&#39;: 1}], &#39;_history&#39;: Ellipsis}
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; from idict.function.dataset import df2Xy
-    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;) &gt;&gt; df2Xy &gt;&gt; let(X2histogram, bins=3)
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;) &gt;&gt; df2Xy &gt;&gt; X2histogram
     &gt;&gt;&gt; d.histogram
-    [{&#39;x&#39;: &#39;(0.099, 2.133]&#39;, &#39;count&#39;: 7}, {&#39;x&#39;: &#39;(2.133, 5.1]&#39;, &#39;count&#39;: 7}, {&#39;x&#39;: &#39;(5.1, 31.1]&#39;, &#39;count&#39;: 6}]
+    [{&#39;x&#39;: &#39;(0.069, 3.975]&#39;, &#39;count&#39;: 11}, {&#39;x&#39;: &#39;(3.975, 7.85]&#39;, &#39;count&#39;: 5}, {&#39;x&#39;: &#39;(7.85, 11.725]&#39;, &#39;count&#39;: 3}, {&#39;x&#39;: &#39;(11.725, 15.6]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(15.6, 19.475]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(19.475, 23.35]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(23.35, 27.225]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(27.225, 31.1]&#39;, &#39;count&#39;: 1}]
     &#34;&#34;&#34;
     import numpy as np
     import pandas
@@ -50,7 +50,7 @@ def X2histogram(col=0, input=&#34;X&#34;, output=&#34;histogram&#34;, bins=8, **
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, &#34;iloc&#34;) else X[:, col]
     if isnumber(vals[0]):
-        cut = pandas.qcut(np.array(list(map(float, vals))), bins, duplicates=&#34;drop&#34;)
+        cut = pandas.cut(np.array(list(map(float, vals))), bins, duplicates=&#34;drop&#34;)
         df = pandas.DataFrame(cut)
         df2 = df.groupby(cut).count()
         dic = df2.to_dict()[0]
@@ -137,12 +137,12 @@ Xy2scatterplot.metadata = {
 &gt;&gt;&gt; from idict import let
 &gt;&gt;&gt; X = np.array([[&quot;a&quot;, 2.1, 1.6], [&quot;a&quot;, 3, 2], [&quot;b&quot;, 7, 3]])
 &gt;&gt;&gt; X2histogram(X=X, col=1, bins=2)
-{'histogram': [{'x': '(2.099, 3.0]', 'count': 2}, {'x': '(3.0, 7.0]', 'count': 1}], '_history': Ellipsis}
+{'histogram': [{'x': '(2.095, 4.55]', 'count': 2}, {'x': '(4.55, 7.0]', 'count': 1}], '_history': Ellipsis}
 &gt;&gt;&gt; from idict import idict
 &gt;&gt;&gt; from idict.function.dataset import df2Xy
-&gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;) &gt;&gt; df2Xy &gt;&gt; let(X2histogram, bins=3)
+&gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;) &gt;&gt; df2Xy &gt;&gt; X2histogram
 &gt;&gt;&gt; d.histogram
-[{'x': '(0.099, 2.133]', 'count': 7}, {'x': '(2.133, 5.1]', 'count': 7}, {'x': '(5.1, 31.1]', 'count': 6}]
+[{'x': '(0.069, 3.975]', 'count': 11}, {'x': '(3.975, 7.85]', 'count': 5}, {'x': '(7.85, 11.725]', 'count': 3}, {'x': '(11.725, 15.6]', 'count': 0}, {'x': '(15.6, 19.475]', 'count': 0}, {'x': '(19.475, 23.35]', 'count': 0}, {'x': '(23.35, 27.225]', 'count': 0}, {'x': '(27.225, 31.1]', 'count': 1}]
 </code></pre></div>
 <details class="source">
 <summary>
@@ -154,12 +154,12 @@ Xy2scatterplot.metadata = {
     &gt;&gt;&gt; from idict import let
     &gt;&gt;&gt; X = np.array([[&#34;a&#34;, 2.1, 1.6], [&#34;a&#34;, 3, 2], [&#34;b&#34;, 7, 3]])
     &gt;&gt;&gt; X2histogram(X=X, col=1, bins=2)
-    {&#39;histogram&#39;: [{&#39;x&#39;: &#39;(2.099, 3.0]&#39;, &#39;count&#39;: 2}, {&#39;x&#39;: &#39;(3.0, 7.0]&#39;, &#39;count&#39;: 1}], &#39;_history&#39;: Ellipsis}
+    {&#39;histogram&#39;: [{&#39;x&#39;: &#39;(2.095, 4.55]&#39;, &#39;count&#39;: 2}, {&#39;x&#39;: &#39;(4.55, 7.0]&#39;, &#39;count&#39;: 1}], &#39;_history&#39;: Ellipsis}
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; from idict.function.dataset import df2Xy
-    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;) &gt;&gt; df2Xy &gt;&gt; let(X2histogram, bins=3)
+    &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;) &gt;&gt; df2Xy &gt;&gt; X2histogram
     &gt;&gt;&gt; d.histogram
-    [{&#39;x&#39;: &#39;(0.099, 2.133]&#39;, &#39;count&#39;: 7}, {&#39;x&#39;: &#39;(2.133, 5.1]&#39;, &#39;count&#39;: 7}, {&#39;x&#39;: &#39;(5.1, 31.1]&#39;, &#39;count&#39;: 6}]
+    [{&#39;x&#39;: &#39;(0.069, 3.975]&#39;, &#39;count&#39;: 11}, {&#39;x&#39;: &#39;(3.975, 7.85]&#39;, &#39;count&#39;: 5}, {&#39;x&#39;: &#39;(7.85, 11.725]&#39;, &#39;count&#39;: 3}, {&#39;x&#39;: &#39;(11.725, 15.6]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(15.6, 19.475]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(19.475, 23.35]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(23.35, 27.225]&#39;, &#39;count&#39;: 0}, {&#39;x&#39;: &#39;(27.225, 31.1]&#39;, &#39;count&#39;: 1}]
     &#34;&#34;&#34;
     import numpy as np
     import pandas
@@ -167,7 +167,7 @@ Xy2scatterplot.metadata = {
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, &#34;iloc&#34;) else X[:, col]
     if isnumber(vals[0]):
-        cut = pandas.qcut(np.array(list(map(float, vals))), bins, duplicates=&#34;drop&#34;)
+        cut = pandas.cut(np.array(list(map(float, vals))), bins, duplicates=&#34;drop&#34;)
         df = pandas.DataFrame(cut)
         df2 = df.groupby(cut).count()
         dic = df2.to_dict()[0]
