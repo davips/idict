@@ -22,7 +22,7 @@ def X2histogram(col=0, input="X", output="histogram", bins=8, **kwargs):
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, "iloc") else X[:, col]
     if isnumber(vals[0]):
-        cut = pandas.qcut(np.array(list(map(float, vals))), bins)
+        cut = pandas.qcut(np.array(list(map(float, vals))), bins, duplicates="drop")
         df = pandas.DataFrame(cut)
         df2 = df.groupby(cut).count()
         dic = df2.to_dict()[0]
