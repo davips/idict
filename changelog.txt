@@ -1,2 +1,2 @@
-Reduce 500MiB dependences
-    Fix dangling numpy dep through pandas through unused datasets lib
+Port to python 3.10
+    Use lz4 from github, since v3.1.12 is not available on pypi at this time

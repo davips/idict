@@ -16,7 +16,6 @@ full = ["pandas", "arff2pandas", "sqlalchemy", "scikit-learn"]
 [tool.poetry.dependencies]
 python = "^3.8"  #">=3.8,<3.10"
 orjson = "^3.5.0"
-lz4 = "^3.1.3"
 ldict = "^3.211211.1"
 garoupa = "^2.211207.7"
 dill = "^0.3.4"
@@ -25,6 +24,7 @@ arff2pandas = {version = "1.0.1", optional = true}
 pandas = { version = "1.3.4", optional = true }
 SQLAlchemy = { version = "^1.4.27", optional = true }
 scikit-learn = {version = "1.0.1", optional = true}
+lz4 = {git = "https://github.com/python-lz4/python-lz4", rev = "v3.1.12"}  # Not available on pypi at this time.
 
 [tool.poetry.dev-dependencies]
 autoreadme = "^0.2102.20"
