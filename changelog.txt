@@ -1,1 +1,1 @@
-Fix duplicates for qcut
+Revert qcut adoption

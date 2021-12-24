@@ -9,12 +9,12 @@ def X2histogram(col=0, input="X", output="histogram", bins=8, **kwargs):
     >>> from idict import let
     >>> X = np.array([["a", 2.1, 1.6], ["a", 3, 2], ["b", 7, 3]])
     >>> X2histogram(X=X, col=1, bins=2)
-    {'histogram': [{'x': '(2.099, 3.0]', 'count': 2}, {'x': '(3.0, 7.0]', 'count': 1}], '_history': Ellipsis}
+    {'histogram': [{'x': '(2.095, 4.55]', 'count': 2}, {'x': '(4.55, 7.0]', 'count': 1}], '_history': Ellipsis}
     >>> from idict import idict
     >>> from idict.function.dataset import df2Xy
-    >>> d = idict.fromtoy(output_format="df") >> df2Xy >> let(X2histogram, bins=3)
+    >>> d = idict.fromtoy(output_format="df") >> df2Xy >> X2histogram
     >>> d.histogram
-    [{'x': '(0.099, 2.133]', 'count': 7}, {'x': '(2.133, 5.1]', 'count': 7}, {'x': '(5.1, 31.1]', 'count': 6}]
+    [{'x': '(0.069, 3.975]', 'count': 11}, {'x': '(3.975, 7.85]', 'count': 5}, {'x': '(7.85, 11.725]', 'count': 3}, {'x': '(11.725, 15.6]', 'count': 0}, {'x': '(15.6, 19.475]', 'count': 0}, {'x': '(19.475, 23.35]', 'count': 0}, {'x': '(23.35, 27.225]', 'count': 0}, {'x': '(27.225, 31.1]', 'count': 1}]
     """
     import numpy as np
     import pandas
@@ -22,7 +22,7 @@ def X2histogram(col=0, input="X", output="histogram", bins=8, **kwargs):
     X = kwargs[input]
     vals = X.iloc[:, col] if hasattr(X, "iloc") else X[:, col]
     if isnumber(vals[0]):
-        cut = pandas.qcut(np.array(list(map(float, vals))), bins, duplicates="drop")
+        cut = pandas.cut(np.array(list(map(float, vals))), bins, duplicates="drop")
         df = pandas.DataFrame(cut)
         df2 = df.groupby(cut).count()
         dic = df2.to_dict()[0]
