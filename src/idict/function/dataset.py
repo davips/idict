@@ -59,7 +59,7 @@ def Xy2M(input=["X", "y"], output="M", **kwargs):
     """
     import numpy
 
-    return {output: numpy.column_stack((kwargs[input[0]], kwargs[input[1]]))}
+    return {output: numpy.column_stack((kwargs[input[0]], kwargs[input[1]])), "_history": ...}
 
 
 def df2Xy(input="df", Xout="X", yout="y", **kwargs):
@@ -198,6 +198,13 @@ def arff2df(input="arff", output="df", **kwargs):
     return {output: df, "_name": relation, "_history": ...}
 
 
+Xy2M.metadata = {
+    "id": "idict--pandas-1.3.4--sklearn-1.0.1--Xy2M",
+    "name": "Xy2M",
+    "description": "X,y (pandas/numpy) to M (numpy) column concatenator.",
+    "parameters": ...,
+    "code": ...,
+}
 df2Xy.metadata = {
     "id": "idict-pandas-1.3.4--sklearn-1.0.1--df2Xy",
     "name": "df2Xy",
