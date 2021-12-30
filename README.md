@@ -225,7 +225,7 @@ print(d2)
     "y": 1.4,
     "x": 5,
     "_id": "cLQzLVSJU.N2iT-5OaZWUEnnYWUHK5qjURoS6ymD",
-    "_ids": "u-FenHI5ID.J6D-Hvj.WShqswXAgoL5sYPWsHSoF... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_ids": "S969viykMVgKVqEgHOtHyhIaHGhMt9l9.mkvh7xr... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -255,7 +255,7 @@ print(d2)
     "y": 1.4,
     "x": 5,
     "_id": "JNtKgf-Bz7S5z6QwqzWKKM5OLM4QR7OmcORBo47s",
-    "_ids": "IYglBIPS5j1KqhPE.JPs6GD89DSHtNtvgQncZo9u... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_ids": "fg5iyZsHWufuM4dbS6MIkjrWYV7FeKkyMh6p2wM3... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -278,7 +278,7 @@ print(d2)
     "y": 1.4,
     "x": 5,
     "_id": "JNtKgf-Bz7S5z6QwqzWKKM5OLM4QR7OmcORBo47s",
-    "_ids": "IYglBIPS5j1KqhPE.JPs6GD89DSHtNtvgQncZo9u... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
+    "_ids": "fg5iyZsHWufuM4dbS6MIkjrWYV7FeKkyMh6p2wM3... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -545,7 +545,7 @@ print(e.z)
 e = d >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 7025.0
+e = 25.07
 """
 ```
 
@@ -555,7 +555,7 @@ e = 7025.0
 e = e >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 7025.0
+e = 25.007
 """
 ```
 
