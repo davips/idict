@@ -1,1 +1,1 @@
-Revert qcut adoption
+Fix decomposition of f result to reflect unambiguous ids

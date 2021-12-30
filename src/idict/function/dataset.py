@@ -75,9 +75,9 @@ def df2Xy(input="df", Xout="X", yout="y", **kwargs):
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
         "_id": "0GLFP05fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy",
         "_ids": {
-            "X": "hooghJAIuzoXue9tSVrWrU9ek4Rw--J2NP7DnTVR",
-            "y": "UldviM8Kn.smh66ZP7X-D9M1k9IQ4M0DmL6B58PJ",
-            "_history": "5ItBBxGIMLsBTpdvIGaFHpdkk.2ERtilWaL0O2e.",
+            "X": "NeRaymrp6pcRWPAFc4t8A9.BnboEM0.1BllNL8yo",
+            "y": "BLW9uncfc4h7G4e1lK66TjtG5bj6uMX2oEJxZBbm",
+            "_history": "wfGnutW0WADjXhbuxxKPp5WD5po2Jk6W4srWxjdQ",
             "df": "q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
@@ -105,8 +105,8 @@ def df2arff(input="df", output="arff", **kwargs):
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
         "_id": "Ojq9k7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul",
         "_ids": {
-            "a": "yfX.AOVXE2hlKyGKeGZ3Klpi3LYxm3PpjcjUaLtE",
-            "_history": "FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J",
+            "a": "pO.BtCjXeyhjKdlZ3GwdvyrYWGXEAQb9ZijWnFXj",
+            "_history": "ZjxJ2WWJn82el.kX9ojvWDavSV8mReWcD3TAGgz1",
             "df": "q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
@@ -128,9 +128,9 @@ def openml(Xout="X", yout="y", name="iris", version=1):
         "_history": "idict--------------sklearn-1.0.1--openml",
         "_id": "idict--------------sklearn-1.0.1--openml",
         "_ids": {
-            "X": "3mesqBlZZACO6sy.bZQCc.uyT3vAX0I5JQxOmclE",
-            "y": "9.w77PtmNX2vQh25rxwCe6MvK5cU1O-FiMwM4tew",
-            "_history": "x5RUSWzvXYmS2WrFfopoDhMo9xC4Zkki-NRROJOc"
+            "X": "KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr",
+            "y": "aUvIFn8094CRcfDRzrN1mjxEdkYnbBAiLiOUicIs",
+            "_history": "miMBPEskz2sHRJKKHQVb1tnaOGFRtnjxZGYCxist"
         }
     }
     >>> (Ø >> openml).X.head()
@@ -170,9 +170,9 @@ def arff2df(input="arff", output="df", **kwargs):
         "arff": "@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
         "_id": "XraBH1sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df",
         "_ids": {
-            "df": "UANHM97QvqLnnzzID7JTDbqRpqUQX-K1K4AEnTby",
-            "_name": "gSpa-e2rKoEZwN4N9d5bs83RCbE82M1Cj0zC585q",
-            "_history": "ltnWRK7riNIANfskLtRiJOT3rmmQYmhmZxP.N2Yi",
+            "df": "GCkwy4oI.s5m.pFcLGaH8kpw-djkkfftwsc5Hdj5",
+            "_name": "K4gZ2YDXBHOHwPzYufHChxkfhSz7ZAr--YbuHM-o",
+            "_history": ".27HRUkG1mSTh3YQOzye1BN4UoUlFhnyvdyHU3XM",
             "arff": "Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)"
         }
     }

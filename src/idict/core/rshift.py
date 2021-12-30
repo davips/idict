@@ -24,7 +24,8 @@ import operator
 from functools import reduce
 from typing import Dict, Union
 
-from garoupa import Hosh, rho_elem, removal_elem
+from garoupa import Hosh, removal_elem
+
 from idict.core.frozenidentifieddict import FrozenIdentifiedDict
 from idict.core.identification import fhosh, blobs_hashes_hoshes
 from idict.parameter.ilet import iLet
@@ -84,7 +85,7 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         for i, k in enumerate(outputs):
             newdata[k] = frozen.data[k]
             if i < noutputs - 1:
-                field_hosh = ufu_1 * rho_elem(c)
+                field_hosh = Hosh(f"{ufu_1.id}-{c}".encode())
                 c += 1
                 acc *= field_hosh
             else:
@@ -277,8 +278,8 @@ def solve(hoshes, output, uf: Hosh):
         "z": 1,
         "_id": "JN-puhssoMO2iTwz8coREZG5ts9KdJ-3GBbIubB7",
         "_ids": {
-            "x": "0216.kBAcz301hb6vAa56OI8ijFgaJH7prk5D0Aq",
-            "y": "FbwPhhohM9oJ2RiZe6NOVCGxpc5Z-6jYgymCTa1J",
+            "x": "ypDxvzf3UHQIWNGWB2p5swFgn9eQOGOx5aS5yOxs",
+            "y": "oDP6ovudiaAlc2aJ3JoN6tu913zpm9cyAPQBYo3H",
             "w": "Tr_9c39277012db0264069f5c777cdf5ae3c57bc (content: -B_305c3d0e44c94a5418d982f7dfe8a537a5c4b)",
             "z": "fA_f76604de6c618f2740bd6cf44b16673648837 (content: l8_09c7059156c4ed2aea46243e9d4b36c01f272)"
         }
