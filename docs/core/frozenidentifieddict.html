@@ -611,7 +611,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         val = get_following_pointers(id2, cache)
         isdescriptor = isinstance(val, dict) and &#34;_id&#34; in val and &#34;_ids&#34; in val
         if val is None or not isdescriptor:  # pragma: no cover
-            raise Exception(f&#34;Could not find {id}/{id2}&#34;)
+            raise Exception(f&#34;Could not find {id} / {id2}&#34;)
         return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)
 
     @staticmethod
@@ -1459,7 +1459,7 @@ True
         val = get_following_pointers(id2, cache)
         isdescriptor = isinstance(val, dict) and &#34;_id&#34; in val and &#34;_ids&#34; in val
         if val is None or not isdescriptor:  # pragma: no cover
-            raise Exception(f&#34;Could not find {id}/{id2}&#34;)
+            raise Exception(f&#34;Could not find {id} / {id2}&#34;)
         return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)
 
     @staticmethod
@@ -1828,7 +1828,7 @@ def fromid(id, cache, identity=ø40) -&gt; Union[&#34;FrozenIdentifiedDict&#34;,
     val = get_following_pointers(id2, cache)
     isdescriptor = isinstance(val, dict) and &#34;_id&#34; in val and &#34;_ids&#34; in val
     if val is None or not isdescriptor:  # pragma: no cover
-        raise Exception(f&#34;Could not find {id}/{id2}&#34;)
+        raise Exception(f&#34;Could not find {id} / {id2}&#34;)
     return build(val[&#34;_id&#34;], val[&#34;_ids&#34;], cache, identity)</code></pre>
 </details>
 </dd>

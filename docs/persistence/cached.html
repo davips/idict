@@ -100,14 +100,17 @@ def cached(d, cache) -&gt; AbstractLazyDict:
 
             # Process and save (all fields, to avoid a parcial idict being stored).
             k = None
+            changed = False
             for k, v in fids.items():
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
                     cache[v] = {&#34;_id&#34;: &#34;_&#34; + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
+                    changed = True
                 elif v not in cache:
                     store(k, v, data[k])
+                    changed = True
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
@@ -116,6 +119,9 @@ def cached(d, cache) -&gt; AbstractLazyDict:
             front_id_ = front_id
             if hasattr(cache, &#34;user_hosh&#34;):
                 # print(&#34;has hosh&#34;, d.id)
+                if front_id_ in cache and changed:
+                    del cache[id]
+                    del cache[front_id]
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
                 front_id_ = (d.id * cache.user_hosh).id
@@ -146,6 +152,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
 
     # Eager saving when there are no lazies.
     if not lazies:
+        changed = False
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
@@ -153,6 +160,10 @@ def cached(d, cache) -&gt; AbstractLazyDict:
                     data[k] = cached(data[k], cache)
                 else:
                     store(k, fid, data[k])
+                changed = True
+        if front_id in cache and changed:
+            del cache[d.id]
+            del cache[front_id]
         if front_id not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
                 cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
@@ -908,14 +919,17 @@ When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workar
 
             # Process and save (all fields, to avoid a parcial idict being stored).
             k = None
+            changed = False
             for k, v in fids.items():
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
                     cache[v] = {&#34;_id&#34;: &#34;_&#34; + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
+                    changed = True
                 elif v not in cache:
                     store(k, v, data[k])
+                    changed = True
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f&#34;No ids&#34;)
@@ -924,6 +938,9 @@ When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workar
             front_id_ = front_id
             if hasattr(cache, &#34;user_hosh&#34;):
                 # print(&#34;has hosh&#34;, d.id)
+                if front_id_ in cache and changed:
+                    del cache[id]
+                    del cache[front_id]
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
                 front_id_ = (d.id * cache.user_hosh).id
@@ -954,6 +971,7 @@ When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workar
 
     # Eager saving when there are no lazies.
     if not lazies:
+        changed = False
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
@@ -961,6 +979,10 @@ When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workar
                     data[k] = cached(data[k], cache)
                 else:
                     store(k, fid, data[k])
+                changed = True
+        if front_id in cache and changed:
+            del cache[d.id]
+            del cache[front_id]
         if front_id not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
                 cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
