@@ -72,14 +72,17 @@ def cached(d, cache) -> AbstractLazyDict:
 
             # Process and save (all fields, to avoid a parcial idict being stored).
             k = None
+            changed = False
             for k, v in fids.items():
                 if isinstance(data[k], LazyVal):
                     data[k] = data[k](**kwargs)
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
                     cache[v] = {"_id": "_" + data[k].id[1:]}
                     data[k] = cached(data[k], cache)
+                    changed = True
                 elif v not in cache:
                     store(k, v, data[k])
+                    changed = True
             if (result := data[outputf]) is None:  # pragma: no cover
                 if k is None:
                     raise Exception(f"No ids")
@@ -88,6 +91,9 @@ def cached(d, cache) -> AbstractLazyDict:
             front_id_ = front_id
             if hasattr(cache, "user_hosh"):
                 # print("has hosh", d.id)
+                if front_id_ in cache and changed:
+                    del cache[id]
+                    del cache[front_id]
                 if front_id_ not in cache:
                     cache[front_id_] = {"_id": id, "_ids": {k: v for k, v in fids.items() if not k.startswith("_")}}
                 front_id_ = (d.id * cache.user_hosh).id
@@ -118,6 +124,7 @@ def cached(d, cache) -> AbstractLazyDict:
 
     # Eager saving when there are no lazies.
     if not lazies:
+        changed = False
         for k, fid in d.ids.items():
             if fid not in cache:
                 if isinstance(data[k], (FrozenIdentifiedDict, Idict)):
@@ -125,6 +132,10 @@ def cached(d, cache) -> AbstractLazyDict:
                     data[k] = cached(data[k], cache)
                 else:
                     store(k, fid, data[k])
+                changed = True
+        if front_id in cache and changed:
+            del cache[d.id]
+            del cache[front_id]
         if front_id not in cache:
             if hasattr(cache, "user_hosh"):
                 cache[front_id] = {"_id": d.id, "_ids": {k: v for k, v in d.ids.items() if not k.startswith("_")}}

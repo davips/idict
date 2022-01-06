@@ -583,7 +583,7 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         val = get_following_pointers(id2, cache)
         isdescriptor = isinstance(val, dict) and "_id" in val and "_ids" in val
         if val is None or not isdescriptor:  # pragma: no cover
-            raise Exception(f"Could not find {id}/{id2}")
+            raise Exception(f"Could not find {id} / {id2}")
         return build(val["_id"], val["_ids"], cache, identity)
 
     @staticmethod

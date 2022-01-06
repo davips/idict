@@ -1,2 +1,3 @@
-Fix decomposition of f result to reflect unambiguous ids
-Complete Xy2M metadata
+Add updating ability for already existing ids in cache (intended for metafields)
+    Side-effect: colliding hashes for normal idicts will not be detected; however, they should not happen.
+Fix SQLA del
