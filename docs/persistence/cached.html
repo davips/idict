@@ -120,8 +120,7 @@ def cached(d, cache) -&gt; AbstractLazyDict:
             if hasattr(cache, &#34;user_hosh&#34;):
                 # print(&#34;has hosh&#34;, d.id)
                 if front_id_ in cache and changed:
-                    del cache[id]
-                    del cache[front_id]
+                    del cache[front_id_]
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
                 front_id_ = (d.id * cache.user_hosh).id
@@ -162,7 +161,6 @@ def cached(d, cache) -&gt; AbstractLazyDict:
                     store(k, fid, data[k])
                 changed = True
         if front_id in cache and changed:
-            del cache[d.id]
             del cache[front_id]
         if front_id not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
@@ -939,8 +937,7 @@ When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workar
             if hasattr(cache, &#34;user_hosh&#34;):
                 # print(&#34;has hosh&#34;, d.id)
                 if front_id_ in cache and changed:
-                    del cache[id]
-                    del cache[front_id]
+                    del cache[front_id_]
                 if front_id_ not in cache:
                     cache[front_id_] = {&#34;_id&#34;: id, &#34;_ids&#34;: {k: v for k, v in fids.items() if not k.startswith(&#34;_&#34;)}}
                 front_id_ = (d.id * cache.user_hosh).id
@@ -981,7 +978,6 @@ When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workar
                     store(k, fid, data[k])
                 changed = True
         if front_id in cache and changed:
-            del cache[d.id]
             del cache[front_id]
         if front_id not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
