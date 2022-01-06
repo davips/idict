@@ -92,8 +92,7 @@ def cached(d, cache) -> AbstractLazyDict:
             if hasattr(cache, "user_hosh"):
                 # print("has hosh", d.id)
                 if front_id_ in cache and changed:
-                    del cache[id]
-                    del cache[front_id]
+                    del cache[front_id_]
                 if front_id_ not in cache:
                     cache[front_id_] = {"_id": id, "_ids": {k: v for k, v in fids.items() if not k.startswith("_")}}
                 front_id_ = (d.id * cache.user_hosh).id
@@ -134,7 +133,6 @@ def cached(d, cache) -> AbstractLazyDict:
                     store(k, fid, data[k])
                 changed = True
         if front_id in cache and changed:
-            del cache[d.id]
             del cache[front_id]
         if front_id not in cache:
             if hasattr(cache, "user_hosh"):

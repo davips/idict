@@ -1,3 +1,1 @@
-Add updating ability for already existing ids in cache (intended for metafields)
-    Side-effect: colliding hashes for normal idicts will not be detected; however, they should not happen.
-Fix SQLA del
+ Fix excessive cachedel of last commit
