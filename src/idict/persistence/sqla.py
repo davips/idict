@@ -187,8 +187,7 @@ class SQLA(CompressedCache):
     def __delitem__(self, key):
         check(key)
         with self.sessionctx() as session:
-            content = session.query(Content).get(key)
-            session.delete(content)
+            session.query(Content).filter_by(id=key).delete()
             session.commit()
 
     def __getattr__(self, key):
