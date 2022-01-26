@@ -554,6 +554,8 @@ class Idict(AbstractMutableLazyDict):
         """
         return self.frozen.trimmed.asmutable
 
+    def __reduce__(self):
+        return self.__class__, ({k: v for k, v in self.data.items()},)
     # def wrapped(self, version, version_id):
     #     """
     #     Wrap a trimmed version of an idict object by a metafield container

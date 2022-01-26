@@ -82,14 +82,18 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         ufu_1 = ufu_1()
         acc = self.identity
         c = 0
+        last_nonmeta = None
+        for k in outputs:
+            if not k.startswith("_"):
+                last_nonmeta = k
         for i, k in enumerate(outputs):
             newdata[k] = frozen.data[k]
-            if i < noutputs - 1:
-                field_hosh = Hosh(f"{ufu_1.id}-{c}".encode())
-                c += 1
-                acc *= field_hosh
-            else:
+            field_hosh = Hosh(f"{ufu_1.id}-{c}".encode())
+            c += 1
+            if k == last_nonmeta:
                 field_hosh = ~acc * ufu_1
+            elif not k.startswith("_"):
+                acc *= field_hosh
             newhoshes[k] = field_hosh
             if k in newblobs:
                 del newblobs[k]
@@ -287,7 +291,7 @@ def solve(hoshes, output, uf: Hosh):
     """
     previous = uf.ø
     for k, v in hoshes.items():
-        if k not in output:
+        if k not in output and not k.startswith("_"):
             previous *= v
     return uf * ~previous
 
