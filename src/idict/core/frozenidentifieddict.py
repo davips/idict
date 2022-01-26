@@ -392,25 +392,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return self.__repr__(all=True)
 
     def __eq__(self, other):
-        """
-        >>> from idict import idict
-        >>> idict(x=3) == {"x": 3}
-        True
-        >>> idict(x=3) == {"x": 3, "_id": idict(x=3).id}
-        True
-        >>> idict(x=3) == idict(x=3)
-        True
-        >>> idict(x=3) != {"x": 4}
-        True
-        >>> idict(x=3) != idict(x=4)
-        True
-        >>> idict(x=3) != {"y": 3}
-        True
-        >>> idict(x=3) != {"x": 3, "_id": (~idict(x=3).hosh).id}
-        True
-        >>> idict(x=3) != idict(y=3)
-        True
-        """
         if isinstance(other, dict):
             if "_id" in other:
                 return self.id == other["_id"]
