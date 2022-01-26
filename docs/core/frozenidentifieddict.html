@@ -420,25 +420,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         return self.__repr__(all=True)
 
     def __eq__(self, other):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict import idict
-        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3}
-        True
-        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;_id&#34;: idict(x=3).id}
-        True
-        &gt;&gt;&gt; idict(x=3) == idict(x=3)
-        True
-        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 4}
-        True
-        &gt;&gt;&gt; idict(x=3) != idict(x=4)
-        True
-        &gt;&gt;&gt; idict(x=3) != {&#34;y&#34;: 3}
-        True
-        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;_id&#34;: (~idict(x=3).hosh).id}
-        True
-        &gt;&gt;&gt; idict(x=3) != idict(y=3)
-        True
-        &#34;&#34;&#34;
         if isinstance(other, dict):
             if &#34;_id&#34; in other:
                 return self.id == other[&#34;_id&#34;]
@@ -1268,25 +1249,6 @@ True
         return self.__repr__(all=True)
 
     def __eq__(self, other):
-        &#34;&#34;&#34;
-        &gt;&gt;&gt; from idict import idict
-        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3}
-        True
-        &gt;&gt;&gt; idict(x=3) == {&#34;x&#34;: 3, &#34;_id&#34;: idict(x=3).id}
-        True
-        &gt;&gt;&gt; idict(x=3) == idict(x=3)
-        True
-        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 4}
-        True
-        &gt;&gt;&gt; idict(x=3) != idict(x=4)
-        True
-        &gt;&gt;&gt; idict(x=3) != {&#34;y&#34;: 3}
-        True
-        &gt;&gt;&gt; idict(x=3) != {&#34;x&#34;: 3, &#34;_id&#34;: (~idict(x=3).hosh).id}
-        True
-        &gt;&gt;&gt; idict(x=3) != idict(y=3)
-        True
-        &#34;&#34;&#34;
         if isinstance(other, dict):
             if &#34;_id&#34; in other:
                 return self.id == other[&#34;_id&#34;]

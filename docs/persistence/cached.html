@@ -160,13 +160,14 @@ def cached(d, cache) -&gt; AbstractLazyDict:
                 else:
                     store(k, fid, data[k])
                 changed = True
-        if front_id in cache and changed:
-            del cache[front_id]
-        if front_id not in cache:
+        front_id_ = (d.id * cache.user_hosh).id if hasattr(cache, &#34;user_hosh&#34;) else front_id
+        if front_id_ in cache and changed:
+            del cache[front_id_]
+        if front_id_ not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
-                cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
-                front_id = (d.id * cache.user_hosh).id
-            cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
+                cache[front_id_] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
+            else:
+                cache[front_id_] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
     return d.clone(data)
 
@@ -977,13 +978,14 @@ When the dict is a singleton, we have to use "</em>"+id[1:] as dict id to workar
                 else:
                     store(k, fid, data[k])
                 changed = True
-        if front_id in cache and changed:
-            del cache[front_id]
-        if front_id not in cache:
+        front_id_ = (d.id * cache.user_hosh).id if hasattr(cache, &#34;user_hosh&#34;) else front_id
+        if front_id_ in cache and changed:
+            del cache[front_id_]
+        if front_id_ not in cache:
             if hasattr(cache, &#34;user_hosh&#34;):
-                cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
-                front_id = (d.id * cache.user_hosh).id
-            cache[front_id] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
+                cache[front_id_] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: {k: v for k, v in d.ids.items() if not k.startswith(&#34;_&#34;)}}
+            else:
+                cache[front_id_] = {&#34;_id&#34;: d.id, &#34;_ids&#34;: d.ids}
 
     return d.clone(data)</code></pre>
 </details>
