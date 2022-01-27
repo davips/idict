@@ -1,1 +1,2 @@
-Fix missing 'else' in eager saving
+Make idict pickable
+Fix metaids entering into id calculation att apply

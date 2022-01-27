@@ -28,10 +28,6 @@ from random import Random
 from typing import TypeVar, Union, Callable
 
 from garoupa import ø40, Hosh
-from ldict.core.appearance import decolorize
-from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
-from ldict.customjson import CustomJSONEncoder
-from ldict.frozenlazydict import FrozenLazyDict
 
 from idict.config import GLOBAL
 from idict.core.appearance import idict2txt
@@ -41,6 +37,10 @@ from idict.function.dataset import openml, df2Xy
 from idict.parameter.ifunctionspace import iFunctionSpace, reduce3
 from idict.parameter.ilet import iLet
 from idict.persistence.cached import cached, get_following_pointers, build
+from ldict.core.appearance import decolorize
+from ldict.core.base import AbstractLazyDict, AbstractMutableLazyDict
+from ldict.customjson import CustomJSONEncoder
+from ldict.frozenlazydict import FrozenLazyDict
 
 VT = TypeVar("VT")
 
@@ -696,3 +696,6 @@ class FrozenIdentifiedDict(AbstractLazyDict):
         from idict.core.idict_ import Idict
 
         return Idict(self, identity=self.identity)
+
+    def __reduce__(self):
+        return self.__class__, ({k: v for k, v in self.data.items()},)
