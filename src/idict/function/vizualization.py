@@ -42,6 +42,9 @@ def tofloat(X, k, col):
         return float(val)
     except ValueError:
         return float(list(X[:, col]).index(val))
+    except TypeError:
+        print(f"Warning: Wrong type {type(val)} converted to zero. Look for '?' characters if you provided an ARFF file.")
+        return 0
 
 
 def Xy2scatterplot(colx=0, coly=1, Xin="X", yin="y", output="scatterplot", **kwargs):

@@ -1,2 +1,3 @@
+Handle TypeError when plotting null floats
 Make idict pickable
 Fix metaids entering into id calculation att apply
