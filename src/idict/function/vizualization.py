@@ -43,7 +43,9 @@ def tofloat(X, k, col):
     except ValueError:
         return float(list(X[:, col]).index(val))
     except TypeError:
-        print(f"Warning: Wrong type {type(val)} converted to zero. Look for '?' characters if you provided an ARFF file.")
+        print(
+            f"Warning: Wrong type {type(val)} converted to zero. Look for '?' characters if you provided an ARFF file."
+        )
         return 0
 
 

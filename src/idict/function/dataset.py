@@ -76,8 +76,8 @@ def df2Xy(input="df", Xout="X", yout="y", **kwargs):
         "_id": "0GLFP05fQeW7dVFF0m50N8yVTgl-1.0.1--df2Xy",
         "_ids": {
             "X": "NeRaymrp6pcRWPAFc4t8A9.BnboEM0.1BllNL8yo",
-            "y": "BLW9uncfc4h7G4e1lK66TjtG5bj6uMX2oEJxZBbm",
-            "_history": "wfGnutW0WADjXhbuxxKPp5WD5po2Jk6W4srWxjdQ",
+            "y": "0u5TDWnV.PZO-bmzBnZveLLnojWlh-1ZsEFsvVoa",
+            "_history": "OdE7kT5FmO.bsbvUAU9a3FA-v5EAQaOdihxMcNv6",
             "df": "q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
@@ -105,8 +105,8 @@ def df2arff(input="df", output="arff", **kwargs):
         "df": "«{'attr1@REAL': {0: 5.1, 1: 3.1}, 'attr2@REAL': {0: 3.5, 1: 4.5}, 'class@{0,1}': {0: '0', 1: '1'}}»",
         "_id": "Ojq9k7ZSbVjwLGlZ7uuqIyhoJPo.p36mAmav2Wul",
         "_ids": {
-            "a": "pO.BtCjXeyhjKdlZ3GwdvyrYWGXEAQb9ZijWnFXj",
-            "_history": "ZjxJ2WWJn82el.kX9ojvWDavSV8mReWcD3TAGgz1",
+            "a": "wVPgESiPwobfFLLm591BKw6i2Zn.p36mAmav2Wul",
+            "_history": "D2NpAYrhyJW-.nOhh91ttSjrbGw.nZ8qxps9giws",
             "df": "q3_b71eb05c4be05eba7b6ae5a9245d5dd70b81b (content: 6X_dc8ccea3b2e46f1c78967fae98b692701dc99)"
         }
     }
@@ -129,8 +129,8 @@ def openml(Xout="X", yout="y", name="iris", version=1):
         "_id": "idict--------------sklearn-1.0.1--openml",
         "_ids": {
             "X": "KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr",
-            "y": "aUvIFn8094CRcfDRzrN1mjxEdkYnbBAiLiOUicIs",
-            "_history": "miMBPEskz2sHRJKKHQVb1tnaOGFRtnjxZGYCxist"
+            "y": "HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W",
+            "_history": "Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf"
         }
     }
     >>> (Ø >> openml).X.head()
@@ -170,9 +170,9 @@ def arff2df(input="arff", output="df", **kwargs):
         "arff": "@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1",
         "_id": "XraBH1sOCC.9ohqV3hfIRTE5FV3.0.1--arff2df",
         "_ids": {
-            "df": "GCkwy4oI.s5m.pFcLGaH8kpw-djkkfftwsc5Hdj5",
+            "df": "VNy1otmyPSLXWCKAYbZRtNqMdW3.0.1--arff2df",
             "_name": "K4gZ2YDXBHOHwPzYufHChxkfhSz7ZAr--YbuHM-o",
-            "_history": ".27HRUkG1mSTh3YQOzye1BN4UoUlFhnyvdyHU3XM",
+            "_history": "VaU.REn8zFBQtEWngL.FYvWCowT0aeZPmXg35hCs",
             "arff": "Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)"
         }
     }

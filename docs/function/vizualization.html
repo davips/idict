@@ -70,6 +70,11 @@ def tofloat(X, k, col):
         return float(val)
     except ValueError:
         return float(list(X[:, col]).index(val))
+    except TypeError:
+        print(
+            f&#34;Warning: Wrong type {type(val)} converted to zero. Look for &#39;?&#39; characters if you provided an ARFF file.&#34;
+        )
+        return 0
 
 
 def Xy2scatterplot(colx=0, coly=1, Xin=&#34;X&#34;, yin=&#34;y&#34;, output=&#34;scatterplot&#34;, **kwargs):
@@ -250,7 +255,12 @@ Xy2scatterplot.metadata = {
     try:
         return float(val)
     except ValueError:
-        return float(list(X[:, col]).index(val))</code></pre>
+        return float(list(X[:, col]).index(val))
+    except TypeError:
+        print(
+            f&#34;Warning: Wrong type {type(val)} converted to zero. Look for &#39;?&#39; characters if you provided an ARFF file.&#34;
+        )
+        return 0</code></pre>
 </details>
 </dd>
 </dl>

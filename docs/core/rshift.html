@@ -110,14 +110,18 @@ def application(self: FrozenIdentifiedDict, other, f, config_hosh, output=None):
         ufu_1 = ufu_1()
         acc = self.identity
         c = 0
+        last_nonmeta = None
+        for k in outputs:
+            if not k.startswith(&#34;_&#34;):
+                last_nonmeta = k
         for i, k in enumerate(outputs):
             newdata[k] = frozen.data[k]
-            if i &lt; noutputs - 1:
-                field_hosh = Hosh(f&#34;{ufu_1.id}-{c}&#34;.encode())
-                c += 1
-                acc *= field_hosh
-            else:
+            field_hosh = Hosh(f&#34;{ufu_1.id}-{c}&#34;.encode())
+            c += 1
+            if k == last_nonmeta:
                 field_hosh = ~acc * ufu_1
+            elif not k.startswith(&#34;_&#34;):
+                acc *= field_hosh
             newhoshes[k] = field_hosh
             if k in newblobs:
                 del newblobs[k]
@@ -315,7 +319,7 @@ def solve(hoshes, output, uf: Hosh):
     &#34;&#34;&#34;
     previous = uf.ø
     for k, v in hoshes.items():
-        if k not in output:
+        if k not in output and not k.startswith(&#34;_&#34;):
             previous *= v
     return uf * ~previous
 
@@ -422,14 +426,18 @@ True
         ufu_1 = ufu_1()
         acc = self.identity
         c = 0
+        last_nonmeta = None
+        for k in outputs:
+            if not k.startswith(&#34;_&#34;):
+                last_nonmeta = k
         for i, k in enumerate(outputs):
             newdata[k] = frozen.data[k]
-            if i &lt; noutputs - 1:
-                field_hosh = Hosh(f&#34;{ufu_1.id}-{c}&#34;.encode())
-                c += 1
-                acc *= field_hosh
-            else:
+            field_hosh = Hosh(f&#34;{ufu_1.id}-{c}&#34;.encode())
+            c += 1
+            if k == last_nonmeta:
                 field_hosh = ~acc * ufu_1
+            elif not k.startswith(&#34;_&#34;):
+                acc *= field_hosh
             newhoshes[k] = field_hosh
             if k in newblobs:
                 del newblobs[k]
@@ -813,7 +821,7 @@ True
     &#34;&#34;&#34;
     previous = uf.ø
     for k, v in hoshes.items():
-        if k not in output:
+        if k not in output and not k.startswith(&#34;_&#34;):
             previous *= v
     return uf * ~previous</code></pre>
 </details>
