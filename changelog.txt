@@ -1,3 +1,2 @@
-Handle TypeError when plotting null floats
-Make idict pickable
-Fix metaids entering into id calculation att apply
+Update dependences, including garoupa and ldict)
+Attempt fixing github pytest
