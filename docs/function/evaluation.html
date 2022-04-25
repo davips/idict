@@ -62,29 +62,15 @@ def split(
 ):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict, let
-    &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
-    &gt;&gt;&gt; d.show(colored=False)
-    {
-        &#34;Xtr&#34;: &#34;→(input output config X y)&#34;,
-        &#34;Xts&#34;: &#34;→(input output config X y)&#34;,
-        &#34;ytr&#34;: &#34;→(input output config X y)&#34;,
-        &#34;yts&#34;: &#34;→(input output config X y)&#34;,
-        &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1---split&#34;,
-        &#34;X&#34;: &#34;«{&#39;attr1&#39;: {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, &#39;attr2&#39;: {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&#34;,
-        &#34;y&#34;: &#34;«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»&#34;,
-        &#34;_id&#34;: &#34;8eGk98oY-ZJCTDqlI6cQpv.ScL12.0.1---split&#34;,
-        &#34;_ids&#34;: {
-            &#34;Xtr&#34;: &#34;sgAswz-TNQOyqNXEOZlDdPMGJzavRgf.FjBFx6Ju&#34;,
-            &#34;Xts&#34;: &#34;fb8kj0bb0D8DvZUHPGTTPC8buLIAQJv-25ZHJT65&#34;,
-            &#34;ytr&#34;: &#34;o.tZeOrqlsvd7-ms6Z6utR3HQEYTPTaN-srQovsp&#34;,
-            &#34;yts&#34;: &#34;-VNSnTA0JvBAZGBoUKB9h0eEomYUqh5jiBwiNT1w&#34;,
-            &#34;_history&#34;: &#34;ZVpX52If8SF51gVRHZMdRxUllQxT.4lyvEaXf1Pt&#34;,
-            &#34;X&#34;: &#34;md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)&#34;,
-            &#34;y&#34;: &#34;Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)&#34;
-        }
-    }
-    &gt;&gt;&gt; d.yts
-    array([1, 0, 1, 0, 0, 0, 1])
+    &gt;&gt;&gt; from idict.function.dataset import df2Xy
+    &gt;&gt;&gt; data = idict.fromtoy(output_format=&#34;df&#34;) &gt;&gt; df2Xy &gt;&gt; split
+    &gt;&gt;&gt; import dill
+    &gt;&gt;&gt; storage = {}
+    &gt;&gt;&gt; d = dill.dumps(data, protocol=5)
+    &gt;&gt;&gt; storage[data.id]=d
+    &gt;&gt;&gt; dump = storage[data.id]
+    &gt;&gt;&gt; dump
+    &gt;&gt;&gt; dill.loads(dump).evaluated
     &#34;&#34;&#34;
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
     multidynamic_input = {}
@@ -123,29 +109,15 @@ split.metadata = {
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
-&gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
-&gt;&gt;&gt; d.show(colored=False)
-{
-    &quot;Xtr&quot;: &quot;→(input output config X y)&quot;,
-    &quot;Xts&quot;: &quot;→(input output config X y)&quot;,
-    &quot;ytr&quot;: &quot;→(input output config X y)&quot;,
-    &quot;yts&quot;: &quot;→(input output config X y)&quot;,
-    &quot;_history&quot;: &quot;idict--------------sklearn-1.0.1---split&quot;,
-    &quot;X&quot;: &quot;«{'attr1': {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, 'attr2': {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&quot;,
-    &quot;y&quot;: &quot;«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»&quot;,
-    &quot;_id&quot;: &quot;8eGk98oY-ZJCTDqlI6cQpv.ScL12.0.1---split&quot;,
-    &quot;_ids&quot;: {
-        &quot;Xtr&quot;: &quot;sgAswz-TNQOyqNXEOZlDdPMGJzavRgf.FjBFx6Ju&quot;,
-        &quot;Xts&quot;: &quot;fb8kj0bb0D8DvZUHPGTTPC8buLIAQJv-25ZHJT65&quot;,
-        &quot;ytr&quot;: &quot;o.tZeOrqlsvd7-ms6Z6utR3HQEYTPTaN-srQovsp&quot;,
-        &quot;yts&quot;: &quot;-VNSnTA0JvBAZGBoUKB9h0eEomYUqh5jiBwiNT1w&quot;,
-        &quot;_history&quot;: &quot;ZVpX52If8SF51gVRHZMdRxUllQxT.4lyvEaXf1Pt&quot;,
-        &quot;X&quot;: &quot;md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)&quot;,
-        &quot;y&quot;: &quot;Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)&quot;
-    }
-}
-&gt;&gt;&gt; d.yts
-array([1, 0, 1, 0, 0, 0, 1])
+&gt;&gt;&gt; from idict.function.dataset import df2Xy
+&gt;&gt;&gt; data = idict.fromtoy(output_format=&quot;df&quot;) &gt;&gt; df2Xy &gt;&gt; split
+&gt;&gt;&gt; import dill
+&gt;&gt;&gt; storage = {}
+&gt;&gt;&gt; d = dill.dumps(data, protocol=5)
+&gt;&gt;&gt; storage[data.id]=d
+&gt;&gt;&gt; dump = storage[data.id]
+&gt;&gt;&gt; dump
+&gt;&gt;&gt; dill.loads(dump).evaluated
 </code></pre></div>
 <details class="source">
 <summary>
@@ -159,29 +131,15 @@ array([1, 0, 1, 0, 0, 0, 1])
 ):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict, let
-    &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
-    &gt;&gt;&gt; d.show(colored=False)
-    {
-        &#34;Xtr&#34;: &#34;→(input output config X y)&#34;,
-        &#34;Xts&#34;: &#34;→(input output config X y)&#34;,
-        &#34;ytr&#34;: &#34;→(input output config X y)&#34;,
-        &#34;yts&#34;: &#34;→(input output config X y)&#34;,
-        &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1---split&#34;,
-        &#34;X&#34;: &#34;«{&#39;attr1&#39;: {0: 5.1, 1: 1.1, 2: 6.1, 3: 1.1, 4: 3.1, 5: 4.7, 6: 9.1, 7: 8.3, 8: 9.1, 9: 2.5, 10: 7.1, 11: 0.1, 12: 2.1, 13: 0.1, 14: 5.1, 15: 31.1, 16: 1.1, 17: 2.2, 18: 3.1, 19: 1.1}, &#39;attr2&#39;: {0: 6.4, 1: 2.5, 2: 3.6, 3: 3.5, 4: 2.5, 5: 4.9, 6: 3.5, 7: 2.9, 8: 7.2, 9: 4.5, 10: 6.6, 11: 4.3, 12: 0.1, 13: 4.0, 14: 4.5, 15: 4.7, 16: 3.2, 17: 8.5, 18: 2.5, 19: 8.5}}»&#34;,
-        &#34;y&#34;: &#34;«[0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1]»&#34;,
-        &#34;_id&#34;: &#34;8eGk98oY-ZJCTDqlI6cQpv.ScL12.0.1---split&#34;,
-        &#34;_ids&#34;: {
-            &#34;Xtr&#34;: &#34;sgAswz-TNQOyqNXEOZlDdPMGJzavRgf.FjBFx6Ju&#34;,
-            &#34;Xts&#34;: &#34;fb8kj0bb0D8DvZUHPGTTPC8buLIAQJv-25ZHJT65&#34;,
-            &#34;ytr&#34;: &#34;o.tZeOrqlsvd7-ms6Z6utR3HQEYTPTaN-srQovsp&#34;,
-            &#34;yts&#34;: &#34;-VNSnTA0JvBAZGBoUKB9h0eEomYUqh5jiBwiNT1w&#34;,
-            &#34;_history&#34;: &#34;ZVpX52If8SF51gVRHZMdRxUllQxT.4lyvEaXf1Pt&#34;,
-            &#34;X&#34;: &#34;md_cb8b0c76becc1de32236764e91e8e457e826f (content: 34_1738c83af436029507def2710bc5125f58d0e)&#34;,
-            &#34;y&#34;: &#34;Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)&#34;
-        }
-    }
-    &gt;&gt;&gt; d.yts
-    array([1, 0, 1, 0, 0, 0, 1])
+    &gt;&gt;&gt; from idict.function.dataset import df2Xy
+    &gt;&gt;&gt; data = idict.fromtoy(output_format=&#34;df&#34;) &gt;&gt; df2Xy &gt;&gt; split
+    &gt;&gt;&gt; import dill
+    &gt;&gt;&gt; storage = {}
+    &gt;&gt;&gt; d = dill.dumps(data, protocol=5)
+    &gt;&gt;&gt; storage[data.id]=d
+    &gt;&gt;&gt; dump = storage[data.id]
+    &gt;&gt;&gt; dump
+    &gt;&gt;&gt; dill.loads(dump).evaluated
     &#34;&#34;&#34;
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
     multidynamic_input = {}
