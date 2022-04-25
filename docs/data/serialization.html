@@ -188,15 +188,42 @@ def deserialize_json(blob):
 
 
 def serialize_numpy(obj):
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; import numpy as np
+    # &gt;&gt;&gt; m = np.array([1,2,3,4])
+    # &gt;&gt;&gt; m
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4]])
+    # &gt;&gt;&gt; m
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; m = np.array([1,2.7,3,4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1. , 2.7, 3. , 4. ])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4/3]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1.        , 2.        ],
+    #        [3.        , 1.33333333]])
+    # &gt;&gt;&gt; m = np.array([1,2,3,&#34;txt&#34;])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;txt&#39;], dtype=&#39;&lt;U21&#39;)
+    # &gt;&gt;&gt; m = np.array([[1,&#34;txt&#34;],[3,4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[&#39;1&#39;, &#39;txt&#39;],
+    #        [&#39;3&#39;, &#39;4&#39;]], dtype=&#39;&lt;U21&#39;)
+    # &#34;&#34;&#34;
     import numpy
 
     if isinstance(obj, numpy.ndarray):
-        dims = str(len(obj.shape))
+        dims = len(obj.shape)
         dtype = str(obj.dtype)
-        rest_of_header=f&#34;§{dims}§{dtype}§&#34;.encode() + integers2bytes(obj.shape)
-        rest_of_header_len =str(len (rest_of_header) ).encode()
-        print(rest_of_header, rest_of_header_len)
-        header = rest_of_header_len+rest_of_header
+        headerlen = 1 + len(dtype)
+        header = f&#34;{headerlen}§{dims}§{dtype}§&#34;.encode() + integers2bytes(obj.shape)
         return header, obj.data
     raise Exception(f&#34;Cannot handle this type {type(obj)}, check its shape or dtype&#34;)
 
@@ -211,18 +238,15 @@ def serialize_numpy(obj):
 def deserialize_numpy(blob):
     import numpy
 
-    rest_of_header_len = blob[:10].split(b&#39;\xc2\xa7&#39;)[0]
-    first_len=len(rest_of_header_len)
-    header_len = first_len+int(rest_of_header_len) 
-    dims, dtype, hw = blob[first_len+2:header_len].split(b&#39;\xc2\xa7&#39;)
-    print(dims, dtype, hw , header_len, rest_of_header_len)
-    dims = int(dims.decode())
+    view = memoryview(blob)
+    prefix, dtype, hw = view[:30].split(b&#34;_&#34;)
+    dims = int(chr(prefix[2]))
     dtype = dtype.decode().rstrip()
-    shape = bytes2integers(hw.ljust(4*dims))
-    dump = memoryview(blob)[header_len:]
+    h, w = bytes2integers(hw)
+    dump = blob[30:]
     m = numpy.frombuffer(dump, dtype=dtype)
-    if dims &gt; 1:
-        m = numpy.reshape(m, newshape=shape)
+    if dims == 2:
+        m = numpy.reshape(m, newshape=(h, w))
     return m
 
 
@@ -368,18 +392,15 @@ dtype: object
 <pre><code class="python">def deserialize_numpy(blob):
     import numpy
 
-    rest_of_header_len = blob[:10].split(b&#39;\xc2\xa7&#39;)[0]
-    first_len=len(rest_of_header_len)
-    header_len = first_len+int(rest_of_header_len) 
-    dims, dtype, hw = blob[first_len+2:header_len].split(b&#39;\xc2\xa7&#39;)
-    print(dims, dtype, hw , header_len, rest_of_header_len)
-    dims = int(dims.decode())
+    view = memoryview(blob)
+    prefix, dtype, hw = view[:30].split(b&#34;_&#34;)
+    dims = int(chr(prefix[2]))
     dtype = dtype.decode().rstrip()
-    shape = bytes2integers(hw.ljust(4*dims))
-    dump = memoryview(blob)[header_len:]
+    h, w = bytes2integers(hw)
+    dump = blob[30:]
     m = numpy.frombuffer(dump, dtype=dtype)
-    if dims &gt; 1:
-        m = numpy.reshape(m, newshape=shape)
+    if dims == 2:
+        m = numpy.reshape(m, newshape=(h, w))
     return m</code></pre>
 </details>
 </dd>
@@ -506,15 +527,42 @@ dtype: object
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def serialize_numpy(obj):
+    # r&#34;&#34;&#34;
+    # &gt;&gt;&gt; import numpy as np
+    # &gt;&gt;&gt; m = np.array([1,2,3,4])
+    # &gt;&gt;&gt; m
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1, 2, 3, 4])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4]])
+    # &gt;&gt;&gt; m
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1, 2],
+    #        [3, 4]])
+    # &gt;&gt;&gt; m = np.array([1,2.7,3,4])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([1. , 2.7, 3. , 4. ])
+    # &gt;&gt;&gt; m = np.array([[1,2],[3,4/3]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[1.        , 2.        ],
+    #        [3.        , 1.33333333]])
+    # &gt;&gt;&gt; m = np.array([1,2,3,&#34;txt&#34;])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;txt&#39;], dtype=&#39;&lt;U21&#39;)
+    # &gt;&gt;&gt; m = np.array([[1,&#34;txt&#34;],[3,4]])
+    # &gt;&gt;&gt; deserialize_numpy(serialize_numpy(m))
+    # array([[&#39;1&#39;, &#39;txt&#39;],
+    #        [&#39;3&#39;, &#39;4&#39;]], dtype=&#39;&lt;U21&#39;)
+    # &#34;&#34;&#34;
     import numpy
 
     if isinstance(obj, numpy.ndarray):
-        dims = str(len(obj.shape))
+        dims = len(obj.shape)
         dtype = str(obj.dtype)
-        rest_of_header=f&#34;§{dims}§{dtype}§&#34;.encode() + integers2bytes(obj.shape)
-        rest_of_header_len =str(len (rest_of_header) ).encode()
-        print(rest_of_header, rest_of_header_len)
-        header = rest_of_header_len+rest_of_header
+        headerlen = 1 + len(dtype)
+        header = f&#34;{headerlen}§{dims}§{dtype}§&#34;.encode() + integers2bytes(obj.shape)
         return header, obj.data
     raise Exception(f&#34;Cannot handle this type {type(obj)}, check its shape or dtype&#34;)</code></pre>
 </details>

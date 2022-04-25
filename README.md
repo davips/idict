@@ -110,8 +110,8 @@ print(d)
     "x": 5,
     "y": 7,
     "z": 10,
-    "_id": "CM_1d358473a37f664d5ef977b57fdec78a25f45",
-    "_ids": "mZ_086724ac390e6923ad8cb026b58e805779ad3... +1 ...pU_0153ee43786f955697415f752930558823778"
+    "_id": "SV_4fc23c71a6bb954f6f2ed40e440cfd2b76087",
+    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -132,8 +132,8 @@ print(d)
     "x": 5,
     "y": 7,
     "z": 10,
-    "_id": "CM_1d358473a37f664d5ef977b57fdec78a25f45",
-    "_ids": "mZ_086724ac390e6923ad8cb026b58e805779ad3... +1 ...pU_0153ee43786f955697415f752930558823778"
+    "_id": "SV_4fc23c71a6bb954f6f2ed40e440cfd2b76087",
+    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -154,8 +154,8 @@ print(d2)
     "y": "→(x)",
     "x": 5,
     "z": 10,
-    "_id": "9MV-B0VzRKPAiQShh5FXNc0KSUOS.o529OTeWhNo",
-    "_ids": "LEAYBblV.4E2tVsfAlaApvzpWsBS.o529OTeWhNo... +1 ...pU_0153ee43786f955697415f752930558823778"
+    "_id": "J.WMNtqzVe2LiO8Ez4Wkgpa6zsBS.o529OTeWhNo",
+    "_ids": "j6dsrYpQ-9A6BFtY5T98d-UeFJOS.o529OTeWhNo... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -171,8 +171,8 @@ print(d)
     "x": 5,
     "y": 7,
     "z": 10,
-    "_id": "CM_1d358473a37f664d5ef977b57fdec78a25f45",
-    "_ids": "mZ_086724ac390e6923ad8cb026b58e805779ad3... +1 ...pU_0153ee43786f955697415f752930558823778"
+    "_id": "SV_4fc23c71a6bb954f6f2ed40e440cfd2b76087",
+    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -197,8 +197,8 @@ print(d)
     "y": 1.4,
     "x": 5,
     "z": 10,
-    "_id": "XZfiBGP6KIEGeJE5kxcYtL-.6m.Zim1XGTCOzwYg",
-    "_ids": "sznGTBZcR7GpO1v3DNJA42yHaWNZim1XGTCOzwYg... +1 ...pU_0153ee43786f955697415f752930558823778"
+    "_id": "7uAa.i.4XbFyFY7OLx2TfzMQOeYZim1XGTCOzwYg",
+    "_ids": "S-Vd.8e3nPaYsNmqhkiGDdvZUvVZim1XGTCOzwYg... +1 ...gk_64fdf435fc9aa10be990397ff8fa92888792c"
 }
 """
 ```
@@ -224,8 +224,8 @@ print(d2)
     "w": "→(a b x y)",
     "y": 1.4,
     "x": 5,
-    "_id": "S.OL.9Ts0KNiIHzqjC.W9AmlPSXHK5qjURoS6ymD",
-    "_ids": "IoNAPdKMfcJb.BWOA19FIXgsGhRA53685iYjzKMc... +2 ...mZ_086724ac390e6923ad8cb026b58e805779ad3"
+    "_id": "cLQzLVSJU.N2iT-5OaZWUEnnYWUHK5qjURoS6ymD",
+    "_ids": "S969viykMVgKVqEgHOtHyhIaHGhMt9l9.mkvh7xr... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -254,8 +254,8 @@ print(d2)
     "w": "→(a b ap gp x y)",
     "y": 1.4,
     "x": 5,
-    "_id": "9SPJm8veZ-xsIcX.8QDlb66Hxe4QR7OmcORBo47s",
-    "_ids": "QBGH-3aMS1D2l8CKY3LN2hkGDQfmYdqAOjG9Wflu... +2 ...mZ_086724ac390e6923ad8cb026b58e805779ad3"
+    "_id": "JNtKgf-Bz7S5z6QwqzWKKM5OLM4QR7OmcORBo47s",
+    "_ids": "fg5iyZsHWufuM4dbS6MIkjrWYV7FeKkyMh6p2wM3... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -277,8 +277,8 @@ print(d2)
     "w": "10.541350399999995",
     "y": 1.4,
     "x": 5,
-    "_id": "9SPJm8veZ-xsIcX.8QDlb66Hxe4QR7OmcORBo47s",
-    "_ids": "QBGH-3aMS1D2l8CKY3LN2hkGDQfmYdqAOjG9Wflu... +2 ...mZ_086724ac390e6923ad8cb026b58e805779ad3"
+    "_id": "JNtKgf-Bz7S5z6QwqzWKKM5OLM4QR7OmcORBo47s",
+    "_ids": "fg5iyZsHWufuM4dbS6MIkjrWYV7FeKkyMh6p2wM3... +2 ...GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -299,8 +299,8 @@ print(a)
 """
 {
     "x": 3,
-    "_id": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1",
-    "_ids": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1"
+    "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
+    "_ids": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
 }
 """
 ```
@@ -312,8 +312,8 @@ print(b)
 """
 {
     "y": 5,
-    "_id": "jP_7e9d5d2deb9cc695d6d19c19e67a3fd3487fd",
-    "_ids": "jP_7e9d5d2deb9cc695d6d19c19e67a3fd3487fd"
+    "_id": "EI_20378979f4669f2e318ae9742e214fd4880d7",
+    "_ids": "EI_20378979f4669f2e318ae9742e214fd4880d7"
 }
 """
 ```
@@ -325,8 +325,8 @@ print(a >> b)
 {
     "x": 3,
     "y": 5,
-    "_id": "9F_239807773a020d7446eaf689fc0896bc46aef",
-    "_ids": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1 jP_7e9d5d2deb9cc695d6d19c19e67a3fd3487fd"
+    "_id": "pl_bb7e60e68670707cdef7dfd31096db4c63c91",
+    "_ids": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 EI_20378979f4669f2e318ae9742e214fd4880d7"
 }
 """
 ```
@@ -347,8 +347,8 @@ print(a)
 """
 {
     "x": 3,
-    "_id": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1",
-    "_ids": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1"
+    "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
+    "_ids": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
 }
 """
 ```
@@ -360,8 +360,8 @@ print(b)
 """
 {
     "y": 5,
-    "_id": "jP_7e9d5d2deb9cc695d6d19c19e67a3fd3487fd",
-    "_ids": "jP_7e9d5d2deb9cc695d6d19c19e67a3fd3487fd"
+    "_id": "EI_20378979f4669f2e318ae9742e214fd4880d7",
+    "_ids": "EI_20378979f4669f2e318ae9742e214fd4880d7"
 }
 """
 ```
@@ -373,8 +373,8 @@ print(a >> b)
 {
     "x": 3,
     "y": 5,
-    "_id": "9F_239807773a020d7446eaf689fc0896bc46aef",
-    "_ids": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1 jP_7e9d5d2deb9cc695d6d19c19e67a3fd3487fd"
+    "_id": "pl_bb7e60e68670707cdef7dfd31096db4c63c91",
+    "_ids": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9 EI_20378979f4669f2e318ae9742e214fd4880d7"
 }
 """
 ```
@@ -395,8 +395,8 @@ print(a)
 """
 {
     "x": 3,
-    "_id": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1",
-    "_ids": "SR_559f408a4eb8136c6f09d08b169d5713fd2f1"
+    "_id": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9",
+    "_ids": "ME_bd0a8d9d8158cdbb9d7d4c7af1659ca1dabc9"
 }
 """
 ```
@@ -411,8 +411,8 @@ print(a)
     "x": 3,
     "y": 5,
     "z": 7,
-    "_id": "OrHzXZ5fAFKCYJaiX-7-TYnMGT8P4S3OFdPs8Gab",
-    "_ids": "TqxPp3oCI6SUV5l7uFmt.gIlR6fP4S3OFdPs8Gab... +2 ...VZ_b8a01d8c73f1dbd075532b4fe849916735085"
+    "_id": "kgdz8xfS7IuGtukIPe37KhAUrB2P4S3OFdPs8Gab",
+    "_ids": "CXqa2zRRNd7Aj5wI8JTJ0O-7ML0P4S3OFdPs8Gab... +2 ...ZN_eccacd999c26ce18c98f9a17a6f47adcf162a"
 }
 """
 ```
@@ -434,8 +434,8 @@ print(a)
     "x": 3,
     "y": 5,
     "z": 7,
-    "_id": "OrHzXZ5fAFKCYJaiX-7-TYnMGT8P4S3OFdPs8Gab",
-    "_ids": "TqxPp3oCI6SUV5l7uFmt.gIlR6fP4S3OFdPs8Gab... +2 ...VZ_b8a01d8c73f1dbd075532b4fe849916735085"
+    "_id": "kgdz8xfS7IuGtukIPe37KhAUrB2P4S3OFdPs8Gab",
+    "_ids": "CXqa2zRRNd7Aj5wI8JTJ0O-7ML0P4S3OFdPs8Gab... +2 ...ZN_eccacd999c26ce18c98f9a17a6f47adcf162a"
 }
 """
 ```
@@ -488,8 +488,8 @@ print(d)
 {
     "x": 5,
     "y": 7,
-    "_id": "cU_3ea44c503b4ebd64c6b88e4b56ae724ce18dc",
-    "_ids": "mZ_086724ac390e6923ad8cb026b58e805779ad3 SW_d6e1cee3f19331ce192c3440b020f13f58df8"
+    "_id": "BB_fad4374ca911f344859dab8e4b016ba2fe65b",
+    "_ids": "GS_cb0fda15eac732cb08351e71fc359058b93bd WK_6ba95267cec724067d58b3186ecbcaa4253ad"
 }
 """
 ```
@@ -505,8 +505,8 @@ print(d1.z)
     "z": "→(x y)",
     "x": 5,
     "y": 7,
-    "_id": "iIlFrFvkDulSWYnPxG.JoUJn2rQMPNZuFtrAIt6g",
-    "_ids": "R-WAFJyTRQ8.evfOY01AVTHxRnSMPNZuFtrAIt6g... +1 ...SW_d6e1cee3f19331ce192c3440b020f13f58df8"
+    "_id": "VqfQeuBWL7Xv1FwWe6pzgqJwclRMPNZuFtrAIt6g",
+    "_ids": "9KKem6QL-I8C0Yk0q3URBt-aNXHMPNZuFtrAIt6g... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
 }
 35
 """
@@ -522,8 +522,8 @@ print(d2.z)
     "z": "→(x y)",
     "x": 5,
     "y": 7,
-    "_id": "iIlFrFvkDulSWYnPxG.JoUJn2rQMPNZuFtrAIt6g",
-    "_ids": "R-WAFJyTRQ8.evfOY01AVTHxRnSMPNZuFtrAIt6g... +1 ...SW_d6e1cee3f19331ce192c3440b020f13f58df8"
+    "_id": "VqfQeuBWL7Xv1FwWe6pzgqJwclRMPNZuFtrAIt6g",
+    "_ids": "9KKem6QL-I8C0Yk0q3URBt-aNXHMPNZuFtrAIt6g... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
 }
 35
 """
@@ -555,7 +555,7 @@ e = 725.0
 e = e >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 700000025.0
+e = 700025.0
 """
 ```
 
@@ -618,14 +618,14 @@ print(d)
 {
     "y": "→(source target x)",
     "x": 5,
-    "_id": "SOPBlaam24W4paJDme64JLguXxkwDfaOqWWvzOrq",
-    "_ids": "WIZQEiMV.pf6LTyXXIT1scDDnclwDfaOqWWvzOrq mZ_086724ac390e6923ad8cb026b58e805779ad3"
+    "_id": "xmcjrFNT-2nEr3vizzx-44QwV5kwDfaOqWWvzOrq",
+    "_ids": "3Tv6p5fZ936EK1DUkkcYAgWPbrmwDfaOqWWvzOrq GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 {
     "y": 5,
     "x": 5,
-    "_id": "SOPBlaam24W4paJDme64JLguXxkwDfaOqWWvzOrq",
-    "_ids": "WIZQEiMV.pf6LTyXXIT1scDDnclwDfaOqWWvzOrq mZ_086724ac390e6923ad8cb026b58e805779ad3"
+    "_id": "xmcjrFNT-2nEr3vizzx-44QwV5kwDfaOqWWvzOrq",
+    "_ids": "3Tv6p5fZ936EK1DUkkcYAgWPbrmwDfaOqWWvzOrq GS_cb0fda15eac732cb08351e71fc359058b93bd"
 }
 """
 ```
@@ -676,8 +676,8 @@ print(d)
     "z": "→(c z→(a b x y))",
     "x": 5,
     "y": 7,
-    "_id": "tRk-a3qvxaRX794zG4L3Xzn-c35mevfjG3VAFXL-",
-    "_ids": "dx0HXvUlKbaiv0cy5rMVqzl8007mevfjG3VAFXL-... +1 ...SW_d6e1cee3f19331ce192c3440b020f13f58df8"
+    "_id": "YZWooP03q0mFec8tjNwy3YuAohamevfjG3VAFXL-",
+    "_ids": "5PKBLX4-dGDGHUifvK.QYVLeZTgmevfjG3VAFXL-... +1 ...WK_6ba95267cec724067d58b3186ecbcaa4253ad"
 }
 """
 ```
