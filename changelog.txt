@@ -1,2 +1,1 @@
-Update dependences, including garoupa and ldict)
-Attempt fixing github pytest
+Add shelchemy to be a future library for shelve+alchemy
