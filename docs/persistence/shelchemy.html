@@ -162,13 +162,33 @@ class ShSQLA:
         with self.sessionctx() as session:
             return (c.id for c in session.query(Content).all())
 
-    def __setitem__(self, key: str, value, packing=True):
+    def __setitem__(self, key: str, value, packing=True, ignoredup=True):
         key = check(key)
         if self.autopack and packing:
             value = pack(value, ensure_determinism=self.deterministic_packing)
+        elif isinstance(value, str):
+            value = value.encode()
         content = Content(id=key, blob=value)
         with self.sessionctx() as session:
-            session.add(content)
+            if ignoredup:
+                session.merge(content)
+            else:
+                session.add(content)
+            session.commit()
+
+    def update(self, dic, packing=True, ignoredup=True):
+        with self.sessionctx() as session:
+            for k, v in dic.items():
+                k = check(k)
+                if self.autopack and packing:
+                    v = pack(v, ensure_determinism=self.deterministic_packing)
+                elif isinstance(v, str):
+                    v = v.encode()
+                content = Content(id=k, blob=v)
+                if ignoredup:
+                    session.merge(content)
+                else:
+                    session.add(content)
             session.commit()
 
     def __getitem__(self, key, packing=True):
@@ -486,13 +506,33 @@ False
         with self.sessionctx() as session:
             return (c.id for c in session.query(Content).all())
 
-    def __setitem__(self, key: str, value, packing=True):
+    def __setitem__(self, key: str, value, packing=True, ignoredup=True):
         key = check(key)
         if self.autopack and packing:
             value = pack(value, ensure_determinism=self.deterministic_packing)
+        elif isinstance(value, str):
+            value = value.encode()
         content = Content(id=key, blob=value)
         with self.sessionctx() as session:
-            session.add(content)
+            if ignoredup:
+                session.merge(content)
+            else:
+                session.add(content)
+            session.commit()
+
+    def update(self, dic, packing=True, ignoredup=True):
+        with self.sessionctx() as session:
+            for k, v in dic.items():
+                k = check(k)
+                if self.autopack and packing:
+                    v = pack(v, ensure_determinism=self.deterministic_packing)
+                elif isinstance(v, str):
+                    v = v.encode()
+                content = Content(id=k, blob=v)
+                if ignoredup:
+                    session.merge(content)
+                else:
+                    session.add(content)
             session.commit()
 
     def __getitem__(self, key, packing=True):
@@ -598,6 +638,31 @@ def asdict(self):
     return iter(self)</code></pre>
 </details>
 </dd>
+<dt id="idict.persistence.shelchemy.ShSQLA.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, dic, packing=True, ignoredup=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, dic, packing=True, ignoredup=True):
+    with self.sessionctx() as session:
+        for k, v in dic.items():
+            k = check(k)
+            if self.autopack and packing:
+                v = pack(v, ensure_determinism=self.deterministic_packing)
+            elif isinstance(v, str):
+                v = v.encode()
+            content = Content(id=k, blob=v)
+            if ignoredup:
+                session.merge(content)
+            else:
+                session.add(content)
+        session.commit()</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 <dt id="idict.persistence.shelchemy.WrongKeyType"><code class="flex name class">
@@ -655,6 +720,7 @@ def asdict(self):
 <li><code><a title="idict.persistence.shelchemy.ShSQLA.copy" href="#idict.persistence.shelchemy.ShSQLA.copy">copy</a></code></li>
 <li><code><a title="idict.persistence.shelchemy.ShSQLA.items" href="#idict.persistence.shelchemy.ShSQLA.items">items</a></code></li>
 <li><code><a title="idict.persistence.shelchemy.ShSQLA.keys" href="#idict.persistence.shelchemy.ShSQLA.keys">keys</a></code></li>
+<li><code><a title="idict.persistence.shelchemy.ShSQLA.update" href="#idict.persistence.shelchemy.ShSQLA.update">update</a></code></li>
 </ul>
 </li>
 <li>
