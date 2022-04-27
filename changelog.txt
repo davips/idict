@@ -1,1 +1,1 @@
-Add shelchemy to be a future library for shelve+alchemy
+Add ignoredup flag and update() to shelchemy
