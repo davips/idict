@@ -134,21 +134,19 @@ class ShSQLA:
         with self.sessionctx() as session:
             return (c.id for c in session.query(Content).all())
 
-    def __setitem__(self, key: str, value, packing=True, ignoredup=True):
+    def __setitem__(self, key: str, value, packing=True, checkdup=False):
         key = check(key)
         if self.autopack and packing:
             value = pack(value, ensure_determinism=self.deterministic_packing)
         elif isinstance(value, str):
             value = value.encode()
-        content = Content(id=key, blob=value)
         with self.sessionctx() as session:
-            if ignoredup:
-                session.merge(content)
-            else:
+            if checkdup or session.query(Content).filter_by(id=key).first() is None:
+                content = Content(id=key, blob=value)
                 session.add(content)
             session.commit()
 
-    def update(self, dic, packing=True, ignoredup=True):
+    def update(self, dic, packing=True, checkdup=False):
         with self.sessionctx() as session:
             for k, v in dic.items():
                 k = check(k)
@@ -156,10 +154,8 @@ class ShSQLA:
                     v = pack(v, ensure_determinism=self.deterministic_packing)
                 elif isinstance(v, str):
                     v = v.encode()
-                content = Content(id=k, blob=v)
-                if ignoredup:
-                    session.merge(content)
-                else:
+                if checkdup or session.query(Content).filter_by(id=k).first() is None:
+                    content = Content(id=k, blob=v)
                     session.add(content)
             session.commit()
 
