@@ -20,10 +20,11 @@
 #  part of this work is illegal and it is unethical regarding the effort and
 #  time spent here.
 #
+from idict.function.dataset import load
+
+
 def file2df(name):
     if name.endswith(".arff"):
-        from arff2pandas import a2p
-
         relation = None
         with open(name) as f:
             for line in f:
@@ -31,7 +32,7 @@ def file2df(name):
                     relation = line[9:-1]
                     break
         with open(name) as f:
-            df = a2p.load(f)
+            df = load(f)
         return df, relation or name
     elif name.endswith(".csv"):
         from pandas import read_csv

@@ -27,6 +27,58 @@ Functions to be used directly within an idict workflow
 from io import StringIO
 
 from idict.function import isplit
+import arff as liacarff
+import pandas as pd
+
+
+# library arff2pandas simply disappeared...
+
+def liac2pandas(arff):
+    attrs = arff['attributes']
+    attrs_t = []
+    for attr in attrs:
+        if isinstance(attr[1], list):
+            attrs_t.append("%s@{%s}" % (attr[0], ','.join(attr[1])))
+        else:
+            attrs_t.append("%s@%s" % (attr[0], attr[1]))
+
+    df = pd.DataFrame(data=arff['data'], columns=attrs_t)
+    return df
+
+
+def load(fp):
+    data = liacarff.load(fp)
+    return liac2pandas(data)
+
+
+def loads(s):
+    data = liacarff.loads(s)
+    return liac2pandas(data)
+
+
+def df2liac(df, relation='data', description=''):
+    attrs = []
+    for col in df.columns:
+        attr = col.split('@')
+        if attr[1].count('{') > 0 and attr[1].count('}') > 0:
+            vals = attr[1].replace('{', '').replace('}', '').split(',')
+            attrs.append((attr[0], vals))
+        else:
+            attrs.append((attr[0], attr[1]))
+
+    data = list(df.values)
+    result = {'attributes': attrs, 'data': data, 'description': description, 'relation': relation}
+    return result
+
+
+def dump(df, fp):
+    arff = df2liac(df)
+    liacarff.dump(arff, fp)
+
+
+def dumps(df):
+    arff = df2liac(df)
+    return liacarff.dumps(arff)
 
 
 def Xy2M(input=["X", "y"], output="M", **kwargs):
@@ -113,9 +165,7 @@ def df2arff(input="df", output="arff", **kwargs):
     >>> d.a
     '@RELATION data\\n\\n@ATTRIBUTE attr1 REAL\\n@ATTRIBUTE attr2 REAL\\n@ATTRIBUTE class {0, 1}\\n\\n@DATA\\n5.1,3.5,0\\n3.1,4.5,1\\n'
     """
-    from arff2pandas import a2p
-
-    return {output: a2p.dumps(kwargs[input]), "_history": ...}
+    return {output: dumps(kwargs[input]), "_history": ...}
 
 
 def openml(Xout="X", yout="y", name="iris", version=1):
@@ -183,13 +233,11 @@ def arff2df(input="arff", output="df", **kwargs):
     0         5.1         3.5           0
     1         3.1         4.5           1
     """
-    from arff2pandas import a2p
-
     relation = "<Unnamed>"
     with StringIO() as f:
         f.write(kwargs[input])
         text = f.getvalue()
-        df = a2p.loads(text)
+        df = loads(text)
         for line in isplit(text, "\n"):
             if line[:9].upper() == "@RELATION":
                 relation = line[9:].strip()
