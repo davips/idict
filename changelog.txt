@@ -1,2 +1,1 @@
-Remove phantom library arff2pandas
-Add ignoredup flag and update() to shelchemy
+Add ctx manager locker for controling started/expired/done jobs (a future spin off library)
