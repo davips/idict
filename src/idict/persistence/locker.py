@@ -36,6 +36,7 @@ def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
     'dict_shelf' is a dict-like or a shelve-like object to store each item status
         when 'None', 'shelve.open("/tmp/locker.db")' will be used
     'logstep' is the frequency of printed messages, 'None' means 'no logs'.
+    'timeout'=None keeps the job status as 'started' forever (or until it finishes)
 
     >>> from time import sleep
     >>> names = ["a","b","c","d","e"]
@@ -77,7 +78,7 @@ def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
                 val = dic[item]
                 if val == b'd':
                     status, action = 'already done', "skipping"
-                elif datetime.now() > unpackb(val).datetime() + timedelta(seconds=timeout):
+                elif timeout is not None and datetime.now() > unpackb(val).datetime() + timedelta(seconds=timeout):
                     status, action = "expired", "restarted"
                 else:
                     status, action = 'already started', "skipping"
