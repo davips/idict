@@ -64,6 +64,7 @@ def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
     &#39;dict_shelf&#39; is a dict-like or a shelve-like object to store each item status
         when &#39;None&#39;, &#39;shelve.open(&#34;/tmp/locker.db&#34;)&#39; will be used
     &#39;logstep&#39; is the frequency of printed messages, &#39;None&#39; means &#39;no logs&#39;.
+    &#39;timeout&#39;=None keeps the job status as &#39;started&#39; forever (or until it finishes)
 
     &gt;&gt;&gt; from time import sleep
     &gt;&gt;&gt; names = [&#34;a&#34;,&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;]
@@ -105,7 +106,7 @@ def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
                 val = dic[item]
                 if val == b&#39;d&#39;:
                     status, action = &#39;already done&#39;, &#34;skipping&#34;
-                elif datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout):
+                elif timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout):
                     status, action = &#34;expired&#34;, &#34;restarted&#34;
                 else:
                     status, action = &#39;already started&#39;, &#34;skipping&#34;
@@ -134,7 +135,8 @@ def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
 <p>Item processing is restarted if 'timeout' expires.
 'dict_shelf' is a dict-like or a shelve-like object to store each item status
 when 'None', 'shelve.open("/tmp/locker.db")' will be used
-'logstep' is the frequency of printed messages, 'None' means 'no logs'.</p>
+'logstep' is the frequency of printed messages, 'None' means 'no logs'.
+'timeout'=None keeps the job status as 'started' forever (or until it finishes)</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from time import sleep
 &gt;&gt;&gt; names = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;]
 &gt;&gt;&gt; storage = {}
@@ -170,6 +172,7 @@ e processed!
     &#39;dict_shelf&#39; is a dict-like or a shelve-like object to store each item status
         when &#39;None&#39;, &#39;shelve.open(&#34;/tmp/locker.db&#34;)&#39; will be used
     &#39;logstep&#39; is the frequency of printed messages, &#39;None&#39; means &#39;no logs&#39;.
+    &#39;timeout&#39;=None keeps the job status as &#39;started&#39; forever (or until it finishes)
 
     &gt;&gt;&gt; from time import sleep
     &gt;&gt;&gt; names = [&#34;a&#34;,&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;]
@@ -211,7 +214,7 @@ e processed!
                 val = dic[item]
                 if val == b&#39;d&#39;:
                     status, action = &#39;already done&#39;, &#34;skipping&#34;
-                elif datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout):
+                elif timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout):
                     status, action = &#34;expired&#34;, &#34;restarted&#34;
                 else:
                     status, action = &#39;already started&#39;, &#34;skipping&#34;

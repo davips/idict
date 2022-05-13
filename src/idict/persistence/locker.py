@@ -28,7 +28,7 @@ from datetime import datetime, timedelta
 from temporenc import packb, unpackb
 
 
-def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
+def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     """
     Generator that skips items from 'iterable' already processed before or still being processed
 
