@@ -56,7 +56,7 @@ from datetime import datetime, timedelta
 from temporenc import packb, unpackb
 
 
-def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
+def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     &#34;&#34;&#34;
     Generator that skips items from &#39;iterable&#39; already processed before or still being processed
 
@@ -128,7 +128,7 @@ def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.persistence.locker.locker"><code class="name flex">
-<span>def <span class="ident">locker</span></span>(<span>iterable, dict_shelf=None, timeout=3600, logstep=1)</span>
+<span>def <span class="ident">locker</span></span>(<span>iterable, dict_shelf=None, timeout=None, logstep=1)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generator that skips items from 'iterable' already processed before or still being processed</p>
@@ -164,7 +164,7 @@ e processed!
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def locker(iterable, dict_shelf=None, timeout=3600, logstep=1):
+<pre><code class="python">def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     &#34;&#34;&#34;
     Generator that skips items from &#39;iterable&#39; already processed before or still being processed
 
