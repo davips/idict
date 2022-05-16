@@ -43,23 +43,39 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     >>> storage = {}
     >>> for name in locker(names, dict_shelf=storage, timeout=10):
     ...    print(f"Processing {name}")
-    ...    sleep(1)
+    ...    sleep(0.1)
     ...    print(f"{name} processed!")
     'a' is new, started
     Processing a
     a processed!
+    'a' done
     'b' is new, started
     Processing b
     b processed!
+    'b' done
     'c' is new, started
     Processing c
     c processed!
+    'c' done
     'd' is new, started
     Processing d
     d processed!
+    'd' done
     'e' is new, started
     Processing e
     e processed!
+    'e' done
+    >>> storage
+    {'a': b'd', 'b': b'd', 'c': b'd', 'd': b'd', 'e': b'd'}
+    >>> for name in locker(names, dict_shelf=storage, timeout=10):
+    ...    print(f"Processing {name}")
+    ...    sleep(0.1)
+    ...    print(f"{name} processed!")
+    'a' already done, skipping
+    'b' already done, skipping
+    'c' already done, skipping
+    'd' already done, skipping
+    'e' already done, skipping
     """
     if dict_shelf is None:
         contextm = shelve.open("/tmp/locker.db")
@@ -90,3 +106,5 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
                 dic[item] = packb(datetime.now())
                 yield item
                 dic[item] = b'd'
+                if logstep is not None and c % logstep == 0:
+                    print(f"'{item}' done")
