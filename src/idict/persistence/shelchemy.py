@@ -47,7 +47,7 @@ def check(key):
 
 @contextmanager
 def sopen(url="sqlite+pysqlite:///:memory:", autopack=True, debug=False):
-    engine = create_engine(url, echo=debug)
+    engine = create_engine(url, autoflush=False, echo=debug)
     Base.metadata.create_all(engine)
     with Session(engine) as session:
         yield ShSQLA(session, autopack)
@@ -109,7 +109,7 @@ class ShSQLA:
 
             @contextmanager
             def sessionctx():
-                engine = create_engine(url=session, echo=debug)
+                engine = create_engine(url=session, autoflush=False, echo=debug)
                 Base.metadata.create_all(engine)
                 session_ = Session(engine)
                 yield session_
