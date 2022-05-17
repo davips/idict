@@ -74,11 +74,11 @@ def check(key):
 
 
 @contextmanager
-def sopen(url=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, debug=False):
+def sopen(url=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, ondup=&#34;overwrite&#34;, deterministic_packing=False, debug=False):
     engine = create_engine(url, echo=debug)
     Base.metadata.create_all(engine)
     with Session(engine, autoflush=False) as session:
-        yield ShSQLA(session, autopack)
+        yield ShSQLA(session, autopack, ondup, deterministic_packing)
 
 
 class ShSQLA:
@@ -280,7 +280,7 @@ class WrongKeyType(Exception):
 </details>
 </dd>
 <dt id="idict.persistence.shelchemy.sopen"><code class="name flex">
-<span>def <span class="ident">sopen</span></span>(<span>url='sqlite+pysqlite:///:memory:', autopack=True, debug=False)</span>
+<span>def <span class="ident">sopen</span></span>(<span>url='sqlite+pysqlite:///:memory:', autopack=True, ondup='overwrite', deterministic_packing=False, debug=False)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -289,11 +289,11 @@ class WrongKeyType(Exception):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@contextmanager
-def sopen(url=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, debug=False):
+def sopen(url=&#34;sqlite+pysqlite:///:memory:&#34;, autopack=True, ondup=&#34;overwrite&#34;, deterministic_packing=False, debug=False):
     engine = create_engine(url, echo=debug)
     Base.metadata.create_all(engine)
     with Session(engine, autoflush=False) as session:
-        yield ShSQLA(session, autopack)</code></pre>
+        yield ShSQLA(session, autopack, ondup, deterministic_packing)</code></pre>
 </details>
 </dd>
 </dl>
