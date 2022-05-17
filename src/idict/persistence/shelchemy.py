@@ -46,11 +46,11 @@ def check(key):
 
 
 @contextmanager
-def sopen(url="sqlite+pysqlite:///:memory:", autopack=True, debug=False):
+def sopen(url="sqlite+pysqlite:///:memory:", autopack=True, ondup="overwrite", deterministic_packing=False, debug=False):
     engine = create_engine(url, echo=debug)
     Base.metadata.create_all(engine)
     with Session(engine, autoflush=False) as session:
-        yield ShSQLA(session, autopack)
+        yield ShSQLA(session, autopack, ondup, deterministic_packing)
 
 
 class ShSQLA:
