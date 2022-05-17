@@ -1,1 +1,1 @@
-Add ctx manager locker for controling started/expired/done jobs (a future spin off library)
+Add ondup flag ("overwrite","skip","stop")

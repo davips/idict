@@ -23,7 +23,7 @@ from contextlib import contextmanager
 from hashlib import md5
 from typing import TypeVar
 
-from sqlalchemy import Column, String, BLOB, create_engine
+from sqlalchemy import BLOB, Column, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
@@ -102,6 +102,7 @@ class ShSQLA:
             self,
             session="sqlite+pysqlite:///:memory:",
             autopack=True,
+            ondup="overwrite",
             deterministic_packing=False,
             debug=False,
     ):
@@ -123,6 +124,7 @@ class ShSQLA:
 
         self.sessionctx = sessionctx
         self.autopack = autopack
+        self.ondup = ondup
         self.deterministic_packing = deterministic_packing
 
     def __contains__(self, key):
@@ -134,19 +136,21 @@ class ShSQLA:
         with self.sessionctx() as session:
             return (c.id for c in session.query(Content).all())
 
-    def __setitem__(self, key: str, value, packing=True, checkdup=False):
+    def __setitem__(self, key: str, value, packing=True):
         key = check(key)
         if self.autopack and packing:
             value = pack(value, ensure_determinism=self.deterministic_packing)
         elif isinstance(value, str):
             value = value.encode()
         with self.sessionctx() as session:
-            if checkdup or session.query(Content).filter_by(id=key).first() is None:
+            if self.ondup == "overwrite":
+                session.query(Content).filter_by(id=key).delete()
+            if self.ondup == "skip" or session.query(Content).filter_by(id=key).first() is None:
                 content = Content(id=key, blob=value)
                 session.add(content)
             session.commit()
 
-    def update(self, dic, packing=True, checkdup=False):
+    def update(self, dic, packing=True):
         with self.sessionctx() as session:
             for k, v in dic.items():
                 k = check(k)
@@ -154,9 +158,13 @@ class ShSQLA:
                     v = pack(v, ensure_determinism=self.deterministic_packing)
                 elif isinstance(v, str):
                     v = v.encode()
-                if checkdup or session.query(Content).filter_by(id=k).first() is None:
+
+                if self.ondup == "overwrite":
+                    session.query(Content).filter_by(id=k).delete()
+                if self.ondup == "skip" or session.query(Content).filter_by(id=k).first() is None:
                     content = Content(id=k, blob=v)
                     session.add(content)
+
             session.commit()
 
     def __getitem__(self, key, packing=True):
