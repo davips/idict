@@ -24,11 +24,28 @@
 import shelve
 from contextlib import contextmanager
 from datetime import datetime, timedelta
+from functools import partial
+from threading import Thread
+from time import sleep
 
 from temporenc import packb, unpackb
 
+from idict.persistence.shelchemy import sopen
 
-def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
+
+def ping(ctx, item, timeout, stop):
+    with ctx() as dic:
+        while not stop[0]:
+            dic[item] = packb(datetime.now())
+            t = timeout
+            if t is None or t == 0:
+                break
+            while not stop[0] and t > 0:
+                sleep(0.2)
+                t -= 0.2
+
+
+def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     """
     Generator that skips items from 'iterable' already processed before or still being processed
 
@@ -77,19 +94,19 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     'd' already done, skipping
     'e' already done, skipping
     """
-    if dict_shelf is None:
-        contextm = shelve.open("/tmp/locker.db")
-    elif hasattr(dict_shelf, "__contains__"):
+    if dict__url__ctxmgr is None:
+        ctx = partial(shelve.open, "/tmp/locker.db")
+    elif isinstance(dict__url__ctxmgr, str):
+        ctx = partial(sopen, dict__url__ctxmgr, autopack=False)
+    elif isinstance(dict__url__ctxmgr, dict) and hasattr(dict__url__ctxmgr, "__contains__"):
         @contextmanager
         def ctx():
-            yield dict_shelf
-
-        contextm = ctx()
+            yield dict__url__ctxmgr
     else:
-        contextm = dict_shelf
+        ctx = dict__url__ctxmgr
 
-    with contextm as dic:
-        for c, item in enumerate(iterable):
+    for c, item in enumerate(iterable):
+        with ctx() as dic:
             if item in dic:
                 val = dic[item]
                 if val == b'd':
@@ -100,11 +117,17 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
                     status, action = 'already started', "skipping"
             else:
                 status, action = "is new", "started"
-            if logstep is not None and c % logstep == 0:
-                print(f"'{item}' {status}, {action}")
-            if action != "skipping":
-                dic[item] = packb(datetime.now())
-                yield item
+
+        if logstep is not None and c % logstep == 0:
+            print(f"'{item}' {status}, {action}")
+        if action != "skipping":
+            stop = [False]
+            t = Thread(target=ping, args=(ctx, item, timeout, stop), daemon=True)
+            t.start()
+            yield item
+            stop[0] = True
+            t.join()
+            with ctx() as dic:
                 dic[item] = b'd'
-                if logstep is not None and c % logstep == 0:
-                    print(f"'{item}' done")
+            if logstep is not None and c % logstep == 0:
+                print(f"'{item}' done")
