@@ -145,7 +145,7 @@ class ShSQLA:
         with self.sessionctx() as session:
             if self.ondup == "overwrite":
                 session.query(Content).filter_by(id=key).delete()
-            if self.ondup == "skip" or session.query(Content).filter_by(id=key).first() is None:
+            if self.ondup == "stop" or session.query(Content).filter_by(id=key).first() is None:
                 content = Content(id=key, blob=value)
                 session.add(content)
             session.commit()
@@ -161,7 +161,7 @@ class ShSQLA:
 
                 if self.ondup == "overwrite":
                     session.query(Content).filter_by(id=k).delete()
-                if self.ondup == "skip" or session.query(Content).filter_by(id=k).first() is None:
+                if self.ondup == "stop" or session.query(Content).filter_by(id=k).first() is None:
                     content = Content(id=k, blob=v)
                     session.add(content)
 
