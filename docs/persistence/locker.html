@@ -52,11 +52,28 @@
 import shelve
 from contextlib import contextmanager
 from datetime import datetime, timedelta
+from functools import partial
+from threading import Thread
+from time import sleep
 
 from temporenc import packb, unpackb
 
+from idict.persistence.shelchemy import sopen
 
-def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
+
+def ping(ctx, item, timeout, stop):
+    with ctx() as dic:
+        while not stop[0]:
+            dic[item] = packb(datetime.now())
+            t = timeout
+            if t is None or t == 0:
+                break
+            while not stop[0] and t &gt; 0:
+                sleep(0.2)
+                t -= 0.2
+
+
+def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     &#34;&#34;&#34;
     Generator that skips items from &#39;iterable&#39; already processed before or still being processed
 
@@ -69,7 +86,7 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     &gt;&gt;&gt; from time import sleep
     &gt;&gt;&gt; names = [&#34;a&#34;,&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;]
     &gt;&gt;&gt; storage = {}
-    &gt;&gt;&gt; for name in locker(names, dict_shelf=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -95,7 +112,7 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     &#39;e&#39; done
     &gt;&gt;&gt; storage
     {&#39;a&#39;: b&#39;d&#39;, &#39;b&#39;: b&#39;d&#39;, &#39;c&#39;: b&#39;d&#39;, &#39;d&#39;: b&#39;d&#39;, &#39;e&#39;: b&#39;d&#39;}
-    &gt;&gt;&gt; for name in locker(names, dict_shelf=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -105,19 +122,19 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
     &#39;d&#39; already done, skipping
     &#39;e&#39; already done, skipping
     &#34;&#34;&#34;
-    if dict_shelf is None:
-        contextm = shelve.open(&#34;/tmp/locker.db&#34;)
-    elif hasattr(dict_shelf, &#34;__contains__&#34;):
+    if dict__url__ctxmgr is None:
+        ctx = partial(shelve.open, &#34;/tmp/locker.db&#34;)
+    elif isinstance(dict__url__ctxmgr, str):
+        ctx = partial(sopen, dict__url__ctxmgr, autopack=False)
+    elif isinstance(dict__url__ctxmgr, dict) and hasattr(dict__url__ctxmgr, &#34;__contains__&#34;):
         @contextmanager
         def ctx():
-            yield dict_shelf
-
-        contextm = ctx()
+            yield dict__url__ctxmgr
     else:
-        contextm = dict_shelf
+        ctx = dict__url__ctxmgr
 
-    with contextm as dic:
-        for c, item in enumerate(iterable):
+    for c, item in enumerate(iterable):
+        with ctx() as dic:
             if item in dic:
                 val = dic[item]
                 if val == b&#39;d&#39;:
@@ -128,14 +145,20 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
                     status, action = &#39;already started&#39;, &#34;skipping&#34;
             else:
                 status, action = &#34;is new&#34;, &#34;started&#34;
-            if logstep is not None and c % logstep == 0:
-                print(f&#34;&#39;{item}&#39; {status}, {action}&#34;)
-            if action != &#34;skipping&#34;:
-                dic[item] = packb(datetime.now())
-                yield item
+
+        if logstep is not None and c % logstep == 0:
+            print(f&#34;&#39;{item}&#39; {status}, {action}&#34;)
+        if action != &#34;skipping&#34;:
+            stop = [False]
+            t = Thread(target=ping, args=(ctx, item, timeout, stop), daemon=True)
+            t.start()
+            yield item
+            stop[0] = True
+            t.join()
+            with ctx() as dic:
                 dic[item] = b&#39;d&#39;
-                if logstep is not None and c % logstep == 0:
-                    print(f&#34;&#39;{item}&#39; done&#34;)</code></pre>
+            if logstep is not None and c % logstep == 0:
+                print(f&#34;&#39;{item}&#39; done&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -146,7 +169,7 @@ def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="idict.persistence.locker.locker"><code class="name flex">
-<span>def <span class="ident">locker</span></span>(<span>iterable, dict_shelf=None, timeout=None, logstep=1)</span>
+<span>def <span class="ident">locker</span></span>(<span>iterable, dict__url__ctxmgr=None, timeout=None, logstep=1)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generator that skips items from 'iterable' already processed before or still being processed</p>
@@ -158,7 +181,7 @@ when 'None', 'shelve.open("/tmp/locker.db")' will be used
 <pre><code class="language-python-repl">&gt;&gt;&gt; from time import sleep
 &gt;&gt;&gt; names = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;]
 &gt;&gt;&gt; storage = {}
-&gt;&gt;&gt; for name in locker(names, dict_shelf=storage, timeout=10):
+&gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
 ...    print(f&quot;Processing {name}&quot;)
 ...    sleep(0.1)
 ...    print(f&quot;{name} processed!&quot;)
@@ -184,7 +207,7 @@ e processed!
 'e' done
 &gt;&gt;&gt; storage
 {'a': b'd', 'b': b'd', 'c': b'd', 'd': b'd', 'e': b'd'}
-&gt;&gt;&gt; for name in locker(names, dict_shelf=storage, timeout=10):
+&gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
 ...    print(f&quot;Processing {name}&quot;)
 ...    sleep(0.1)
 ...    print(f&quot;{name} processed!&quot;)
@@ -198,7 +221,7 @@ e processed!
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def locker(iterable, dict_shelf=None, timeout=None, logstep=1):
+<pre><code class="python">def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     &#34;&#34;&#34;
     Generator that skips items from &#39;iterable&#39; already processed before or still being processed
 
@@ -211,7 +234,7 @@ e processed!
     &gt;&gt;&gt; from time import sleep
     &gt;&gt;&gt; names = [&#34;a&#34;,&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;]
     &gt;&gt;&gt; storage = {}
-    &gt;&gt;&gt; for name in locker(names, dict_shelf=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -237,7 +260,7 @@ e processed!
     &#39;e&#39; done
     &gt;&gt;&gt; storage
     {&#39;a&#39;: b&#39;d&#39;, &#39;b&#39;: b&#39;d&#39;, &#39;c&#39;: b&#39;d&#39;, &#39;d&#39;: b&#39;d&#39;, &#39;e&#39;: b&#39;d&#39;}
-    &gt;&gt;&gt; for name in locker(names, dict_shelf=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -247,19 +270,19 @@ e processed!
     &#39;d&#39; already done, skipping
     &#39;e&#39; already done, skipping
     &#34;&#34;&#34;
-    if dict_shelf is None:
-        contextm = shelve.open(&#34;/tmp/locker.db&#34;)
-    elif hasattr(dict_shelf, &#34;__contains__&#34;):
+    if dict__url__ctxmgr is None:
+        ctx = partial(shelve.open, &#34;/tmp/locker.db&#34;)
+    elif isinstance(dict__url__ctxmgr, str):
+        ctx = partial(sopen, dict__url__ctxmgr, autopack=False)
+    elif isinstance(dict__url__ctxmgr, dict) and hasattr(dict__url__ctxmgr, &#34;__contains__&#34;):
         @contextmanager
         def ctx():
-            yield dict_shelf
-
-        contextm = ctx()
+            yield dict__url__ctxmgr
     else:
-        contextm = dict_shelf
+        ctx = dict__url__ctxmgr
 
-    with contextm as dic:
-        for c, item in enumerate(iterable):
+    for c, item in enumerate(iterable):
+        with ctx() as dic:
             if item in dic:
                 val = dic[item]
                 if val == b&#39;d&#39;:
@@ -270,14 +293,41 @@ e processed!
                     status, action = &#39;already started&#39;, &#34;skipping&#34;
             else:
                 status, action = &#34;is new&#34;, &#34;started&#34;
-            if logstep is not None and c % logstep == 0:
-                print(f&#34;&#39;{item}&#39; {status}, {action}&#34;)
-            if action != &#34;skipping&#34;:
-                dic[item] = packb(datetime.now())
-                yield item
+
+        if logstep is not None and c % logstep == 0:
+            print(f&#34;&#39;{item}&#39; {status}, {action}&#34;)
+        if action != &#34;skipping&#34;:
+            stop = [False]
+            t = Thread(target=ping, args=(ctx, item, timeout, stop), daemon=True)
+            t.start()
+            yield item
+            stop[0] = True
+            t.join()
+            with ctx() as dic:
                 dic[item] = b&#39;d&#39;
-                if logstep is not None and c % logstep == 0:
-                    print(f&#34;&#39;{item}&#39; done&#34;)</code></pre>
+            if logstep is not None and c % logstep == 0:
+                print(f&#34;&#39;{item}&#39; done&#34;)</code></pre>
+</details>
+</dd>
+<dt id="idict.persistence.locker.ping"><code class="name flex">
+<span>def <span class="ident">ping</span></span>(<span>ctx, item, timeout, stop)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ping(ctx, item, timeout, stop):
+    with ctx() as dic:
+        while not stop[0]:
+            dic[item] = packb(datetime.now())
+            t = timeout
+            if t is None or t == 0:
+                break
+            while not stop[0] and t &gt; 0:
+                sleep(0.2)
+                t -= 0.2</code></pre>
 </details>
 </dd>
 </dl>
@@ -299,6 +349,7 @@ e processed!
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="idict.persistence.locker.locker" href="#idict.persistence.locker.locker">locker</a></code></li>
+<li><code><a title="idict.persistence.locker.ping" href="#idict.persistence.locker.ping">ping</a></code></li>
 </ul>
 </li>
 </ul>

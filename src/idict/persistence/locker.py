@@ -58,7 +58,7 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     >>> from time import sleep
     >>> names = ["a","b","c","d","e"]
     >>> storage = {}
-    >>> for name in locker(names, dict_shelf=storage, timeout=10):
+    >>> for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
     ...    print(f"Processing {name}")
     ...    sleep(0.1)
     ...    print(f"{name} processed!")
@@ -84,7 +84,7 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     'e' done
     >>> storage
     {'a': b'd', 'b': b'd', 'c': b'd', 'd': b'd', 'e': b'd'}
-    >>> for name in locker(names, dict_shelf=storage, timeout=10):
+    >>> for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
     ...    print(f"Processing {name}")
     ...    sleep(0.1)
     ...    print(f"{name} processed!")
