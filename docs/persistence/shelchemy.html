@@ -173,7 +173,7 @@ class ShSQLA:
         with self.sessionctx() as session:
             if self.ondup == &#34;overwrite&#34;:
                 session.query(Content).filter_by(id=key).delete()
-            if self.ondup == &#34;skip&#34; or session.query(Content).filter_by(id=key).first() is None:
+            if self.ondup == &#34;stop&#34; or session.query(Content).filter_by(id=key).first() is None:
                 content = Content(id=key, blob=value)
                 session.add(content)
             session.commit()
@@ -189,7 +189,7 @@ class ShSQLA:
 
                 if self.ondup == &#34;overwrite&#34;:
                     session.query(Content).filter_by(id=k).delete()
-                if self.ondup == &#34;skip&#34; or session.query(Content).filter_by(id=k).first() is None:
+                if self.ondup == &#34;stop&#34; or session.query(Content).filter_by(id=k).first() is None:
                     content = Content(id=k, blob=v)
                     session.add(content)
 
@@ -521,7 +521,7 @@ False
         with self.sessionctx() as session:
             if self.ondup == &#34;overwrite&#34;:
                 session.query(Content).filter_by(id=key).delete()
-            if self.ondup == &#34;skip&#34; or session.query(Content).filter_by(id=key).first() is None:
+            if self.ondup == &#34;stop&#34; or session.query(Content).filter_by(id=key).first() is None:
                 content = Content(id=key, blob=value)
                 session.add(content)
             session.commit()
@@ -537,7 +537,7 @@ False
 
                 if self.ondup == &#34;overwrite&#34;:
                     session.query(Content).filter_by(id=k).delete()
-                if self.ondup == &#34;skip&#34; or session.query(Content).filter_by(id=k).first() is None:
+                if self.ondup == &#34;stop&#34; or session.query(Content).filter_by(id=k).first() is None:
                     content = Content(id=k, blob=v)
                     session.add(content)
 
@@ -666,7 +666,7 @@ def asdict(self):
 
             if self.ondup == &#34;overwrite&#34;:
                 session.query(Content).filter_by(id=k).delete()
-            if self.ondup == &#34;skip&#34; or session.query(Content).filter_by(id=k).first() is None:
+            if self.ondup == &#34;stop&#34; or session.query(Content).filter_by(id=k).first() is None:
                 content = Content(id=k, blob=v)
                 session.add(content)
 
