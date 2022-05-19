@@ -37,11 +37,11 @@ def ping(ctx, item, timeout, stop):
     with ctx() as dic:
         while not stop[0]:
             dic[item] = packb(datetime.now())
-            t = timeout
+            t = timeout / 2
             if t is None or t == 0:
                 break
             while not stop[0] and t > 0:
-                sleep(0.2)
+                sleep(min(0.2, t))
                 t -= 0.2
 
 
