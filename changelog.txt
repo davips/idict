@@ -1,1 +1,2 @@
-Improve locker by using keep-alive thread
+Fix keep-alive
+    Set ping time to timeout/2
