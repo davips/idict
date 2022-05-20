@@ -166,11 +166,11 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "dill"
-version = "0.3.4"
+version = "0.3.5"
 description = "serialize all of python"
 category = "main"
 optional = false
-python-versions = ">=2.7, !=3.0.*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*"
 
 [package.extras]
 graph = ["objgraph (>=1.7.2)"]
@@ -860,7 +860,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
 name = "xdis"
-version = "6.0.3"
+version = "6.0.4"
 description = "Python cross-version byte-code disassembler and marshal routines"
 category = "main"
 optional = false
@@ -1011,8 +1011,8 @@ decorator = [
     {file = "decorator-5.1.1.tar.gz", hash = "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330"},
 ]
 dill = [
-    {file = "dill-0.3.4-py2.py3-none-any.whl", hash = "sha256:7e40e4a70304fd9ceab3535d36e58791d9c4a776b38ec7f7ec9afc8d3dca4d4f"},
-    {file = "dill-0.3.4.zip", hash = "sha256:9f9734205146b2b353ab3fec9af0070237b6ddae78452af83d2fca84d739e675"},
+    {file = "dill-0.3.5-py2.py3-none-any.whl", hash = "sha256:6eb4bb70a98509e69204e621942c4306580d5bf2229f450f04fcf2efca3908e5"},
+    {file = "dill-0.3.5.tar.gz", hash = "sha256:3a11d19c15d409296a2ee714b1dbd5efb733a329f0d89c0e58aad6154ab6f2f5"},
 ]
 garoupa = [
     {file = "garoupa-2.220128.1-py3-none-any.whl", hash = "sha256:3eb61a5c9c58054dc1e58fa1fcd1c8e04bf49fa6688d051d08b3aa6506af7f58"},
@@ -1617,29 +1617,29 @@ wrapt = [
     {file = "wrapt-1.14.1.tar.gz", hash = "sha256:380a85cf89e0e69b7cfbe2ea9f765f004ff419f34194018a6827ac0e3edfed4d"},
 ]
 xdis = [
-    {file = "xdis-6.0.3-py2-none-any.whl", hash = "sha256:8e91c864508f1bbb98ab0365b98a0dac1703fd9409be5c4869350c2a7b7add6a"},
-    {file = "xdis-6.0.3-py2.4.egg", hash = "sha256:2fddcbff21bc1a835d150a04207698bafe0ecfd963449ac8aeffb1fe21ace63a"},
-    {file = "xdis-6.0.3-py2.5.egg", hash = "sha256:ea9d5082814c4761d938c218f5cedfcd58d3227cbd419e57c06172cd137238dd"},
-    {file = "xdis-6.0.3-py2.6.egg", hash = "sha256:4e467adbac75823ebd6b65ce9c2410fb1522957209cd858bb26c64605a74e780"},
-    {file = "xdis-6.0.3-py2.7.egg", hash = "sha256:2640799aadf7585fd0933d240735c96a2a5b1e2bf8e8e832e5208c25e7a83026"},
-    {file = "xdis-6.0.3-py3.1.egg", hash = "sha256:8365c6b290dcaf8aca28ca249b91ba5b12258d6107903c4e2467e37ae10feeb3"},
-    {file = "xdis-6.0.3-py3.10.egg", hash = "sha256:ac1e482e5baec3016acf91e636f9e4462cdbc942620a76938660bf22f834bad3"},
-    {file = "xdis-6.0.3-py3.2.egg", hash = "sha256:fe912f3a5e9534fdc4d1c857f4ddd33e9eb1b27a7a66d73b88faef8ce796b747"},
-    {file = "xdis-6.0.3-py3.3.egg", hash = "sha256:b8e7c2ccc3662438591ad4e2a86246cfd56646dee4ef22ca5ddf5876f7bad5d2"},
-    {file = "xdis-6.0.3-py3.4.egg", hash = "sha256:43021b3e79598686df1a2a5487f2802df27b51260ca91de34fd199e2adf98358"},
-    {file = "xdis-6.0.3-py3.5.egg", hash = "sha256:68c6006417ddf7f255f8e4b3b0e946990dbffd23a1dea6fc0db4198659d92338"},
-    {file = "xdis-6.0.3-py3.6.egg", hash = "sha256:9de257f9cf7217bb0332e4e14120cbce68ed31347d08db6cde0db8c83e9eb982"},
-    {file = "xdis-6.0.3-py3.7.egg", hash = "sha256:174189dccc5a57149841ec9e243507bc35c335f4d3c09b86473c1ee06b18b105"},
-    {file = "xdis-6.0.3-py3.8.egg", hash = "sha256:2040ccc7daf0a276b8d89d10bfea908a74c517d6aeffd5f2b72679aa6d3282b4"},
-    {file = "xdis-6.0.3-py3.9.egg", hash = "sha256:bd32fde51e6ea935b56131623a477073bfb504e325a13acdabd8a2bff3f12075"},
-    {file = "xdis-6.0.3-py310-none-any.whl", hash = "sha256:fd7782ddc8569b8c40f994a59af935521fc8cdc0a1b0dc3fa2cef12ace50be14"},
-    {file = "xdis-6.0.3-py33-none-any.whl", hash = "sha256:e32a99911c2c549be7257758f8778dee5a62de72e1bdb0e7696414e03403b86e"},
-    {file = "xdis-6.0.3-py34-none-any.whl", hash = "sha256:0ea30d313d8ddcd4fc38305a85c49b1698471badc6fb5bc51ac5c332f4a8c451"},
-    {file = "xdis-6.0.3-py35-none-any.whl", hash = "sha256:bf5ad2d846558910f0807edeced94e119c4a27fbaea6e7d16770b7f20fbca345"},
-    {file = "xdis-6.0.3-py36-none-any.whl", hash = "sha256:d3df8c6bdaac1d93f881498516a132961c19843043fed16a39598165c02ed3e5"},
-    {file = "xdis-6.0.3-py37-none-any.whl", hash = "sha256:d30c4293f28679749cbd801ea5ab04387cdc492c6012c01345f6e2043a70652a"},
-    {file = "xdis-6.0.3-py38-none-any.whl", hash = "sha256:5ab1b6c582d7c44ebc1f2c3139277baa4ca5992093b7717a478a9205ae4f3776"},
-    {file = "xdis-6.0.3.tar.gz", hash = "sha256:97f776f1c626e6a9e3babd0c1ca5ef394e879d7027580c54ae0be873122f9ebc"},
+    {file = "xdis-6.0.4-py2-none-any.whl", hash = "sha256:e94f10448fbbde1ab4aea753275def610e599c02eb3b2ffd3e9bee87f93cef8a"},
+    {file = "xdis-6.0.4-py2.4.egg", hash = "sha256:0d9d2c636909c70f903d1ef933e1bea1b46176020ab6d5a62e97ef50a7637c19"},
+    {file = "xdis-6.0.4-py2.5.egg", hash = "sha256:74f16078398d79367f8918e724f323e97f57238bd210b7f19de150814b1e6414"},
+    {file = "xdis-6.0.4-py2.6.egg", hash = "sha256:e71216b9bed8fe2288d9315499e993f36af80c081ec09b116bd712257c506f65"},
+    {file = "xdis-6.0.4-py2.7.egg", hash = "sha256:326de2982243c411edd8b9064ce0a5da9ce18cfb215d4b495042bbcd8e47d285"},
+    {file = "xdis-6.0.4-py3.1.egg", hash = "sha256:ed1561adf6671a6ec13ae35c41e76bfad564eae486597d2e2ea0340850eaed90"},
+    {file = "xdis-6.0.4-py3.10.egg", hash = "sha256:2944647d3d81369a8d78a2a9ab4984ce95a3e74617087b452eb2b9e081bddff4"},
+    {file = "xdis-6.0.4-py3.2.egg", hash = "sha256:ae46452e2b9c4ca6d41c6ee824c44880e3b84ba0930e0f6a73abbcbeb534730f"},
+    {file = "xdis-6.0.4-py3.3.egg", hash = "sha256:002b20895fb383d462b26a4c8a822ac40a4aba831bad974fd0882a8a76f24aef"},
+    {file = "xdis-6.0.4-py3.4.egg", hash = "sha256:2bf73b8b5b481eb3c176da9044ed450f6db9a74b1ddfc4db8ddb64e08c830b09"},
+    {file = "xdis-6.0.4-py3.5.egg", hash = "sha256:cdce2707fb0ea7fe108eddcb2af51898997bc1ab051751b16fd8f6b0b30b3925"},
+    {file = "xdis-6.0.4-py3.6.egg", hash = "sha256:33c7bce40496a791cdfe829f14e33631e05618616d91bcedce82eccc546f8819"},
+    {file = "xdis-6.0.4-py3.7.egg", hash = "sha256:519c22b4e70de733d631ac0ac37e422c41f270e4d99b2c55df3daf763e4fcfcc"},
+    {file = "xdis-6.0.4-py3.8.egg", hash = "sha256:e960b7e22fa789cb43e8f0a0f887d585d3a66786f0bb559dd1a984e35ee01321"},
+    {file = "xdis-6.0.4-py3.9.egg", hash = "sha256:dfdc53aaeda620e04ca6fc83a86963e30f8cbd5559c7c51b103d1882b551151a"},
+    {file = "xdis-6.0.4-py310-none-any.whl", hash = "sha256:288ad36acd198dd6c9dfe5d7c3555ff653280558ee752438dccb4cc63285e024"},
+    {file = "xdis-6.0.4-py33-none-any.whl", hash = "sha256:c8d43a7d323dcfaf74ae41d9030ed21c64e8d9df367fb489304e1db6e65cfd95"},
+    {file = "xdis-6.0.4-py34-none-any.whl", hash = "sha256:d85694b944b2abb389ce6483995bb43accbf1fce34fcc88a29767886097b29d2"},
+    {file = "xdis-6.0.4-py35-none-any.whl", hash = "sha256:6911e4f2f69367846e6ae9ea3a13c130590d760b0cc5680bd4ccbdfa5a52f324"},
+    {file = "xdis-6.0.4-py36-none-any.whl", hash = "sha256:1fd4eb936c21e1bae641f194601f31801c2b6fcb7d7dfe8eb791d2ca8626b32a"},
+    {file = "xdis-6.0.4-py37-none-any.whl", hash = "sha256:6e58aad4a115636f7bcd91e77c4220bd7a135a2770ca3400c394f6db11fb72e7"},
+    {file = "xdis-6.0.4-py38-none-any.whl", hash = "sha256:18f91849ced2b0786bf196e65520e42384ce71cc6980caa55f12c2b0fbd73115"},
+    {file = "xdis-6.0.4.tar.gz", hash = "sha256:1bc5453cfa0ea8331f5bdf6ddba53f50b8289ac368d9fddb135cbbdf42aeffb8"},
 ]
 zipp = [
     {file = "zipp-3.8.0-py3-none-any.whl", hash = "sha256:c4f6e5bbf48e74f7a38e7cc5b0480ff42b0ae5178957d564d18932525d5cf099"},

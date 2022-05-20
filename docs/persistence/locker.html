@@ -53,6 +53,7 @@ import shelve
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from functools import partial
+from random import random
 from threading import Thread
 from time import sleep
 
@@ -64,13 +65,17 @@ from idict.persistence.shelchemy import sopen
 def ping(ctx, item, timeout, stop):
     with ctx() as dic:
         while not stop[0]:
-            dic[item] = packb(datetime.now())
             t = timeout / 2
             if t is None or t == 0:
                 break
             while not stop[0] and t &gt; 0:
                 sleep(min(0.2, t))
                 t -= 0.2
+            dic[item] = packb(datetime.now())
+
+
+def alive(val, timeout):
+    return timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout)
 
 
 def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
@@ -112,7 +117,7 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     &#39;e&#39; done
     &gt;&gt;&gt; storage
     {&#39;a&#39;: b&#39;d&#39;, &#39;b&#39;: b&#39;d&#39;, &#39;c&#39;: b&#39;d&#39;, &#39;d&#39;: b&#39;d&#39;, &#39;e&#39;: b&#39;d&#39;}
-    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -135,20 +140,33 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
 
     for c, item in enumerate(iterable):
         with ctx() as dic:
-            if item in dic:
-                val = dic[item]
-                if val == b&#39;d&#39;:
-                    status, action = &#39;already done&#39;, &#34;skipping&#34;
-                elif timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout):
-                    status, action = &#34;expired&#34;, &#34;restarted&#34;
+            while True:
+                if item in dic:
+                    val = dic[item]
+                    if val == b&#39;d&#39;:
+                        status, action = &#39;already done&#39;, &#34;skipping&#34;
+                    elif not alive(val, timeout):
+                        status, action = &#34;expired&#34;, &#34;restarted&#34;
+                    else:
+                        status, action = &#39;already started&#39;, &#34;skipping&#34;
                 else:
-                    status, action = &#39;already started&#39;, &#34;skipping&#34;
-            else:
-                status, action = &#34;is new&#34;, &#34;started&#34;
+                    status, action = &#34;is new&#34;, &#34;started&#34;
+
+                # Check for race condition.
+                if action == &#34;skipping&#34;:
+                    break
+                else:
+                    now = packb(datetime.now())
+                    sleep((random() + 1) / 1000)  # ~1ms
+                    if item not in dic or not alive(dic[item], timeout):
+                        break
 
         if logstep is not None and c % logstep == 0:
             print(f&#34;&#39;{item}&#39; {status}, {action}&#34;)
         if action != &#34;skipping&#34;:
+            with ctx() as dic:
+                # Mark as started, as early as possible.
+                dic[item] = now
             stop = [False]
             t = Thread(target=ping, args=(ctx, item, timeout, stop), daemon=True)
             t.start()
@@ -168,6 +186,19 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="idict.persistence.locker.alive"><code class="name flex">
+<span>def <span class="ident">alive</span></span>(<span>val, timeout)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def alive(val, timeout):
+    return timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout)</code></pre>
+</details>
+</dd>
 <dt id="idict.persistence.locker.locker"><code class="name flex">
 <span>def <span class="ident">locker</span></span>(<span>iterable, dict__url__ctxmgr=None, timeout=None, logstep=1)</span>
 </code></dt>
@@ -207,7 +238,7 @@ e processed!
 'e' done
 &gt;&gt;&gt; storage
 {'a': b'd', 'b': b'd', 'c': b'd', 'd': b'd', 'e': b'd'}
-&gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+&gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
 ...    print(f&quot;Processing {name}&quot;)
 ...    sleep(0.1)
 ...    print(f&quot;{name} processed!&quot;)
@@ -260,7 +291,7 @@ e processed!
     &#39;e&#39; done
     &gt;&gt;&gt; storage
     {&#39;a&#39;: b&#39;d&#39;, &#39;b&#39;: b&#39;d&#39;, &#39;c&#39;: b&#39;d&#39;, &#39;d&#39;: b&#39;d&#39;, &#39;e&#39;: b&#39;d&#39;}
-    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -283,20 +314,33 @@ e processed!
 
     for c, item in enumerate(iterable):
         with ctx() as dic:
-            if item in dic:
-                val = dic[item]
-                if val == b&#39;d&#39;:
-                    status, action = &#39;already done&#39;, &#34;skipping&#34;
-                elif timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout):
-                    status, action = &#34;expired&#34;, &#34;restarted&#34;
+            while True:
+                if item in dic:
+                    val = dic[item]
+                    if val == b&#39;d&#39;:
+                        status, action = &#39;already done&#39;, &#34;skipping&#34;
+                    elif not alive(val, timeout):
+                        status, action = &#34;expired&#34;, &#34;restarted&#34;
+                    else:
+                        status, action = &#39;already started&#39;, &#34;skipping&#34;
                 else:
-                    status, action = &#39;already started&#39;, &#34;skipping&#34;
-            else:
-                status, action = &#34;is new&#34;, &#34;started&#34;
+                    status, action = &#34;is new&#34;, &#34;started&#34;
+
+                # Check for race condition.
+                if action == &#34;skipping&#34;:
+                    break
+                else:
+                    now = packb(datetime.now())
+                    sleep((random() + 1) / 1000)  # ~1ms
+                    if item not in dic or not alive(dic[item], timeout):
+                        break
 
         if logstep is not None and c % logstep == 0:
             print(f&#34;&#39;{item}&#39; {status}, {action}&#34;)
         if action != &#34;skipping&#34;:
+            with ctx() as dic:
+                # Mark as started, as early as possible.
+                dic[item] = now
             stop = [False]
             t = Thread(target=ping, args=(ctx, item, timeout, stop), daemon=True)
             t.start()
@@ -321,14 +365,20 @@ e processed!
 <pre><code class="python">def ping(ctx, item, timeout, stop):
     with ctx() as dic:
         while not stop[0]:
-            dic[item] = packb(datetime.now())
             t = timeout / 2
             if t is None or t == 0:
                 break
             while not stop[0] and t &gt; 0:
                 sleep(min(0.2, t))
-                t -= 0.2</code></pre>
+                t -= 0.2
+            dic[item] = packb(datetime.now())</code></pre>
 </details>
+</dd>
+<dt id="idict.persistence.locker.random"><code class="name flex">
+<span>def <span class="ident">random</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>random() -&gt; x in the interval [0, 1).</p></div>
 </dd>
 </dl>
 </section>
@@ -348,8 +398,10 @@ e processed!
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="idict.persistence.locker.alive" href="#idict.persistence.locker.alive">alive</a></code></li>
 <li><code><a title="idict.persistence.locker.locker" href="#idict.persistence.locker.locker">locker</a></code></li>
 <li><code><a title="idict.persistence.locker.ping" href="#idict.persistence.locker.ping">ping</a></code></li>
+<li><code><a title="idict.persistence.locker.random" href="#idict.persistence.locker.random">random</a></code></li>
 </ul>
 </li>
 </ul>
