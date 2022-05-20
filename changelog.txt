@@ -1,2 +1,1 @@
-Fix keep-alive
-    Set ping time to timeout/2
+Check for race condition

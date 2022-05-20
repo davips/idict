@@ -25,6 +25,7 @@ import shelve
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from functools import partial
+from random import random
 from threading import Thread
 from time import sleep
 
@@ -36,13 +37,17 @@ from idict.persistence.shelchemy import sopen
 def ping(ctx, item, timeout, stop):
     with ctx() as dic:
         while not stop[0]:
-            dic[item] = packb(datetime.now())
             t = timeout / 2
             if t is None or t == 0:
                 break
             while not stop[0] and t > 0:
                 sleep(min(0.2, t))
                 t -= 0.2
+            dic[item] = packb(datetime.now())
+
+
+def alive(val, timeout):
+    return timeout is not None and datetime.now() > unpackb(val).datetime() + timedelta(seconds=timeout)
 
 
 def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
@@ -84,7 +89,7 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     'e' done
     >>> storage
     {'a': b'd', 'b': b'd', 'c': b'd', 'd': b'd', 'e': b'd'}
-    >>> for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+    >>> for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
     ...    print(f"Processing {name}")
     ...    sleep(0.1)
     ...    print(f"{name} processed!")
@@ -107,20 +112,33 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
 
     for c, item in enumerate(iterable):
         with ctx() as dic:
-            if item in dic:
-                val = dic[item]
-                if val == b'd':
-                    status, action = 'already done', "skipping"
-                elif timeout is not None and datetime.now() > unpackb(val).datetime() + timedelta(seconds=timeout):
-                    status, action = "expired", "restarted"
+            while True:
+                if item in dic:
+                    val = dic[item]
+                    if val == b'd':
+                        status, action = 'already done', "skipping"
+                    elif not alive(val, timeout):
+                        status, action = "expired", "restarted"
+                    else:
+                        status, action = 'already started', "skipping"
                 else:
-                    status, action = 'already started', "skipping"
-            else:
-                status, action = "is new", "started"
+                    status, action = "is new", "started"
+
+                # Check for race condition.
+                if action == "skipping":
+                    break
+                else:
+                    now = packb(datetime.now())
+                    sleep((random() + 1) / 1000)  # ~1ms
+                    if item not in dic or not alive(dic[item], timeout):
+                        break
 
         if logstep is not None and c % logstep == 0:
             print(f"'{item}' {status}, {action}")
         if action != "skipping":
+            with ctx() as dic:
+                # Mark as started, as early as possible.
+                dic[item] = now
             stop = [False]
             t = Thread(target=ping, args=(ctx, item, timeout, stop), daemon=True)
             t.start()
