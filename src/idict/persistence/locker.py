@@ -50,13 +50,12 @@ def alive(val, timeout):
     return timeout is not None and datetime.now() > unpackb(val).datetime() + timedelta(seconds=timeout)
 
 
-def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
+def locker(iterable, dict__url=None, timeout=None, logstep=1):
     """
     Generator that skips items from 'iterable' already processed before or still being processed
 
     Item processing is restarted if 'timeout' expires.
-    'dict_shelf' is a dict-like or a shelve-like object to store each item status
-        when 'None', 'shelve.open("/tmp/locker.db")' will be used
+    'dict_shelf' is a dict-like object or a sqlalchemy url to store and query each item status
     'logstep' is the frequency of printed messages, 'None' means 'no logs'.
     'timeout'=None keeps the job status as 'started' forever (or until it finishes)
 
@@ -65,7 +64,7 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     >>> from time import sleep
     >>> names = ["a","b","c","d","e"]
     >>> storage = {}
-    >>> for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+    >>> for name in locker(names, dict__url=storage, timeout=10):
     ...    print(f"Processing {name}")
     ...    sleep(0.1)
     ...    print(f"{name} processed!")
@@ -91,7 +90,7 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     'e' done
     >>> storage
     {'a': b'd', 'b': b'd', 'c': b'd', 'd': b'd', 'e': b'd'}
-    >>> for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
+    >>> for name in locker(names, dict__url=storage, timeout=1):
     ...    print(f"Processing {name}")
     ...    sleep(0.1)
     ...    print(f"{name} processed!")
@@ -101,16 +100,16 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     'd' already done, skipping
     'e' already done, skipping
     """
-    if dict__url__ctxmgr is None:
+    if dict__url is None:
         ctx = partial(shelve.open, "/tmp/locker.db")
-    elif isinstance(dict__url__ctxmgr, str):
-        ctx = partial(sopen, dict__url__ctxmgr, autopack=False)
-    elif isinstance(dict__url__ctxmgr, dict) and hasattr(dict__url__ctxmgr, "__contains__"):
+    elif isinstance(dict__url, str):
+        ctx = partial(sopen, dict__url, autopack=False)
+    elif isinstance(dict__url, dict) and hasattr(dict__url, "__contains__"):
         @contextmanager
         def ctx():
-            yield dict__url__ctxmgr
+            yield dict__url
     else:
-        ctx = dict__url__ctxmgr
+        ctx = dict__url
 
     for c, item in enumerate(iterable):
         with ctx() as dic:
