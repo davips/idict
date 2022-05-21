@@ -78,20 +78,21 @@ def alive(val, timeout):
     return timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout)
 
 
-def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
+def locker(iterable, dict__url=None, timeout=None, logstep=1):
     &#34;&#34;&#34;
     Generator that skips items from &#39;iterable&#39; already processed before or still being processed
 
     Item processing is restarted if &#39;timeout&#39; expires.
-    &#39;dict_shelf&#39; is a dict-like or a shelve-like object to store each item status
-        when &#39;None&#39;, &#39;shelve.open(&#34;/tmp/locker.db&#34;)&#39; will be used
+    &#39;dict_shelf&#39; is a dict-like object or a sqlalchemy url to store and query each item status
     &#39;logstep&#39; is the frequency of printed messages, &#39;None&#39; means &#39;no logs&#39;.
     &#39;timeout&#39;=None keeps the job status as &#39;started&#39; forever (or until it finishes)
+
+    # TODO: improve avoidance of race condition adopting a pre-started state
 
     &gt;&gt;&gt; from time import sleep
     &gt;&gt;&gt; names = [&#34;a&#34;,&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;]
     &gt;&gt;&gt; storage = {}
-    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url=storage, timeout=10):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -117,7 +118,7 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     &#39;e&#39; done
     &gt;&gt;&gt; storage
     {&#39;a&#39;: b&#39;d&#39;, &#39;b&#39;: b&#39;d&#39;, &#39;c&#39;: b&#39;d&#39;, &#39;d&#39;: b&#39;d&#39;, &#39;e&#39;: b&#39;d&#39;}
-    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
+    &gt;&gt;&gt; for name in locker(names, dict__url=storage, timeout=1):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -127,16 +128,16 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
     &#39;d&#39; already done, skipping
     &#39;e&#39; already done, skipping
     &#34;&#34;&#34;
-    if dict__url__ctxmgr is None:
+    if dict__url is None:
         ctx = partial(shelve.open, &#34;/tmp/locker.db&#34;)
-    elif isinstance(dict__url__ctxmgr, str):
-        ctx = partial(sopen, dict__url__ctxmgr, autopack=False)
-    elif isinstance(dict__url__ctxmgr, dict) and hasattr(dict__url__ctxmgr, &#34;__contains__&#34;):
+    elif isinstance(dict__url, str):
+        ctx = partial(sopen, dict__url, autopack=False)
+    elif isinstance(dict__url, dict) and hasattr(dict__url, &#34;__contains__&#34;):
         @contextmanager
         def ctx():
-            yield dict__url__ctxmgr
+            yield dict__url
     else:
-        ctx = dict__url__ctxmgr
+        ctx = dict__url
 
     for c, item in enumerate(iterable):
         with ctx() as dic:
@@ -200,19 +201,19 @@ def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
 </details>
 </dd>
 <dt id="idict.persistence.locker.locker"><code class="name flex">
-<span>def <span class="ident">locker</span></span>(<span>iterable, dict__url__ctxmgr=None, timeout=None, logstep=1)</span>
+<span>def <span class="ident">locker</span></span>(<span>iterable, dict__url=None, timeout=None, logstep=1)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Generator that skips items from 'iterable' already processed before or still being processed</p>
 <p>Item processing is restarted if 'timeout' expires.
-'dict_shelf' is a dict-like or a shelve-like object to store each item status
-when 'None', 'shelve.open("/tmp/locker.db")' will be used
+'dict_shelf' is a dict-like object or a sqlalchemy url to store and query each item status
 'logstep' is the frequency of printed messages, 'None' means 'no logs'.
 'timeout'=None keeps the job status as 'started' forever (or until it finishes)</p>
+<h1 id="todo-improve-avoidance-of-race-condition-adopting-a-pre-started-state">TODO: improve avoidance of race condition adopting a pre-started state</h1>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from time import sleep
 &gt;&gt;&gt; names = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;]
 &gt;&gt;&gt; storage = {}
-&gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+&gt;&gt;&gt; for name in locker(names, dict__url=storage, timeout=10):
 ...    print(f&quot;Processing {name}&quot;)
 ...    sleep(0.1)
 ...    print(f&quot;{name} processed!&quot;)
@@ -238,7 +239,7 @@ e processed!
 'e' done
 &gt;&gt;&gt; storage
 {'a': b'd', 'b': b'd', 'c': b'd', 'd': b'd', 'e': b'd'}
-&gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
+&gt;&gt;&gt; for name in locker(names, dict__url=storage, timeout=1):
 ...    print(f&quot;Processing {name}&quot;)
 ...    sleep(0.1)
 ...    print(f&quot;{name} processed!&quot;)
@@ -252,20 +253,21 @@ e processed!
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def locker(iterable, dict__url__ctxmgr=None, timeout=None, logstep=1):
+<pre><code class="python">def locker(iterable, dict__url=None, timeout=None, logstep=1):
     &#34;&#34;&#34;
     Generator that skips items from &#39;iterable&#39; already processed before or still being processed
 
     Item processing is restarted if &#39;timeout&#39; expires.
-    &#39;dict_shelf&#39; is a dict-like or a shelve-like object to store each item status
-        when &#39;None&#39;, &#39;shelve.open(&#34;/tmp/locker.db&#34;)&#39; will be used
+    &#39;dict_shelf&#39; is a dict-like object or a sqlalchemy url to store and query each item status
     &#39;logstep&#39; is the frequency of printed messages, &#39;None&#39; means &#39;no logs&#39;.
     &#39;timeout&#39;=None keeps the job status as &#39;started&#39; forever (or until it finishes)
+
+    # TODO: improve avoidance of race condition adopting a pre-started state
 
     &gt;&gt;&gt; from time import sleep
     &gt;&gt;&gt; names = [&#34;a&#34;,&#34;b&#34;,&#34;c&#34;,&#34;d&#34;,&#34;e&#34;]
     &gt;&gt;&gt; storage = {}
-    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=10):
+    &gt;&gt;&gt; for name in locker(names, dict__url=storage, timeout=10):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -291,7 +293,7 @@ e processed!
     &#39;e&#39; done
     &gt;&gt;&gt; storage
     {&#39;a&#39;: b&#39;d&#39;, &#39;b&#39;: b&#39;d&#39;, &#39;c&#39;: b&#39;d&#39;, &#39;d&#39;: b&#39;d&#39;, &#39;e&#39;: b&#39;d&#39;}
-    &gt;&gt;&gt; for name in locker(names, dict__url__ctxmgr=storage, timeout=1):
+    &gt;&gt;&gt; for name in locker(names, dict__url=storage, timeout=1):
     ...    print(f&#34;Processing {name}&#34;)
     ...    sleep(0.1)
     ...    print(f&#34;{name} processed!&#34;)
@@ -301,16 +303,16 @@ e processed!
     &#39;d&#39; already done, skipping
     &#39;e&#39; already done, skipping
     &#34;&#34;&#34;
-    if dict__url__ctxmgr is None:
+    if dict__url is None:
         ctx = partial(shelve.open, &#34;/tmp/locker.db&#34;)
-    elif isinstance(dict__url__ctxmgr, str):
-        ctx = partial(sopen, dict__url__ctxmgr, autopack=False)
-    elif isinstance(dict__url__ctxmgr, dict) and hasattr(dict__url__ctxmgr, &#34;__contains__&#34;):
+    elif isinstance(dict__url, str):
+        ctx = partial(sopen, dict__url, autopack=False)
+    elif isinstance(dict__url, dict) and hasattr(dict__url, &#34;__contains__&#34;):
         @contextmanager
         def ctx():
-            yield dict__url__ctxmgr
+            yield dict__url
     else:
-        ctx = dict__url__ctxmgr
+        ctx = dict__url
 
     for c, item in enumerate(iterable):
         with ctx() as dic:
