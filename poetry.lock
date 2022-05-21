@@ -166,7 +166,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "dill"
-version = "0.3.5"
+version = "0.3.5.1"
 description = "serialize all of python"
 category = "main"
 optional = false
@@ -888,7 +888,7 @@ full = ["pandas", "SQLAlchemy", "scikit-learn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"  #">=3.8,<3.10"
-content-hash = "54b758072140e97a73f94f3cf96741484327b06fc9137c91791dd57f09387eb2"
+content-hash = "7a263c20b6e61238c7992e7db02fc771f0630a8c34c349f52f52f62e1e5f1fc6"
 
 [metadata.files]
 ansi2html = [
@@ -1011,8 +1011,8 @@ decorator = [
     {file = "decorator-5.1.1.tar.gz", hash = "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330"},
 ]
 dill = [
-    {file = "dill-0.3.5-py2.py3-none-any.whl", hash = "sha256:6eb4bb70a98509e69204e621942c4306580d5bf2229f450f04fcf2efca3908e5"},
-    {file = "dill-0.3.5.tar.gz", hash = "sha256:3a11d19c15d409296a2ee714b1dbd5efb733a329f0d89c0e58aad6154ab6f2f5"},
+    {file = "dill-0.3.5.1-py2.py3-none-any.whl", hash = "sha256:33501d03270bbe410c72639b350e941882a8b0fd55357580fbc873fba0c59302"},
+    {file = "dill-0.3.5.1.tar.gz", hash = "sha256:d75e41f3eff1eee599d738e76ba8f4ad98ea229db8b085318aa2b3333a208c86"},
 ]
 garoupa = [
     {file = "garoupa-2.220128.1-py3-none-any.whl", hash = "sha256:3eb61a5c9c58054dc1e58fa1fcd1c8e04bf49fa6688d051d08b3aa6506af7f58"},
