@@ -55,11 +55,10 @@ from datetime import datetime, timedelta
 from functools import partial
 from random import random
 from threading import Thread
-from time import sleep
-
-from temporenc import packb, unpackb
 
 from idict.persistence.shelchemy import sopen
+from temporenc import packb, unpackb
+from time import sleep
 
 
 def ping(ctx, item, timeout, stop):
@@ -75,7 +74,7 @@ def ping(ctx, item, timeout, stop):
 
 
 def alive(val, timeout):
-    return timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout)
+    return timeout is not None and datetime.now() &lt; unpackb(val).datetime() + timedelta(seconds=timeout)
 
 
 def locker(iterable, dict__url=None, timeout=None, logstep=1):
@@ -153,10 +152,10 @@ def locker(iterable, dict__url=None, timeout=None, logstep=1):
                 else:
                     status, action = &#34;is new&#34;, &#34;started&#34;
 
-                # Check for race condition.
                 if action == &#34;skipping&#34;:
                     break
                 else:
+                    # Check for race condition.
                     now = packb(datetime.now())
                     sleep((random() + 1) / 1000)  # ~1ms
                     if item not in dic or not alive(dic[item], timeout):
@@ -197,7 +196,7 @@ def locker(iterable, dict__url=None, timeout=None, logstep=1):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def alive(val, timeout):
-    return timeout is not None and datetime.now() &gt; unpackb(val).datetime() + timedelta(seconds=timeout)</code></pre>
+    return timeout is not None and datetime.now() &lt; unpackb(val).datetime() + timedelta(seconds=timeout)</code></pre>
 </details>
 </dd>
 <dt id="idict.persistence.locker.locker"><code class="name flex">
@@ -328,10 +327,10 @@ e processed!
                 else:
                     status, action = &#34;is new&#34;, &#34;started&#34;
 
-                # Check for race condition.
                 if action == &#34;skipping&#34;:
                     break
                 else:
+                    # Check for race condition.
                     now = packb(datetime.now())
                     sleep((random() + 1) / 1000)  # ~1ms
                     if item not in dic or not alive(dic[item], timeout):
