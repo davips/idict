@@ -27,11 +27,10 @@ from datetime import datetime, timedelta
 from functools import partial
 from random import random
 from threading import Thread
-from time import sleep
-
-from temporenc import packb, unpackb
 
 from idict.persistence.shelchemy import sopen
+from temporenc import packb, unpackb
+from time import sleep
 
 
 def ping(ctx, item, timeout, stop):
@@ -47,7 +46,7 @@ def ping(ctx, item, timeout, stop):
 
 
 def alive(val, timeout):
-    return timeout is not None and datetime.now() > unpackb(val).datetime() + timedelta(seconds=timeout)
+    return timeout is not None and datetime.now() < unpackb(val).datetime() + timedelta(seconds=timeout)
 
 
 def locker(iterable, dict__url=None, timeout=None, logstep=1):
@@ -125,10 +124,10 @@ def locker(iterable, dict__url=None, timeout=None, logstep=1):
                 else:
                     status, action = "is new", "started"
 
-                # Check for race condition.
                 if action == "skipping":
                     break
                 else:
+                    # Check for race condition.
                     now = packb(datetime.now())
                     sleep((random() + 1) / 1000)  # ~1ms
                     if item not in dic or not alive(dic[item], timeout):
