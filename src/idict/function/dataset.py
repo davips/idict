@@ -170,19 +170,19 @@ def df2arff(input="df", output="arff", **kwargs):
 
 def openml(Xout="X", yout="y", name="iris", version=1):
     """
-    >>> from idict import Ø
-    >>> (Ø >> openml).show(colored=False)
-    {
-        "X": "→(Xout yout name version)",
-        "y": "→(Xout yout name version)",
-        "_history": "idict--------------sklearn-1.0.1--openml",
-        "_id": "idict--------------sklearn-1.0.1--openml",
-        "_ids": {
-            "X": "KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr",
-            "y": "HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W",
-            "_history": "Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf"
-        }
-    }
+    #>>> from idict import Ø
+    #>>> (Ø >> openml).show(colored=False)
+    #{
+        #"X": "→(Xout yout name version)",
+        #"y": "→(Xout yout name version)",
+        #"_history": "idict--------------sklearn-1.0.1--openml",
+        #"_id": "idict--------------sklearn-1.0.1--openml",
+        #"_ids": {
+            #"X": "KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr",
+            #"y": "HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W",
+            #"_history": "Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf"
+        #}
+    #}
     #>>> (Ø >> openml).X.head()
        #sepallength  sepalwidth  petallength  petalwidth
     #0          5.1         3.5          1.4         0.2

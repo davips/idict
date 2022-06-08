@@ -199,34 +199,34 @@ def df2arff(input=&#34;df&#34;, output=&#34;arff&#34;, **kwargs):
 
 def openml(Xout=&#34;X&#34;, yout=&#34;y&#34;, name=&#34;iris&#34;, version=1):
     &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import Ø
-    &gt;&gt;&gt; (Ø &gt;&gt; openml).show(colored=False)
-    {
-        &#34;X&#34;: &#34;→(Xout yout name version)&#34;,
-        &#34;y&#34;: &#34;→(Xout yout name version)&#34;,
-        &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
-        &#34;_id&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
-        &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr&#34;,
-            &#34;y&#34;: &#34;HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W&#34;,
-            &#34;_history&#34;: &#34;Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf&#34;
-        }
-    }
-    &gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()
-       sepallength  sepalwidth  petallength  petalwidth
-    0          5.1         3.5          1.4         0.2
-    1          4.9         3.0          1.4         0.2
-    2          4.7         3.2          1.3         0.2
-    3          4.6         3.1          1.5         0.2
-    4          5.0         3.6          1.4         0.2
-    &gt;&gt;&gt; (Ø &gt;&gt; openml).y.head()
-    0    Iris-setosa
-    1    Iris-setosa
-    2    Iris-setosa
-    3    Iris-setosa
-    4    Iris-setosa
-    Name: class, dtype: category
-    Categories (3, object): [&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;]
+    #&gt;&gt;&gt; from idict import Ø
+    #&gt;&gt;&gt; (Ø &gt;&gt; openml).show(colored=False)
+    #{
+        #&#34;X&#34;: &#34;→(Xout yout name version)&#34;,
+        #&#34;y&#34;: &#34;→(Xout yout name version)&#34;,
+        #&#34;_history&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
+        #&#34;_id&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
+        #&#34;_ids&#34;: {
+            #&#34;X&#34;: &#34;KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr&#34;,
+            #&#34;y&#34;: &#34;HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W&#34;,
+            #&#34;_history&#34;: &#34;Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf&#34;
+        #}
+    #}
+    #&gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()
+       #sepallength  sepalwidth  petallength  petalwidth
+    #0          5.1         3.5          1.4         0.2
+    #1          4.9         3.0          1.4         0.2
+    #2          4.7         3.2          1.3         0.2
+    #3          4.6         3.1          1.5         0.2
+    #4          5.0         3.6          1.4         0.2
+    #&gt;&gt;&gt; (Ø &gt;&gt; openml).y.head()
+    #0    Iris-setosa
+    #1    Iris-setosa
+    #2    Iris-setosa
+    #3    Iris-setosa
+    #4    Iris-setosa
+    #Name: class, dtype: category
+    #Categories (3, object): [&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;]
     &#34;&#34;&#34;
     from sklearn.datasets import fetch_openml
 
@@ -675,69 +675,97 @@ array([0, 1])
 <span>def <span class="ident">openml</span></span>(<span>Xout='X', yout='y', name='iris', version=1)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import Ø
-&gt;&gt;&gt; (Ø &gt;&gt; openml).show(colored=False)
-{
-    &quot;X&quot;: &quot;→(Xout yout name version)&quot;,
-    &quot;y&quot;: &quot;→(Xout yout name version)&quot;,
-    &quot;_history&quot;: &quot;idict--------------sklearn-1.0.1--openml&quot;,
-    &quot;_id&quot;: &quot;idict--------------sklearn-1.0.1--openml&quot;,
-    &quot;_ids&quot;: {
-        &quot;X&quot;: &quot;KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr&quot;,
-        &quot;y&quot;: &quot;HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W&quot;,
-        &quot;_history&quot;: &quot;Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf&quot;
-    }
-}
-&gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()
-   sepallength  sepalwidth  petallength  petalwidth
-0          5.1         3.5          1.4         0.2
-1          4.9         3.0          1.4         0.2
-2          4.7         3.2          1.3         0.2
-3          4.6         3.1          1.5         0.2
-4          5.0         3.6          1.4         0.2
-&gt;&gt;&gt; (Ø &gt;&gt; openml).y.head()
-0    Iris-setosa
-1    Iris-setosa
-2    Iris-setosa
-3    Iris-setosa
-4    Iris-setosa
-Name: class, dtype: category
-Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
-</code></pre></div>
+<div class="desc"><h1 id="from-idict-import">&gt;&gt;&gt; from idict import Ø</h1>
+<h1 id="openmlshowcoloredfalse">&gt;&gt;&gt; (Ø &gt;&gt; openml).show(colored=False)</h1>
+<h1 id="_1">{</h1>
+<pre><code>#"X": "→(Xout yout name version)",
+#"y": "→(Xout yout name version)",
+#"_history": "idict--------------sklearn-1.0.1--openml",
+#"_id": "idict--------------sklearn-1.0.1--openml",
+#"_ids": {
+    #"X": "KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr",
+    #"y": "HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W",
+    #"_history": "Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf"
+#}
+</code></pre>
+<h1 id="_2">}</h1>
+<h1 id="openmlxhead">&gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()</h1>
+<p>#sepallength
+sepalwidth
+petallength
+petalwidth</p>
+<h1 id="0-51-35-14-02">0
+5.1
+3.5
+1.4
+0.2</h1>
+<h1 id="1-49-30-14-02">1
+4.9
+3.0
+1.4
+0.2</h1>
+<h1 id="2-47-32-13-02">2
+4.7
+3.2
+1.3
+0.2</h1>
+<h1 id="3-46-31-15-02">3
+4.6
+3.1
+1.5
+0.2</h1>
+<h1 id="4-50-36-14-02">4
+5.0
+3.6
+1.4
+0.2</h1>
+<h1 id="openmlyhead">&gt;&gt;&gt; (Ø &gt;&gt; openml).y.head()</h1>
+<h1 id="0-iris-setosa">0
+Iris-setosa</h1>
+<h1 id="1-iris-setosa">1
+Iris-setosa</h1>
+<h1 id="2-iris-setosa">2
+Iris-setosa</h1>
+<h1 id="3-iris-setosa">3
+Iris-setosa</h1>
+<h1 id="4-iris-setosa">4
+Iris-setosa</h1>
+<h1 id="name-class-dtype-category">Name: class, dtype: category</h1>
+<h1 id="categories-3-object-iris-setosa-iris-versicolor-iris-virginica">Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']</h1></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def openml(Xout=&#34;X&#34;, yout=&#34;y&#34;, name=&#34;iris&#34;, version=1):
     &#34;&#34;&#34;
-    &gt;&gt;&gt; from idict import Ø
-    &gt;&gt;&gt; (Ø &gt;&gt; openml).show(colored=False)
-    {
-        &#34;X&#34;: &#34;→(Xout yout name version)&#34;,
-        &#34;y&#34;: &#34;→(Xout yout name version)&#34;,
-        &#34;_history&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
-        &#34;_id&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
-        &#34;_ids&#34;: {
-            &#34;X&#34;: &#34;KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr&#34;,
-            &#34;y&#34;: &#34;HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W&#34;,
-            &#34;_history&#34;: &#34;Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf&#34;
-        }
-    }
-    &gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()
-       sepallength  sepalwidth  petallength  petalwidth
-    0          5.1         3.5          1.4         0.2
-    1          4.9         3.0          1.4         0.2
-    2          4.7         3.2          1.3         0.2
-    3          4.6         3.1          1.5         0.2
-    4          5.0         3.6          1.4         0.2
-    &gt;&gt;&gt; (Ø &gt;&gt; openml).y.head()
-    0    Iris-setosa
-    1    Iris-setosa
-    2    Iris-setosa
-    3    Iris-setosa
-    4    Iris-setosa
-    Name: class, dtype: category
-    Categories (3, object): [&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;]
+    #&gt;&gt;&gt; from idict import Ø
+    #&gt;&gt;&gt; (Ø &gt;&gt; openml).show(colored=False)
+    #{
+        #&#34;X&#34;: &#34;→(Xout yout name version)&#34;,
+        #&#34;y&#34;: &#34;→(Xout yout name version)&#34;,
+        #&#34;_history&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
+        #&#34;_id&#34;: &#34;idict--------------sklearn-1.0.1--openml&#34;,
+        #&#34;_ids&#34;: {
+            #&#34;X&#34;: &#34;KkSoAvgPmGq52PvPBqGFCEp9cSUCfb7eht9VpUdr&#34;,
+            #&#34;y&#34;: &#34;HOE9E-HnFYen6JNRC9cHgAamJlOWGYTPIVKvQu8W&#34;,
+            #&#34;_history&#34;: &#34;Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf&#34;
+        #}
+    #}
+    #&gt;&gt;&gt; (Ø &gt;&gt; openml).X.head()
+       #sepallength  sepalwidth  petallength  petalwidth
+    #0          5.1         3.5          1.4         0.2
+    #1          4.9         3.0          1.4         0.2
+    #2          4.7         3.2          1.3         0.2
+    #3          4.6         3.1          1.5         0.2
+    #4          5.0         3.6          1.4         0.2
+    #&gt;&gt;&gt; (Ø &gt;&gt; openml).y.head()
+    #0    Iris-setosa
+    #1    Iris-setosa
+    #2    Iris-setosa
+    #3    Iris-setosa
+    #4    Iris-setosa
+    #Name: class, dtype: category
+    #Categories (3, object): [&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;]
     &#34;&#34;&#34;
     from sklearn.datasets import fetch_openml
 
