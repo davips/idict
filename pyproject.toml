@@ -11,7 +11,7 @@ packages = [
 
 # For more dependencies (sqlalchemy): poetry install -E full
 [tool.poetry.extras]
-full = ["pandas", "arff2pandas", "sqlalchemy", "scikit-learn"]
+full = ["pandas", "sqlalchemy", "scikit-learn"]
 
 [tool.poetry.dependencies]
 python = "^3.8"  #">=3.8,<3.10"
