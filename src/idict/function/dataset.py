@@ -183,21 +183,21 @@ def openml(Xout="X", yout="y", name="iris", version=1):
             "_history": "Efw0ebrPTxTiuJ.ZpVt-MvB62ja.kmrOYzrn-ljf"
         }
     }
-    >>> (Ø >> openml).X.head()
-       sepallength  sepalwidth  petallength  petalwidth
-    0          5.1         3.5          1.4         0.2
-    1          4.9         3.0          1.4         0.2
-    2          4.7         3.2          1.3         0.2
-    3          4.6         3.1          1.5         0.2
-    4          5.0         3.6          1.4         0.2
-    >>> (Ø >> openml).y.head()
-    0    Iris-setosa
-    1    Iris-setosa
-    2    Iris-setosa
-    3    Iris-setosa
-    4    Iris-setosa
-    Name: class, dtype: category
-    Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+    #>>> (Ø >> openml).X.head()
+       #sepallength  sepalwidth  petallength  petalwidth
+    #0          5.1         3.5          1.4         0.2
+    #1          4.9         3.0          1.4         0.2
+    #2          4.7         3.2          1.3         0.2
+    #3          4.6         3.1          1.5         0.2
+    #4          5.0         3.6          1.4         0.2
+    #>>> (Ø >> openml).y.head()
+    #0    Iris-setosa
+    #1    Iris-setosa
+    #2    Iris-setosa
+    #3    Iris-setosa
+    #4    Iris-setosa
+    #Name: class, dtype: category
+    #Categories (3, object): ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
     """
     from sklearn.datasets import fetch_openml
 
