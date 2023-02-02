@@ -14,7 +14,7 @@ packages = [
 full = ["pandas", "sqlalchemy", "scikit-learn"]
 
 [tool.poetry.dependencies]
-python = "^3.8"  #">=3.8,<3.10"
+python = ">=3.8,<3.10"
 orjson = "^3.5.0"
 lz4 = "^4.0.0"
 ldict = "^3.220128.3"

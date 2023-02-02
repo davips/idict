@@ -14,6 +14,12 @@
 
 A lazy `dict` with universally unique deterministic identifiers.
 
+### **This project was succeeded by [hdict](https://pypi.org/project/hdict).**
+
+---
+---
+---
+---
 [Latest release](https://pypi.org/project/idict) |
 [Current code](https://github.com/davips/idict) |
 [API documentation](https://davips.github.io/idict)
