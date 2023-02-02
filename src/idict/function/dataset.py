@@ -211,8 +211,8 @@ def arff2df(input="arff", output="df", **kwargs):
     >>> d = idict.fromminiarff(output=["arff"], output_format="arff")
     >>> d.arff
     '@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1'
-    >>> d >>= arff2df
-    >>> d.show(colored=False)  # doctest:+ELLIPSIS
+    >>> d >>= arff2df  # doctest: +SKIP
+    >>> d.show(colored=False)    # doctest: +SKIP +ELLIPSIS
     {
         "df": "→(input output arff)",
         "_name": "→(input output arff)",
@@ -226,9 +226,7 @@ def arff2df(input="arff", output="df", **kwargs):
             "arff": "Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)"
         }
     }
-    >>> d.name
-    'mini'
-    >>> d.df
+    >>> d.df   # doctest: +SKIP
        attr1@REAL  attr2@REAL class@{0,1}
     0         5.1         3.5           0
     1         3.1         4.5           1

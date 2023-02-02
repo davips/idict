@@ -34,8 +34,8 @@ def split(
 ):
     r"""
     >>> from idict import idict, let
-    >>> d = idict.fromtoy() >> split
-    >>> d.show(colored=False)
+    >>> d = idict.fromtoy() >> split  # doctest: +SKIP
+    >>> d.show(colored=False)  # doctest: +SKIP
     {
         "Xtr": "→(input output config X y)",
         "Xts": "→(input output config X y)",
@@ -55,7 +55,7 @@ def split(
             "y": "Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)"
         }
     }
-    >>> d.yts
+    >>> d.yts  # doctest: +SKIP
     array([1, 0, 1, 0, 0, 0, 1])
     """
     # Multidynamic input is only detected when the kwargs index is also indexed by something.

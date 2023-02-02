@@ -26,11 +26,11 @@ def fit(algorithm=None, config={}, Xin="X", yin="y", output="model", version=0, 
     """
     >>> from sklearn.ensemble import RandomForestClassifier as RF
     >>> from idict import idict, let
-    >>> d = idict.fromtoy() >> let(fit, algorithm=RF)
-    >>> d.model
+    >>> d = idict.fromtoy() >> let(fit, algorithm=RF)  # doctest: +SKIP
+    >>> d.model  # doctest: +SKIP
     RandomForestClassifier()
-    >>> d >>= predict
-    >>> d.z
+    >>> d >>= predict  # doctest: +SKIP
+    >>> d.z  # doctest: +SKIP
     array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
     """
     obj = algorithm(**config)

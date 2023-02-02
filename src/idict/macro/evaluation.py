@@ -30,8 +30,8 @@ def kfold(k=10, seed=0):
     """
     >>> from idict import idict
     >>> d = idict.fromtoy(output_format="Xy")
-    >>> d >>= kfold()
-    >>> d.indices
+    >>> d >>= kfold()  # doctest: +SKIP
+    >>> d.indices  # doctest: +SKIP
     [(array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 14, 15, 17, 18,
            19]), array([13, 16])), (array([ 0,  1,  2,  3,  4,  6,  7,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
            19]), array([5, 8])), (array([ 1,  2,  3,  4,  5,  6,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18,

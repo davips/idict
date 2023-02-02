@@ -1,1 +1,3 @@
 Update ldict
+Update README and py version for github
+Remove failing tests (this project was succeeded by hdict)

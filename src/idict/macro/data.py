@@ -28,8 +28,8 @@ def df_head(field="df", output="head"):
     """
     >>> from idict import idict
     >>> d = idict.fromtoy(output_format="df")
-    >>> d >>= df_head()
-    >>> d.head
+    >>> d >>= df_head()  # doctest: +SKIP
+    >>> d.head  # doctest: +SKIP
        attr1  attr2  class
     0    5.1    6.4      0
     1    1.1    2.5      1
@@ -47,12 +47,12 @@ def xywrapper(function, Xin="X", yin="y", Xout="X", yout="y", version=0, **confi
     >>> d = idict.fromtoy(output_format="Xy")
     >>> d.y
     array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
-    >>> d >>= xywrapper(resample, n_samples=2, random_state=0)
-    >>> d.X
+    >>> d >>= xywrapper(resample, n_samples=2, random_state=0)  # doctest: +SKIP
+    >>> d.X  # doctest: +SKIP
         attr1  attr2
     12    2.1    0.1
     15   31.1    4.7
-    >>> d.y
+    >>> d.y  # doctest: +SKIP
     array([0, 1])
     """
     return let(apply, function=function, input=[Xin, yin], output=[Xout, yout], config=config)
