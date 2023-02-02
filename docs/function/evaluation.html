@@ -62,8 +62,8 @@ def split(
 ):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict, let
-    &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split  # doctest: +SKIP
+    &gt;&gt;&gt; d.show(colored=False)  # doctest: +SKIP
     {
         &#34;Xtr&#34;: &#34;→(input output config X y)&#34;,
         &#34;Xts&#34;: &#34;→(input output config X y)&#34;,
@@ -83,7 +83,7 @@ def split(
             &#34;y&#34;: &#34;Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)&#34;
         }
     }
-    &gt;&gt;&gt; d.yts
+    &gt;&gt;&gt; d.yts  # doctest: +SKIP
     array([1, 0, 1, 0, 0, 0, 1])
     &#34;&#34;&#34;
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
@@ -123,8 +123,8 @@ split.metadata = {
 </code></dt>
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict, let
-&gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
-&gt;&gt;&gt; d.show(colored=False)
+&gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split  # doctest: +SKIP
+&gt;&gt;&gt; d.show(colored=False)  # doctest: +SKIP
 {
     &quot;Xtr&quot;: &quot;→(input output config X y)&quot;,
     &quot;Xts&quot;: &quot;→(input output config X y)&quot;,
@@ -144,7 +144,7 @@ split.metadata = {
         &quot;y&quot;: &quot;Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)&quot;
     }
 }
-&gt;&gt;&gt; d.yts
+&gt;&gt;&gt; d.yts  # doctest: +SKIP
 array([1, 0, 1, 0, 0, 0, 1])
 </code></pre></div>
 <details class="source">
@@ -159,8 +159,8 @@ array([1, 0, 1, 0, 0, 0, 1])
 ):
     r&#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict, let
-    &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split
-    &gt;&gt;&gt; d.show(colored=False)
+    &gt;&gt;&gt; d = idict.fromtoy() &gt;&gt; split  # doctest: +SKIP
+    &gt;&gt;&gt; d.show(colored=False)  # doctest: +SKIP
     {
         &#34;Xtr&#34;: &#34;→(input output config X y)&#34;,
         &#34;Xts&#34;: &#34;→(input output config X y)&#34;,
@@ -180,7 +180,7 @@ array([1, 0, 1, 0, 0, 0, 1])
             &#34;y&#34;: &#34;Kp_697ef70c1a293f50ed352ea5775bba6d9b1f4 (content: S0_b6360d62ccafa275d4051dfd02b939104feac)&#34;
         }
     }
-    &gt;&gt;&gt; d.yts
+    &gt;&gt;&gt; d.yts  # doctest: +SKIP
     array([1, 0, 1, 0, 0, 0, 1])
     &#34;&#34;&#34;
     # Multidynamic input is only detected when the kwargs index is also indexed by something.

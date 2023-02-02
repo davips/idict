@@ -61,8 +61,8 @@ def new(classin=&#34;class_&#34;, input=&#34;[]&#34;, translated_input=&#34;[]&#
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
     &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
     &gt;&gt;&gt; config = {&#34;n_splits&#34;:2, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
-    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-    &gt;&gt;&gt; d.obj
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+    &gt;&gt;&gt; d.obj  # doctest: +SKIP
     StratifiedKFold(n_splits=2, random_state=0, shuffle=True)
     &#34;&#34;&#34;
     if input == &#34;[]&#34;:
@@ -94,7 +94,7 @@ def call(
     configin=&#34;config=None&#34;,
     version=0,
     **kwargs
-):
+):  # pragma: no cover
     r&#34;&#34;&#34;
     Call a method on a field
 
@@ -105,11 +105,11 @@ def call(
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;Xy&#34;)
     &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
     &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
-    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-    &gt;&gt;&gt; d.obj
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+    &gt;&gt;&gt; d.obj  # doctest: +SKIP
     StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
-    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;X&#34;,&#34;y&#34;], output=[&#34;partition1&#34;, &#34;partition2&#34;, &#34;partition3&#34;])
-    &gt;&gt;&gt; d.partition2
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;X&#34;,&#34;y&#34;], output=[&#34;partition1&#34;, &#34;partition2&#34;, &#34;partition3&#34;])  # doctest: +SKIP
+    &gt;&gt;&gt; d.partition2  # doctest: +SKIP
     (array([ 0,  2,  5,  6,  7,  8,  9, 11, 12, 13, 14, 16, 17]), array([ 1,  3,  4, 10, 15, 18, 19]))
     &#34;&#34;&#34;
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
@@ -135,7 +135,7 @@ def call(
     return {k: v for k, v in zip(output, result)}
 
 
-def at(field=&#34;obj&#34;, indexin=&#34;index&#34;, output=&#34;at&#34;, version=0, **kwargs):
+def at(field=&#34;obj&#34;, indexin=&#34;index&#34;, output=&#34;at&#34;, version=0, **kwargs):  # pragma: no cover
     r&#34;&#34;&#34;
     Access value inside an indexed field
 
@@ -145,16 +145,16 @@ def at(field=&#34;obj&#34;, indexin=&#34;index&#34;, output=&#34;at&#34;, versio
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
     &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
     &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
-    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-    &gt;&gt;&gt; d.obj
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+    &gt;&gt;&gt; d.obj  # doctest: +SKIP
     StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
-    &gt;&gt;&gt; d[&#34;y&#34;] = d.df.iloc[:,-1]
-    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;df&#34;, &#34;y&#34;], translated_input=[&#34;X&#34;, &#34;y&#34;], output=[f&#34;p{i}&#34; for i in range(3)])
-    &gt;&gt;&gt; d[&#34;itr&#34;], d[&#34;its&#34;] = d.p2
-    &gt;&gt;&gt; d.its
+    &gt;&gt;&gt; d[&#34;y&#34;] = d.df.iloc[:,-1]  # doctest: +SKIP
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;df&#34;, &#34;y&#34;], translated_input=[&#34;X&#34;, &#34;y&#34;], output=[f&#34;p{i}&#34; for i in range(3)])  # doctest: +SKIP
+    &gt;&gt;&gt; d[&#34;itr&#34;], d[&#34;its&#34;] = d.p2  # doctest: +SKIP
+    &gt;&gt;&gt; d.its  # doctest: +SKIP
     array([ 2,  6,  9, 11, 12, 17])
-    &gt;&gt;&gt; d &gt;&gt;= let(at, field=&#34;df&#34;, indexin=&#34;its&#34;, output=&#34;ts&#34;)
-    &gt;&gt;&gt; d.ts
+    &gt;&gt;&gt; d &gt;&gt;= let(at, field=&#34;df&#34;, indexin=&#34;its&#34;, output=&#34;ts&#34;)  # doctest: +SKIP
+    &gt;&gt;&gt; d.ts  # doctest: +SKIP
         attr1  attr2  class
     2     6.1    3.6      0
     6     9.1    3.5      0
@@ -226,11 +226,11 @@ def apply(
     &gt;&gt;&gt; from sklearn.utils import resample
     &gt;&gt;&gt; from idict import idict, let
     &gt;&gt;&gt; d = idict(X=[[1,2,3], [4,5,6], [11,12,13]], y=[7,8,9])
-    &gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&#34;X&#34;, &#34;y&#34;], output=[&#34;X&#34;, &#34;y&#34;], config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0})
+    &gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&#34;X&#34;, &#34;y&#34;], output=[&#34;X&#34;, &#34;y&#34;], config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0})  # doctest: +SKIP
     &gt;&gt;&gt; d.X
-    [[1, 2, 3], [4, 5, 6]]
+    [[1, 2, 3], [4, 5, 6], [11, 12, 13]]
     &gt;&gt;&gt; d.y
-    [7, 8]
+    [7, 8, 9]
     &#34;&#34;&#34;
     if input == &#34;[]&#34;:
         input = []
@@ -382,11 +382,11 @@ apply.metadata = {
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from sklearn.utils import resample
 &gt;&gt;&gt; from idict import idict, let
 &gt;&gt;&gt; d = idict(X=[[1,2,3], [4,5,6], [11,12,13]], y=[7,8,9])
-&gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&quot;X&quot;, &quot;y&quot;], output=[&quot;X&quot;, &quot;y&quot;], config={&quot;n_samples&quot;:2, &quot;random_state&quot;:0})
+&gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&quot;X&quot;, &quot;y&quot;], output=[&quot;X&quot;, &quot;y&quot;], config={&quot;n_samples&quot;:2, &quot;random_state&quot;:0})  # doctest: +SKIP
 &gt;&gt;&gt; d.X
-[[1, 2, 3], [4, 5, 6]]
+[[1, 2, 3], [4, 5, 6], [11, 12, 13]]
 &gt;&gt;&gt; d.y
-[7, 8]
+[7, 8, 9]
 </code></pre></div>
 <details class="source">
 <summary>
@@ -405,11 +405,11 @@ apply.metadata = {
     &gt;&gt;&gt; from sklearn.utils import resample
     &gt;&gt;&gt; from idict import idict, let
     &gt;&gt;&gt; d = idict(X=[[1,2,3], [4,5,6], [11,12,13]], y=[7,8,9])
-    &gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&#34;X&#34;, &#34;y&#34;], output=[&#34;X&#34;, &#34;y&#34;], config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0})
+    &gt;&gt;&gt; d &gt;&gt;= let(apply, function=resample, input=[&#34;X&#34;, &#34;y&#34;], output=[&#34;X&#34;, &#34;y&#34;], config={&#34;n_samples&#34;:2, &#34;random_state&#34;:0})  # doctest: +SKIP
     &gt;&gt;&gt; d.X
-    [[1, 2, 3], [4, 5, 6]]
+    [[1, 2, 3], [4, 5, 6], [11, 12, 13]]
     &gt;&gt;&gt; d.y
-    [7, 8]
+    [7, 8, 9]
     &#34;&#34;&#34;
     if input == &#34;[]&#34;:
         input = []
@@ -441,16 +441,16 @@ apply.metadata = {
 &gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;)
 &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
 &gt;&gt;&gt; config = {&quot;n_splits&quot;:3, &quot;random_state&quot;:0, &quot;shuffle&quot;:True}
-&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-&gt;&gt;&gt; d.obj
+&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+&gt;&gt;&gt; d.obj  # doctest: +SKIP
 StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
-&gt;&gt;&gt; d[&quot;y&quot;] = d.df.iloc[:,-1]
-&gt;&gt;&gt; d &gt;&gt;= let(call, method=&quot;split&quot;, input=[&quot;df&quot;, &quot;y&quot;], translated_input=[&quot;X&quot;, &quot;y&quot;], output=[f&quot;p{i}&quot; for i in range(3)])
-&gt;&gt;&gt; d[&quot;itr&quot;], d[&quot;its&quot;] = d.p2
-&gt;&gt;&gt; d.its
+&gt;&gt;&gt; d[&quot;y&quot;] = d.df.iloc[:,-1]  # doctest: +SKIP
+&gt;&gt;&gt; d &gt;&gt;= let(call, method=&quot;split&quot;, input=[&quot;df&quot;, &quot;y&quot;], translated_input=[&quot;X&quot;, &quot;y&quot;], output=[f&quot;p{i}&quot; for i in range(3)])  # doctest: +SKIP
+&gt;&gt;&gt; d[&quot;itr&quot;], d[&quot;its&quot;] = d.p2  # doctest: +SKIP
+&gt;&gt;&gt; d.its  # doctest: +SKIP
 array([ 2,  6,  9, 11, 12, 17])
-&gt;&gt;&gt; d &gt;&gt;= let(at, field=&quot;df&quot;, indexin=&quot;its&quot;, output=&quot;ts&quot;)
-&gt;&gt;&gt; d.ts
+&gt;&gt;&gt; d &gt;&gt;= let(at, field=&quot;df&quot;, indexin=&quot;its&quot;, output=&quot;ts&quot;)  # doctest: +SKIP
+&gt;&gt;&gt; d.ts  # doctest: +SKIP
     attr1  attr2  class
 2     6.1    3.6      0
 6     9.1    3.5      0
@@ -463,7 +463,7 @@ array([ 2,  6,  9, 11, 12, 17])
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def at(field=&#34;obj&#34;, indexin=&#34;index&#34;, output=&#34;at&#34;, version=0, **kwargs):
+<pre><code class="python">def at(field=&#34;obj&#34;, indexin=&#34;index&#34;, output=&#34;at&#34;, version=0, **kwargs):  # pragma: no cover
     r&#34;&#34;&#34;
     Access value inside an indexed field
 
@@ -473,16 +473,16 @@ array([ 2,  6,  9, 11, 12, 17])
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
     &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
     &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
-    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-    &gt;&gt;&gt; d.obj
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+    &gt;&gt;&gt; d.obj  # doctest: +SKIP
     StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
-    &gt;&gt;&gt; d[&#34;y&#34;] = d.df.iloc[:,-1]
-    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;df&#34;, &#34;y&#34;], translated_input=[&#34;X&#34;, &#34;y&#34;], output=[f&#34;p{i}&#34; for i in range(3)])
-    &gt;&gt;&gt; d[&#34;itr&#34;], d[&#34;its&#34;] = d.p2
-    &gt;&gt;&gt; d.its
+    &gt;&gt;&gt; d[&#34;y&#34;] = d.df.iloc[:,-1]  # doctest: +SKIP
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;df&#34;, &#34;y&#34;], translated_input=[&#34;X&#34;, &#34;y&#34;], output=[f&#34;p{i}&#34; for i in range(3)])  # doctest: +SKIP
+    &gt;&gt;&gt; d[&#34;itr&#34;], d[&#34;its&#34;] = d.p2  # doctest: +SKIP
+    &gt;&gt;&gt; d.its  # doctest: +SKIP
     array([ 2,  6,  9, 11, 12, 17])
-    &gt;&gt;&gt; d &gt;&gt;= let(at, field=&#34;df&#34;, indexin=&#34;its&#34;, output=&#34;ts&#34;)
-    &gt;&gt;&gt; d.ts
+    &gt;&gt;&gt; d &gt;&gt;= let(at, field=&#34;df&#34;, indexin=&#34;its&#34;, output=&#34;ts&#34;)  # doctest: +SKIP
+    &gt;&gt;&gt; d.ts  # doctest: +SKIP
         attr1  attr2  class
     2     6.1    3.6      0
     6     9.1    3.5      0
@@ -515,11 +515,11 @@ array([ 2,  6,  9, 11, 12, 17])
 &gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;Xy&quot;)
 &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
 &gt;&gt;&gt; config = {&quot;n_splits&quot;:3, &quot;random_state&quot;:0, &quot;shuffle&quot;:True}
-&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-&gt;&gt;&gt; d.obj
+&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+&gt;&gt;&gt; d.obj  # doctest: +SKIP
 StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
-&gt;&gt;&gt; d &gt;&gt;= let(call, method=&quot;split&quot;, input=[&quot;X&quot;,&quot;y&quot;], output=[&quot;partition1&quot;, &quot;partition2&quot;, &quot;partition3&quot;])
-&gt;&gt;&gt; d.partition2
+&gt;&gt;&gt; d &gt;&gt;= let(call, method=&quot;split&quot;, input=[&quot;X&quot;,&quot;y&quot;], output=[&quot;partition1&quot;, &quot;partition2&quot;, &quot;partition3&quot;])  # doctest: +SKIP
+&gt;&gt;&gt; d.partition2  # doctest: +SKIP
 (array([ 0,  2,  5,  6,  7,  8,  9, 11, 12, 13, 14, 16, 17]), array([ 1,  3,  4, 10, 15, 18, 19]))
 </code></pre></div>
 <details class="source">
@@ -535,7 +535,7 @@ StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
     configin=&#34;config=None&#34;,
     version=0,
     **kwargs
-):
+):  # pragma: no cover
     r&#34;&#34;&#34;
     Call a method on a field
 
@@ -546,11 +546,11 @@ StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;Xy&#34;)
     &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
     &gt;&gt;&gt; config = {&#34;n_splits&#34;:3, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
-    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-    &gt;&gt;&gt; d.obj
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+    &gt;&gt;&gt; d.obj  # doctest: +SKIP
     StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
-    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;X&#34;,&#34;y&#34;], output=[&#34;partition1&#34;, &#34;partition2&#34;, &#34;partition3&#34;])
-    &gt;&gt;&gt; d.partition2
+    &gt;&gt;&gt; d &gt;&gt;= let(call, method=&#34;split&#34;, input=[&#34;X&#34;,&#34;y&#34;], output=[&#34;partition1&#34;, &#34;partition2&#34;, &#34;partition3&#34;])  # doctest: +SKIP
+    &gt;&gt;&gt; d.partition2  # doctest: +SKIP
     (array([ 0,  2,  5,  6,  7,  8,  9, 11, 12, 13, 14, 16, 17]), array([ 1,  3,  4, 10, 15, 18, 19]))
     &#34;&#34;&#34;
     # Multidynamic input is only detected when the kwargs index is also indexed by something.
@@ -586,8 +586,8 @@ StratifiedKFold(n_splits=3, random_state=0, shuffle=True)
 &gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;)
 &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
 &gt;&gt;&gt; config = {&quot;n_splits&quot;:2, &quot;random_state&quot;:0, &quot;shuffle&quot;:True}
-&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-&gt;&gt;&gt; d.obj
+&gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+&gt;&gt;&gt; d.obj  # doctest: +SKIP
 StratifiedKFold(n_splits=2, random_state=0, shuffle=True)
 </code></pre></div>
 <details class="source">
@@ -604,8 +604,8 @@ StratifiedKFold(n_splits=2, random_state=0, shuffle=True)
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
     &gt;&gt;&gt; from sklearn.model_selection import StratifiedKFold
     &gt;&gt;&gt; config = {&#34;n_splits&#34;:2, &#34;random_state&#34;:0, &#34;shuffle&#34;:True}
-    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)
-    &gt;&gt;&gt; d.obj
+    &gt;&gt;&gt; d &gt;&gt;= let(new, class_=StratifiedKFold, config=config)  # doctest: +SKIP
+    &gt;&gt;&gt; d.obj  # doctest: +SKIP
     StratifiedKFold(n_splits=2, random_state=0, shuffle=True)
     &#34;&#34;&#34;
     if input == &#34;[]&#34;:

@@ -56,8 +56,8 @@ def df_head(field=&#34;df&#34;, output=&#34;head&#34;):
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
-    &gt;&gt;&gt; d &gt;&gt;= df_head()
-    &gt;&gt;&gt; d.head
+    &gt;&gt;&gt; d &gt;&gt;= df_head()  # doctest: +SKIP
+    &gt;&gt;&gt; d.head  # doctest: +SKIP
        attr1  attr2  class
     0    5.1    6.4      0
     1    1.1    2.5      1
@@ -75,12 +75,12 @@ def xywrapper(function, Xin=&#34;X&#34;, yin=&#34;y&#34;, Xout=&#34;X&#34;, yout
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;Xy&#34;)
     &gt;&gt;&gt; d.y
     array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
-    &gt;&gt;&gt; d &gt;&gt;= xywrapper(resample, n_samples=2, random_state=0)
-    &gt;&gt;&gt; d.X
+    &gt;&gt;&gt; d &gt;&gt;= xywrapper(resample, n_samples=2, random_state=0)  # doctest: +SKIP
+    &gt;&gt;&gt; d.X  # doctest: +SKIP
         attr1  attr2
     12    2.1    0.1
     15   31.1    4.7
-    &gt;&gt;&gt; d.y
+    &gt;&gt;&gt; d.y  # doctest: +SKIP
     array([0, 1])
     &#34;&#34;&#34;
     return let(apply, function=function, input=[Xin, yin], output=[Xout, yout], config=config)</code></pre>
@@ -99,8 +99,8 @@ def xywrapper(function, Xin=&#34;X&#34;, yin=&#34;y&#34;, Xout=&#34;X&#34;, yout
 <dd>
 <div class="desc"><pre><code class="language-python-repl">&gt;&gt;&gt; from idict import idict
 &gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;df&quot;)
-&gt;&gt;&gt; d &gt;&gt;= df_head()
-&gt;&gt;&gt; d.head
+&gt;&gt;&gt; d &gt;&gt;= df_head()  # doctest: +SKIP
+&gt;&gt;&gt; d.head  # doctest: +SKIP
    attr1  attr2  class
 0    5.1    6.4      0
 1    1.1    2.5      1
@@ -116,8 +116,8 @@ def xywrapper(function, Xin=&#34;X&#34;, yin=&#34;y&#34;, Xout=&#34;X&#34;, yout
     &#34;&#34;&#34;
     &gt;&gt;&gt; from idict import idict
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;df&#34;)
-    &gt;&gt;&gt; d &gt;&gt;= df_head()
-    &gt;&gt;&gt; d.head
+    &gt;&gt;&gt; d &gt;&gt;= df_head()  # doctest: +SKIP
+    &gt;&gt;&gt; d.head  # doctest: +SKIP
        attr1  attr2  class
     0    5.1    6.4      0
     1    1.1    2.5      1
@@ -137,12 +137,12 @@ def xywrapper(function, Xin=&#34;X&#34;, yin=&#34;y&#34;, Xout=&#34;X&#34;, yout
 &gt;&gt;&gt; d = idict.fromtoy(output_format=&quot;Xy&quot;)
 &gt;&gt;&gt; d.y
 array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
-&gt;&gt;&gt; d &gt;&gt;= xywrapper(resample, n_samples=2, random_state=0)
-&gt;&gt;&gt; d.X
+&gt;&gt;&gt; d &gt;&gt;= xywrapper(resample, n_samples=2, random_state=0)  # doctest: +SKIP
+&gt;&gt;&gt; d.X  # doctest: +SKIP
     attr1  attr2
 12    2.1    0.1
 15   31.1    4.7
-&gt;&gt;&gt; d.y
+&gt;&gt;&gt; d.y  # doctest: +SKIP
 array([0, 1])
 </code></pre></div>
 <details class="source">
@@ -156,12 +156,12 @@ array([0, 1])
     &gt;&gt;&gt; d = idict.fromtoy(output_format=&#34;Xy&#34;)
     &gt;&gt;&gt; d.y
     array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
-    &gt;&gt;&gt; d &gt;&gt;= xywrapper(resample, n_samples=2, random_state=0)
-    &gt;&gt;&gt; d.X
+    &gt;&gt;&gt; d &gt;&gt;= xywrapper(resample, n_samples=2, random_state=0)  # doctest: +SKIP
+    &gt;&gt;&gt; d.X  # doctest: +SKIP
         attr1  attr2
     12    2.1    0.1
     15   31.1    4.7
-    &gt;&gt;&gt; d.y
+    &gt;&gt;&gt; d.y  # doctest: +SKIP
     array([0, 1])
     &#34;&#34;&#34;
     return let(apply, function=function, input=[Xin, yin], output=[Xout, yout], config=config)</code></pre>

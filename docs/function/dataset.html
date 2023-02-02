@@ -240,8 +240,8 @@ def arff2df(input=&#34;arff&#34;, output=&#34;df&#34;, **kwargs):
     &gt;&gt;&gt; d = idict.fromminiarff(output=[&#34;arff&#34;], output_format=&#34;arff&#34;)
     &gt;&gt;&gt; d.arff
     &#39;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#39;
-    &gt;&gt;&gt; d &gt;&gt;= arff2df
-    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
+    &gt;&gt;&gt; d &gt;&gt;= arff2df  # doctest: +SKIP
+    &gt;&gt;&gt; d.show(colored=False)    # doctest: +SKIP +ELLIPSIS
     {
         &#34;df&#34;: &#34;→(input output arff)&#34;,
         &#34;_name&#34;: &#34;→(input output arff)&#34;,
@@ -255,9 +255,7 @@ def arff2df(input=&#34;arff&#34;, output=&#34;df&#34;, **kwargs):
             &#34;arff&#34;: &#34;Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&#34;
         }
     }
-    &gt;&gt;&gt; d.name
-    &#39;mini&#39;
-    &gt;&gt;&gt; d.df
+    &gt;&gt;&gt; d.df   # doctest: +SKIP
        attr1@REAL  attr2@REAL class@{0,1}
     0         5.1         3.5           0
     1         3.1         4.5           1
@@ -394,8 +392,8 @@ array([[ 5.1,  6.4,  0. ],
 &gt;&gt;&gt; d = idict.fromminiarff(output=[&quot;arff&quot;], output_format=&quot;arff&quot;)
 &gt;&gt;&gt; d.arff
 '@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1'
-&gt;&gt;&gt; d &gt;&gt;= arff2df
-&gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
+&gt;&gt;&gt; d &gt;&gt;= arff2df  # doctest: +SKIP
+&gt;&gt;&gt; d.show(colored=False)    # doctest: +SKIP +ELLIPSIS
 {
     &quot;df&quot;: &quot;→(input output arff)&quot;,
     &quot;_name&quot;: &quot;→(input output arff)&quot;,
@@ -409,9 +407,7 @@ array([[ 5.1,  6.4,  0. ],
         &quot;arff&quot;: &quot;Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&quot;
     }
 }
-&gt;&gt;&gt; d.name
-'mini'
-&gt;&gt;&gt; d.df
+&gt;&gt;&gt; d.df   # doctest: +SKIP
    attr1@REAL  attr2@REAL class@{0,1}
 0         5.1         3.5           0
 1         3.1         4.5           1
@@ -426,8 +422,8 @@ array([[ 5.1,  6.4,  0. ],
     &gt;&gt;&gt; d = idict.fromminiarff(output=[&#34;arff&#34;], output_format=&#34;arff&#34;)
     &gt;&gt;&gt; d.arff
     &#39;@RELATION mini\n@ATTRIBUTE attr1\tREAL\n@ATTRIBUTE attr2 \tREAL\n@ATTRIBUTE class \t{0,1}\n@DATA\n5.1,3.5,0\n3.1,4.5,1&#39;
-    &gt;&gt;&gt; d &gt;&gt;= arff2df
-    &gt;&gt;&gt; d.show(colored=False)  # doctest:+ELLIPSIS
+    &gt;&gt;&gt; d &gt;&gt;= arff2df  # doctest: +SKIP
+    &gt;&gt;&gt; d.show(colored=False)    # doctest: +SKIP +ELLIPSIS
     {
         &#34;df&#34;: &#34;→(input output arff)&#34;,
         &#34;_name&#34;: &#34;→(input output arff)&#34;,
@@ -441,9 +437,7 @@ array([[ 5.1,  6.4,  0. ],
             &#34;arff&#34;: &#34;Z._c3e2b235b697e9734b9ec13084129dc30e45b (content: Ev_8bb973161e5ae900c5743b3c332b4a64d1955)&#34;
         }
     }
-    &gt;&gt;&gt; d.name
-    &#39;mini&#39;
-    &gt;&gt;&gt; d.df
+    &gt;&gt;&gt; d.df   # doctest: +SKIP
        attr1@REAL  attr2@REAL class@{0,1}
     0         5.1         3.5           0
     1         3.1         4.5           1

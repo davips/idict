@@ -1732,4 +1732,4 @@ full = ["pandas", "SQLAlchemy", "scikit-learn"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<3.10"
-content-hash = "da39ec6ca3fe4e9e4394fea778649e1c87d6ff53e446b35899a38140821efd72"
+content-hash = "5f368e46e519b85aabbaf905d01d9c1bb341fd0e46b83afa4486679a845dc8e6"

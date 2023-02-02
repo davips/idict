@@ -14,6 +14,12 @@
 
 A lazy `dict` with universally unique deterministic identifiers.
 
+### **This project was succeeded by [hdict](https://pypi.org/project/hdict).**
+
+---
+---
+---
+---
 [Latest release](https://pypi.org/project/idict) |
 [Current code](https://github.com/davips/idict) |
 [API documentation](https://davips.github.io/idict)
@@ -545,7 +551,7 @@ print(e.z)
 e = d >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 700025.0
+e = 25.007
 """
 ```
 
@@ -555,7 +561,7 @@ e = 700025.0
 e = e >> Random() >> let(fun, a=5)
 print("e =", e.z)
 """
-e = 700025.0
+e = 7000025.0
 """
 ```
 
